@@ -1,22 +1,16 @@
 /**
- * Undo Extension
+ * Undo Extension: /undo reverts conversation context AND file changes to
+ * the state right before the user's last prompt. Repeated /undo walks back
+ * one prompt at a time.
  *
- * /undo reverts BOTH the conversation context AND all file changes to the
- * state right before the user submitted their last prompt. Repeated /undo
- * walks back one prompt at a time.
- *
- * How it works:
- * - On every `before_agent_start`, we snapshot the full working tree
- *   (tracked + untracked, respecting .gitignore) into a git commit object
- *   using a throwaway temp index, WITHOUT touching the user's real index
- *   or working tree. The commit sha (or null if not a git repo) is persisted
- *   as a custom session entry ("undo-checkpoint") via pi.appendEntry(),
- *   which lands immediately before the user's message in the branch because
- *   before_agent_start fires before that message is appended.
- * - /undo walks the branch backwards to find the last user message, finds
- *   the checkpoint entry right before it, restores the working tree from
- *   that checkpoint's commit sha (deleting files created since), and
- *   navigates the session tree back to the checkpoint entry.
+ * On every before_agent_start we snapshot the full working tree (tracked +
+ * untracked, respecting .gitignore) into a git commit object via a
+ * throwaway temp index, without touching the real index/working tree. The
+ * sha (or null if not a git repo) is persisted as a custom session entry
+ * ("undo-checkpoint") via pi.appendEntry(), which lands immediately before
+ * the user's message since before_agent_start fires before that message is
+ * appended. /undo finds the last user message, the checkpoint right before
+ * it, restores files from that commit, and navigates back to it.
  */
 
 import { randomUUID } from "node:crypto";
