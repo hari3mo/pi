@@ -1,0 +1,14 @@
+#!/bin/bash
+# Fail closed: refuse to commit any credential-shaped staged path.
+set -euo pipefail
+staged="$(git diff --cached --name-only)"
+[ -z "$staged" ] && exit 0
+forbidden="$(printf '%s\n' "$staged" | grep -Ei \
+  '(^|/)(auth\.json|.*\.(env|key|pem|p12|pfx|pkcs12|keystore|oauth)|.*(secret|secrets|token|password|credential|credentials).*|id_(rsa|dsa|ecdsa|ed25519)|.*_(rsa|ed25519))$' || true)"
+if [ -n "$forbidden" ]; then
+  echo "pre-commit BLOCKED — credential-shaped file(s) staged:" >&2
+  printf '  %s\n' $forbidden >&2
+  echo "Unstage them (git restore --staged <file>) and verify .gitignore." >&2
+  exit 1
+fi
+exit 0

@@ -1,0 +1,1 @@
+/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/index.ts

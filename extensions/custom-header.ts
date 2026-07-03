@@ -1,0 +1,124 @@
+/**
+ * Custom Header Extension
+ *
+ * Replaces the built-in pi header (logo + keybinding hints) with a
+ * figlet ASCII-art banner reading "harimo", followed by three quiet
+ * subtitle lines: a time-of-day greeting, a cwd/git-branch context line,
+ * and a deterministic "aphorism of the day".
+ */
+
+import { execFileSync } from "node:child_process";
+import { homedir } from "node:os";
+import { basename, sep } from "node:path";
+import type { ExtensionAPI, Theme } from "@earendil-works/pi-coding-agent";
+import { VERSION } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth } from "@earendil-works/pi-tui";
+
+// Generated with: figlet -f standard 'harimo'
+const BANNER_LINES = [
+	' _                _                 ',
+	'| |__   __ _ _ __(_)_ __ ___   ___  ',
+	"| '_ \\ / _` | '__| | '_ ` _ \\ / _ \\ ",
+	'| | | | (_| | |  | | | | | | | (_) |',
+	'|_| |_|\\__,_|_|  |_|_| |_| |_|\\___/ ',
+];
+
+// Deterministic "aphorism of the day" — same for everyone, everywhere, all day.
+const APHORISMS = [
+	"the void ships no bugs",
+	"small diffs, long orbits",
+	"make it work, make it right, make it porcelain",
+	"every session spirals into the core",
+	"attention is gravity",
+	"delete more than you write",
+	"the event horizon is just scope creep",
+	"quiet tools, loud results",
+	"entropy is the only reviewer that never sleeps",
+	"a good name bends light",
+];
+
+function getBanner(theme: Theme): string[] {
+	const colored = BANNER_LINES.map((line) => theme.fg("accent", line));
+	return ["", ...colored, ""];
+}
+
+function getGreeting(): string {
+	const hour = new Date().getHours();
+	if (hour >= 5 && hour <= 11) return "morning, harimo";
+	if (hour >= 12 && hour <= 16) return "afternoon, harimo";
+	if (hour >= 17 && hour <= 21) return "evening, harimo";
+	return "burning the midnight oil, harimo";
+}
+
+function getAphorism(): string {
+	// Local-day math, not UTC — the aphorism should flip at local midnight.
+	const localMs = Date.now() - new Date().getTimezoneOffset() * 60_000;
+	const daysSinceEpoch = Math.floor(localMs / 86_400_000);
+	return APHORISMS[daysSinceEpoch % APHORISMS.length]!;
+}
+
+/** Collapse an absolute cwd to a short "~/…/leaf" form, or bare basename outside home. */
+function shortenCwd(cwd: string): string {
+	const home = homedir();
+	if (cwd === home) return "~";
+	if (cwd.startsWith(home + sep)) {
+		const remainder = cwd.slice(home.length + 1);
+		const segments = remainder.split(sep).filter(Boolean);
+		const last = segments[segments.length - 1] ?? "";
+		return segments.length > 1 ? `~/\u2026/${last}` : `~/${last}`;
+	}
+	return basename(cwd);
+}
+
+/** Computed once at session_start, not per render — git branch lookup shells out. */
+function computeContextLine(cwd: string): string {
+	const dir = shortenCwd(cwd);
+	try {
+		const branch = execFileSync("git", ["rev-parse", "--abbrev-ref", "HEAD"], {
+			cwd,
+			stdio: ["ignore", "pipe", "ignore"],
+			timeout: 500,
+		})
+			.toString()
+			.trim();
+		return branch ? `${dir} · ${branch}` : dir;
+	} catch {
+		return dir;
+	}
+}
+
+export default function (pi: ExtensionAPI) {
+	let contextLine = "";
+
+	pi.on("session_start", async (_event, ctx) => {
+		contextLine = computeContextLine(ctx.cwd);
+
+		if (ctx.mode === "tui") {
+			ctx.ui.setHeader((_tui, theme) => {
+				return {
+					render(width: number): string[] {
+						const banner = getBanner(theme);
+						const greetingLine = `${theme.fg("muted", `   ${getGreeting()}`)}${theme.fg("dim", ` v${VERSION}`)}`;
+						const contextLineStyled = theme.fg("dim", `   ${contextLine}`);
+						const aphorismLine = theme.fg("dim", `   \x1b[3m${getAphorism()}\x1b[23m`);
+						return [
+							...banner,
+							truncateToWidth(greetingLine, width),
+							truncateToWidth(contextLineStyled, width),
+							truncateToWidth(aphorismLine, width),
+						];
+					},
+					invalidate() {},
+				};
+			});
+		}
+	});
+
+	pi.registerCommand("builtin-header", {
+		description: "Restore built-in header with keybinding hints",
+		handler: async (_args, ctx) => {
+			ctx.ui.setHeader(undefined);
+			ctx.ui.notify("Built-in header restored", "info");
+		},
+	});
+}
