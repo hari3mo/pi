@@ -126,9 +126,9 @@ const CONSTELLATIONS: Constellation[] = [
 		// Each letter is a small asterism: stars at the stroke ends/joints,
 		// dotted constellation lines tracing the strokes. Letters sit on a
 		// shared 0.4..0.6 band of the unit square, 0.172 pitch, 0.13 wide.
-		nx: 0.135,
+		nx: 0.175,
 		ny: 0.1,
-		w: 0.24,
+		w: 0.32,
 		stars: [
 			// H (0-5)
 			[0, 0.4], [0, 0.6], [0.13, 0.4], [0.13, 0.6], [0, 0.5], [0.13, 0.5],
@@ -154,7 +154,7 @@ const CONSTELLATIONS: Constellation[] = [
 	},
 	{
 		// Big Dipper (shifted off top-left to clear HARIMO)
-		nx: 0.36,
+		nx: 0.46,
 		ny: 0.13,
 		w: 0.16,
 		stars: [
