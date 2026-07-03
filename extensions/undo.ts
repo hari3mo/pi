@@ -243,6 +243,9 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	// Capture a one-time session-start baseline for /revert.
+	// Accepted limitation: legacy sessions (created before this extension) get
+	// their baseline at first load; a fork taken before that point re-captures
+	// a fork-time baseline instead of the true session-start state.
 	pi.on("session_start", async (_event, ctx) => {
 		try {
 			const hasBaseline = ctx.sessionManager
@@ -272,9 +275,9 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			const checkpoint = findCheckpointBefore(branch, userMessage.index);
-			const promptText = extractPromptText(userMessage.message.content);
-			const preview = truncatePreview(promptText);
+			let checkpoint = findCheckpointBefore(branch, userMessage.index);
+			let promptText = extractPromptText(userMessage.message.content);
+			let preview = truncatePreview(promptText);
 
 			const willRestoreFiles = Boolean(checkpoint?.data?.sha && checkpoint?.data?.repoRoot);
 
@@ -286,15 +289,25 @@ export default function (pi: ExtensionAPI) {
 				if (!ok) return;
 			}
 
-			const targetId = checkpoint ? checkpoint.id : userMessage.entry.parentId;
+			// Snapshot the current (pre-undo) tree so /redo can restore it later.
+			const redoSnapshot = await snapshot(ctx.cwd);
+			const oldLeafId = ctx.sessionManager.getLeafId();
+
+			// Re-check in case the branch moved during the confirm dialog / snapshot.
+			const freshBranch = ctx.sessionManager.getBranch();
+			const freshUserMessage = findLastUserMessage(freshBranch);
+			if (!freshUserMessage) {
+				ctx.ui.notify("Nothing to undo", "warning");
+				return;
+			}
+			checkpoint = findCheckpointBefore(freshBranch, freshUserMessage.index);
+			promptText = extractPromptText(freshUserMessage.message.content);
+			preview = truncatePreview(promptText);
+			const targetId = checkpoint ? checkpoint.id : freshUserMessage.entry.parentId;
 			if (!targetId) {
 				ctx.ui.notify("Can't rewind context further (no earlier point in this session)", "warning");
 				return;
 			}
-
-			// Snapshot the current (pre-undo) tree so /redo can restore it later.
-			const redoSnapshot = await snapshot(ctx.cwd);
-			const oldLeafId = ctx.sessionManager.getLeafId();
 
 			// Navigate context first: if another extension cancels the tree
 			// navigation, files must remain untouched.
@@ -362,11 +375,24 @@ export default function (pi: ExtensionAPI) {
 				if (!ok) return;
 			}
 
+			let navigated = false;
 			if (oldLeafId) {
-				const result = await ctx.navigateTree(oldLeafId, { summarize: false });
-				if (result.cancelled) {
-					ctx.ui.notify("Redo cancelled", "warning");
-					return;
+				// Forked/cloned sessions copy only the root->leaf path, so the
+				// pre-undo leaf may not exist in this session file.
+				const targetExists = Boolean(ctx.sessionManager.getEntry(oldLeafId));
+				if (!targetExists) {
+					ctx.ui.notify("Cannot restore context (that point isn't in this session)", "warning");
+				} else {
+					try {
+						const result = await ctx.navigateTree(oldLeafId, { summarize: false });
+						if (result.cancelled) {
+							ctx.ui.notify("Redo cancelled", "warning");
+							return;
+						}
+						navigated = true;
+					} catch {
+						ctx.ui.notify("Cannot restore context (that point isn't in this session)", "warning");
+					}
 				}
 			}
 
@@ -377,16 +403,26 @@ export default function (pi: ExtensionAPI) {
 					filesRestored = true;
 				} catch (err) {
 					const message = err instanceof Error ? err.message : String(err);
-					ctx.ui.notify(`Context moved forward, but file restore failed: ${message}`, "error");
+					ctx.ui.notify(
+						navigated
+							? `Context moved forward, but file restore failed: ${message}`
+							: `File restore failed: ${message}`,
+						"error",
+					);
 					return;
 				}
 			}
 
 			if (ctx.hasUI) {
-				ctx.ui.notify(
-					filesRestored ? "Redone: files + context restored" : "Redone: context restored",
-					"info",
-				);
+				if (navigated && filesRestored) {
+					ctx.ui.notify("Redone: context and files restored", "info");
+				} else if (navigated) {
+					ctx.ui.notify("Redone: context restored (no file snapshot)", "info");
+				} else if (filesRestored) {
+					ctx.ui.notify("Redone: files restored", "info");
+				} else {
+					ctx.ui.notify("Nothing to redo (empty redo entry)", "warning");
+				}
 			}
 		},
 	});
@@ -413,10 +449,13 @@ export default function (pi: ExtensionAPI) {
 
 			// Snapshot the current (pre-revert) tree so /redo can restore it later.
 			const preRevertSnapshot = await snapshot(ctx.cwd);
+			// Record the current leaf so /redo chains past this entry instead of
+			// finding it forever (context content is unchanged by that hop).
+			const revertLeafId = ctx.sessionManager.getLeafId();
 			pi.appendEntry<RedoData>("undo-redo", {
 				sha: preRevertSnapshot.sha,
 				repoRoot: preRevertSnapshot.repoRoot ?? repoRoot,
-				oldLeafId: null,
+				oldLeafId: revertLeafId,
 			});
 
 			try {
