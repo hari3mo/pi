@@ -9,6 +9,7 @@ import * as path from "node:path";
 import { CONFIG_DIR_NAME, getAgentDir } from "@earendil-works/pi-coding-agent";
 import { lintGenerality, redactSecrets, rewriteGenerality, sanitizeText } from "./sanitize.ts";
 import {
+	applyBasis,
 	CAP_GLOBAL,
 	CAP_PROJECT,
 	type Category,
@@ -325,6 +326,7 @@ export async function saveHeuristic(
 	rawText: string,
 	category: Category,
 	source: Source,
+	basis?: string,
 ): Promise<SaveResult> {
 	if (!rawText || !rawText.trim()) {
 		throw new Error("Heuristic text must not be empty.");
@@ -352,7 +354,12 @@ export async function saveHeuristic(
 		const exactMatch = scoped.find((h) => normalize(h.text) === norm);
 		if (exactMatch) {
 			const idx = list.findIndex((h) => h.id === exactMatch.id);
-			const updated: Heuristic = { ...list[idx], hits: list[idx].hits + 1, lastReinforced: now };
+			const updated: Heuristic = {
+				...list[idx],
+				hits: list[idx].hits + 1,
+				lastReinforced: now,
+				basis: applyBasis(list[idx].basis, basis),
+			};
 			const newList = [...list];
 			newList[idx] = updated;
 			return { list: newList, result: { status: "reinforced" as const, id: updated.id, warnings } };
@@ -375,6 +382,7 @@ export async function saveHeuristic(
 				text: shouldReplaceText ? text : current.text,
 				hits: current.hits + 1,
 				lastReinforced: now,
+				basis: applyBasis(current.basis, basis),
 			};
 			const newList = [...list];
 			newList[idx] = updated;
@@ -392,6 +400,7 @@ export async function saveHeuristic(
 			hits: 0,
 			source,
 			pinned: false,
+			basis,
 		};
 		return { list: [...list, entry], result: { status: "added" as const, id: entry.id, warnings } };
 	});
