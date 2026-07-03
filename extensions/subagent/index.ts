@@ -64,6 +64,15 @@ function getElapsedMs(result: { startTime?: number; endTime?: number }): number 
 	return (result.endTime ?? Date.now()) - result.startTime;
 }
 
+// Wall-clock span covering a whole batch (chain/parallel): earliest start to
+// latest end (or now, for whatever is still running).
+function wallClockElapsedMs(results: Array<{ startTime?: number; endTime?: number }>): number | undefined {
+	const starts = results.map((r) => r.startTime).filter((t): t is number => t !== undefined);
+	if (starts.length === 0) return undefined;
+	const ends = results.map((r) => r.endTime ?? Date.now());
+	return Math.max(...ends) - Math.min(...starts);
+}
+
 function formatUsageStats(
 	usage: {
 		input: number;
