@@ -18,6 +18,7 @@ import {
 	jaccard,
 	LOCK_MAX_ATTEMPTS,
 	LOCK_RETRY_MS,
+	MAX_READ_BYTES,
 	MAX_READ_LINES,
 	newId,
 	normalize,
