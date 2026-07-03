@@ -123,8 +123,39 @@ interface Constellation {
 }
 const CONSTELLATIONS: Constellation[] = [
 	{
-		// Big Dipper
-		nx: 0.3,
+		// HARIMO — signature constellation, pinned to the top-left corner.
+		// Each letter is a small asterism: stars at the stroke ends/joints,
+		// dotted constellation lines tracing the strokes. Letters sit on a
+		// shared 0.4..0.6 band of the unit square, 0.172 pitch, 0.13 wide.
+		nx: 0.135,
+		ny: 0.1,
+		w: 0.24,
+		stars: [
+			// H (0-5)
+			[0, 0.4], [0, 0.6], [0.13, 0.4], [0.13, 0.6], [0, 0.5], [0.13, 0.5],
+			// A (6-10): apex, feet, crossbar
+			[0.237, 0.4], [0.172, 0.6], [0.302, 0.6], [0.205, 0.5], [0.269, 0.5],
+			// R (11-16): spine, bowl, leg
+			[0.344, 0.6], [0.344, 0.4], [0.474, 0.4], [0.474, 0.5], [0.344, 0.5], [0.474, 0.6],
+			// I (17-18)
+			[0.581, 0.4], [0.581, 0.6],
+			// M (19-23)
+			[0.688, 0.6], [0.688, 0.4], [0.753, 0.51], [0.818, 0.4], [0.818, 0.6],
+			// O (24-27): diamond
+			[0.86, 0.5], [0.925, 0.4], [0.99, 0.5], [0.925, 0.6],
+		],
+		edges: [
+			[0, 1], [2, 3], [4, 5], //             H
+			[7, 6], [8, 6], [9, 10], //            A
+			[11, 12], [12, 13], [13, 14], [14, 15], [15, 16], // R
+			[17, 18], //                           I
+			[19, 20], [20, 21], [21, 22], [22, 23], //         M
+			[24, 25], [25, 26], [26, 27], [27, 24], //         O
+		],
+	},
+	{
+		// Big Dipper (shifted off top-left to clear HARIMO)
+		nx: 0.36,
 		ny: 0.13,
 		w: 0.16,
 		stars: [
