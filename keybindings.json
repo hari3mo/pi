@@ -1,3 +1,4 @@
 {
-  "app.thinking.cycle": ["alt+tab"]
+  "app.thinking.cycle": ["alt+tab"],
+  "app.model.cycleForward": ["shift+tab", "ctrl+p"]
 }
