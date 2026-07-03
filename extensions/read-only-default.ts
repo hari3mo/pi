@@ -77,7 +77,10 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	function updateStatus(ctx: ExtensionContext): void {
-		ctx.ui.setStatus("read-only-mode", readOnly ? ctx.ui.theme.fg("warning", "🔒 read-only") : undefined);
+		ctx.ui.setStatus(
+			"read-only-mode",
+			readOnly ? ctx.ui.theme.fg("warning", "🔒 read-only") : ctx.ui.theme.fg("accent", "✎ write"),
+		);
 	}
 
 	function persist(): void {
