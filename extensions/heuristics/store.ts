@@ -114,7 +114,6 @@ function parseJsonl(raw: string): { list: Heuristic[]; skipped: number; capped: 
 	return { list: Array.from(map.values()), skipped, capped };
 }
 
-/** Lock-free read. Skips bad lines, dedups by id (last wins), caps at 5000 lines. */
 /**
  * Read at most MAX_READ_BYTES from the front of the file. Statting first lets
  * us avoid ever pulling a huge file fully into memory (review fix 6) — the
@@ -135,6 +134,7 @@ async function readFileCapped(filePath: string, sizeBytes: number): Promise<{ ra
 	}
 }
 
+/** Lock-free read. Skips bad lines, dedups by id (last wins), caps at 5000 lines / 2MB. */
 export async function readStore(dir: string, notify?: (msg: string) => void): Promise<ReadStoreResult> {
 	const filePath = path.join(dir, JSONL_NAME);
 	let raw: string;
