@@ -168,10 +168,12 @@ async function acquireLock(dir: string): Promise<string> {
 				const st = await fsp.stat(lockPath);
 				if (Date.now() - st.mtimeMs > STALE_MS) {
 					await fsp.unlink(lockPath).catch(() => {});
+					attempts++; // stole a stale lock; still counts toward the retry budget
 					continue; // retry immediately after stealing
 				}
 			} catch {
-				continue; // lock disappeared mid-check; retry immediately
+				attempts++; // lock disappeared mid-check; still counts toward the retry budget
+				continue; // retry immediately
 			}
 			attempts++;
 			await sleep(LOCK_RETRY_MS);
