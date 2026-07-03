@@ -105,13 +105,17 @@ gotchas, environment quirks, workflow preferences) — only facts determined to 
    environment/tooling quirk, or a workflow/convention preference."
 2. "Use learn_heuristic scope 'project' for lessons specific to the current repository;
    use scope 'global' only for lessons that apply to every project."
-3. "Do not call learn_heuristic for one-off facts, transient state, secrets, or anything
+3. "Only call learn_heuristic for lessons determined to be TRUE: directly observed
+   behavior, explicit user confirmation, a reproduced result, or authoritative
+   documentation — never speculation, assumptions, plausible guesses, or single
+   unverified inferences."
+4. "Do not call learn_heuristic for one-off facts, transient state, secrets, or anything
    already stated in AGENTS.md or the current task."
-4. "Phrase learn_heuristic text as a GENERALIZABLE lesson that will help future
+5. "Phrase learn_heuristic text as a GENERALIZABLE lesson that will help future
    sessions: 'When X, do Y because Z' — never session-specific details like line
    numbers, temporary paths, ticket IDs, or one-off values."
-5. "Keep learn_heuristic text to one short imperative sentence."
-6. "After a delegated/subagent task fails, is misrouted to the wrong role or tier, needs
+6. "Keep learn_heuristic text to one short imperative sentence."
+7. "After a delegated/subagent task fails, is misrouted to the wrong role or tier, needs
    rework, or reveals a better way to frame the hand-off, call learn_heuristic with
    category 'orchestration' capturing the durable delegation lesson — which role fits
    this kind of task, what context/files the task text must include, how to frame the
@@ -236,7 +240,8 @@ injection.
 Grammar (args split on whitespace):
 - `/heuristics` → interactive list (TUI) / printed summary (non-TUI)
 - `/heuristics list [global|project|all]`
-- `/heuristics add [global|project] <text>` (source=user, category=workflow default)
+- `/heuristics add [global|project] <text>` (source=user, category=workflow default,
+  basis="user-confirmed" — user-authored entries are by definition user-confirmed)
 - `/heuristics rm <id>` (alias `delete`)
 - `/heuristics edit <id>` (ctx.ui.editor; TUI only)
 - `/heuristics promote <id>` (project→global, bumps hits) / `demote <id>` (global→project
@@ -248,6 +253,11 @@ Grammar (args split on whitespace):
 labels. Non-TUI: list/stats/add/rm/promote/demote/pin/unpin work everywhere;
 edit + interactive list require `ctx.mode === "tui"` else notify error. Guard all
 dialogs with `ctx.hasUI`.
+
+List entry format appends `basis` when present, kept compact:
+`[id] (scope/category/basis, hits=N) text...` (basis segment omitted for entries
+without one, e.g. pre-existing stores). `stats` adds a per-basis count line per scope
+(missing basis counted under `unset`).
 
 ## 11. File layout (this extension dir; each file <500 lines)
 
