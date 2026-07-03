@@ -375,6 +375,12 @@ export async function editText(dir: string, scope: Scope, id: string, rawText: s
 	if (secret.warning) warnings.push(secret.warning);
 	text = rewriteGenerality(text);
 
+	// Matches saveHeuristic's guard: empty/whitespace-only text (after
+	// sanitize) is rejected outright, with no write to the store.
+	if (!text.trim()) {
+		return { found: false, warnings: [...warnings, "Heuristic text must not be empty; edit rejected."] };
+	}
+
 	return mutateStore(dir, scope, (list) => {
 		const idx = list.findIndex((h) => h.id === id);
 		if (idx === -1) return { list, result: { found: false, warnings } };
