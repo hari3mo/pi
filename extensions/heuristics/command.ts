@@ -47,7 +47,8 @@ function output(ctx: ExtensionCommandContext, message: string, type: "info" | "w
 
 function formatEntry(h: Heuristic): string {
 	const pin = h.pinned ? " 📌" : "";
-	return `[${h.id}] (${h.scope}/${h.category}, hits=${h.hits}${pin}) ${truncate(h.text, 100)}`;
+	const basis = h.basis ? `/${h.basis}` : "";
+	return `[${h.id}] (${h.scope}/${h.category}${basis}, hits=${h.hits}${pin}) ${truncate(h.text, 100)}`;
 }
 
 async function loadCombined(ctx: ExtensionCommandContext): Promise<{ global: Heuristic[]; project: Heuristic[] }> {
@@ -106,12 +107,21 @@ async function printStats(ctx: ExtensionCommandContext): Promise<void> {
 			.map(([k, v]) => `${k}=${v}`)
 			.join(", ");
 	};
+	const byBasis = (list: Heuristic[]) => {
+		const counts = new Map<string, number>();
+		for (const h of list) counts.set(h.basis ?? "unset", (counts.get(h.basis ?? "unset") ?? 0) + 1);
+		return Array.from(counts.entries())
+			.map(([k, v]) => `${k}=${v}`)
+			.join(", ");
+	};
 	const lines = [
 		`Global: ${global.length} (${byCategory(global) || "none"}); pinned=${global.filter((h) => h.pinned).length}`,
+		`Global basis: ${byBasis(global) || "none"}`,
 		ctx.isProjectTrusted()
 			? `Project: ${project.length} (${byCategory(project) || "none"}); pinned=${project.filter((h) => h.pinned).length}`
 			: "Project: (not shown; project is not trusted)",
-	];
+		ctx.isProjectTrusted() ? `Project basis: ${byBasis(project) || "none"}` : undefined,
+	].filter((l): l is string => l !== undefined);
 	output(ctx, lines.join("\n"), "info");
 }
 
@@ -144,7 +154,8 @@ async function handleAdd(ctx: ExtensionCommandContext, rest: string): Promise<vo
 	const dir = scope === "global" ? globalDir() : projectDirFor(ctx.cwd);
 	const category: Category = "workflow";
 	try {
-		const result = await saveHeuristic(dir, scope, project, text, category, "user");
+		// User-authored entries are by definition user-confirmed (DESIGN.md §10).
+		const result = await saveHeuristic(dir, scope, project, text, category, "user", "user-confirmed");
 		const allWarnings = [...warnings, ...result.warnings];
 		const msg = `Learned (${result.status}) [${result.id}]${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
 		output(ctx, msg, "info");
