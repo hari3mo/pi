@@ -14,6 +14,9 @@ import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 const SEP = "  ·  ";
 
+// Lets the top-level thinking_level_select handler nudge the minimal footer.
+let requestFooterRender: (() => void) | undefined;
+
 function fmtTokens(n: number): string {
 	if (n < 1000) return `${n}`;
 	if (n < 1_000_000) return `${(n / 1000).toFixed(1)}k`;
@@ -42,9 +45,13 @@ function applyMinimalChrome(ctx: ExtensionContext): void {
 
 	ctx.ui.setFooter((tui, theme, footerData) => {
 		const unsub = footerData.onBranchChange(() => tui.requestRender());
+		requestFooterRender = () => tui.requestRender();
 
 		return {
-			dispose: unsub,
+			dispose: () => {
+				requestFooterRender = undefined;
+				unsub();
+			},
 			invalidate() {},
 			render(width: number): string[] {
 				let input = 0;
@@ -68,6 +75,7 @@ function applyMinimalChrome(ctx: ExtensionContext): void {
 
 				const leftParts = [model];
 				if (branch) leftParts.push(branch);
+				leftParts.push(`🧠 ${pi.getThinkingLevel()}`);
 
 				const rightParts: string[] = [];
 				if (ctxPct) rightParts.push(`ctx ${ctxPct}`);
@@ -97,6 +105,10 @@ export default function (pi: ExtensionAPI) {
 		if (enabled) applyMinimalChrome(ctx);
 	});
 
+	pi.on("thinking_level_select", async () => {
+		requestFooterRender?.();
+	});
+
 	pi.registerCommand("minimal-ui", {
 		description: "Toggle minimal chrome (quiet footer + breathing indicator)",
 		handler: async (_args, ctx) => {
@@ -104,6 +116,7 @@ export default function (pi: ExtensionAPI) {
 			if (enabled) {
 				applyMinimalChrome(ctx);
 				ctx.ui.notify("Minimal chrome on", "info");
+				// no-op: thinking level rendered inside the minimal footer
 			} else {
 				restoreDefaults(ctx);
 				ctx.ui.notify("Default chrome restored", "info");
