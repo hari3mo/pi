@@ -47,6 +47,23 @@ function formatTokens(count: number): string {
 	return `${(count / 1000000).toFixed(1)}M`;
 }
 
+function formatDuration(ms: number): string {
+	const totalSeconds = Math.max(0, Math.floor(ms / 1000));
+	const h = Math.floor(totalSeconds / 3600);
+	const m = Math.floor((totalSeconds % 3600) / 60);
+	const s = totalSeconds % 60;
+	if (h > 0) return `${h}h ${m}m`;
+	if (m > 0) return `${m}m ${s}s`;
+	return `${s}s`;
+}
+
+// Live runtime for a subagent: counts up from startTime while running,
+// freezes at endTime once the process exits.
+function getElapsedMs(result: { startTime?: number; endTime?: number }): number | undefined {
+	if (!result.startTime) return undefined;
+	return (result.endTime ?? Date.now()) - result.startTime;
+}
+
 function formatUsageStats(
 	usage: {
 		input: number;
@@ -58,8 +75,10 @@ function formatUsageStats(
 		turns?: number;
 	},
 	model?: string,
+	durationMs?: number,
 ): string {
 	const parts: string[] = [];
+	if (durationMs !== undefined) parts.push(formatDuration(durationMs));
 	if (usage.turns) parts.push(`${usage.turns} turn${usage.turns > 1 ? "s" : ""}`);
 	if (usage.input) parts.push(`↑${formatTokens(usage.input)}`);
 	if (usage.output) parts.push(`↓${formatTokens(usage.output)}`);
