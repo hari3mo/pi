@@ -25,7 +25,7 @@ import type {
 	SessionEntry,
 	SessionMessageEntry,
 } from "@earendil-works/pi-coding-agent";
-import type { ImageContent, TextContent } from "@earendil-works/pi-ai";
+import type { ImageContent, TextContent, UserMessage } from "@earendil-works/pi-ai";
 
 interface CheckpointData {
 	sha: string | null;
@@ -142,11 +142,11 @@ export default function (pi: ExtensionAPI) {
 
 	function findLastUserMessage(
 		branch: SessionEntry[],
-	): { entry: SessionMessageEntry; index: number } | undefined {
+	): { entry: SessionMessageEntry; message: UserMessage; index: number } | undefined {
 		for (let i = branch.length - 1; i >= 0; i--) {
 			const entry = branch[i];
 			if (entry.type === "message" && entry.message.role === "user") {
-				return { entry, index: i };
+				return { entry, message: entry.message, index: i };
 			}
 		}
 		return undefined;
@@ -201,7 +201,7 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			const checkpoint = findCheckpointBefore(branch, userMessage.index);
-			const promptText = extractPromptText(userMessage.entry.message.content);
+			const promptText = extractPromptText(userMessage.message.content);
 			const preview = truncatePreview(promptText);
 
 			const willRestoreFiles = Boolean(checkpoint?.data?.sha && checkpoint?.data?.repoRoot);
