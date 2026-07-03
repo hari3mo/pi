@@ -86,8 +86,18 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 				const right = theme.fg("dim", rightParts.join(SEP));
 
 				const gap = width - visibleWidth(left) - visibleWidth(right);
-				if (gap < 1) return [truncateToWidth(left, width)];
-				return [left + " ".repeat(gap) + right];
+				const mainLine = gap < 1 ? truncateToWidth(left, width) : left + " ".repeat(gap) + right;
+
+				const lines = [mainLine];
+				const extensionStatuses = footerData.getExtensionStatuses();
+				if (extensionStatuses.size > 0) {
+					const statusLine = Array.from(extensionStatuses.entries())
+						.sort(([a], [b]) => a.localeCompare(b))
+						.map(([, text]) => text.replace(/[\r\n\t]/g, " ").replace(/ +/g, " ").trim())
+						.join(" ");
+					lines.push(truncateToWidth(statusLine, width, theme.fg("dim", "...")));
+				}
+				return lines;
 			},
 		};
 	});
