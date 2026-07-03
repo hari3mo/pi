@@ -23,7 +23,7 @@ function fmtTokens(n: number): string {
 	return `${(n / 1_000_000).toFixed(2)}m`;
 }
 
-function applyMinimalChrome(ctx: ExtensionContext): void {
+function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — luminance ramp, no color noise.
 	const gray = (hex: string, s: string) => {
 		const r = parseInt(hex.slice(1, 3), 16);
@@ -102,7 +102,7 @@ export default function (pi: ExtensionAPI) {
 	let enabled = true;
 
 	pi.on("session_start", async (_event, ctx) => {
-		if (enabled) applyMinimalChrome(ctx);
+		if (enabled) applyMinimalChrome(pi, ctx);
 	});
 
 	pi.on("thinking_level_select", async () => {
@@ -114,9 +114,8 @@ export default function (pi: ExtensionAPI) {
 		handler: async (_args, ctx) => {
 			enabled = !enabled;
 			if (enabled) {
-				applyMinimalChrome(ctx);
+				applyMinimalChrome(pi, ctx);
 				ctx.ui.notify("Minimal chrome on", "info");
-				// no-op: thinking level rendered inside the minimal footer
 			} else {
 				restoreDefaults(ctx);
 				ctx.ui.notify("Default chrome restored", "info");
