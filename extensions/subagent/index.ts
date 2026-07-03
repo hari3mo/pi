@@ -996,9 +996,11 @@ export default function (pi: ExtensionAPI) {
 					: failCount > 0
 						? theme.fg("warning", "◐")
 						: theme.fg("success", "✓");
+				const batchElapsed = wallClockElapsedMs(details.results);
+				const batchElapsedSuffix = batchElapsed !== undefined ? ` · ${formatDuration(batchElapsed)}` : "";
 				const status = isRunning
-					? `${successCount + failCount}/${details.results.length} done, ${running} running`
-					: `${successCount}/${details.results.length} tasks`;
+					? `${successCount + failCount}/${details.results.length} done, ${running} running${batchElapsedSuffix}`
+					: `${successCount}/${details.results.length} tasks${batchElapsedSuffix}`;
 
 				if (expanded && !isRunning) {
 					const container = new Container();
@@ -1014,10 +1016,12 @@ export default function (pi: ExtensionAPI) {
 						const rIcon = isFailedResult(r) ? theme.fg("error", "✗") : theme.fg("success", "✓");
 						const displayItems = getDisplayItems(r.messages);
 						const finalOutput = getFinalOutput(r.messages);
+						const rElapsed = getElapsedMs(r);
+						const rElapsedSuffix = rElapsed !== undefined ? theme.fg("dim", ` · ${formatDuration(rElapsed)}`) : "";
 
 						container.addChild(new Spacer(1));
 						container.addChild(
-							new Text(`${theme.fg("muted", "─── ") + theme.fg("accent", r.agent)} ${rIcon}`, 0, 0),
+							new Text(`${theme.fg("muted", "─── ") + theme.fg("accent", r.agent)} ${rIcon}${rElapsedSuffix}`, 0, 0),
 						);
 						container.addChild(new Text(theme.fg("muted", "Task: ") + theme.fg("dim", r.task), 0, 0));
 
@@ -1044,7 +1048,7 @@ export default function (pi: ExtensionAPI) {
 						if (taskUsage) container.addChild(new Text(theme.fg("dim", taskUsage), 0, 0));
 					}
 
-					const usageStr = formatUsageStats(aggregateUsage(details.results));
+					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, batchElapsed);
 					if (usageStr) {
 						container.addChild(new Spacer(1));
 						container.addChild(new Text(theme.fg("dim", `Total: ${usageStr}`), 0, 0));
@@ -1062,13 +1066,15 @@ export default function (pi: ExtensionAPI) {
 								? theme.fg("error", "✗")
 								: theme.fg("success", "✓");
 					const displayItems = getDisplayItems(r.messages);
-					text += `\n\n${theme.fg("muted", "─── ")}${theme.fg("accent", r.agent)} ${rIcon}`;
+					const rElapsed = getElapsedMs(r);
+					const rElapsedSuffix = rElapsed !== undefined ? theme.fg("dim", ` · ${formatDuration(rElapsed)}`) : "";
+					text += `\n\n${theme.fg("muted", "─── ")}${theme.fg("accent", r.agent)} ${rIcon}${rElapsedSuffix}`;
 					if (displayItems.length === 0)
 						text += `\n${theme.fg("muted", r.exitCode === -1 ? "(running...)" : "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
 				}
 				if (!isRunning) {
-					const usageStr = formatUsageStats(aggregateUsage(details.results));
+					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, batchElapsed);
 					if (usageStr) text += `\n\n${theme.fg("dim", `Total: ${usageStr}`)}`;
 				}
 				if (!expanded) text += `\n${theme.fg("muted", "(Ctrl+O to expand)")}`;
