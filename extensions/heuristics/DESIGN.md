@@ -1,20 +1,24 @@
-# Continuous-Learning Extension — Consolidated Design (authoritative)
+# Continuous-Learning Extension — Consolidated Design (authoritative, v2)
 
-Pi extension that continuously learns heuristics (durable lessons) across sessions,
-with a **harness-agnostic store** consumable by Claude Code / Codex / Copilot, and
-first-class support for **subagent-orchestration lessons**.
+Pi extension that continuously learns heuristics — durable, GENERALIZABLE lessons that
+apply to future sessions (not session-specific trivia) — with first-class support for
+subagent-orchestration lessons.
 
-Extension lives at `~/.pi/agent/extensions/heuristics/` (this dir). The STORE does not.
+"Generalizable" means: broad "when X, do Y because Z" learnings. NOT cross-harness
+portability (a previous draft had a rendered-markdown interop layer; it is REMOVED).
 
-## 1. Storage (harness-neutral)
+Extension lives at `~/.pi/agent/extensions/heuristics/` (this dir).
 
-- Global dir: `~/.agents/heuristics/`
-- Project dir: `<git-root>/.agents/heuristics/` — git root = nearest ancestor of cwd
-  containing `.git` (dir or file); fallback to cwd when not in a repo. Single anchor:
-  no ancestor merging. Hardcode `".agents"` (do NOT use CONFIG_DIR_NAME here).
-- Files per dir: `heuristics.jsonl` (source of truth), `HEURISTICS.md` (generated view),
-  `archive.jsonl` (evictions, append-only, never injected), `README.md` (interop doc,
-  write only if absent), `.lock`.
+## 1. Storage
+
+- Global dir: `${getAgentDir()}/heuristics/` (import `getAgentDir` from
+  `@earendil-works/pi-coding-agent`; resolves to `~/.pi/agent/heuristics/`).
+- Project dir: `<project-root>/${CONFIG_DIR_NAME}/heuristics/` (import
+  `CONFIG_DIR_NAME`; resolves to `<repo>/.pi/heuristics/`). Project root = nearest
+  ancestor of cwd containing `.git` (dir or file); fallback to cwd. Single anchor, no
+  ancestor merging.
+- Files per dir: `heuristics.jsonl` (source of truth), `archive.jsonl` (evictions,
+  append-only, never injected), `.lock`, `.bak` (pre-rewrite backup).
 - Never touch the repo's `.gitignore`.
 
 ### Per-heuristic schema (JSONL, one object per line)
@@ -36,7 +40,8 @@ Extension lives at `~/.pi/agent/extensions/heuristics/` (this dir). The STORE do
 
 Reader: per-line JSON.parse in try/catch; skip bad lines (count + notify once); ignore
 blank lines and `#`-prefixed lines; dedup by id (last wins); cap read at 5000 lines with
-warning. Whole file unreadable → treat as empty, warn once, never throw.
+warning. Whole file unreadable → treat as empty, warn once, never throw. Files are
+human-editable (one record per line).
 
 ## 2. Concurrency
 
@@ -48,9 +53,7 @@ Write path `mutateStore(dir, fn)` — used by capture/reinforce/delete/edit/evic
 3. Apply mutation in memory.
 4. Best-effort copy current jsonl → `.bak`.
 5. Write `tmp.<pid>.<rand>` then `fs.rename` over `heuristics.jsonl` (atomic).
-6. Render `HEURISTICS.md` (tmp+rename) inside the same lock hold.
-7. `ensureReadme(dir)` (write only if absent).
-8. Unlink lock in `finally`.
+6. Unlink lock in `finally`.
 
 Read path (injection): lock-free `readFile`; on ENOENT retry once after 20ms. Cache by
 mtime — re-stat before each injection, reload only on change. Injection NEVER writes.
@@ -60,7 +63,7 @@ mtime — re-stat before each injection, reload only on change. Injection NEVER 
 ```ts
 name: "learn_heuristic"
 parameters: Type.Object({
-  text:     Type.String({ description: "One imperative, self-contained sentence." }),
+  text:     Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
   category: StringEnum(["correction","gotcha","environment","workflow","convention","orchestration"]),
   scope:    Type.Optional(StringEnum(["global","project"])),  // default "project"
 })
@@ -87,10 +90,10 @@ quirk, workflow/convention preference, or delegation lesson".
    use scope 'global' only for lessons that apply to every project."
 3. "Do not call learn_heuristic for one-off facts, transient state, secrets, or anything
    already stated in AGENTS.md or the current task."
-4. "Keep learn_heuristic text to one short imperative sentence: 'Do X before Y because Z.'"
-5. "When you call learn_heuristic, phrase the lesson as a harness-neutral imperative —
-   'Run X before committing', not 'pi should…' — and name real tools (npm, git), never
-   the coding agent or its internal tools."
+4. "Phrase learn_heuristic text as a GENERALIZABLE lesson that will help future
+   sessions: 'When X, do Y because Z' — never session-specific details like line
+   numbers, temporary paths, ticket IDs, or one-off values."
+5. "Keep learn_heuristic text to one short imperative sentence."
 6. "After a delegated/subagent task fails, is misrouted to the wrong role or tier, needs
    rework, or reveals a better way to frame the hand-off, call learn_heuristic with
    category 'orchestration' capturing the durable delegation lesson — which role fits
@@ -103,37 +106,30 @@ sanitize (single line: collapse newlines/control chars, trim, cap 400 chars)
 → secret scrub (REDACT matched value, keep rest, append warning; patterns:
   `sk-[A-Za-z0-9]{16,}`, `AKIA[0-9A-Z]{16}`, `gh[pousr]_[A-Za-z0-9]{20,}`, `xox[baprs]-\S+`,
   `-----BEGIN [A-Z ]*PRIVATE KEY-----`, `(password|secret|token|api[_-]?key)\s*[:=]\s*\S+`)
-→ neutrality rewrite + lint (category-aware, §5; warn-only, never block)
-→ dedup (§6) → add/reinforce/merge → eviction (§7) → render md → ensure README.
+→ generality rewrite + lint (§5; warn-only, never block)
+→ dedup (§6) → add/reinforce/merge → eviction (§7).
 
-## 5. Content neutrality (category-aware)
+## 5. Generality rule (warn-only, never block)
 
-Rewrite: if text matches case-insensitive
-`^\s*(pi|the agent|the assistant|you|claude|codex|copilot)\s+(should|must|shall|will|needs? to|has to)\s+(.+)$`
-→ replace with group 3, first letter uppercased.
-When `category === "orchestration"` skip Class-B rewrites; still apply Class-A.
+Goal: stored heuristics must be broad lessons useful in FUTURE sessions, not overfit
+notes about the current one.
 
-Lint `lint(text, category)` — warn-only, never block:
+Rewrite (deterministic): if text matches case-insensitive
+`^\s*(pi|the agent|the assistant|you|i)\s+(should|must|shall|will|needs? to|has to)\s+(.+)$`
+→ replace with group 3, first letter uppercased. ("You should run tests first" →
+"Run tests first".)
 
-```
-ALWAYS_BANNED = ["before_agent_start","tool_call","tool_result","learn_heuristic",
-  "registerTool","systemPromptOptions","promptGuidelines","pi extension",
-  "the subagent tool","subagent tool","agentScope","confirmProjectAgents",
-  "pi -p","--mode json","--no-session","--tools","--model","--append-system-prompt",
-  "npx","claude-flow","claude-fable-5","claude-sonnet-5","claude-opus-4-8",
-  ".agents/heuristics","HEURISTICS.md"]
+Lint `lintGenerality(text)` — flags session-specific markers, warn-only (save anyway,
+append a warning asking the model to rephrase more generally):
+- line-number references: `/\bline\s+\d+\b/i` or `/:\d+\b/` following a filename-like token
+- ephemeral paths: `/\/(tmp|var\/folders|private\/tmp)\//`
+- ticket/PR ids: `/\b(#\d{2,}|[A-Z]{2,}-\d+)\b/`
+- dates/timestamps: `/\b20\d{2}-\d{2}-\d{2}\b/`
+- long hex/uuid-ish ids: `/\b[0-9a-f]{12,}\b/i`
+- "this session/conversation/today": `/\b(this (session|conversation|chat)|today|yesterday)\b/i`
 
-GENERIC_ORCH_TERMS = ["subagent","sub-agent","delegate","delegation","orchestrat",
-  "lead","orchestrator","role","builder","architect","reviewer","qa-reviewer",
-  "scope-planner","shipper","task contract","tier","parallel","chain","verification",
-  "the agent"]
-
-effectiveBanned(cat) = cat === "orchestration" ? ALWAYS_BANNED
-                                               : ALWAYS_BANNED + GENERIC_ORCH_TERMS
-```
-
-Word-boundary matches, except `orchestrat` and `sub-agent` (prefix/substring). On match:
-save anyway + append warning asking the model to rephrase harness-neutrally.
+No banned-vocabulary lists; orchestration terms (subagent, delegate, builder, etc.) are
+fine in any category.
 
 ## 6. Dedup-on-save
 
@@ -188,7 +184,7 @@ This project:
 
 ## 9. Reflection nudges (zero-token, one-shot)
 
-Generic (D13): on `agent_end`, regex-scan the run's USER messages for
+Generic: on `agent_end`, regex-scan the run's USER messages for
 `/\b(no,? actually|don'?t (do|use)|you should('?ve| have)|always |never |stop )/i`.
 If matched AND learn_heuristic was NOT called this run → set pending nudge:
 "Note: the user corrected you recently — if that was a durable lesson, call
@@ -218,27 +214,7 @@ Explicitly NO injection of heuristics into subagent task text (no tool_call muta
 the subagent tool). Subagent children run this extension themselves and get their own
 injection.
 
-## 10. Rendered view — HEURISTICS.md
-
-Single-scope per dir (never merge global into project file). Deterministic to keep git
-diffs quiet:
-- Banner: `<!-- GENERATED — do not edit. Source: heuristics.jsonl. Regenerated on every change; edits are overwritten. -->`
-- H1: `# Global Heuristics` or `# Project Heuristics` + one intro sentence
-  ("Learned working agreements... Harness-neutral; safe to import into any agent context file.")
-- `## <category>` sections, categories sorted alphabetically.
-- Within category: pinned first, then `created` ascending. (Score is ONLY for
-  eviction/injection, never render order.)
-- One bullet per heuristic, verbatim text, no IDs/metadata.
-- Empty store → banner + H1 + `_No heuristics recorded yet._`
-
-## 11. README.md (interop, write-if-absent, never overwrite)
-
-Explains: files, universal wiring line for other harnesses
-(`> Read ~/.agents/heuristics/HEURISTICS.md and follow those heuristics.`), Claude Code
-`@~/.agents/heuristics/HEURISTICS.md` / `@.agents/heuristics/HEURISTICS.md` import forms,
-regeneration warning, commit/secret caution. Pi itself doesn't need the import line.
-
-## 12. `/heuristics` command
+## 10. `/heuristics` command
 
 Grammar (args split on whitespace):
 - `/heuristics` → interactive list (TUI) / printed summary (non-TUI)
@@ -250,46 +226,49 @@ Grammar (args split on whitespace):
   via cwd, requires trusted project)
 - `/heuristics pin <id>` / `unpin <id>`
 - `/heuristics stats`
-- `/heuristics render` (regenerate HEURISTICS.md from jsonl — repair)
 
 `getArgumentCompletions`: first token → subcommands; id-taking → ids with truncated-text
-labels. Non-TUI: list/stats/add/rm/promote/demote/pin/unpin/render work everywhere;
+labels. Non-TUI: list/stats/add/rm/promote/demote/pin/unpin work everywhere;
 edit + interactive list require `ctx.mode === "tui"` else notify error. Guard all
 dialogs with `ctx.hasUI`.
 
-## 13. File layout (this extension dir; each file <500 lines)
+## 11. File layout (this extension dir; each file <500 lines)
 
 - `index.ts` (~200) — factory: session_start (load caches, resolve dirs, clear nudge
   state), before_agent_start (mtime-check reload → build block → systemPrompt append,
   consume nudge), agent_end (generic nudge regex), tool_result + tool_call (orchestration
   signals), registerTool(learn_heuristic), registerCommand(heuristics).
-- `schema.ts` (~160) — Heuristic type, consts (CAP_GLOBAL=200, CAP_PROJECT=100,
+- `schema.ts` (~150) — Heuristic type, consts (CAP_GLOBAL=200, CAP_PROJECT=100,
   MAX_INJECT_CHARS=4000, MAX_INJECT_ITEMS=50, MAX_HEURISTIC_CHARS=400, ORCH_RESERVE=900,
   STALE_MS=10000, HALFLIFE_DAYS=60, JACCARD_NEAR=0.80, JACCARD_MERGE=0.90, CHURN_WINDOW=6,
   CHURN_CAP=20, BUILDER_WATCH_CALLS=2, BUILDER_ROLES=["builder"]), StringEnums, newId,
   normalize, tokens, jaccard, scoreOf.
-- `store.ts` (~300) — path resolution (globalDir, projectRoot walk, projectDir),
-  readStore, mutateStore (lock/steal/retry/.bak/tmp+rename/render/readme), saveHeuristic
-  (full pipeline), deleteById, editText, promote, demote, pin/unpin.
-- `sanitize.ts` (~120) — single-line sanitize, SECRET_PATTERNS + redact, neutralize
-  (rewrite + category-aware lint), ALWAYS_BANNED, GENERIC_ORCH_TERMS.
-- `render.ts` (~110) — renderMarkdown(entries, scope), ensureReadme(dir, scope).
+- `store.ts` (~300) — path resolution (globalDir via getAgentDir, projectRoot walk,
+  projectDir via CONFIG_DIR_NAME), readStore, mutateStore (lock/steal/retry/.bak/
+  tmp+rename), saveHeuristic (full pipeline), deleteById, editText, promote, demote,
+  pin/unpin.
+- `sanitize.ts` (~110) — single-line sanitize, SECRET_PATTERNS + redact, generality
+  rewrite + lintGenerality.
 - `inject.ts` (~140) — buildInjectionBlock(global, project, projectTrusted, isSubagent,
   nudgeLine) with reserve + budget logic.
-- `command.ts` (~260) — /heuristics per §12.
+- `command.ts` (~260) — /heuristics per §10.
 - Optional `ui.ts` (~200) — TUI list component (model on todo.ts example) if needed.
 
-Imports: `@earendil-works/pi-coding-agent` (ExtensionAPI, isToolCallEventType…),
-`typebox`, `StringEnum` from `@earendil-works/pi-ai`, node builtins only. No npm deps.
+Imports: `@earendil-works/pi-coding-agent` (ExtensionAPI, getAgentDir, CONFIG_DIR_NAME,
+isToolCallEventType…), `typebox`, `StringEnum` from `@earendil-works/pi-ai`, node
+builtins only. No npm deps.
 
-## 14. Verification checklist (builder must run)
+## 12. Verification checklist (builder must run)
 
-1. `pi -e ~/.pi/agent/extensions/heuristics/index.ts -p "call learn_heuristic with a test workflow lesson scope global"` → `~/.agents/heuristics/heuristics.jsonl` + `HEURISTICS.md` + `README.md` created; jsonl line matches schema.
+1. `pi -e ~/.pi/agent/extensions/heuristics/index.ts -p "call learn_heuristic with a test workflow lesson scope global"` → `~/.pi/agent/heuristics/heuristics.jsonl` created; jsonl line matches schema.
 2. Save the same lesson again → result says "reinforced", hits=1, no duplicate line.
-3. `/heuristics list` works in TUI; `add`/`rm`/`pin`/`render` work via `-p` print mode.
+3. `/heuristics list` works in TUI; `add`/`rm`/`pin` work via `-p` print mode.
 4. In an untrusted dir, project scope redirects to global with warning; project jsonl never read for injection.
-5. Injection: verify block appears (e.g. via a debug print of ctx.getSystemPrompt() in before_agent_start or a before_provider_request logger) and respects 4000-char cap with a large store.
-6. Orchestration entry excluded when argv includes --no-session (simulate by spawning `pi --mode json -p --no-session ...`).
+5. Injection: verify block appears (e.g. via a before_provider_request logger or debug print of ctx.getSystemPrompt()) and respects the 4000-char cap with a large store.
+6. Orchestration entries excluded when argv includes --no-session (simulate by spawning `pi --mode json -p --no-session ...` or unit-invoking inject.ts via jiti).
 7. Two concurrent writers (spawn two `pi -p` capture calls simultaneously) → no lost update, valid jsonl.
 8. Corrupt a jsonl line by hand → reads skip it, next mutation rewrites clean, `.bak` exists.
-9. Secret text (`api_key=abc123`) → stored redacted with warning. Non-orchestration text containing "subagent" → saved with neutrality warning; orchestration text with "subagent" → no warning.
+9. Secret text (`api_key=abc123`) → stored redacted with warning. Text containing "line 42" or "/tmp/foo" or "this session" → saved with generality warning.
+
+Use a TEMP location or backup/restore the real store dirs while testing; leave them
+clean when done.
