@@ -354,12 +354,7 @@ export async function saveHeuristic(
 		const exactMatch = scoped.find((h) => normalize(h.text) === norm);
 		if (exactMatch) {
 			const idx = list.findIndex((h) => h.id === exactMatch.id);
-			const updated: Heuristic = {
-				...list[idx],
-				hits: list[idx].hits + 1,
-				lastReinforced: now,
-				basis: applyBasis(list[idx].basis, basis),
-			};
+			const updated: Heuristic = { ...list[idx], hits: list[idx].hits + 1, lastReinforced: now, basis: applyBasis(list[idx].basis, basis) };
 			const newList = [...list];
 			newList[idx] = updated;
 			return { list: newList, result: { status: "reinforced" as const, id: updated.id, warnings } };
