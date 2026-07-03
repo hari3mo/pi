@@ -14,6 +14,7 @@ import { Type } from "typebox";
 import { registerHeuristicsCommand } from "./command.ts";
 import { buildInjectionBlock } from "./inject.ts";
 import {
+	BasisSchema,
 	BUILDER_WATCH_CALLS,
 	CategorySchema,
 	CHURN_CAP,
@@ -94,11 +95,12 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 			"Record a durable, generalizable, cross-session lesson: a user correction, a non-obvious " +
 			"gotcha, an environment/tooling quirk, a workflow/convention preference, or a delegation lesson.",
 		promptSnippet:
-			"Record a durable cross-session lesson: a user correction, gotcha, env quirk, " +
-			"workflow/convention preference, or delegation lesson",
+			"Record a durable, verified, cross-session lesson (user corrections, gotchas, environment quirks, " +
+			"workflow preferences) — only facts determined to be true",
 		promptGuidelines: [
 			"Call learn_heuristic when you discover a durable lesson worth remembering across sessions: a user correction of your behavior, a non-obvious gotcha, an environment/tooling quirk, or a workflow/convention preference.",
 			"Use learn_heuristic scope 'project' for lessons specific to the current repository; use scope 'global' only for lessons that apply to every project.",
+			"Only call learn_heuristic for lessons determined to be TRUE: directly observed behavior, explicit user confirmation, a reproduced result, or authoritative documentation — never speculation, assumptions, plausible guesses, or single unverified inferences.",
 			"Do not call learn_heuristic for one-off facts, transient state, secrets, or anything already stated in AGENTS.md or the current task.",
 			"Phrase learn_heuristic text as a GENERALIZABLE lesson that will help future sessions: 'When X, do Y because Z' — never session-specific details like line numbers, temporary paths, ticket IDs, or one-off values.",
 			"Keep learn_heuristic text to one short imperative sentence.",
@@ -107,6 +109,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 		parameters: Type.Object({
 			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
 			category: CategorySchema,
+			basis: BasisSchema,
 			scope: Type.Optional(ScopeSchema),
 		}),
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
@@ -130,7 +133,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 			const dir = scope === "global" ? globalDir() : projectDirFor(ctx.cwd);
 			const category = params.category as Category;
 
-			const result = await saveHeuristic(dir, scope, project, params.text, category, "agent");
+			const result = await saveHeuristic(dir, scope, project, params.text, category, "agent", params.basis as string);
 			const allWarnings = [...warnings, ...result.warnings];
 			const text = `Learned (${result.status}) [${result.id}]${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
 
