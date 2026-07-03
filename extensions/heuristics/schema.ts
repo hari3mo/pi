@@ -66,6 +66,9 @@ export const BUILDER_ROLES = ["builder"];
 /** Max lines read from heuristics.jsonl before we stop parsing (DESIGN.md §1). */
 export const MAX_READ_LINES = 5000;
 
+/** Max bytes read from heuristics.jsonl before the line cap even applies, to bound memory on a huge file. */
+export const MAX_READ_BYTES = 2 * 1024 * 1024;
+
 /** Read-path ENOENT retry delay for injection (DESIGN.md §2). */
 export const READ_RETRY_MS = 20;
 
