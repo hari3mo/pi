@@ -34,9 +34,15 @@ Extension lives at `~/.pi/agent/extensions/heuristics/` (this dir).
   "lastReinforced":"ISO 8601",
   "hits":          0,          // reinforcement count, NOT injection count
   "source":        "agent" | "user",
-  "pinned":        false
+  "pinned":        false,
+  "basis":         "user-confirmed" | "directly-observed" | "reproduced" | "documented" | undefined
 }
 ```
+
+`basis` records how the lesson was verified true (see §3); optional so existing stored
+entries saved before this field existed remain valid. Not rendered into the injection
+block (§8) — it is metadata for the capture gate and for `/heuristics list`/`stats`
+(§10), not for the system prompt.
 
 Reader: per-line JSON.parse in try/catch; skip bad lines (count + notify once); ignore
 blank lines and `#`-prefixed lines; dedup by id (last wins); cap read at 5000 lines with
@@ -65,6 +71,7 @@ name: "learn_heuristic"
 parameters: Type.Object({
   text:     Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
   category: StringEnum(["correction","gotcha","environment","workflow","convention","orchestration"]),
+  basis:    StringEnum(["user-confirmed","directly-observed","reproduced","documented"]),  // REQUIRED
   scope:    Type.Optional(StringEnum(["global","project"])),  // default "project"
 })
 ```
@@ -72,6 +79,16 @@ parameters: Type.Object({
 StringEnum category description appends: `orchestration: a lesson about delegating to
 and coordinating other agents (role-fit, tier choice, contract framing, what context a
 delegated task needs, verifying returned work).`
+
+`basis` is REQUIRED (not optional) — a verification gate: it is how the model attests
+the lesson was determined to be TRUE, not speculation. StringEnum description: "How
+this lesson was verified true: user-confirmed = the user explicitly stated or confirmed
+it; directly-observed = you saw the behavior happen in this session; reproduced = you
+tested it and confirmed the outcome; documented = stated in authoritative docs/config
+you read." Persisted onto the saved record (new entries always; on reinforce/merge the
+existing record's `basis` is replaced only when the new call supplies one). Missing/
+empty `basis` is rejected by the schema itself (required field) — no separate runtime
+guard. Never rendered into the injection block (§8).
 
 Trust: if scope=project and `!ctx.isProjectTrusted()` → save to GLOBAL instead, warn
 `"project not trusted; saved to global heuristics"`. Global never trust-gated.
