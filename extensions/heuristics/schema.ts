@@ -1,9 +1,9 @@
 /**
  * Heuristics extension — shared types, constants, and small pure helpers.
  *
- * See DESIGN.md for the authoritative spec. This file implements §1 (schema)
- * and the constants table from §13, plus the scoring/dedup primitives used by
- * store.ts and inject.ts.
+ * See DESIGN.md (authoritative, v2) for the full spec. This file implements the
+ * per-heuristic schema (§1), the constants table (§11), and the dedup/scoring
+ * primitives (§6, §7) shared by store.ts and inject.ts.
  */
 
 import { StringEnum } from "@earendil-works/pi-ai";
@@ -45,7 +45,7 @@ export interface Heuristic {
 }
 
 // ---------------------------------------------------------------------------
-// Constants (DESIGN.md §13)
+// Constants (DESIGN.md §11)
 // ---------------------------------------------------------------------------
 
 export const CAP_GLOBAL = 200;
@@ -54,7 +54,7 @@ export const MAX_INJECT_CHARS = 4000;
 export const MAX_INJECT_ITEMS = 50;
 export const MAX_HEURISTIC_CHARS = 400;
 export const ORCH_RESERVE = 900;
-export const STALE_MS = 10000;
+export const STALE_MS = 10_000;
 export const HALFLIFE_DAYS = 60;
 export const JACCARD_NEAR = 0.8;
 export const JACCARD_MERGE = 0.9;
@@ -68,6 +68,10 @@ export const MAX_READ_LINES = 5000;
 
 /** Read-path ENOENT retry delay for injection (DESIGN.md §2). */
 export const READ_RETRY_MS = 20;
+
+/** Lock acquisition backoff/retry (DESIGN.md §2): retry <=20x at 100ms (~2s). */
+export const LOCK_RETRY_MS = 100;
+export const LOCK_MAX_ATTEMPTS = 20;
 
 // ---------------------------------------------------------------------------
 // TypeBox schemas for the learn_heuristic tool (DESIGN.md §3)
@@ -177,7 +181,7 @@ export function jaccard(a: Set<string>, b: Set<string>): number {
 }
 
 // ---------------------------------------------------------------------------
-// Scoring (DESIGN.md §7) — eviction and injection ranking ONLY, never render order
+// Scoring (DESIGN.md §7) — eviction and injection ranking ONLY.
 // ---------------------------------------------------------------------------
 
 export function scoreOf(h: Heuristic, now: number = Date.now()): number {
@@ -185,4 +189,16 @@ export function scoreOf(h: Heuristic, now: number = Date.now()): number {
 	const ageDays = Math.max(0, (now - Date.parse(h.lastReinforced)) / 86_400_000);
 	const weight = h.hits + (h.source === "user" ? 3 : 1);
 	return weight * 0.5 ** (ageDays / HALFLIFE_DAYS);
+}
+
+// ---------------------------------------------------------------------------
+// Orchestration role matching (DESIGN.md §9, S4)
+// ---------------------------------------------------------------------------
+
+const BUILDER_SUBSTRING_RE = /build|coder|impl/i;
+
+export function matchesBuilderRole(agentName: string): boolean {
+	const lower = agentName.toLowerCase();
+	if (BUILDER_ROLES.includes(lower)) return true;
+	return BUILDER_SUBSTRING_RE.test(agentName);
 }
