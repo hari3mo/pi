@@ -49,20 +49,13 @@ function summarizePrompt(prompt: string): string {
 export default function (pi: ExtensionAPI) {
 	let projectLabel = "";
 
-	function setTitleFrom(descriptor: string) {
-		const title = descriptor ? `pi \u00b7 ${projectLabel} \u00b7 ${descriptor}` : `pi \u00b7 ${projectLabel}`;
-		pi.getActiveTools; // no-op reference kept out; real call below
-	}
-
 	pi.on("session_start", async (_event, ctx) => {
 		projectLabel = shortenCwd(ctx.cwd);
-		if (ctx.mode === "tui" || ctx.mode === "rpc") {
-			ctx.ui.setTitle(`pi \u00b7 ${projectLabel}`);
-		}
+		if (ctx.hasUI) ctx.ui.setTitle(`pi \u00b7 ${projectLabel}`);
 	});
 
 	pi.on("before_agent_start", async (event, ctx) => {
-		if (ctx.mode !== "tui" && ctx.mode !== "rpc") return;
+		if (!ctx.hasUI) return;
 		const descriptor = summarizePrompt(event.prompt ?? "");
 		const title = descriptor ? `pi \u00b7 ${projectLabel} \u00b7 ${descriptor}` : `pi \u00b7 ${projectLabel}`;
 		ctx.ui.setTitle(title);
