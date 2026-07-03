@@ -45,14 +45,30 @@ export function globalDir(): string {
 }
 
 /** Nearest ancestor of cwd containing .git (dir or file); fallback to cwd. */
+// Memoized per input cwd for the process lifetime: this walk runs sync
+// existsSync checks every turn via before_agent_start, and a repo's git root
+// never moves during a session (review fix 8).
+const gitRootCache = new Map<string, string>();
+
 export function findGitRoot(cwd: string): string {
+	const cached = gitRootCache.get(cwd);
+	if (cached !== undefined) return cached;
 	let dir = path.resolve(cwd);
+	let result: string;
 	while (true) {
-		if (fs.existsSync(path.join(dir, ".git"))) return dir;
+		if (fs.existsSync(path.join(dir, ".git"))) {
+			result = dir;
+			break;
+		}
 		const parent = path.dirname(dir);
-		if (parent === dir) return path.resolve(cwd);
+		if (parent === dir) {
+			result = path.resolve(cwd);
+			break;
+		}
 		dir = parent;
 	}
+	gitRootCache.set(cwd, result);
+	return result;
 }
 
 /** `<project-root>/${CONFIG_DIR_NAME}/heuristics/` — resolves to `<repo>/.pi/heuristics/`. */

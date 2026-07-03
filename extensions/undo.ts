@@ -1,7 +1,9 @@
 /**
  * Undo Extension: /undo reverts conversation context AND file changes to
  * the state right before the user's last prompt. Repeated /undo walks back
- * one prompt at a time.
+ * one prompt at a time. /redo reverses the most recent /undo (or /revert).
+ * /revert restores files to the state at session start, without touching
+ * conversation context.
  *
  * On every before_agent_start we snapshot the full working tree (tracked +
  * untracked, respecting .gitignore) into a git commit object via a
@@ -10,7 +12,13 @@
  * ("undo-checkpoint") via pi.appendEntry(), which lands immediately before
  * the user's message since before_agent_start fires before that message is
  * appended. /undo finds the last user message, the checkpoint right before
- * it, restores files from that commit, and navigates back to it.
+ * it, navigates back to it, restores files from that commit, and records an
+ * "undo-redo" entry (with a snapshot of the pre-undo state and the leaf we
+ * came from) so /redo can reverse the operation.
+ *
+ * On session_start, if no "revert-baseline" custom entry exists yet for
+ * this session, we snapshot the working tree once and persist it. /revert
+ * restores files back to that baseline (files only; conversation untouched).
  */
 
 import { randomUUID } from "node:crypto";
@@ -22,6 +30,7 @@ import { join } from "node:path";
 import type {
 	CustomEntry,
 	ExtensionAPI,
+	ExtensionCommandContext,
 	SessionEntry,
 	SessionMessageEntry,
 } from "@earendil-works/pi-coding-agent";
@@ -32,11 +41,30 @@ interface CheckpointData {
 	repoRoot: string | null;
 }
 
+interface RedoData {
+	sha: string | null;
+	repoRoot: string | null;
+	oldLeafId: string | null;
+}
+
+interface RevertBaselineData {
+	sha: string | null;
+	repoRoot: string | null;
+}
+
 interface ExecLikeResult {
 	stdout: string;
 	stderr: string;
 	code: number;
 }
+
+/** git commit-tree fails without a configured identity; pin a stable synthetic one. */
+const GIT_IDENTITY_ENV: NodeJS.ProcessEnv = {
+	GIT_AUTHOR_NAME: "pi-undo",
+	GIT_AUTHOR_EMAIL: "pi-undo@local",
+	GIT_COMMITTER_NAME: "pi-undo",
+	GIT_COMMITTER_EMAIL: "pi-undo@local",
+};
 
 /** Run execFile with a Promise wrapper that never rejects; mirrors pi.exec's {stdout,stderr,code} shape. */
 function execFileWithEnv(
@@ -83,7 +111,7 @@ export default function (pi: ExtensionAPI) {
 		if (!repoRoot) return { sha: null, repoRoot: null };
 
 		const tmpIndex = join(tmpdir(), `pi-undo-index-${randomUUID()}`);
-		const env = { ...process.env, GIT_INDEX_FILE: tmpIndex };
+		const env = { ...process.env, ...GIT_IDENTITY_ENV, GIT_INDEX_FILE: tmpIndex };
 		try {
 			await runGit(["add", "-A"], repoRoot, env);
 			const treeSha = (await runGit(["write-tree"], repoRoot, env)).trim();
@@ -116,19 +144,16 @@ export default function (pi: ExtensionAPI) {
 			await runGit(["read-tree", sha], repoRoot, env);
 			await runGit(["checkout-index", "-a", "-f"], repoRoot, env);
 
-			const snapshotOut = await runGit(["ls-files", "--cached"], repoRoot, env);
-			const snapshotFiles = new Set(
-				snapshotOut
-					.split("\n")
-					.map((line) => line.trim())
-					.filter(Boolean),
-			);
+			// Use -z / NUL-delimited output and skip trimming: git quotes/escapes
+			// non-ASCII or special paths in normal output, which corrupts them.
+			const snapshotOut = await runGit(["ls-files", "-z", "--cached"], repoRoot, env);
+			const snapshotFiles = new Set(snapshotOut.split("\0").filter((path) => path.length > 0));
 
-			const currentOut = await runGit(["ls-files", "--cached", "--others", "--exclude-standard"], repoRoot);
-			const currentFiles = currentOut
-				.split("\n")
-				.map((line) => line.trim())
-				.filter(Boolean);
+			const currentOut = await runGit(
+				["ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+				repoRoot,
+			);
+			const currentFiles = currentOut.split("\0").filter((path) => path.length > 0);
 
 			for (const file of currentFiles) {
 				if (!snapshotFiles.has(file)) {
@@ -165,6 +190,35 @@ export default function (pi: ExtensionAPI) {
 		return undefined;
 	}
 
+	/** Walk the branch backwards for the most recent "undo-redo" entry, stopping at the first user message. */
+	function findRedoEntry(branch: SessionEntry[]): CustomEntry<RedoData> | undefined {
+		for (let i = branch.length - 1; i >= 0; i--) {
+			const entry = branch[i];
+			if (entry.type === "custom" && entry.customType === "undo-redo") {
+				return entry as CustomEntry<RedoData>;
+			}
+			if (entry.type === "message" && entry.message.role === "user") {
+				return undefined;
+			}
+		}
+		return undefined;
+	}
+
+	/** Find the session's "revert-baseline" entry, preferring one on the current branch. */
+	function findRevertBaseline(ctx: ExtensionCommandContext): CustomEntry<RevertBaselineData> | undefined {
+		for (const entry of ctx.sessionManager.getBranch()) {
+			if (entry.type === "custom" && entry.customType === "revert-baseline") {
+				return entry as CustomEntry<RevertBaselineData>;
+			}
+		}
+		for (const entry of ctx.sessionManager.getEntries()) {
+			if (entry.type === "custom" && entry.customType === "revert-baseline") {
+				return entry as CustomEntry<RevertBaselineData>;
+			}
+		}
+		return undefined;
+	}
+
 	function extractPromptText(content: string | (TextContent | ImageContent)[]): string {
 		if (typeof content === "string") return content;
 		return content
@@ -185,6 +239,24 @@ export default function (pi: ExtensionAPI) {
 			pi.appendEntry<CheckpointData>("undo-checkpoint", { sha, repoRoot });
 		} catch {
 			pi.appendEntry<CheckpointData>("undo-checkpoint", { sha: null, repoRoot: null });
+		}
+	});
+
+	// Capture a one-time session-start baseline for /revert.
+	pi.on("session_start", async (_event, ctx) => {
+		try {
+			const hasBaseline = ctx.sessionManager
+				.getEntries()
+				.some((entry) => entry.type === "custom" && entry.customType === "revert-baseline");
+			if (hasBaseline) return;
+
+			const repoRoot = await getRepoRoot(ctx.cwd);
+			if (!repoRoot) return;
+
+			const { sha } = await snapshot(ctx.cwd);
+			pi.appendEntry<RevertBaselineData>("revert-baseline", { sha, repoRoot });
+		} catch {
+			// Never break startup.
 		}
 	});
 
@@ -214,44 +286,145 @@ export default function (pi: ExtensionAPI) {
 				if (!ok) return;
 			}
 
-			let filesRestored = false;
-			if (checkpoint?.data?.sha && checkpoint.data.repoRoot) {
-				try {
-					await restoreFiles(checkpoint.data.repoRoot, checkpoint.data.sha);
-					filesRestored = true;
-				} catch (err) {
-					const message = err instanceof Error ? err.message : String(err);
-					ctx.ui.notify(`File restore failed: ${message}`, "error");
-					if (ctx.hasUI) {
-						const proceed = await ctx.ui.confirm(
-							"Continue with context-only undo?",
-							"File restore failed. Revert conversation context anyway?",
-						);
-						if (!proceed) return;
-					} else {
-						return;
-					}
-				}
-			}
-
 			const targetId = checkpoint ? checkpoint.id : userMessage.entry.parentId;
 			if (!targetId) {
 				ctx.ui.notify("Can't rewind context further (no earlier point in this session)", "warning");
 				return;
 			}
 
+			// Snapshot the current (pre-undo) tree so /redo can restore it later.
+			const redoSnapshot = await snapshot(ctx.cwd);
+			const oldLeafId = ctx.sessionManager.getLeafId();
+
+			// Navigate context first: if another extension cancels the tree
+			// navigation, files must remain untouched.
 			const result = await ctx.navigateTree(targetId, { summarize: false });
-			if (result.cancelled) return;
+			if (result.cancelled) {
+				ctx.ui.notify("Undo cancelled", "warning");
+				return;
+			}
+
+			pi.appendEntry<RedoData>("undo-redo", {
+				sha: redoSnapshot.sha,
+				repoRoot: redoSnapshot.repoRoot,
+				oldLeafId,
+			});
+
+			let filesRestored = false;
+			let fileRestoreError: string | undefined;
+			if (checkpoint?.data?.sha && checkpoint.data.repoRoot) {
+				try {
+					await restoreFiles(checkpoint.data.repoRoot, checkpoint.data.sha);
+					filesRestored = true;
+				} catch (err) {
+					fileRestoreError = err instanceof Error ? err.message : String(err);
+				}
+			}
 
 			if (ctx.hasUI) {
 				ctx.ui.setEditorText(promptText);
-				if (filesRestored) {
+				if (fileRestoreError) {
+					ctx.ui.notify(
+						`Context reverted, but file restore failed: ${fileRestoreError}`,
+						"error",
+					);
+				} else if (filesRestored) {
 					ctx.ui.notify(`Reverted files + context to before: "${preview}"`, "info");
 				} else if (checkpoint && !checkpoint.data?.sha) {
 					ctx.ui.notify("Context reverted (no file snapshot \u2014 not a git repo)", "info");
 				} else {
 					ctx.ui.notify(`Context reverted to before: "${preview}"`, "info");
 				}
+			}
+		},
+	});
+
+	pi.registerCommand("redo", {
+		description: "Go forward again after /undo (restores context and files)",
+		handler: async (_args, ctx) => {
+			await ctx.waitForIdle();
+
+			const branch = ctx.sessionManager.getBranch();
+			const redoEntry = findRedoEntry(branch);
+			if (!redoEntry?.data) {
+				ctx.ui.notify("Nothing to redo", "warning");
+				return;
+			}
+
+			const { sha, repoRoot, oldLeafId } = redoEntry.data;
+
+			if (ctx.hasUI) {
+				const description =
+					sha && repoRoot
+						? "Go forward again? Files will be restored."
+						: "Go forward again? (no file snapshot available)";
+				const ok = await ctx.ui.confirm("Redo?", description);
+				if (!ok) return;
+			}
+
+			if (oldLeafId) {
+				const result = await ctx.navigateTree(oldLeafId, { summarize: false });
+				if (result.cancelled) {
+					ctx.ui.notify("Redo cancelled", "warning");
+					return;
+				}
+			}
+
+			let filesRestored = false;
+			if (sha && repoRoot) {
+				try {
+					await restoreFiles(repoRoot, sha);
+					filesRestored = true;
+				} catch (err) {
+					const message = err instanceof Error ? err.message : String(err);
+					ctx.ui.notify(`Context moved forward, but file restore failed: ${message}`, "error");
+					return;
+				}
+			}
+
+			if (ctx.hasUI) {
+				ctx.ui.notify(
+					filesRestored ? "Redone: files + context restored" : "Redone: context restored",
+					"info",
+				);
+			}
+		},
+	});
+
+	pi.registerCommand("revert", {
+		description: "Revert all file changes made this session back to session-start state (files only)",
+		handler: async (_args, ctx) => {
+			await ctx.waitForIdle();
+
+			const baseline = findRevertBaseline(ctx);
+			if (!baseline?.data?.sha || !baseline.data.repoRoot) {
+				ctx.ui.notify("No session-start snapshot available", "warning");
+				return;
+			}
+			const { sha: baselineSha, repoRoot } = baseline.data;
+
+			if (ctx.hasUI) {
+				const ok = await ctx.ui.confirm(
+					"Revert all files?",
+					"This rewrites the working tree back to session start. It does NOT change the conversation.",
+				);
+				if (!ok) return;
+			}
+
+			// Snapshot the current (pre-revert) tree so /redo can restore it later.
+			const preRevertSnapshot = await snapshot(ctx.cwd);
+			pi.appendEntry<RedoData>("undo-redo", {
+				sha: preRevertSnapshot.sha,
+				repoRoot: preRevertSnapshot.repoRoot ?? repoRoot,
+				oldLeafId: null,
+			});
+
+			try {
+				await restoreFiles(repoRoot, baselineSha);
+				ctx.ui.notify("Reverted all files to session-start state", "info");
+			} catch (err) {
+				const message = err instanceof Error ? err.message : String(err);
+				ctx.ui.notify(`Revert failed: ${message}`, "error");
 			}
 		},
 	});
