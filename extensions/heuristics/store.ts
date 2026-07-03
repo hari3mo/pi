@@ -5,9 +5,9 @@
 
 import * as fs from "node:fs";
 import * as fsp from "node:fs/promises";
-import * as os from "node:os";
 import * as path from "node:path";
-import { ensureReadme, renderMarkdown } from "./render.ts";
+import { CONFIG_DIR_NAME, getAgentDir } from "@earendil-works/pi-coding-agent";
+import { lintGenerality, redactSecrets, rewriteGenerality, sanitizeText } from "./sanitize.ts";
 import {
 	CAP_GLOBAL,
 	CAP_PROJECT,
@@ -16,17 +16,18 @@ import {
 	JACCARD_MERGE,
 	JACCARD_NEAR,
 	jaccard,
+	LOCK_MAX_ATTEMPTS,
+	LOCK_RETRY_MS,
 	MAX_READ_LINES,
 	newId,
 	normalize,
 	READ_RETRY_MS,
-	STALE_MS,
 	type Scope,
 	type Source,
+	STALE_MS,
 	scoreOf,
 	tokens,
 } from "./schema.ts";
-import { lint, neutralize, redactSecrets, sanitizeText } from "./sanitize.ts";
 
 const JSONL_NAME = "heuristics.jsonl";
 const BAK_NAME = "heuristics.jsonl.bak";
@@ -37,8 +38,9 @@ const LOCK_NAME = ".lock";
 // Path resolution (DESIGN.md §1)
 // ---------------------------------------------------------------------------
 
+/** `${getAgentDir()}/heuristics/` — resolves to `~/.pi/agent/heuristics/`. */
 export function globalDir(): string {
-	return path.join(os.homedir(), ".agents", "heuristics");
+	return path.join(getAgentDir(), "heuristics");
 }
 
 /** Nearest ancestor of cwd containing .git (dir or file); fallback to cwd. */
@@ -52,8 +54,9 @@ export function findGitRoot(cwd: string): string {
 	}
 }
 
+/** `<project-root>/${CONFIG_DIR_NAME}/heuristics/` — resolves to `<repo>/.pi/heuristics/`. */
 export function projectDirFor(cwd: string): string {
-	return path.join(findGitRoot(cwd), ".agents", "heuristics");
+	return path.join(findGitRoot(cwd), CONFIG_DIR_NAME, "heuristics");
 }
 
 // ---------------------------------------------------------------------------
@@ -125,6 +128,7 @@ function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Lock-free, cached by mtime. Re-stats before each injection; reloads only on change. */
 export async function readStoreForInjection(dir: string): Promise<Heuristic[]> {
 	const filePath = path.join(dir, JSONL_NAME);
 	let stat: fs.Stats;
@@ -153,7 +157,7 @@ async function acquireLock(dir: string): Promise<string> {
 	await fsp.mkdir(dir, { recursive: true });
 	const lockPath = path.join(dir, LOCK_NAME);
 	let attempts = 0;
-	while (attempts < 20) {
+	while (attempts < LOCK_MAX_ATTEMPTS) {
 		try {
 			const handle = await fsp.open(lockPath, "wx");
 			await handle.close();
@@ -170,7 +174,7 @@ async function acquireLock(dir: string): Promise<string> {
 				continue; // lock disappeared mid-check; retry immediately
 			}
 			attempts++;
-			await sleep(100);
+			await sleep(LOCK_RETRY_MS);
 		}
 	}
 	throw new Error(`Could not acquire heuristics store lock at ${lockPath}; another process may be stuck.`);
@@ -224,8 +228,8 @@ async function appendArchive(dir: string, entries: Heuristic[]): Promise<void> {
 
 /**
  * Locked read-modify-write. `fn` receives the current list and returns the
- * mutated list plus a result value. Eviction, archive append, HEURISTICS.md
- * regeneration, and README bootstrap all happen inside the same lock hold.
+ * mutated list plus a result value. Eviction and archive append happen inside
+ * the same lock hold. Never called from the injection (read) path.
  */
 export async function mutateStore<T>(
 	dir: string,
@@ -247,8 +251,6 @@ export async function mutateStore<T>(
 
 		await appendArchive(dir, archived);
 		await atomicWrite(jsonlPath, serializeJsonl(finalList));
-		await atomicWrite(path.join(dir, "HEURISTICS.md"), renderMarkdown(finalList, scope));
-		await ensureReadme(dir);
 
 		injectionCache.delete(dir);
 		return result;
@@ -267,6 +269,7 @@ export interface SaveResult {
 	warnings: string[];
 }
 
+/** sanitize -> secret scrub -> generality rewrite+lint (warn-only) -> dedup -> add/reinforce/merge -> eviction */
 export async function saveHeuristic(
 	dir: string,
 	scope: Scope,
@@ -284,8 +287,9 @@ export async function saveHeuristic(
 	const secret = redactSecrets(text);
 	text = secret.text;
 	if (secret.warning) warnings.push(secret.warning);
-	text = neutralize(text, category);
-	const lintWarning = lint(text, category);
+
+	text = rewriteGenerality(text);
+	const lintWarning = lintGenerality(text);
 	if (lintWarning) warnings.push(lintWarning);
 
 	if (!text.trim()) {
@@ -346,7 +350,7 @@ export async function saveHeuristic(
 }
 
 // ---------------------------------------------------------------------------
-// Direct mutations (DESIGN.md §12)
+// Direct mutations (DESIGN.md §10)
 // ---------------------------------------------------------------------------
 
 export async function deleteById(dir: string, scope: Scope, id: string): Promise<boolean> {
@@ -367,15 +371,15 @@ export async function editText(dir: string, scope: Scope, id: string, rawText: s
 	const secret = redactSecrets(text);
 	text = secret.text;
 	if (secret.warning) warnings.push(secret.warning);
+	text = rewriteGenerality(text);
 
 	return mutateStore(dir, scope, (list) => {
 		const idx = list.findIndex((h) => h.id === id);
 		if (idx === -1) return { list, result: { found: false, warnings } };
-		const finalText = neutralize(text, list[idx].category);
-		const lintWarning = lint(finalText, list[idx].category);
+		const lintWarning = lintGenerality(text);
 		if (lintWarning) warnings.push(lintWarning);
 		const newList = [...list];
-		newList[idx] = { ...newList[idx], text: finalText };
+		newList[idx] = { ...newList[idx], text };
 		return { list: newList, result: { found: true, warnings } };
 	});
 }
@@ -392,7 +396,7 @@ export async function setPinned(dir: string, scope: Scope, id: string, pinned: b
 
 export async function promoteToGlobal(
 	projectDir: string,
-	globalDir: string,
+	globalStoreDir: string,
 	id: string,
 ): Promise<{ found: boolean }> {
 	const removed = await mutateStore(projectDir, "project", (list) => {
@@ -402,7 +406,7 @@ export async function promoteToGlobal(
 	});
 	if (!removed) return { found: false };
 
-	await mutateStore(globalDir, "global", (list) => {
+	await mutateStore(globalStoreDir, "global", (list) => {
 		const now = new Date().toISOString();
 		const promoted: Heuristic = {
 			...removed,
@@ -417,12 +421,12 @@ export async function promoteToGlobal(
 }
 
 export async function demoteToProject(
-	globalDir: string,
+	globalStoreDir: string,
 	projectDir: string,
 	projectPath: string,
 	id: string,
 ): Promise<{ found: boolean }> {
-	const removed = await mutateStore(globalDir, "global", (list) => {
+	const removed = await mutateStore(globalStoreDir, "global", (list) => {
 		const idx = list.findIndex((h) => h.id === id);
 		if (idx === -1) return { list, result: undefined as Heuristic | undefined };
 		return { list: list.filter((h) => h.id !== id), result: list[idx] };
