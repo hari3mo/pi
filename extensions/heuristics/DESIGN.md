@@ -96,8 +96,8 @@ Trust: if scope=project and `!ctx.isProjectTrusted()` → save to GLOBAL instead
 Result: `{ content:[text "Learned (added|reinforced|merged) [id]" + any warnings], details }`.
 Empty/whitespace text → throw (isError). Over-long → truncate to MAX_HEURISTIC_CHARS (400).
 
-`promptSnippet`: "Record a durable cross-session lesson: a user correction, gotcha, env
-quirk, workflow/convention preference, or delegation lesson".
+`promptSnippet`: "Record a durable, verified, cross-session lesson (user corrections,
+gotchas, environment quirks, workflow preferences) — only facts determined to be true".
 
 `promptGuidelines` (each bullet must name the tool):
 1. "Call learn_heuristic when you discover a durable lesson worth remembering across
