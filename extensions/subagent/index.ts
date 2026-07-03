@@ -182,6 +182,11 @@ interface SingleResult {
 	stopReason?: string;
 	errorMessage?: string;
 	step?: number;
+	// Wall-clock runtime: startTime is set the moment the subagent process is
+	// spawned; endTime lands once it exits. While endTime is unset the caller
+	// should treat the subagent as still running and compute elapsed live.
+	startTime?: number;
+	endTime?: number;
 }
 
 interface SubagentDetails {
@@ -343,6 +348,10 @@ async function runSingleAgent(
 		}
 	};
 
+	// Tick once a second so the runtime timer keeps counting up in the UI
+	// even while the subagent is quiet (e.g. mid tool-call, no new messages).
+	let tickTimer: ReturnType<typeof setInterval> | null = null;
+
 	try {
 		if (agent.systemPrompt.trim()) {
 			const tmp = await writePromptToTempFile(agent.name, agent.systemPrompt);
@@ -353,6 +362,10 @@ async function runSingleAgent(
 
 		args.push(`Task: ${task}`);
 		let wasAborted = false;
+
+		currentResult.startTime = Date.now();
+		tickTimer = setInterval(emitUpdate, 1000);
+		emitUpdate();
 
 		const exitCode = await new Promise<number>((resolve) => {
 			const invocation = getPiInvocation(args);
@@ -434,9 +447,12 @@ async function runSingleAgent(
 		});
 
 		currentResult.exitCode = exitCode;
+		currentResult.endTime = Date.now();
 		if (wasAborted) throw new Error("Subagent was aborted");
 		return currentResult;
 	} finally {
+		if (tickTimer) clearInterval(tickTimer);
+		if (!currentResult.endTime) currentResult.endTime = Date.now();
 		if (tmpPromptPath)
 			try {
 				fs.unlinkSync(tmpPromptPath);
