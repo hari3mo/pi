@@ -23,6 +23,19 @@ function fmtTokens(n: number): string {
 	return `${(n / 1_000_000).toFixed(2)}m`;
 }
 
+const THINKING_GLYPHS: Record<string, string> = {
+	off: "▁",
+	minimal: "▂",
+	low: "▃",
+	medium: "▅",
+	high: "▇",
+	xhigh: "█",
+};
+
+function thinkingGlyph(level: string): string {
+	return THINKING_GLYPHS[level] ?? "▁";
+}
+
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — luminance ramp, no color noise.
 	const gray = (hex: string, s: string) => {
@@ -75,7 +88,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 
 				const leftParts = [model];
 				if (branch) leftParts.push(branch);
-				leftParts.push(`🧠 ${pi.getThinkingLevel()}`);
+				leftParts.push(`${thinkingGlyph(pi.getThinkingLevel())} ${pi.getThinkingLevel()}`);
 
 				const rightParts: string[] = [];
 				if (ctxPct) rightParts.push(`ctx ${ctxPct}`);
