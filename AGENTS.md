@@ -12,6 +12,24 @@ Second-order benefit: keep the lead's context clean. When the orchestrator never
 touches raw file dumps or stack traces directly, it stays sharp in long sessions
 instead of drowning in half-finished edits.
 
+## Delegation Gate (read this first)
+
+The subagent pipeline (scope-planner → architect → builder → qa-reviewer →
+shipper, or any fan-out) is deployed ONLY when one of these holds:
+
+1. **Current selected model is `claude-fable-5`** → the pipeline is always in
+   effect. Fable orchestrates; it does not build.
+2. **Current selected model is `claude-opus-4-8` AND the task is appropriately
+   complex** (see the opus complexity test in Hard Delegation Thresholds:
+   3+ parallelizable workstreams, context-heavy scope, or mechanical work at
+   volume). Small or singular-focus opus tasks are done directly — no pipeline.
+
+In ALL other cases — `claude-sonnet-5` or any other model as the lead, or an
+opus task that fails the complexity test — do NOT spawn subagents. Work
+directly, following normal engineering judgment and the decomposition order
+(design → execute → verify). Every rule below that mandates delegation is
+conditional on this gate being open.
+
 ## Model Tiers (pinned)
 
 | Tier | Model | Thinking level | Role |
@@ -45,6 +63,9 @@ is enough to propose; the orchestrator decides what to accept.
 
 ## Routing Rules
 
+These routing rules only apply when the Delegation Gate above is open. If the
+gate is closed, the lead does everything itself in decomposition order.
+
 When a task arrives, decompose it and route each piece by weight:
 
 - **Design decisions** (wrong call is expensive to unwind later) → deep reasoning tier
@@ -63,13 +84,13 @@ does the work itself but still follows the decomposition order: decide first
 
 ## Hard Delegation Thresholds (MUST rules)
 
-These rules apply when the currently selected model is `claude-fable-5` (the
-orchestrator tier) — always. They also apply when the selected model is
-`claude-opus-4-8`, but only if the task is large enough to genuinely benefit
-from delegation. If the lead session is running as `claude-sonnet-5`, skip this
-section — it's already the delegation target, so forcing a further handoff
-would just add overhead. Do the work directly, following normal engineering
-judgment.
+These rules apply ONLY when the Delegation Gate is open: always when the
+currently selected model is `claude-fable-5` (the orchestrator tier), and for
+`claude-opus-4-8` only if the task is large enough to genuinely benefit from
+delegation (the complexity test below). If the lead session is running as
+`claude-sonnet-5` or any other model, skip this section entirely — it's
+already the delegation target, so forcing a further handoff would just add
+overhead. Do the work directly, following normal engineering judgment.
 
 For `claude-opus-4-8`, "large enough to benefit" means ANY of:
 
@@ -138,8 +159,9 @@ a role gets work, not just what it does.
 
 - Lead session: `claude-fable-5` at `xhigh` (set in `~/.pi/agent/settings.json`);
   recommend bumping to max effort when a task genuinely rewards it
-- Delegate everything that doesn't reward frontier-level judgment; when in doubt,
-  the Hard Delegation Thresholds above decide
+- Deploy the subagent pipeline only when the Delegation Gate is open (fable
+  always; opus only for appropriately complex tasks); when in doubt within an
+  open gate, the Hard Delegation Thresholds above decide
 - The orchestrator plans and synthesizes on a clean context and avoids writing
   code itself when a builder-tier agent is available
 - Spend the priciest model only where it pays for itself
