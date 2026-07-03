@@ -95,32 +95,52 @@ export function buildInjectionBlock(
 ): string {
 	const effectiveProject = projectTrusted ? project : [];
 
-	let orchLines: string[] = [];
-	let orchOmitted = 0;
-	let usedReserve = 0;
-	const usedIds = new Set<string>();
+	// Fixed overhead (DESIGN.md §8, review fix 7): the char budget below governs
+	// bullet lines only, but the assembled block also carries the header, the
+	// blank-line separator, worst-case section labels, the nudge line, and the
+	// "(+N more not shown)" line. Seed the bullet budget with that overhead up
+	// front so the FINAL block never exceeds MAX_INJECT_CHARS.
+	const LABELS_OVERHEAD = "Orchestration:\n".length + "Global:\n".length + "This project:\n".length;
+	const OMIT_LINE_OVERHEAD = "(+999 more not shown)\n".length;
+	const nudgeOverhead = nudgeLine ? nudgeLine.length + 1 : 0;
+	const fixedOverhead = HEADER.length + 2 + LABELS_OVERHEAD + OMIT_LINE_OVERHEAD + nudgeOverhead;
+	const bulletBudget = Math.max(0, MAX_INJECT_CHARS - fixedOverhead);
 
+	// Orchestration candidates are computed once regardless of whether they fit
+	// the reserve; ALL of them (picked or not) are excluded from the general
+	// pool below so an overflowing entry can never reappear (or be re-counted)
+	// in the general section (review fix 2).
+	const orchCandidates = isSubagent
+		? []
+		: orderCandidates(
+				global.filter((h) => h.category === "orchestration"),
+				effectiveProject.filter((h) => h.category === "orchestration"),
+			);
+	const orchConsideredIds = new Set(orchCandidates.map((p) => p.item.id));
+
+	let orchLines: string[] = [];
+	let usedReserve = 0;
+	const orchPickedIds = new Set<string>();
 	if (!isSubagent) {
-		const orchGlobal = global.filter((h) => h.category === "orchestration");
-		const orchProject = effectiveProject.filter((h) => h.category === "orchestration");
-		const orchCandidates = orderCandidates(orchGlobal, orchProject);
-		const { picked, usedChars, omitted } = selectWithinBudget(orchCandidates, ORCH_RESERVE, MAX_INJECT_ITEMS);
+		const orchBudget = Math.min(ORCH_RESERVE, bulletBudget);
+		const { picked, usedChars } = selectWithinBudget(orchCandidates, orchBudget, MAX_INJECT_ITEMS);
 		orchLines = picked.map((p) => bulletFor(p.item));
-		orchOmitted = omitted;
 		usedReserve = usedChars;
-		for (const p of picked) usedIds.add(p.item.id);
+		for (const p of picked) orchPickedIds.add(p.item.id);
 	}
 
-	// General pool: everything not already placed in the orchestration section.
-	// For subagents, orchestration-category heuristics are filtered out entirely
-	// (never spill into the general pool).
-	const generalGlobal = global.filter((h) => !usedIds.has(h.id) && !(isSubagent && h.category === "orchestration"));
+	// General pool: everything not already considered for the orchestration
+	// section. For subagents, orchestration-category heuristics are filtered
+	// out entirely (never spill into the general pool).
+	const generalGlobal = global.filter(
+		(h) => !orchConsideredIds.has(h.id) && !(isSubagent && h.category === "orchestration"),
+	);
 	const generalProject = effectiveProject.filter(
-		(h) => !usedIds.has(h.id) && !(isSubagent && h.category === "orchestration"),
+		(h) => !orchConsideredIds.has(h.id) && !(isSubagent && h.category === "orchestration"),
 	);
 	const generalCandidates = orderCandidates(generalGlobal, generalProject);
 
-	const remainingCharBudget = Math.max(0, MAX_INJECT_CHARS - usedReserve);
+	const remainingCharBudget = Math.max(0, bulletBudget - usedReserve);
 	const remainingItemBudget = Math.max(0, MAX_INJECT_ITEMS - orchLines.length);
 	const general = selectWithinBudget(generalCandidates, remainingCharBudget, remainingItemBudget);
 
@@ -138,7 +158,16 @@ export function buildInjectionBlock(
 		sections.push(`This project:\n${projectPicked.map((p) => bulletFor(p.item)).join("\n")}`);
 	}
 
-	const totalOmitted = orchOmitted + general.omitted;
+	// Omitted count computed once via final id-set difference: every candidate
+	// considered (orchestration + general pools) minus whatever actually ended
+	// up shown (review fix 2).
+	const shownIds = new Set<string>([...orchPickedIds, ...general.picked.map((p) => p.item.id)]);
+	const allCandidateIds = new Set<string>([
+		...orchCandidates.map((p) => p.item.id),
+		...generalCandidates.map((p) => p.item.id),
+	]);
+	let totalOmitted = 0;
+	for (const id of allCandidateIds) if (!shownIds.has(id)) totalOmitted++;
 
 	if (sections.length === 0 && !nudgeLine) return "";
 
