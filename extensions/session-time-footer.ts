@@ -18,7 +18,7 @@
 
 import { isAbsolute, relative, resolve, sep } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import type { ThinkingLevel } from "@earendil-works/pi-ai";
+import type { ThinkingLevel } from "@earendil-works/pi-agent-core";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 function formatTokens(count: number): string {
