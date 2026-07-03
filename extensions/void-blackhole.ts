@@ -9,12 +9,21 @@
  * at the event horizon, and is re-fed from the rim — the whole galaxy forever
  * spiralling into the core. A bright photon ring hugs the shadow's edge.
  *
- * Relativistic garnish, all driven by the live particles:
- *   - gravitational lensing: matter near the hole casts a bent secondary
- *     image that arcs over the top of the shadow (and faintly beneath it)
- *   - Doppler beaming that strengthens as orbital speed climbs near the hole
- *   - gravitational redshift: the final plunge fades into the shadow
- *   - a photon ring that shimmers in time and glows on the approaching side
+ * Relativistic treatment, all driven by the live particles (the
+ * Interstellar/EHT look, approximated in screen space):
+ *   - gravitational lensing: the far side of the disk is bent radially
+ *     outward (d -> d + k/d), so matter that would hide behind the hole
+ *     folds up into the arc over the shadow instead — plus faint,
+ *     demagnified counter-images hugging the photon ring on the far side
+ *   - the near side of the disk passes physically in front of the hole,
+ *     crossing the lower half of the shadow like the Interstellar band
+ *   - Doppler beaming that strengthens sharply as orbital speed climbs
+ *     near the hole — the approaching side burns, the receding side fades
+ *   - a Shakura–Sunyaev temperature profile: brightness peaks just outside
+ *     the inner rim and dies at the horizon, so the final plunge
+ *     redshifts away into the shadow
+ *   - a thin photon ring at the shadow's edge, shimmering in time and
+ *     strongly lopsided toward the approaching side
  *
  * Around it all, the galactic disk itself: the site's two-armed spiral dust
  * field (a port of buildDustField() from galaxy.js), rejection-sampled from
@@ -69,11 +78,14 @@ const DUST_OUTER = 6.2;
 const DUST_COUNT = 2400;
 const DUST_SPIN = 0.2; //     rad/s — matches RING_SPIN from main.js
 
-const LENS_OUT = 2.8; // matter inside this radius casts a lensed image
-const LENS_R = 1.62; //  lensed arc radius, in event-horizon units (the
-//                       photon ring's outer edge sits at sqrt(1.55) ~ 1.24,
-//                       so the arc clears it by a full cell and reads as a
-//                       separate halo even at terminal resolution)
+const LENS_OUT = 2.8; // matter inside this radius casts a counter-image
+const BEND = 0.4; //   far-side lensing strength: the image of matter behind
+//                     the hole is pushed to d + BEND/d screen radii (d in
+//                     horizon units), so it can never appear inside the
+//                     shadow — min apparent radius 2*sqrt(BEND) ~ 1.26,
+//                     folding the rear disk into the arc over the top
+const SECOND_R = 1.18; // demagnified counter-images hug this radius, just
+//                        outside the photon ring band (sqrt(1.35) ~ 1.16)
 const TICK_MS = 50; // 20 fps — plenty for glyphs
 const FEED_GRAVITY = 3.2; // feed multiplier while space is held
 const ART_MAX_W = 280; // wide: fill the terminal, centered, landing-page scale
@@ -620,7 +632,13 @@ class BlackHoleComponent {
 			);
 		}
 
-		// -- accretion disk --
+		// -- accretion disk, split around the shadow carve. Far-side matter
+		// (z < 0) is gravitationally lensed: its light passes the hole and
+		// bends, so the whole rear disk folds up into the arc hugging the
+		// photon ring — the Interstellar/EHT signature. Near-side matter
+		// (z >= 0) sits between the camera and the hole, so it is collected
+		// here and drawn after the carve, crossing in front of the shadow. --
+		const front: number[] = []; // packed [col, row, b] triplets
 		for (let i = 0; i < DISK_COUNT; i++) {
 			const r = this.diskR[i];
 			const theta = this.diskTheta[i];
@@ -635,94 +653,59 @@ class BlackHoleComponent {
 			// Tilt the system (rotation about x), camera looks along z.
 			const projY = z * SIN_T - y * COS_T;
 
-			// Hottest at the inner rim. Doppler beaming brightens the
-			// approaching side, and strengthens as orbital speed climbs
-			// toward the hole; gravitational redshift dims the last stretch
-			// of the plunge so matter fades into the shadow instead of
-			// burning brightest at the moment it vanishes.
-			const amp = Math.min(0.5, 0.18 + 0.45 / r);
-			const beaming = 1 - amp + amp * Math.cos(theta);
-			const rs = Math.max(
-				0,
-				Math.min(1, (r - EVENT_HORIZON) / (DISK_INNER - EVENT_HORIZON)),
-			);
-			let b = Math.pow(1 - u, 0.7) * beaming + this.diskNoise[i];
-			b = Math.max(0, Math.min(1, b)) * (0.35 + 0.65 * Math.sqrt(rs));
+			// Shakura–Sunyaev-flavored temperature: flux ~ r^-3 (1 - sqrt(rh/r))
+			// peaks just outside the inner rim and dies at the horizon, so
+			// gravitational redshift of the final plunge falls out of the same
+			// curve — matter fades into the shadow instead of burning brightest
+			// at the moment it vanishes. Normalized to 1 at the peak.
+			const q =
+				Math.pow(EVENT_HORIZON / r, 3) * (1 - Math.sqrt(EVENT_HORIZON / r));
+			const heat = Math.pow(Math.max(0, q) / 0.0567, 0.6);
 
-			// Gravitational lensing: matter near the hole also casts a bent
-			// secondary image hugging a ring just outside the photon ring —
-			// the far side arcs over the top of the shadow, the near side
-			// glows faintly beneath it. Driven by the live particles, so the
-			// arcs churn and flare with the disk itself.
+			// Doppler beaming, sharpening as orbital speed climbs toward the
+			// hole: the approaching side burns white-hot, the receding side
+			// fades to embers — the disk reads properly lopsided.
+			const amp = Math.min(0.8, 0.2 + 0.55 / r);
+			const beaming = 1 - amp + amp * Math.cos(theta);
+			let b = heat * beaming + this.diskNoise[i];
+			b = Math.max(0, Math.min(1, b));
+
+			// Screen-space distance from the hole, in horizon radii (the
+			// shadow ellipse is d = 1 by construction).
+			const d = Math.max(0.2, Math.hypot(x, projY) / EVENT_HORIZON);
+
+			// Secondary lensed counter-image: a faint, demagnified copy of
+			// the inner disk on the opposite side of the hole, pinned just
+			// outside the photon ring — the dim under-arc beneath the shadow
+			// (cast by the far side) and its twin above (cast by the near).
 			if (r < LENS_OUT) {
 				const fade = 1 - (r - EVENT_HORIZON) / (LENS_OUT - EVENT_HORIZON);
-				const t = (x * sX) / (holeRx * LENS_R);
-				if (t > -1 && t < 1) {
-					const dyArc = holeRy * LENS_R * Math.sqrt(1 - t * t);
-					const colArc = Math.round(cx + x * sX);
-					if (z < 0) {
-						deposit(colArc, Math.round(cy - dyArc), b * 0.6 * fade);
-					} else {
-						deposit(colArc, Math.round(cy + dyArc), b * 0.3 * fade);
-					}
-				}
+				const m2 = -SECOND_R / d;
+				deposit(
+					Math.round(cx + x * m2 * sX),
+					Math.round(cy + projY * m2 * sY),
+					b * 0.3 * fade,
+				);
 			}
 
-			deposit(Math.round(cx + x * sX), Math.round(cy + projY * sY), b * 0.85);
-		}
-
-		// -- planets: single-glyph bodies riding the disk at their own
-		// Keplerian rates, tilted with the system like everything else --
-		for (const p of PLANETS) {
-			const omega = Math.sqrt(GM / (p.r * p.r * p.r));
-			const theta = p.a - this.elapsed * omega;
-			const px = Math.cos(theta) * p.r;
-			const pz = Math.sin(theta) * p.r;
-			const projY = pz * SIN_T - p.h * COS_T;
-			const col = Math.round(cx + px * sX);
-			const row = Math.round(cy + projY * sY);
-			glyph(col, row, p.ch, p.b);
-			if (p.halo) {
-				// The bigger bodies glow a cell wide.
-				deposit(col - 1, row, 0.16);
-				deposit(col + 1, row, 0.16);
-			}
-		}
-
-		// -- comets: bright heads, tails streaming anti-solar (away from the
-		// core), longest and brightest near perihelion --
-		for (let c = 0; c < COMET_DEFS.length; c++) {
-			const def = COMET_DEFS[c];
-			const th = this.cometThetas[c];
-			const r = def.p / (1 + def.e * Math.cos(th));
-			const ang = th + def.w; // whole orbit rotated in the disk plane
-			const hx = Math.cos(ang) * r;
-			const hz = Math.sin(ang) * r;
-			const prox =
-				1 - smoothstep(def.p / (1 + def.e), def.p / (1 - def.e), r);
-			glyph(
-				Math.round(cx + hx * sX),
-				Math.round(cy + hz * SIN_T * sY),
-				"*",
-				0.45 + 0.55 * prox,
-			);
-			const rx = hx / r;
-			const rz = hz / r;
-			const spacing = 0.3 + 0.25 * prox;
-			for (let i = 0; i < COMET_TAIL; i++) {
-				const d = (i + 1) * spacing;
-				const ch =
-					COMET_TAIL_CHARS[
-						Math.min(
-							COMET_TAIL_CHARS.length - 1,
-							Math.floor((i / COMET_TAIL) * COMET_TAIL_CHARS.length),
-						)
-					];
-				glyph(
-					Math.round(cx + (hx + rx * d) * sX),
-					Math.round(cy + (hz + rz * d) * SIN_T * sY),
-					ch,
-					(0.12 + 0.88 * prox) * (1 - i / COMET_TAIL) * 0.7,
+			if (z < 0) {
+				// Far side: bend the image radially outward, d -> d + k/d.
+				// The mapping never dips below 2*sqrt(k), so rear matter can
+				// never appear inside the shadow — what would hide behind the
+				// hole is folded up over the top instead, and the pile-up of
+				// images near the minimum forms the bright arc on its own.
+				const w = smoothstep(0, 0.5, -z);
+				const m = (d + (BEND * w) / d) / d;
+				deposit(
+					Math.round(cx + x * m * sX),
+					Math.round(cy + projY * m * sY),
+					b * 0.85,
+				);
+			} else {
+				front.push(
+					Math.round(cx + x * sX),
+					Math.round(cy + projY * sY),
+					b * 0.85,
 				);
 			}
 		}
@@ -773,17 +756,99 @@ class BlackHoleComponent {
 				if (d2 < 1.0) {
 					bright[row * artW + col] = -1; // nothing escapes
 					overlay[row * artW + col] = null; // not even the comet
-				} else if (d2 < 1.55) {
-					// Per-cell phase from a stable hash, animated slowly in time
-					// so the ring shimmers instead of sitting frozen — and the
-					// approaching (Doppler) side glows a touch hotter, matching
-					// the disk's bright side.
+				} else if (d2 < 1.35) {
+					// Thin photon ring hugging the shadow's edge. Per-cell phase
+					// from a stable hash, animated slowly in time so the ring
+					// shimmers instead of sitting frozen — and strongly Doppler-
+					// lopsided like the EHT image: hot on the approaching side,
+					// fading to embers on the receding one.
 					const h = (((col * 73856093) ^ (row * 19349663)) >>> 0) % 97;
 					const tw =
 						0.5 + 0.5 * Math.sin(this.elapsed * 2.1 + (h / 97) * Math.PI * 2);
-					const doppler = 0.9 + 0.1 * (dx / Math.sqrt(d2));
-					stamp(col, row, (0.84 + 0.16 * tw) * doppler);
+					const doppler = 0.66 + 0.34 * (dx / Math.sqrt(d2));
+					stamp(col, row, (0.8 + 0.2 * tw) * doppler);
 				}
+			}
+		}
+
+		// Things on the far side of the hole (z < 0) whose image lands on the
+		// shadow or the photon ring are hidden behind it.
+		const hiddenBehindHole = (
+			col: number,
+			row: number,
+			zWorld: number,
+		): boolean => {
+			if (zWorld >= 0) return false;
+			const ddx = (col - cx) / holeRx;
+			const ddy = (row - cy) / holeRy;
+			return ddx * ddx + ddy * ddy < 1.35;
+		};
+
+		// -- near-side disk: matter between the camera and the hole, drawn
+		// after the carve so it physically crosses in front of the shadow's
+		// lower half — the foreground band of the Interstellar shot --
+		for (let k = 0; k < front.length; k += 3) {
+			deposit(front[k], front[k + 1], front[k + 2]);
+		}
+
+		// -- planets: single-glyph bodies riding the disk at their own
+		// Keplerian rates, tilted with the system like everything else —
+		// occluded when they swing behind the hole, in front when near --
+		for (const p of PLANETS) {
+			const omega = Math.sqrt(GM / (p.r * p.r * p.r));
+			const theta = p.a - this.elapsed * omega;
+			const px = Math.cos(theta) * p.r;
+			const pz = Math.sin(theta) * p.r;
+			const projY = pz * SIN_T - p.h * COS_T;
+			const col = Math.round(cx + px * sX);
+			const row = Math.round(cy + projY * sY);
+			if (hiddenBehindHole(col, row, pz)) continue; // swallowed from view
+			glyph(col, row, p.ch, p.b);
+			if (p.halo) {
+				// The bigger bodies glow a cell wide.
+				deposit(col - 1, row, 0.16);
+				deposit(col + 1, row, 0.16);
+			}
+		}
+
+		// -- comets: bright heads, tails streaming anti-solar (away from the
+		// core), longest and brightest near perihelion; each glyph vanishes
+		// while it is behind the hole --
+		for (let c = 0; c < COMET_DEFS.length; c++) {
+			const def = COMET_DEFS[c];
+			const th = this.cometThetas[c];
+			const r = def.p / (1 + def.e * Math.cos(th));
+			const ang = th + def.w; // whole orbit rotated in the disk plane
+			const hx = Math.cos(ang) * r;
+			const hz = Math.sin(ang) * r;
+			const prox =
+				1 - smoothstep(def.p / (1 + def.e), def.p / (1 - def.e), r);
+			const hcol = Math.round(cx + hx * sX);
+			const hrow = Math.round(cy + hz * SIN_T * sY);
+			if (!hiddenBehindHole(hcol, hrow, hz)) {
+				glyph(hcol, hrow, "*", 0.45 + 0.55 * prox);
+			}
+			const rx = hx / r;
+			const rz = hz / r;
+			const spacing = 0.3 + 0.25 * prox;
+			for (let i = 0; i < COMET_TAIL; i++) {
+				const d = (i + 1) * spacing;
+				const ch =
+					COMET_TAIL_CHARS[
+						Math.min(
+							COMET_TAIL_CHARS.length - 1,
+							Math.floor((i / COMET_TAIL) * COMET_TAIL_CHARS.length),
+						)
+					];
+				const tcol = Math.round(cx + (hx + rx * d) * sX);
+				const trow = Math.round(cy + (hz + rz * d) * SIN_T * sY);
+				if (hiddenBehindHole(tcol, trow, hz + rz * d)) continue;
+				glyph(
+					tcol,
+					trow,
+					ch,
+					(0.12 + 0.88 * prox) * (1 - i / COMET_TAIL) * 0.7,
+				);
 			}
 		}
 
