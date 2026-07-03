@@ -143,3 +143,4 @@ a role gets work, not just what it does.
 - The orchestrator plans and synthesizes on a clean context and avoids writing
   code itself when a builder-tier agent is available
 - Spend the priciest model only where it pays for itself
+
