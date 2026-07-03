@@ -14,6 +14,11 @@ export function sanitizeText(raw: string): string {
 	// biome-ignore lint/suspicious/noControlCharactersInRegex: intentional control-char strip
 	t = t.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f\x7f]/g, "");
 	t = t.replace(/\s+/g, " ").trim();
+	// Redact secrets BEFORE truncating too (the caller also redacts after this
+	// returns): a secret token straddling the 400-char cut could otherwise
+	// leave an unredacted fragment. Running the (cheap) redaction pass twice
+	// is harmless; natural-language secrets remain out of scope either way.
+	t = redactSecrets(t).text;
 	if (t.length > MAX_HEURISTIC_CHARS) t = t.slice(0, MAX_HEURISTIC_CHARS).trimEnd();
 	return t;
 }
