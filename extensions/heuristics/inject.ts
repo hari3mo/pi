@@ -103,7 +103,9 @@ export function buildInjectionBlock(
 	const LABELS_OVERHEAD = "Orchestration:\n".length + "Global:\n".length + "This project:\n".length;
 	const OMIT_LINE_OVERHEAD = "(+999 more not shown)\n".length;
 	const nudgeOverhead = nudgeLine ? nudgeLine.length + 1 : 0;
-	const fixedOverhead = HEADER.length + 2 + LABELS_OVERHEAD + OMIT_LINE_OVERHEAD + nudgeOverhead;
+	// +2 join separators between HEADER/blank/sections, +2 more for up to 3
+	// sections joined by "\n" (Orchestration/Global/This project).
+	const fixedOverhead = HEADER.length + 2 + 2 + LABELS_OVERHEAD + OMIT_LINE_OVERHEAD + nudgeOverhead;
 	const bulletBudget = Math.max(0, MAX_INJECT_CHARS - fixedOverhead);
 
 	// Orchestration candidates are computed once regardless of whether they fit
