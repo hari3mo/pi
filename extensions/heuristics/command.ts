@@ -33,6 +33,18 @@ function truncate(text: string, n: number): string {
 	return text.length > n ? `${text.slice(0, n - 1)}…` : text;
 }
 
+/**
+ * ctx.ui.notify is a no-op when `!ctx.hasUI` (print/json modes use a no-op UI
+ * context), so every /heuristics subcommand must also echo to stdout in that
+ * case to remain visible in `pi -p`. See DESIGN.md §10 + review fix 1.
+ */
+function output(ctx: ExtensionCommandContext, message: string, type: "info" | "warning" | "error" = "info"): void {
+	ctx.ui.notify(message, type);
+	if (!ctx.hasUI) {
+		console.log(message);
+	}
+}
+
 function formatEntry(h: Heuristic): string {
 	const pin = h.pinned ? " 📌" : "";
 	return `[${h.id}] (${h.scope}/${h.category}, hits=${h.hits}${pin}) ${truncate(h.text, 100)}`;
@@ -82,7 +94,7 @@ async function printList(ctx: ExtensionCommandContext, which: "global" | "projec
 			lines.push("Project: (not shown; project is not trusted)");
 		}
 	}
-	ctx.ui.notify(lines.length > 0 ? lines.join("\n") : "No heuristics recorded yet.", "info");
+	output(ctx, lines.length > 0 ? lines.join("\n") : "No heuristics recorded yet.", "info");
 }
 
 async function printStats(ctx: ExtensionCommandContext): Promise<void> {
@@ -100,7 +112,7 @@ async function printStats(ctx: ExtensionCommandContext): Promise<void> {
 			? `Project: ${project.length} (${byCategory(project) || "none"}); pinned=${project.filter((h) => h.pinned).length}`
 			: "Project: (not shown; project is not trusted)",
 	];
-	ctx.ui.notify(lines.join("\n"), "info");
+	output(ctx, lines.join("\n"), "info");
 }
 
 function parseAddArgs(rest: string): { scope: Scope; text: string } {
@@ -115,7 +127,7 @@ function parseAddArgs(rest: string): { scope: Scope; text: string } {
 async function handleAdd(ctx: ExtensionCommandContext, rest: string): Promise<void> {
 	const { scope: requestedScope, text } = parseAddArgs(rest);
 	if (!text.trim()) {
-		ctx.ui.notify("Usage: /heuristics add [global|project] <text>", "error");
+		output(ctx, "Usage: /heuristics add [global|project] <text>", "error");
 		return;
 	}
 	let scope: Scope = requestedScope;
@@ -135,110 +147,110 @@ async function handleAdd(ctx: ExtensionCommandContext, rest: string): Promise<vo
 		const result = await saveHeuristic(dir, scope, project, text, category, "user");
 		const allWarnings = [...warnings, ...result.warnings];
 		const msg = `Learned (${result.status}) [${result.id}]${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
-		ctx.ui.notify(msg, "info");
+		output(ctx, msg, "info");
 	} catch (err) {
-		ctx.ui.notify(`Failed to add heuristic: ${err instanceof Error ? err.message : String(err)}`, "error");
+		output(ctx, `Failed to add heuristic: ${err instanceof Error ? err.message : String(err)}`, "error");
 	}
 }
 
 async function handleRm(ctx: ExtensionCommandContext, id: string): Promise<void> {
 	if (!id) {
-		ctx.ui.notify("Usage: /heuristics rm <id>", "error");
+		output(ctx, "Usage: /heuristics rm <id>", "error");
 		return;
 	}
 	const found = await findEntry(ctx, id);
 	if (!found) {
-		ctx.ui.notify(`No heuristic found with id ${id}`, "error");
+		output(ctx, `No heuristic found with id ${id}`, "error");
 		return;
 	}
 	await deleteById(found.dir, found.scope, id);
-	ctx.ui.notify(`Deleted ${id}`, "info");
+	output(ctx, `Deleted ${id}`, "info");
 }
 
 async function handleEdit(ctx: ExtensionCommandContext, id: string): Promise<void> {
 	if (ctx.mode !== "tui") {
-		ctx.ui.notify("/heuristics edit requires the TUI.", "error");
+		output(ctx, "/heuristics edit requires the TUI.", "error");
 		return;
 	}
 	if (!id) {
-		ctx.ui.notify("Usage: /heuristics edit <id>", "error");
+		output(ctx, "Usage: /heuristics edit <id>", "error");
 		return;
 	}
 	const found = await findEntry(ctx, id);
 	if (!found) {
-		ctx.ui.notify(`No heuristic found with id ${id}`, "error");
+		output(ctx, `No heuristic found with id ${id}`, "error");
 		return;
 	}
 	const newText = await ctx.ui.editor("Edit heuristic:", found.entry.text);
 	if (newText === undefined) return;
 	const result = await editText(found.dir, found.scope, id, newText);
 	if (!result.found) {
-		ctx.ui.notify(`No heuristic found with id ${id}`, "error");
+		output(ctx, `No heuristic found with id ${id}`, "error");
 		return;
 	}
 	const msg = `Updated ${id}${result.warnings.length ? `\n${result.warnings.join("\n")}` : ""}`;
-	ctx.ui.notify(msg, "info");
+	output(ctx, msg, "info");
 }
 
 async function handlePromote(ctx: ExtensionCommandContext, id: string): Promise<void> {
 	if (!id) {
-		ctx.ui.notify("Usage: /heuristics promote <id>", "error");
+		output(ctx, "Usage: /heuristics promote <id>", "error");
 		return;
 	}
 	if (!ctx.isProjectTrusted()) {
-		ctx.ui.notify("project not trusted; cannot promote", "error");
+		output(ctx, "project not trusted; cannot promote", "error");
 		return;
 	}
 	const result = await promoteToGlobal(projectDirFor(ctx.cwd), globalDir(), id);
-	ctx.ui.notify(result.found ? `Promoted ${id} to global` : `No project heuristic found with id ${id}`, result.found ? "info" : "error");
+	output(ctx, result.found ? `Promoted ${id} to global` : `No project heuristic found with id ${id}`, result.found ? "info" : "error");
 }
 
 async function handleDemote(ctx: ExtensionCommandContext, id: string): Promise<void> {
 	if (!id) {
-		ctx.ui.notify("Usage: /heuristics demote <id>", "error");
+		output(ctx, "Usage: /heuristics demote <id>", "error");
 		return;
 	}
 	if (!ctx.isProjectTrusted()) {
-		ctx.ui.notify("project not trusted; cannot demote", "error");
+		output(ctx, "project not trusted; cannot demote", "error");
 		return;
 	}
 	const result = await demoteToProject(globalDir(), projectDirFor(ctx.cwd), findGitRoot(ctx.cwd), id);
-	ctx.ui.notify(result.found ? `Demoted ${id} to project` : `No global heuristic found with id ${id}`, result.found ? "info" : "error");
+	output(ctx, result.found ? `Demoted ${id} to project` : `No global heuristic found with id ${id}`, result.found ? "info" : "error");
 }
 
 async function handlePin(ctx: ExtensionCommandContext, id: string, pinned: boolean): Promise<void> {
 	if (!id) {
-		ctx.ui.notify(`Usage: /heuristics ${pinned ? "pin" : "unpin"} <id>`, "error");
+		output(ctx, `Usage: /heuristics ${pinned ? "pin" : "unpin"} <id>`, "error");
 		return;
 	}
 	const found = await findEntry(ctx, id);
 	if (!found) {
-		ctx.ui.notify(`No heuristic found with id ${id}`, "error");
+		output(ctx, `No heuristic found with id ${id}`, "error");
 		return;
 	}
 	await setPinned(found.dir, found.scope, id, pinned);
-	ctx.ui.notify(`${pinned ? "Pinned" : "Unpinned"} ${id}`, "info");
+	output(ctx, `${pinned ? "Pinned" : "Unpinned"} ${id}`, "info");
 }
 
 async function runAction(ctx: ExtensionCommandContext, action: string, entry: Heuristic, dir: string, scope: Scope): Promise<void> {
 	switch (action) {
 		case "pin":
 			await setPinned(dir, scope, entry.id, true);
-			ctx.ui.notify(`Pinned ${entry.id}`, "info");
+			output(ctx, `Pinned ${entry.id}`, "info");
 			return;
 		case "unpin":
 			await setPinned(dir, scope, entry.id, false);
-			ctx.ui.notify(`Unpinned ${entry.id}`, "info");
+			output(ctx, `Unpinned ${entry.id}`, "info");
 			return;
 		case "delete":
 			await deleteById(dir, scope, entry.id);
-			ctx.ui.notify(`Deleted ${entry.id}`, "info");
+			output(ctx, `Deleted ${entry.id}`, "info");
 			return;
 		case "edit": {
 			const newText = await ctx.ui.editor("Edit heuristic:", entry.text);
 			if (newText === undefined) return;
 			const result = await editText(dir, scope, entry.id, newText);
-			ctx.ui.notify(`Updated ${entry.id}${result.warnings.length ? `\n${result.warnings.join("\n")}` : ""}`, "info");
+			output(ctx, `Updated ${entry.id}${result.warnings.length ? `\n${result.warnings.join("\n")}` : ""}`, "info");
 			return;
 		}
 		case "promote":
@@ -265,7 +277,7 @@ async function interactiveList(ctx: ExtensionCommandContext): Promise<void> {
 				: []),
 		];
 		if (combined.length === 0) {
-			ctx.ui.notify("No heuristics recorded yet.", "info");
+			output(ctx, "No heuristics recorded yet.", "info");
 			return;
 		}
 		const options = combined.map((c) => formatEntry(c.entry));
@@ -322,7 +334,7 @@ export function registerHeuristicsCommand(pi: ExtensionAPI): void {
 					if (which === "global" || which === "project" || which === "all" || which === "") {
 						await printList(ctx, (which || "all") as "global" | "project" | "all");
 					} else {
-						ctx.ui.notify("Usage: /heuristics list [global|project|all]", "error");
+						output(ctx, "Usage: /heuristics list [global|project|all]", "error");
 					}
 					return;
 				}
@@ -352,7 +364,7 @@ export function registerHeuristicsCommand(pi: ExtensionAPI): void {
 					await printStats(ctx);
 					return;
 				default:
-					ctx.ui.notify(
+					output(ctx, 
 						"Usage: /heuristics [list|add|rm|edit|promote|demote|pin|unpin|stats] ...",
 						"error",
 					);
