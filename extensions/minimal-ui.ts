@@ -24,16 +24,16 @@ function fmtTokens(n: number): string {
 }
 
 const THINKING_GLYPHS: Record<string, string> = {
-	off: "▁",
-	minimal: "▂",
-	low: "▃",
-	medium: "▅",
-	high: "▇",
-	xhigh: "█",
+	off: "○",
+	minimal: "◔",
+	low: "◑",
+	medium: "◕",
+	high: "●",
+	xhigh: "✺",
 };
 
 function thinkingGlyph(level: string): string {
-	return THINKING_GLYPHS[level] ?? "▁";
+	return THINKING_GLYPHS[level] ?? "○";
 }
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
@@ -88,7 +88,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 
 				const leftParts = [model];
 				if (branch) leftParts.push(branch);
-				leftParts.push(`${thinkingGlyph(pi.getThinkingLevel())} ${pi.getThinkingLevel()}`);
+				leftParts.push(`${pi.getThinkingLevel()} ${thinkingGlyph(pi.getThinkingLevel())}`);
 
 				const rightParts: string[] = [];
 				if (ctxPct) rightParts.push(`ctx ${ctxPct}`);

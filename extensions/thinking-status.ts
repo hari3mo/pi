@@ -9,20 +9,20 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
 const THINKING_GLYPHS: Record<string, string> = {
-	off: "▁",
-	minimal: "▂",
-	low: "▃",
-	medium: "▅",
-	high: "▇",
-	xhigh: "█",
+	off: "○",
+	minimal: "◔",
+	low: "◑",
+	medium: "◕",
+	high: "●",
+	xhigh: "✺",
 };
 
 function thinkingGlyph(level: string): string {
-	return THINKING_GLYPHS[level] ?? "▁";
+	return THINKING_GLYPHS[level] ?? "○";
 }
 
 function formatThinkingStatus(ctx: { ui: { theme: { fg: (name: string, text: string) => string } } }, level: string) {
-	return ctx.ui.theme.fg("dim", `${thinkingGlyph(level)} ${level}`);
+	return ctx.ui.theme.fg("dim", `${level} ${thinkingGlyph(level)}`);
 }
 
 export default function (pi: ExtensionAPI) {
