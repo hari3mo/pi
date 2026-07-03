@@ -97,10 +97,10 @@ export const ScopeSchema = StringEnum(["global", "project"] as const, {
 // ID generation
 // ---------------------------------------------------------------------------
 
-/** `h_<base36 epoch-ms>_<4 rand chars>` */
+/** `h_<base36 epoch-ms>_<8 rand chars>` (widened from 4 to make same-millisecond collisions negligible) */
 export function newId(): string {
 	const time = Date.now().toString(36);
-	const rand = Math.random().toString(36).slice(2, 6).padEnd(4, "0");
+	const rand = Math.random().toString(36).slice(2, 10).padEnd(8, "0");
 	return `h_${time}_${rand}`;
 }
 
@@ -186,7 +186,11 @@ export function jaccard(a: Set<string>, b: Set<string>): number {
 
 export function scoreOf(h: Heuristic, now: number = Date.now()): number {
 	if (h.pinned) return Number.POSITIVE_INFINITY;
-	const ageDays = Math.max(0, (now - Date.parse(h.lastReinforced)) / 86_400_000);
+	let ageDays = Math.max(0, (now - Date.parse(h.lastReinforced)) / 86_400_000);
+	// A malformed lastReinforced makes Date.parse return NaN, which would
+	// silently propagate into every sort comparator that uses this score.
+	// Treat unparsable timestamps as maximally stale instead.
+	if (Number.isNaN(ageDays)) ageDays = 3650;
 	const weight = h.hits + (h.source === "user" ? 3 : 1);
 	return weight * 0.5 ** (ageDays / HALFLIFE_DAYS);
 }
