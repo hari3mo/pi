@@ -42,6 +42,8 @@ export interface Heuristic {
 	hits: number;
 	source: Source;
 	pinned: boolean;
+	/** How this lesson was verified true (DESIGN.md §3). Optional so existing stored entries without it remain valid. */
+	basis?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -95,6 +97,17 @@ export const CategorySchema = StringEnum(
 export const ScopeSchema = StringEnum(["global", "project"] as const, {
 	description: 'Where to save the lesson. Defaults to "project".',
 });
+
+export const BasisSchema = StringEnum(
+	["user-confirmed", "directly-observed", "reproduced", "documented"] as const,
+	{
+		description:
+			"How this lesson was verified true: user-confirmed = the user explicitly stated or " +
+			"confirmed it; directly-observed = you saw the behavior happen in this session; " +
+			"reproduced = you tested it and confirmed the outcome; documented = stated in " +
+			"authoritative docs/config you read.",
+	},
+);
 
 // ---------------------------------------------------------------------------
 // ID generation
@@ -186,6 +199,11 @@ export function jaccard(a: Set<string>, b: Set<string>): number {
 // ---------------------------------------------------------------------------
 // Scoring (DESIGN.md §7) — eviction and injection ranking ONLY.
 // ---------------------------------------------------------------------------
+
+/** Merge basis on reinforce/merge: keep existing unless a new one is provided (DESIGN.md §3, §4). */
+export function applyBasis(current: string | undefined, next: string | undefined): string | undefined {
+	return next !== undefined ? next : current;
+}
 
 export function scoreOf(h: Heuristic, now: number = Date.now()): number {
 	if (h.pinned) return Number.POSITIVE_INFINITY;
