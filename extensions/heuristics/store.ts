@@ -66,6 +66,7 @@ export function projectDirFor(cwd: string): string {
 
 const warnedBadLines = new Set<string>();
 const warnedUnreadable = new Set<string>();
+const warnedOversized = new Set<string>();
 
 export interface ReadStoreResult {
 	list: Heuristic[];
@@ -98,11 +99,35 @@ function parseJsonl(raw: string): { list: Heuristic[]; skipped: number; capped: 
 }
 
 /** Lock-free read. Skips bad lines, dedups by id (last wins), caps at 5000 lines. */
+/**
+ * Read at most MAX_READ_BYTES from the front of the file. Statting first lets
+ * us avoid ever pulling a huge file fully into memory (review fix 6) — the
+ * existing MAX_READ_LINES cap only kicks in AFTER the whole file is read, so
+ * on its own it doesn't bound memory.
+ */
+async function readFileCapped(filePath: string, sizeBytes: number): Promise<{ raw: string; oversized: boolean }> {
+	if (sizeBytes <= MAX_READ_BYTES) {
+		return { raw: await fsp.readFile(filePath, "utf8"), oversized: false };
+	}
+	const handle = await fsp.open(filePath, "r");
+	try {
+		const buffer = Buffer.alloc(MAX_READ_BYTES);
+		const { bytesRead } = await handle.read(buffer, 0, MAX_READ_BYTES, 0);
+		return { raw: buffer.toString("utf8", 0, bytesRead), oversized: true };
+	} finally {
+		await handle.close();
+	}
+}
+
 export async function readStore(dir: string, notify?: (msg: string) => void): Promise<ReadStoreResult> {
 	const filePath = path.join(dir, JSONL_NAME);
 	let raw: string;
+	let oversized = false;
 	try {
-		raw = await fsp.readFile(filePath, "utf8");
+		const st = await fsp.stat(filePath);
+		const capped = await readFileCapped(filePath, st.size);
+		raw = capped.raw;
+		oversized = capped.oversized;
 	} catch (err) {
 		if ((err as NodeJS.ErrnoException).code === "ENOENT") {
 			return { list: [], skipped: 0, unreadable: false, capped: false };
@@ -113,13 +138,17 @@ export async function readStore(dir: string, notify?: (msg: string) => void): Pr
 		}
 		return { list: [], skipped: 0, unreadable: true, capped: false };
 	}
+	if (oversized && !warnedOversized.has(dir)) {
+		warnedOversized.add(dir);
+		notify?.(`${filePath} exceeds ${MAX_READ_BYTES} bytes; only the first ${MAX_READ_BYTES} bytes were read.`);
+	}
 	const { list, skipped, capped } = parseJsonl(raw);
 	if ((skipped > 0 || capped) && !warnedBadLines.has(dir)) {
 		warnedBadLines.add(dir);
 		if (skipped > 0) notify?.(`Skipped ${skipped} malformed line(s) in ${filePath}.`);
 		if (capped) notify?.(`${filePath} exceeds ${MAX_READ_LINES} lines; only the first ${MAX_READ_LINES} were read.`);
 	}
-	return { list, skipped, unreadable: false, capped };
+	return { list, skipped, unreadable: false, capped: capped || oversized };
 }
 
 // mtime-cached read path used only for injection (never writes).
