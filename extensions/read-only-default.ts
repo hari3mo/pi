@@ -76,13 +76,6 @@ export default function (pi: ExtensionAPI) {
 		default: false,
 	});
 
-	function updateStatus(ctx: ExtensionContext): void {
-		ctx.ui.setStatus(
-			"read-only-mode",
-			readOnly ? ctx.ui.theme.fg("warning", "🔒 read-only") : ctx.ui.theme.fg("accent", "✎ write"),
-		);
-	}
-
 	function persist(): void {
 		pi.appendEntry<ReadOnlyState>("read-only-mode", { readOnly, toolsBeforeReadOnly });
 	}
@@ -93,7 +86,6 @@ export default function (pi: ExtensionAPI) {
 			toolsBeforeReadOnly = pi.getActiveTools();
 		}
 		pi.setActiveTools(toolsBeforeReadOnly.filter((name) => !WRITE_TOOLS.has(name)));
-		updateStatus(ctx);
 		persist();
 		if (notify) ctx.ui.notify("Read-only mode enabled. edit/write tools disabled, bash restricted.", "info");
 	}
@@ -102,7 +94,6 @@ export default function (pi: ExtensionAPI) {
 		readOnly = false;
 		pi.setActiveTools(toolsBeforeReadOnly ?? pi.getActiveTools());
 		toolsBeforeReadOnly = undefined;
-		updateStatus(ctx);
 		persist();
 		if (notify) ctx.ui.notify("Write mode enabled. Full tool access restored for this session.", "info");
 	}
@@ -178,6 +169,5 @@ export default function (pi: ExtensionAPI) {
 			toolsBeforeReadOnly = pi.getActiveTools();
 			pi.setActiveTools(toolsBeforeReadOnly.filter((name) => !WRITE_TOOLS.has(name)));
 		}
-		updateStatus(ctx);
 	});
 }
