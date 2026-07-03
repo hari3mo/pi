@@ -46,7 +46,6 @@ import type {
 	ExtensionAPI,
 	ExtensionCommandContext,
 } from "@earendil-works/pi-coding-agent";
-import { matchesKey } from "@earendil-works/pi-tui";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -497,20 +496,8 @@ class BlackHoleComponent {
 	}
 
 	handleInput(data: string): void {
-		if (this.splash) {
-			// Any key collapses the intro back into the editor.
-			this.close();
-			return;
-		}
-		if (matchesKey(data, "escape") || data === "q" || data === "Q") {
-			this.close();
-			return;
-		}
-		// Key-repeat while SPACE is held keeps the feed alive, like the
-		// press-and-hold feed on the site.
-		if (data === " ") {
-			this.feedUntil = Date.now() + 350;
-		}
+		// Any key — splash or /galaxy — collapses the view back into the editor.
+		this.close();
 	}
 
 	invalidate(): void {
