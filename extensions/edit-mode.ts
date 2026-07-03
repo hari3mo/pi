@@ -4,7 +4,7 @@
  * Toggles between "edit" (writes apply automatically) and "read" (writes
  * ask for confirmation) modes for the built-in `write`/`edit` tools.
  *
- * - Ctrl+` or /mode to toggle
+ * - Ctrl+Tab or /mode to toggle
  * - /mode read | /mode edit to set explicitly
  * - --read flag to start in read mode
  */
@@ -47,7 +47,7 @@ export default function (pi: ExtensionAPI): void {
 		}
 	}
 
-	pi.registerShortcut(Key.ctrl("`"), {
+	pi.registerShortcut(Key.ctrl("tab"), {
 		description: "Toggle read/edit mode",
 		handler: async (ctx) => toggle(ctx),
 	});
