@@ -1,9 +1,7 @@
 /**
  * Undo Extension: /undo reverts conversation context AND file changes to
  * the state right before the user's last prompt. Repeated /undo walks back
- * one prompt at a time. /redo reverses the most recent /undo (or /revert).
- * /revert restores files to the state at session start, without touching
- * conversation context.
+ * one prompt at a time. /redo reverses the most recent /undo.
  *
  * On every before_agent_start we snapshot the full working tree (tracked +
  * untracked, respecting .gitignore) into a git commit object via a
@@ -15,10 +13,6 @@
  * it, navigates back to it, restores files from that commit, and records an
  * "undo-redo" entry (with a snapshot of the pre-undo state and the leaf we
  * came from) so /redo can reverse the operation.
- *
- * On session_start, if no "revert-baseline" custom entry exists yet for
- * this session, we snapshot the working tree once and persist it. /revert
- * restores files back to that baseline (files only; conversation untouched).
  */
 
 import { randomUUID } from "node:crypto";
@@ -30,7 +24,6 @@ import { join } from "node:path";
 import type {
 	CustomEntry,
 	ExtensionAPI,
-	ExtensionCommandContext,
 	SessionEntry,
 	SessionMessageEntry,
 } from "@earendil-works/pi-coding-agent";
@@ -45,11 +38,6 @@ interface RedoData {
 	sha: string | null;
 	repoRoot: string | null;
 	oldLeafId: string | null;
-}
-
-interface RevertBaselineData {
-	sha: string | null;
-	repoRoot: string | null;
 }
 
 interface ExecLikeResult {
@@ -204,21 +192,6 @@ export default function (pi: ExtensionAPI) {
 		return undefined;
 	}
 
-	/** Find the session's "revert-baseline" entry, preferring one on the current branch. */
-	function findRevertBaseline(ctx: ExtensionCommandContext): CustomEntry<RevertBaselineData> | undefined {
-		for (const entry of ctx.sessionManager.getBranch()) {
-			if (entry.type === "custom" && entry.customType === "revert-baseline") {
-				return entry as CustomEntry<RevertBaselineData>;
-			}
-		}
-		for (const entry of ctx.sessionManager.getEntries()) {
-			if (entry.type === "custom" && entry.customType === "revert-baseline") {
-				return entry as CustomEntry<RevertBaselineData>;
-			}
-		}
-		return undefined;
-	}
-
 	function extractPromptText(content: string | (TextContent | ImageContent)[]): string {
 		if (typeof content === "string") return content;
 		return content
@@ -239,27 +212,6 @@ export default function (pi: ExtensionAPI) {
 			pi.appendEntry<CheckpointData>("undo-checkpoint", { sha, repoRoot });
 		} catch {
 			pi.appendEntry<CheckpointData>("undo-checkpoint", { sha: null, repoRoot: null });
-		}
-	});
-
-	// Capture a one-time session-start baseline for /revert.
-	// Accepted limitation: legacy sessions (created before this extension) get
-	// their baseline at first load; a fork taken before that point re-captures
-	// a fork-time baseline instead of the true session-start state.
-	pi.on("session_start", async (_event, ctx) => {
-		try {
-			const hasBaseline = ctx.sessionManager
-				.getEntries()
-				.some((entry) => entry.type === "custom" && entry.customType === "revert-baseline");
-			if (hasBaseline) return;
-
-			const repoRoot = await getRepoRoot(ctx.cwd);
-			if (!repoRoot) return;
-
-			const { sha } = await snapshot(ctx.cwd);
-			pi.appendEntry<RevertBaselineData>("revert-baseline", { sha, repoRoot });
-		} catch {
-			// Never break startup.
 		}
 	});
 
@@ -427,44 +379,4 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	pi.registerCommand("revert", {
-		description: "Revert all file changes made this session back to session-start state (files only)",
-		handler: async (_args, ctx) => {
-			await ctx.waitForIdle();
-
-			const baseline = findRevertBaseline(ctx);
-			if (!baseline?.data?.sha || !baseline.data.repoRoot) {
-				ctx.ui.notify("No session-start snapshot available", "warning");
-				return;
-			}
-			const { sha: baselineSha, repoRoot } = baseline.data;
-
-			if (ctx.hasUI) {
-				const ok = await ctx.ui.confirm(
-					"Revert all files?",
-					"This rewrites the working tree back to session start. It does NOT change the conversation.",
-				);
-				if (!ok) return;
-			}
-
-			// Snapshot the current (pre-revert) tree so /redo can restore it later.
-			const preRevertSnapshot = await snapshot(ctx.cwd);
-			// Record the current leaf so /redo chains past this entry instead of
-			// finding it forever (context content is unchanged by that hop).
-			const revertLeafId = ctx.sessionManager.getLeafId();
-			pi.appendEntry<RedoData>("undo-redo", {
-				sha: preRevertSnapshot.sha,
-				repoRoot: preRevertSnapshot.repoRoot ?? repoRoot,
-				oldLeafId: revertLeafId,
-			});
-
-			try {
-				await restoreFiles(repoRoot, baselineSha);
-				ctx.ui.notify("Reverted all files to session-start state", "info");
-			} catch (err) {
-				const message = err instanceof Error ? err.message : String(err);
-				ctx.ui.notify(`Revert failed: ${message}`, "error");
-			}
-		},
-	});
 }
