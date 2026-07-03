@@ -1,23 +1,26 @@
 /**
  * Thinking Status Extension
  *
- * Shows the current thinking level in the footer status bar,
- * updating whenever it changes (keybinding, model switch, pi.setThinkingLevel()).
+ * Shows the current thinking level in the footer status bar. Demonstrates
+ * `pi.getThinkingLevel()` for initial state and the `thinking_level_select`
+ * event for live updates.
  */
 
-import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+
+function formatThinkingStatus(ctx: { ui: { theme: { fg: (name: string, text: string) => string } } }, level: string) {
+	return ctx.ui.theme.fg("dim", `🧠 ${level}`);
+}
 
 export default function (pi: ExtensionAPI) {
-	function updateStatus(ctx: ExtensionContext) {
+	pi.on("session_start", async (_event, ctx) => {
+		if (!ctx.hasUI) return;
 		const level = pi.getThinkingLevel();
-		if (level === "off") {
-			ctx.ui.setStatus("thinking", undefined);
-		} else {
-			ctx.ui.setStatus("thinking", ctx.ui.theme.fg("muted", `🧠 ${level}`));
-		}
-	}
+		ctx.ui.setStatus("thinking", formatThinkingStatus(ctx, level));
+	});
 
-	pi.on("thinking_level_select", async (_event, ctx) => updateStatus(ctx));
-	pi.on("model_select", async (_event, ctx) => updateStatus(ctx));
-	pi.on("session_start", async (_event, ctx) => updateStatus(ctx));
+	pi.on("thinking_level_select", async (event, ctx) => {
+		if (!ctx.hasUI) return;
+		ctx.ui.setStatus("thinking", formatThinkingStatus(ctx, event.level));
+	});
 }
