@@ -285,16 +285,22 @@ async function interactiveList(ctx: ExtensionCommandContext): Promise<void> {
 export function registerHeuristicsCommand(pi: ExtensionAPI): void {
 	pi.registerCommand("heuristics", {
 		description: "Manage learned heuristics (durable cross-session lessons)",
-		getArgumentCompletions: (argumentPrefix: string): AutocompleteItem[] | null => {
+		getArgumentCompletions: async (argumentPrefix: string): Promise<AutocompleteItem[] | null> => {
 			const hasSpace = /\s/.test(argumentPrefix);
 			if (!hasSpace) {
 				const items = SUBCOMMANDS.map((s) => ({ value: s, label: s }));
 				const filtered = items.filter((i) => i.value.startsWith(argumentPrefix));
 				return filtered.length > 0 ? filtered : null;
 			}
-			const [sub] = splitFirst(argumentPrefix);
+			const [sub, idPrefix] = splitFirst(argumentPrefix);
 			if (!ID_SUBCOMMANDS.has(sub.toLowerCase())) return null;
-			return null; // id completions require an async store read; see command.ts limitations note
+			// No ctx here (getArgumentCompletions has no cwd/trust access), so only the
+			// global store — never trust-gated — is safe to read for completions.
+			const { list } = await readStore(globalDir());
+			const items = list
+				.filter((h) => h.id.startsWith(idPrefix))
+				.map((h) => ({ value: h.id, label: `${h.id} — ${truncate(h.text, 50)}` }));
+			return items.length > 0 ? items : null;
 		},
 		handler: async (args: string, ctx: ExtensionCommandContext) => {
 			const trimmed = args.trim();
