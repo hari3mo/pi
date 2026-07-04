@@ -53,8 +53,10 @@ human-editable (one record per line).
 
 Write path `mutateStore(dir, fn)` — used by capture/reinforce/delete/edit/evict/promote:
 1. Acquire lock: `fs.open(dir/.lock, "wx")`. On EEXIST: if lock mtime older than
-   STALE_MS (10000) → unlink & steal; else backoff 100ms, retry ≤20× (~2s), then fail
-   loudly (user-visible warning; no silent corruption).
+   STALE_MS (10000) → unlink & steal; else backoff 100ms, retry ≤130× (~13s), then
+   fail loudly (user-visible warning; no silent corruption). The retry budget
+   deliberately exceeds STALE_MS so an orphaned lock is always stolen within one
+   acquire call rather than the writer giving up first and dropping the lesson.
 2. Read + parse jsonl (skip bad lines, dedup by id).
 3. Apply mutation in memory.
 4. Best-effort copy current jsonl → `.bak`.
@@ -267,7 +269,7 @@ without one, e.g. pre-existing stores). `stats` adds a per-basis count line per 
   signals), registerTool(learn_heuristic), registerCommand(heuristics).
 - `schema.ts` (~150) — Heuristic type, consts (CAP_GLOBAL=200, CAP_PROJECT=100,
   MAX_INJECT_CHARS=4000, MAX_INJECT_ITEMS=50, MAX_HEURISTIC_CHARS=400, ORCH_RESERVE=900,
-  STALE_MS=10000, HALFLIFE_DAYS=60, JACCARD_NEAR=0.80, JACCARD_MERGE=0.90, CHURN_WINDOW=6,
+  STALE_MS=10000, LOCK_MAX_ATTEMPTS=130 (budget>STALE_MS), HALFLIFE_DAYS=60, JACCARD_NEAR=0.80, JACCARD_MERGE=0.90, CHURN_WINDOW=6,
   CHURN_CAP=20, BUILDER_WATCH_CALLS=2, BUILDER_ROLES=["builder"]), StringEnums, newId,
   normalize, tokens, jaccard, scoreOf.
 - `store.ts` (~300) — path resolution (globalDir via getAgentDir, projectRoot walk,
