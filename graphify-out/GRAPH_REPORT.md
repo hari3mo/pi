@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 196 files · ~156,926 words
+- 196 files · ~157,598 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `f1d86810`
+- Built from commit: `4d16846c`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -372,15 +372,15 @@ Cohesion: 0.29
 Nodes (6): cases, here, parseQaVerdict, src, start, stripped
 
 ## Knowledge Gaps
-- **603 isolated node(s):** `PKG`, `jiti`, `cases`, `AGENT_DIR`, `VALIDATOR` (+598 more)
+- **603 isolated node(s):** `AGENT_DIR`, `PKG`, `jiti`, `cases`, `VALIDATOR` (+598 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.994117296)
-- `~/.pi/agent config repo overview` (3× useful, score=2.994087199)
+- `Config Index (semantic audit map)` (3× useful, score=2.993850971)
+- `~/.pi/agent config repo overview` (3× useful, score=2.993820877)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -391,7 +391,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.322) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
   _High betweenness centrality (0.252) - this node is a cross-community bridge._
-- **What connects `PKG`, `jiti`, `cases` to the rest of the system?**
+- **What connects `AGENT_DIR`, `PKG`, `jiti` to the rest of the system?**
   _636 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
