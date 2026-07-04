@@ -74,6 +74,36 @@
   },
   "nodes": [
     {
+      "label": "minimal-ui.ts",
+      "file_type": "code",
+      "source_file": "extensions/minimal-ui.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_minimal_ui",
+      "community": 28,
+      "norm_label": "minimal-ui.ts"
+    },
+    {
+      "label": "applyMinimalChrome()",
+      "file_type": "code",
+      "source_file": "extensions/minimal-ui.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "extensions_minimal_ui_applyminimalchrome",
+      "community": 28,
+      "norm_label": "applyminimalchrome()"
+    },
+    {
+      "label": "restoreDefaults()",
+      "file_type": "code",
+      "source_file": "extensions/minimal-ui.ts",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "extensions_minimal_ui_restoredefaults",
+      "community": 28,
+      "norm_label": "restoredefaults()"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
@@ -1640,36 +1670,6 @@
       "community": 0,
       "norm_label": "demotetoproject()",
       "id": "extensions_heuristics_store_demotetoproject"
-    },
-    {
-      "label": "minimal-ui.ts",
-      "file_type": "code",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 49,
-      "norm_label": "minimal-ui.ts",
-      "id": "extensions_minimal_ui"
-    },
-    {
-      "label": "applyMinimalChrome()",
-      "file_type": "code",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 49,
-      "norm_label": "applyminimalchrome()",
-      "id": "extensions_minimal_ui_applyminimalchrome"
-    },
-    {
-      "label": "restoreDefaults()",
-      "file_type": "code",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L95",
-      "_origin": "ast",
-      "community": 49,
-      "norm_label": "restoredefaults()",
-      "id": "extensions_minimal_ui_restoredefaults"
     },
     {
       "label": "model-awareness.ts",
@@ -4167,7 +4167,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "model-email.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email"
     },
@@ -4177,7 +4177,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_fs"
     },
@@ -4187,7 +4187,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_path"
     },
@@ -4197,7 +4197,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "{ checkpy, pyblock, tasks }",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_checkpy_pyblock_tasks"
     },
@@ -4207,7 +4207,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "skill",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_skill"
     },
@@ -4217,7 +4217,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "email",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_email"
     },
@@ -4227,7 +4227,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "models",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_models"
     },
@@ -4237,7 +4237,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "kv",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_kv"
     },
@@ -4247,7 +4247,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "call()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_call"
     },
@@ -4357,7 +4357,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 34,
+      "community": 6,
       "norm_label": "pyblock()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_pyblock"
     },
@@ -8785,7 +8785,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8795,7 +8795,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8805,7 +8805,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9505,7 +9505,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9515,7 +9515,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9525,7 +9525,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9535,7 +9535,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 56,
+      "community": 15,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -11831,7 +11831,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 28,
+      "community": 34,
       "norm_label": "pi-tui scrollback-wipe fix",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_patch"
@@ -11845,7 +11845,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 28,
+      "community": 34,
       "norm_label": "dorender off-screen clamp",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_clamp"
@@ -11859,7 +11859,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 28,
+      "community": 34,
       "norm_label": "viewport reflow on content collapse",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_viewport_reflow"
@@ -12355,6 +12355,36 @@
     }
   ],
   "links": [
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_config_index_audit_map",
+      "target": "extensions_minimal_ui"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/minimal-ui.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "extensions_minimal_ui",
+      "target": "extensions_minimal_ui_applyminimalchrome",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/minimal-ui.ts",
+      "source_location": "L90",
+      "weight": 1.0,
+      "source": "extensions_minimal_ui",
+      "target": "extensions_minimal_ui_restoredefaults",
+      "confidence_score": 1.0
+    },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
@@ -13012,17 +13042,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_minimal_ui",
-      "target": "extensions_lib_format"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "extensions/session-receipt.ts",
       "source_location": "L15",
       "weight": 1.0,
@@ -13040,28 +13059,6 @@
       "confidence_score": 1.0,
       "source": "extensions_session_receipt",
       "target": "extensions_lib_format_fmtduration"
-    },
-    {
-      "relation": "imports",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_minimal_ui",
-      "target": "extensions_lib_format_fmttokens"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_minimal_ui_applyminimalchrome",
-      "target": "extensions_lib_format_fmttokens"
     },
     {
       "relation": "imports",
@@ -15946,36 +15943,6 @@
       "confidence_score": 1.0,
       "source": "extensions_heuristics_store_setpinned",
       "target": "extensions_heuristics_store_mutatestore"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_minimal_ui"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_minimal_ui",
-      "target": "extensions_minimal_ui_applyminimalchrome"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/minimal-ui.ts",
-      "source_location": "L95",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_minimal_ui",
-      "target": "extensions_minimal_ui_restoredefaults"
     },
     {
       "relation": "references",
@@ -29437,5 +29404,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "1447dace2f754f101c5a7181dc686530e34d93ea"
+  "built_at_commit": "5b04000707ef5563a7967a3d9157bff4dae0915d"
 }
