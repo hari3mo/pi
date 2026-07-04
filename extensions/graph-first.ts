@@ -123,6 +123,8 @@ export function classifyStructureGrep(command: string): GrepClassification {
 
 	let repoWide = false;
 	let pattern: string | undefined;
+	const globValues: string[] = []; // --include/--glob/--iglob values (target guard)
+	const pathArgs: string[] = []; // positional path args after the pattern
 	for (let i = gi + 1; i < tokens.length; i++) {
 		const tok = tokens[i];
 		if (tok.startsWith("-") && tok !== "-") {
@@ -130,17 +132,33 @@ export function classifyStructureGrep(command: string): GrepClassification {
 				repoWide = true;
 				continue;
 			}
-			if (tok.startsWith("--include")) {
-				repoWide = true; // covers --include and --include=GLOB
+			// --flag=value forms: capture the regexp pattern and include/glob globs.
+			const eq = tok.indexOf("=");
+			if (eq !== -1) {
+				const name = tok.slice(0, eq);
+				const val = tok.slice(eq + 1);
+				if (name === "--regexp") {
+					if (pattern === undefined) pattern = val;
+				} else if (name === "--include" || name === "--glob" || name === "--iglob") {
+					repoWide = true;
+					globValues.push(val);
+				}
+				continue; // any other --flag=value is self-contained
+			}
+			// --glob/--iglob/-g take their glob in the NEXT token.
+			if (tok === "-g" || tok === "--glob" || tok === "--iglob") {
+				repoWide = true;
+				if (i + 1 < tokens.length) globValues.push(tokens[i + 1]);
+				i++;
+				continue;
+			}
+			if (tok === "--include") {
+				repoWide = true; // grep --include needs '='; bare form is inert
 				continue;
 			}
 			if (tok === "-e" || tok === "--regexp") {
 				if (pattern === undefined && i + 1 < tokens.length) pattern = tokens[i + 1];
 				i++;
-				continue;
-			}
-			if (tok.startsWith("--regexp=")) {
-				if (pattern === undefined) pattern = tok.slice("--regexp=".length);
 				continue;
 			}
 			if (VALUE_FLAGS.has(tok)) {
@@ -151,20 +169,37 @@ export function classifyStructureGrep(command: string): GrepClassification {
 			if (/^-[A-Za-z]+$/.test(tok) && /[rR]/.test(tok)) repoWide = true;
 			continue; // boolean / unknown flag
 		}
-		if (pattern === undefined) {
-			pattern = tok; // first positional is the search pattern; rest are paths
-		}
+		if (pattern === undefined) pattern = tok; // first positional is the search pattern
+		else pathArgs.push(tok); // subsequent positionals are search paths
 	}
 
 	if (pattern === undefined) return none;
 
+	// --- TARGET guard (a): a search scoped to a non-code context is content. ---
+	// A doc/log/text glob (*.md/*.txt/*.log/*.rst) or a path under docs//logs//
+	// *.log/README* means the user is grepping prose — pass untouched. This is the
+	// primary defense: a blocked legit content grep is the worst failure.
+	const DOC_EXT_RE = /\.(?:md|txt|log|rst)$/i;
+	const nonCodeGlob = (g: string): boolean => DOC_EXT_RE.test(g);
+	const nonCodePath = (p: string): boolean =>
+		DOC_EXT_RE.test(p) || /(?:^|\/)(?:docs|logs)(?:\/|$)/.test(p) || /(?:^|\/)README[^/]*$/i.test(p);
+	if (globValues.some(nonCodeGlob) || pathArgs.some(nonCodePath)) return none;
+
 	// Structure keyword anchored at the start of the pattern (after regex ^).
 	const normalized = pattern.replace(/^[\s^]+/, "");
+	const words = normalized.split(/\s+/).filter(Boolean);
 	const kw = STRUCTURE_KEYWORD_RE.exec(normalized);
 	if (kw) {
+		// PROSE guard (b): a ≥3-word pattern is a sentence, not a declaration
+		// ("class action lawsuit") — content, pass.
+		if (words.length >= 3) return none;
+		// Guard (c): the keyword must be immediately followed by a real identifier
+		// to be a symbol search ("def my_func"); a bare keyword or keyword+non-id is
+		// ambiguous — pass. (Non-code targets already returned above via guard a.)
 		const after = normalized.slice(kw[0].length).replace(/^[\s^\\b]+/, "");
-		const id = (/[A-Za-z_][A-Za-z0-9_]*/.exec(after)?.[0] ?? normalized).slice(0, 48);
-		return { flagged: true, identifier: id };
+		const idMatch = /^[A-Za-z_][A-Za-z0-9_]*/.exec(after);
+		if (!idMatch) return none;
+		return { flagged: true, identifier: idMatch[0].slice(0, 48) };
 	}
 
 	// A bare identifier searched repo-wide. Exclude all-caps content markers
