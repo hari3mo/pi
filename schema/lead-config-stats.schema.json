@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/lead-config-stats.schema.json",
+  "title": "Lead-config per-session stats",
+  "description": "graphify-out/.lead_config_stats.json — append-only ring (~50 records) of extensions/lead-config.ts's per-session model-detection stats. Derived/machine-local (under gitignored graphify-out/), optional. Malleable: extra fields allowed so the extension can grow the record. audit-pipelines.py:check_lead_profile_coverage() WARNs when a model id repeatedly resolves to the fallback profile across recorded sessions (roster drift — add a profile or extend a match pattern).",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "required": ["ts", "models", "fallbacks"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "ts": { "type": "integer", "minimum": 0 },
+      "models": { "type": "array", "items": { "type": "string" }, "description": "Distinct model ids seen this session." },
+      "profiles": { "type": "array", "items": { "type": "string" }, "description": "Distinct profile names applied this session." },
+      "fallbacks": { "type": "integer", "minimum": 0, "description": "Count of prompts that resolved to the fallback profile." },
+      "fallbackModels": { "type": "array", "items": { "type": "string" }, "description": "Distinct model ids that resolved to the fallback profile." }
+    }
+  }
+}

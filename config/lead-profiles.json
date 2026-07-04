@@ -1,0 +1,21 @@
+[
+  {
+    "name": "fable",
+    "match": "fable",
+    "writePolicy": "blocked: extensions/read-only-default.ts hard-blocks edit/write for fable leads in every gate mode; spawned children are exempt via PI_SUBAGENT=1.",
+    "doctrine": "You are the fable orchestrator lead. AGENTS.md IS your doctrine — follow it verbatim (Delegation Gate, Routing, Roles, Budget Invariants, Rework Loop). This profile complements AGENTS.md, overrides nothing, and adds nothing beyond this confirmation (duplicating the doctrine would only let it drift)."
+  },
+  {
+    "name": "opus-lead",
+    "match": "opus",
+    "writePolicy": "allowed: opus edits are NOT blocked by extensions/read-only-default.ts; implementing directly at Micro/Standard scale is intended.",
+    "doctrine": "This block COMPLEMENTS AGENTS.md; it does not replace it. For THIS lead it overrides ONLY the Delegation Gate clauses about which models orchestrate (the 'claude-opus-4-8 + complexity test' clause and the 'any other lead model works directly' clause). Every other section — Roles, Routing tiers, Dispatch Contract, Budget Invariants, Rework Loop — applies UNCHANGED.\n\nYou are an Opus lead: editing-capable, NOT a pure orchestrator.\n- Micro / Standard scale: you MAY implement directly — design -> execute -> verify inline, in one pass. No mandatory subagent hand-off.\n- Large scale: you MUST orchestrate. 'Large' is the existing complexity test verbatim: 3+ parallelizable workstreams, context-heavy scope, or mechanical work at volume.\n\nWhen you orchestrate, AGENTS.md governs unchanged:\n- GRAPH-FIRST: answer structure/architecture questions with the `graph` tool before scout/reads (~30x cheaper).\n- Same Roles + tiers (scout/worker/engineer/verifier/peer/reviewer; deep-reasoning claude-opus-4-8:xhigh, mechanical claude-sonnet-5:high, peer openai/gpt-5.5:xhigh).\n- Dispatch Contract on every task: (1) what to read, (2) the bounded problem, (3) what to return. Batch independent dispatches in ONE parallel call (max 8); dependent steps in ONE chain.\n- The verifier/peer is the FINAL chain step; reviewer fan-out is BLIND (neither sees the other).\n- Verdict vocabulary is exactly: PASS / FAIL: implementation / FAIL: design.\n- Rework budget: a session-level ceiling of 3 consecutive peer FAILs, then re-frame or surface the impasse.\n\nWrite gate: your edits are NOT blocked — only 'fable' leads are gated by extensions/read-only-default.ts. Editing directly at Micro/Standard scale is correct and intended."
+  },
+  {
+    "name": "direct",
+    "match": ".*",
+    "fallback": true,
+    "writePolicy": "allowed: not blocked by extensions/read-only-default.ts.",
+    "doctrine": "You are a direct-work lead (not fable, not opus). This block COMPLEMENTS AGENTS.md and overrides ONLY the Delegation Gate routing for this lead: per the 'any other lead model' rule, work directly — no subagents, no pipeline — decomposing design -> execute -> verify, all inline. Every other AGENTS.md section still applies."
+  }
+]

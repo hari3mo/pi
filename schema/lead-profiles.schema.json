@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/lead-profiles.schema.json",
+  "title": "Model-aware lead profiles",
+  "description": "config/lead-profiles.json — the ordered list of lead-doctrine profiles applied per active model by extensions/lead-config.ts. First profile whose `match` (regex, or literal substring if the regex fails to compile) tests true against the active model id wins; non-`fallback` profiles are tried first, then the `fallback` profile as the catch-all. The matched profile's `doctrine` is appended to the system prompt every prompt. Malleable: extra fields allowed so the extension can grow a profile without breaking validation.",
+  "type": "array",
+  "minItems": 1,
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "required": ["name", "match", "doctrine"],
+    "properties": {
+      "name": { "type": "string", "minLength": 1, "description": "Profile id shown in the injected header." },
+      "match": { "type": "string", "description": "Regex tested against the active model id (falls back to substring .includes if it will not compile). Ignored for the fallback profile." },
+      "doctrine": { "type": "string", "description": "Lead-doctrine text injected into the system prompt for this profile. Should state that it complements AGENTS.md and which sections it overrides." },
+      "writePolicy": { "type": "string", "description": "Informational note on whether this lead's edits are gated by extensions/read-only-default.ts. Not enforced here." },
+      "fallback": { "type": "boolean", "description": "True marks the catch-all profile applied when no non-fallback profile matches a usable model id." }
+    }
+  }
+}

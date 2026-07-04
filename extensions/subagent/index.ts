@@ -782,8 +782,13 @@ async function showActiveSubagentPanel(ctx: ExtensionContext): Promise<void> {
 			{ overlay: true, overlayOptions: { anchor: "right-center", width: "80%", maxHeight: "85%", margin: 1 } },
 		);
 	} finally {
-		// Backstop: dispose() also runs when the TUI closes the overlay; both paths
-		// are idempotent, so the listener + spinner timer cannot leak.
+		// Normal path (Esc/q → done()): pi resolves the custom promise and this
+		// finally disposes; dispose() is idempotent. External teardown
+		// (resetExtensionUI → tui.hideOverlay()) never resolves this promise nor
+		// calls dispose(), so the finally never runs there — that gap is covered
+		// inside the panel: the spinner tick's orphan self-check disposes once
+		// render() stops being called, which clears the timer and unregisters the
+		// data listener. See ActiveSubagentPanel.syncSpinnerTimer().
 		panel?.dispose();
 	}
 }
