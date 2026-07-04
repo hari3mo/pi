@@ -74,14 +74,74 @@
   },
   "nodes": [
     {
+      "label": "self-audit.ts",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_self_audit",
+      "community": 52,
+      "norm_label": "self-audit.ts"
+    },
+    {
+      "label": "VALIDATOR",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "extensions_self_audit_validator",
+      "community": 52,
+      "norm_label": "validator"
+    },
+    {
+      "label": "PIPELINE_AUDIT",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "extensions_self_audit_pipeline_audit",
+      "community": 52,
+      "norm_label": "pipeline_audit"
+    },
+    {
+      "label": "AuditResult",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "extensions_self_audit_auditresult",
+      "community": 52,
+      "norm_label": "auditresult"
+    },
+    {
+      "label": "runScript()",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "extensions_self_audit_runscript",
+      "community": 52,
+      "norm_label": "runscript()"
+    },
+    {
+      "label": "runValidator()",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "extensions_self_audit_runvalidator",
+      "community": 52,
+      "norm_label": "runvalidator()"
+    },
+    {
       "label": "check-parse-verdict.mjs",
       "file_type": "code",
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict",
       "community": 68,
-      "norm_label": "check-parse-verdict.mjs"
+      "norm_label": "check-parse-verdict.mjs",
+      "id": "scripts_check_parse_verdict"
     },
     {
       "label": "here",
@@ -89,9 +149,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_here",
       "community": 68,
-      "norm_label": "here"
+      "norm_label": "here",
+      "id": "scripts_check_parse_verdict_here"
     },
     {
       "label": "src",
@@ -99,9 +159,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_src",
       "community": 68,
-      "norm_label": "src"
+      "norm_label": "src",
+      "id": "scripts_check_parse_verdict_src"
     },
     {
       "label": "start",
@@ -109,9 +169,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_start",
       "community": 68,
-      "norm_label": "start"
+      "norm_label": "start",
+      "id": "scripts_check_parse_verdict_start"
     },
     {
       "label": "stripped",
@@ -119,9 +179,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_stripped",
       "community": 68,
-      "norm_label": "stripped"
+      "norm_label": "stripped",
+      "id": "scripts_check_parse_verdict_stripped"
     },
     {
       "label": "parseQaVerdict",
@@ -129,9 +189,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L49",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_parseqaverdict",
       "community": 68,
-      "norm_label": "parseqaverdict"
+      "norm_label": "parseqaverdict",
+      "id": "scripts_check_parse_verdict_parseqaverdict"
     },
     {
       "label": "cases",
@@ -139,9 +199,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "scripts_check_parse_verdict_cases",
       "community": 68,
-      "norm_label": "cases"
+      "norm_label": "cases",
+      "id": "scripts_check_parse_verdict_cases"
     },
     {
       "label": "index.ts",
@@ -1920,66 +1980,6 @@
       "community": 35,
       "norm_label": "execute()",
       "id": "extensions_read_only_default_execute"
-    },
-    {
-      "label": "self-audit.ts",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "self-audit.ts",
-      "id": "extensions_self_audit"
-    },
-    {
-      "label": "VALIDATOR",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "validator",
-      "id": "extensions_self_audit_validator"
-    },
-    {
-      "label": "PIPELINE_AUDIT",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L27",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "pipeline_audit",
-      "id": "extensions_self_audit_pipeline_audit"
-    },
-    {
-      "label": "AuditResult",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L30",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "auditresult",
-      "id": "extensions_self_audit_auditresult"
-    },
-    {
-      "label": "runScript()",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L38",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "runscript()",
-      "id": "extensions_self_audit_runscript"
-    },
-    {
-      "label": "runValidator()",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "runvalidator()",
-      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "session-receipt.ts",
@@ -12438,12 +12438,73 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_auditresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_pipeline_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_runscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_runvalidator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "extensions_self_audit_runvalidator",
+      "target": "extensions_self_audit_runscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_cases",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_cases"
     },
     {
       "relation": "contains",
@@ -12451,9 +12512,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_here",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_here"
     },
     {
       "relation": "contains",
@@ -12461,9 +12522,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_parseqaverdict",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_parseqaverdict"
     },
     {
       "relation": "contains",
@@ -12471,9 +12532,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_src",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_src"
     },
     {
       "relation": "contains",
@@ -12481,9 +12542,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_start",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_start"
     },
     {
       "relation": "contains",
@@ -12491,9 +12552,9 @@
       "source_file": "scripts/check-parse-verdict.mjs",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_parse_verdict",
-      "target": "scripts_check_parse_verdict_stripped",
-      "confidence_score": 1.0
+      "target": "scripts_check_parse_verdict_stripped"
     },
     {
       "relation": "references",
@@ -16297,67 +16358,6 @@
       "confidence_score": 1.0,
       "source": "extensions_read_only_default_execute",
       "target": "extensions_read_only_default_setmode"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L27",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_pipeline_audit"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L38",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runscript"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit_runvalidator",
-      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "references",
@@ -29544,5 +29544,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "8a58ba86dabcf2f7b24f1a3aae19eaa937aaef5f"
+  "built_at_commit": "dc82c11faacee293aeb1ed38b5b25cd3657b1d2c"
 }

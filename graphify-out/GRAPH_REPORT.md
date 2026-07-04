@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 194 files · ~155,725 words
+- 194 files · ~155,804 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8a58ba86`
+- Built from commit: `dc82c11f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -390,26 +390,26 @@ Cohesion: 0.40
 Nodes (5): ponytail: ceiling-comment convention, Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, OpenClaw copy of ponytail-debt skill (generated), OpenCode /ponytail-debt command, ponytail-debt skill — ponytail: comment debt ledger
 
 ## Knowledge Gaps
-- **598 isolated node(s):** `here`, `src`, `start`, `stripped`, `parseQaVerdict` (+593 more)
+- **598 isolated node(s):** `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult`, `here`, `src` (+593 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.994903437)
-- `~/.pi/agent config repo overview` (3× useful, score=2.994873332)
+- `Config Index (semantic audit map)` (3× useful, score=2.994823652)
+- `~/.pi/agent config repo overview` (3× useful, score=2.994793548)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain.json`, `porcelain-light.json`, `Ponytail Ruleset & Mirrors`, `porcelain.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.222) - this node is a cross-community bridge._
+  _High betweenness centrality (0.239) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Ponytail Ruleset & Mirrors` to `Example Generator & LOC Metric`, `Subagent Dispatch Tool`?**
-  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+  _High betweenness centrality (0.085) - this node is a cross-community bridge._
 - **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`, `Compact always-on ruleset (AGENTS.md)`, `Ponytail Ruleset & Mirrors`, `ponytail-debt skill — ponytail: comment debt ledger`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **What connects `here`, `src`, `start` to the rest of the system?**
+  _High betweenness centrality (0.062) - this node is a cross-community bridge._
+- **What connects `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult` to the rest of the system?**
   _631 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._

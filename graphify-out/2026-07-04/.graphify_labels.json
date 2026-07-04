@@ -58,13 +58,20 @@
   "56": "queue-as-followup.ts",
   "57": "Statusline Script",
   "58": "Autocommit Script",
+  "59": "Single-shot benchmark (promptfoo, 5 tasks x 3 models)",
   "60": "Publish Workflow",
   "61": "check-versions.js",
   "62": "execute",
   "63": "commands.test.js",
   "64": "graphify-bridge.ts",
   "65": "copilot-plugin.test.js",
+  "66": "Compact always-on ruleset (AGENTS.md)",
+  "67": "ponytail skill (lazy senior dev mode)",
+  "68": "check-parse-verdict.mjs",
+  "69": "porcelain.json",
+  "70": "porcelain-light.json",
   "71": "ponytail-statusline.sh script",
   "72": "baseline.js",
-  "73": "ponytail-statusline.ps1"
+  "73": "ponytail-statusline.ps1",
+  "74": "ponytail-debt skill — ponytail: comment debt ledger"
 }
