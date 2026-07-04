@@ -35,7 +35,7 @@ Every session that changes config must update it.
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
 | pi-tui scrollback fix | `patches/pi-tui-scrollback-fix.md`, `patches/pi-tui-scrollback-fix-harness.mjs`, `patches/pi-tui-scrollback-fix.harness.mjs` | Documents + regression-tests a manual patch to the installed `pi-tui` dist that stops scrollback-wiping full-redraws when content above the viewport changes; must be re-applied after pi package updates. |
-| Rework loop doc | `docs/rework-loop.md` | Defines the `qa-reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the pipeline's bounded rework/retry mechanics. |
+| Rework loop doc | `docs/rework-loop.md` | Defines the `qa-reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the bounded rework/retry mechanics for any QA-gated build (pipeline or solo). |
 | Autocommit snapshot infra | `.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit` | launchd-triggered git auto-snapshot of config changes (tool-driven and manual editor edits alike), gated by a pre-commit hook that runs the validator. |
 | Global settings | `settings.json` | Default provider/model/thinking level, enabled model list (feeds `model-cycle.ts`), quiet-startup flag, installed packages. |
 | Keybindings | `keybindings.json` | User keybinding overrides (currently: `app.thinking.cycle` → Option+Tab to free Shift+Tab for model-cycle; session rename → Option+R). |
@@ -48,6 +48,13 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-03
+
+**QA gate relaxed: any new feature is QA-mandatory.** `AGENTS.md` (Hard Delegation
+Thresholds + micro-dispatch rule + Rework Loop heading), `docs/rework-loop.md` (loop now
+covers solo builds; "implementing agent" replaces builder-only routing). Why: user
+directive — run the qa-reviewer/rework loop after any newly implemented feature,
+regardless of scale or a runnable acceptance path; spot-check now covers only
+non-feature changes.
 
 **~22:55 — Changelog backfilled (this entry).** Reconstructed the full
 pre-index history below from `~/.pi/agent/sessions/` logs, ~370 auto-snapshot commits

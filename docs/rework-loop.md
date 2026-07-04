@@ -1,25 +1,29 @@
 # Rework Loop (verification is a gate, not a formality)
 
-The pipeline is not one-pass. `qa-reviewer` is a gate that can bounce work
-backwards, and the orchestrator runs the loop until the gate passes or the
-loop budget is exhausted.
+QA-gated work is not one-pass — this loop applies to any build that goes
+through `qa-reviewer`, whether from the full pipeline or a solo build
+(`solo-engineer`/`fable-engineer`). `qa-reviewer` is a gate that can bounce
+work backwards, and the orchestrator runs the loop until the gate passes or
+the loop budget is exhausted. "Implementing agent" below means whichever
+agent built the work.
 
 **Reviewer verdict contract.** Every `qa-reviewer` task must ask for a
 structured verdict, one of:
 
 - `PASS` — proceed to `shipper`
 - `FAIL: implementation` — findings as `file:line` + what's wrong + expected
-  behavior; route back to `builder`
+  behavior; route back to the implementing agent
 - `FAIL: design` — the flaw is in the approach, not the code; route back to
   `architect` (or `scope-planner` if "done" itself was misdefined)
 
 **Loop mechanics:**
 
-1. On `FAIL: implementation`, re-delegate to `builder` with (a) the original
+1. On `FAIL: implementation`, re-delegate to the implementing agent with (a) the original
    bounded task, (b) the reviewer's findings verbatim, and (c) an explicit
    instruction to fix ONLY the findings — no opportunistic refactoring.
 2. Re-review the fix. A fresh `qa-reviewer` invocation checks the findings
-   are resolved AND nothing regressed. Never let the builder self-certify.
+   are resolved AND nothing regressed. Never let the implementing agent
+   self-certify.
 3. On `FAIL: design`, do not patch around it. Route back to `architect`
    with the reviewer's findings; the revised design then flows forward
    through `builder` → `qa-reviewer` again.
