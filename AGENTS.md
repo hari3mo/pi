@@ -13,25 +13,27 @@ The subagent pipeline (scope-planner → architect → builder → qa-reviewer �
 shipper, or any fan-out) is deployed ONLY when one of these holds:
 
 1. **Lead is `claude-fable-5`** → fable orchestrates; it never builds
-   directly. It routes by scale — pipeline is NOT the default:
+   directly. Fable is strictly an orchestrator — never an executor, at
+   lead level or as a subagent. It routes by scale, cheapest tier first —
+   pipeline is NOT the default:
    - **Micro** (ALL THREE: single file, ≤ ~20 changed lines, zero design
      decisions): ONE `builder` with the fully specified change; skip
      scope-planner and architect; if it implements a new feature, still
      route the result through `qa-reviewer`, otherwise spot-check the
-     returned diff. A complete spec does NOT make a task micro — any new module or
-     change beyond ~20 lines is at least single-session scope and routes
-     to `solo-engineer`, even when fully specified (benchmarked:
-     mechanical-tier builders ship spec-corner defects on algorithmic
-     code that review does not catch).
-   - **Single-session scope** (fits one context window, requirements clear,
-     no genuinely concurrent workstreams): ONE `solo-engineer` end-to-end,
-     then spot-check against acceptance criteria. NO pipeline. Escalate the
-     dispatch to `fable-engineer` (≈1.6x cost, benchmarked best quality)
-     when the code is expensive to change later — core algorithms, dense
-     state, long-lived public contracts — or after `solo-engineer` fails
-     review twice; inline any repo conventions in its task text (it loads
-     no context files). (Benchmarked 2026-07: the full pipeline cost 2–14x
-     solo with equal-or-worse quality at this scale — ~/orch-bench/REPORT.md.)
+     returned diff.
+   - **Single-session scope** (fits one context window, no genuinely
+     concurrent workstreams): default is **spec-then-build** — the lead
+     fixes the design itself (dispatching `architect` only when a decision
+     is expensive to unwind), hands ONE `builder` a complete spec, then
+     gates the result through `qa-reviewer`. NO pipeline. Reserve
+     `solo-engineer` (deep tier) for the carve-outs where cheap execution
+     is known to fail: core algorithmic/stateful modules with spec-corner
+     semantics (benchmarked: mechanical-tier builders ship spec-corner
+     defects on algorithmic code that review does not catch), tasks where
+     design and implementation genuinely cannot separate, or escalation
+     after `builder` fails review twice on the same work item.
+     (Benchmarked 2026-07: the full pipeline cost 2–14x solo with
+     equal-or-worse quality at this scale — ~/orch-bench/REPORT.md.)
    - **Full pipeline** ONLY when: scope exceeds one context window
      (multi-session, 10+ interacting files); 2+ genuinely concurrent
      workstreams; or ambiguity needing scope-planner negotiation.
@@ -83,9 +85,8 @@ build/ship.
 |------|---------------|------|
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
-| `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
-| `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
-| `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
+| `builder` | Default executor at any scale once the spec is complete: implementation, boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
+| `solo-engineer` | Escalation executor, not the default: algorithmic/stateful cores with spec-corner semantics, tasks where design and implementation cannot separate, or rework after `builder` fails review twice | Deep reasoning |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
 | `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
 
@@ -98,11 +99,11 @@ orchestrator decides.
 
 - **Design decisions** (expensive to unwind) → deep reasoning tier:
   algorithms, storage, API contracts, failure modes, security tradeoffs
-- **Execution** (mechanical once design is fixed) → mechanical tier:
-  wiring, boilerplate, test scaffolding, lint/format, renames, commits —
-  EXCEPT core algorithmic/stateful modules and small-but-hard tasks where
-  design and implementation cannot separate: route those to
-  `solo-engineer` (or `fable-engineer` at highest stakes); mechanical-tier
+- **Execution** (once the spec is complete) → mechanical tier at any
+  scale: implementation, wiring, boilerplate, test scaffolding,
+  lint/format, renames, commits — EXCEPT core algorithmic/stateful
+  modules and small-but-hard tasks where design and implementation
+  cannot separate: route those to `solo-engineer`; mechanical-tier
   builders ship subtle spec-corner defects review does not catch
 - **Verification** → deep reasoning tier, never the agent that built it
 - **High-stakes calls** → architect + `peer-engineer` in parallel, neither
@@ -125,10 +126,10 @@ The lead MUST delegate (never edit/write directly) when ANY of: modifies
 2+ files; writes a new code file; changes > ~20 lines in one file;
 adds/changes tests; is mechanical repetition. WHO gets the dispatch is
 decided by the Delegation Gate's scale rules, not this list: `builder`
-only for micro or genuinely mechanical work; `solo-engineer` for whole
-bounded tasks beyond micro (a new module of real size is single-session
-scope, not a builder job); small-but-hard tasks (design and implementation
-inseparable) also go whole to `solo-engineer`.
+is the default for any fully specified work at any scale — the lead's
+job is to make the spec complete enough that it is; `solo-engineer`
+ONLY for the carve-outs (algorithmic/stateful cores, design and
+implementation inseparable, or escalation after two failed reviews).
 
 The lead MUST route through `scope-planner`/`architect` first when ANY of:
 
@@ -138,15 +139,17 @@ The lead MUST route through `scope-planner`/`architect` first when ANY of:
   genuinely needs negotiation.
 - New API contract, schema, storage decision, or dependency in an EXISTING
   system (or outliving the task) → `architect`. Greenfield single-session
-  builds make these calls inline via `solo-engineer`/`fable-engineer`.
+  builds routed to `solo-engineer` make these calls inline.
 - Wrong approach expensive to unwind → `architect`
 
 The lead MUST send work to `qa-reviewer` when ANY of: a newly
 implemented feature (new user-visible behavior or capability, at any
-scale — including micro dispatches and greenfield `solo-engineer`/
-`fable-engineer` builds); 3+ files of existing code; auth/security
-paths; data migrations; public API surface; or a delegated change to
-existing behavior that has NO runnable verification path. On a QA
+scale — including micro dispatches and greenfield `solo-engineer`
+builds); any non-micro `builder` implementation (the deep-tier QA gate
+is what makes cheap execution safe); 3+ files of existing code;
+auth/security paths; data migrations; public API surface; or a
+delegated change to existing behavior that has NO runnable
+verification path. On a QA
 `FAIL`, run the rework loop (docs/rework-loop.md) with whichever agent
 built the work as the implementing agent. Only non-feature changes with
 a runnable verification path — bug fixes with a re-checked repro,
@@ -187,10 +190,12 @@ read `~/.pi/agent/docs/rework-loop.md` before running the pipeline.
 
 - Lead session: `claude-fable-5` at `xhigh` (settings.json); bump effort
   when the task rewards it
-- Orchestration is the exception: most tasks route to one strong solo
-  agent; the pipeline exists for scope, concurrency, or ambiguity it can
-  actually exploit
-- Spend the priciest model only where it pays for itself
+- Cheap-first execution: labor defaults to the mechanical tier behind a
+  deep-tier QA gate; deep tier is for judgment (design, review) and the
+  named carve-outs, never routine typing; the pipeline exists for scope,
+  concurrency, or ambiguity it can actually exploit
+- Spend the priciest model only where it pays for itself — fable only
+  ever orchestrates, it is never dispatched as an executor
 
 ## Config Maintenance (~/.pi/agent)
 
