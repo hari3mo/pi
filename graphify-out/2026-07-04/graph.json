@@ -74,14 +74,164 @@
   },
   "nodes": [
     {
+      "label": "check-impact-trace.mjs",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace",
+      "community": 78,
+      "norm_label": "check-impact-trace.mjs"
+    },
+    {
+      "label": "here",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_here",
+      "community": 78,
+      "norm_label": "here"
+    },
+    {
+      "label": "AGENT_DIR",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_agent_dir",
+      "community": 78,
+      "norm_label": "agent_dir"
+    },
+    {
+      "label": "PKG",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L23",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_pkg",
+      "community": 78,
+      "norm_label": "pkg"
+    },
+    {
+      "label": "jiti",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_jiti",
+      "community": 78,
+      "norm_label": "jiti"
+    },
+    {
+      "label": "check()",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_check",
+      "community": 78,
+      "norm_label": "check()"
+    },
+    {
+      "label": "nodes",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_nodes",
+      "community": 78,
+      "norm_label": "nodes"
+    },
+    {
+      "label": "links",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_links",
+      "community": 78,
+      "norm_label": "links"
+    },
+    {
+      "label": "expectKeys",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_expectkeys",
+      "community": 78,
+      "norm_label": "expectkeys"
+    },
+    {
+      "label": "toKeys()",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_tokeys",
+      "community": 78,
+      "norm_label": "tokeys()"
+    },
+    {
+      "label": "viaLinks",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_vialinks",
+      "community": 78,
+      "norm_label": "vialinks"
+    },
+    {
+      "label": "viaEdges",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_viaedges",
+      "community": 78,
+      "norm_label": "viaedges"
+    },
+    {
+      "label": "seen",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_seen",
+      "community": 78,
+      "norm_label": "seen"
+    },
+    {
+      "label": "flaggedAt",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_flaggedat",
+      "community": 78,
+      "norm_label": "flaggedat"
+    },
+    {
+      "label": "eqSet()",
+      "file_type": "code",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "scripts_check_impact_trace_eqset",
+      "community": 78,
+      "norm_label": "eqset()"
+    },
+    {
       "label": "check-graph-first.mjs",
       "file_type": "code",
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_check_graph_first",
       "community": 67,
-      "norm_label": "check-graph-first.mjs"
+      "norm_label": "check-graph-first.mjs",
+      "id": "scripts_check_graph_first"
     },
     {
       "label": "here",
@@ -89,9 +239,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L20",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_here",
       "community": 67,
-      "norm_label": "here"
+      "norm_label": "here",
+      "id": "scripts_check_graph_first_here"
     },
     {
       "label": "AGENT_DIR",
@@ -99,9 +249,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_agent_dir",
       "community": 67,
-      "norm_label": "agent_dir"
+      "norm_label": "agent_dir",
+      "id": "scripts_check_graph_first_agent_dir"
     },
     {
       "label": "PKG",
@@ -109,9 +259,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_pkg",
       "community": 67,
-      "norm_label": "pkg"
+      "norm_label": "pkg",
+      "id": "scripts_check_graph_first_pkg"
     },
     {
       "label": "jiti",
@@ -119,9 +269,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_jiti",
       "community": 67,
-      "norm_label": "jiti"
+      "norm_label": "jiti",
+      "id": "scripts_check_graph_first_jiti"
     },
     {
       "label": "check()",
@@ -129,9 +279,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_check",
       "community": 67,
-      "norm_label": "check()"
+      "norm_label": "check()",
+      "id": "scripts_check_graph_first_check"
     },
     {
       "label": "cases",
@@ -139,9 +289,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_cases",
       "community": 67,
-      "norm_label": "cases"
+      "norm_label": "cases",
+      "id": "scripts_check_graph_first_cases"
     },
     {
       "label": "state",
@@ -149,9 +299,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "scripts_check_graph_first_state",
       "community": 67,
-      "norm_label": "state"
+      "norm_label": "state",
+      "id": "scripts_check_graph_first_state"
     },
     {
       "label": "impact-trace.ts",
@@ -702,146 +852,6 @@
       "community": 44,
       "norm_label": "execute()",
       "id": "extensions_graphify_bridge_execute"
-    },
-    {
-      "label": "check-impact-trace.mjs",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "check-impact-trace.mjs",
-      "id": "scripts_check_impact_trace"
-    },
-    {
-      "label": "here",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "here",
-      "id": "scripts_check_impact_trace_here"
-    },
-    {
-      "label": "AGENT_DIR",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "agent_dir",
-      "id": "scripts_check_impact_trace_agent_dir"
-    },
-    {
-      "label": "PKG",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L23",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "pkg",
-      "id": "scripts_check_impact_trace_pkg"
-    },
-    {
-      "label": "jiti",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "jiti",
-      "id": "scripts_check_impact_trace_jiti"
-    },
-    {
-      "label": "check()",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L30",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "check()",
-      "id": "scripts_check_impact_trace_check"
-    },
-    {
-      "label": "nodes",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L35",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "nodes",
-      "id": "scripts_check_impact_trace_nodes"
-    },
-    {
-      "label": "links",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L42",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "links",
-      "id": "scripts_check_impact_trace_links"
-    },
-    {
-      "label": "expectKeys",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "expectkeys",
-      "id": "scripts_check_impact_trace_expectkeys"
-    },
-    {
-      "label": "toKeys()",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L52",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "tokeys()",
-      "id": "scripts_check_impact_trace_tokeys"
-    },
-    {
-      "label": "viaLinks",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L55",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "vialinks",
-      "id": "scripts_check_impact_trace_vialinks"
-    },
-    {
-      "label": "viaEdges",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L61",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "viaedges",
-      "id": "scripts_check_impact_trace_viaedges"
-    },
-    {
-      "label": "seen",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L69",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "seen",
-      "id": "scripts_check_impact_trace_seen"
-    },
-    {
-      "label": "eqSet()",
-      "file_type": "code",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L74",
-      "_origin": "ast",
-      "community": 78,
-      "norm_label": "eqset()",
-      "id": "scripts_check_impact_trace_eqset"
     },
     {
       "label": "audit-pipelines.py",
@@ -3917,7 +3927,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "ponytail.mjs",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail"
     },
@@ -3927,7 +3937,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "__dirname",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_dirname"
     },
@@ -3937,7 +3947,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "require",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_require"
     },
@@ -3947,7 +3957,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "{ getponytailinstructions }",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_getponytailinstructions"
     },
@@ -3957,7 +3967,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "{ getdefaultmode, normalizepersistedmode }",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_getdefaultmode_normalizepersistedmode"
     },
@@ -3967,7 +3977,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "statepath",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_statepath"
     },
@@ -3987,7 +3997,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "writemode()",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_writemode"
     },
@@ -3997,7 +4007,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 23,
+      "community": 43,
       "norm_label": "parsecommandfile()",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_parsecommandfile"
     },
@@ -5847,7 +5857,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "ponytail-activate.js",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate"
     },
@@ -5857,7 +5867,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_fs"
     },
@@ -5867,7 +5877,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_path"
     },
@@ -5877,7 +5887,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "{ getdefaultmode, getclaudedir, isshellsafe }",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_getdefaultmode_getclaudedir_isshellsafe"
     },
@@ -5887,7 +5897,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "{ getponytailinstructions }",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_getponytailinstructions"
     },
@@ -5897,7 +5907,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "{\n  clearmode,\n  iscodex,\n  iscopilot,\n  setmode,\n  writehookoutput,\n}",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_clearmode_iscodex_iscopilot_setmode_writehookoutput"
     },
@@ -5907,7 +5917,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "claudedir",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_claudedir"
     },
@@ -5917,7 +5927,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "settingspath",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_settingspath"
     },
@@ -5927,7 +5937,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "mode",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_mode"
     },
@@ -5937,7 +5947,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 43,
+      "community": 8,
       "norm_label": "output",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate_output"
     },
@@ -6047,7 +6057,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 43,
+      "community": 23,
       "norm_label": "isshellsafe()",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_isshellsafe"
     },
@@ -6077,7 +6087,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "getclaudedir()",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_getclaudedir"
     },
@@ -7525,7 +7535,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "uninstall.js",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall"
     },
@@ -7535,7 +7545,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_fs"
     },
@@ -7545,7 +7555,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_path"
     },
@@ -7555,7 +7565,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "{ getconfigpath, getclaudedir }",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_getconfigpath_getclaudedir"
     },
@@ -7565,7 +7575,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "removeifexists()",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_removeifexists"
     },
@@ -7575,7 +7585,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 79,
+      "community": 23,
       "norm_label": "settingspath",
       "id": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_settingspath"
     },
@@ -12034,7 +12044,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -12118,7 +12128,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "opencode /ponytail command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -12202,7 +12212,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -12300,7 +12310,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "hermes after-install notes",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -12524,7 +12534,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -12804,7 +12814,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "hermes plugin manifest",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -12902,7 +12912,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -12916,7 +12926,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -13028,7 +13038,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify skill (knowledge-graph pipeline)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_skill"
@@ -13042,7 +13052,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_pipeline"
@@ -13056,7 +13066,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify honesty rules (extracted/inferred/ambiguous)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_honesty_rules"
@@ -13070,7 +13080,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: url add + folder watch",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_add_watch_ref"
@@ -13084,7 +13094,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: extra exports + benchmark",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_exports_ref"
@@ -13098,7 +13108,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: extraction subagent prompt spec",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_extraction_spec_ref"
@@ -13112,7 +13122,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: github clone + cross-repo merge",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_github_and_merge_ref"
@@ -13126,7 +13136,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: commit hook + claude.md integration",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_hooks_ref"
@@ -13140,7 +13150,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_ref"
@@ -13154,7 +13164,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -13168,7 +13178,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -13182,7 +13192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: whisper video transcription",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_transcribe_ref"
@@ -13196,7 +13206,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: incremental update + cluster-only",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_update_ref"
@@ -13457,12 +13467,152 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_agent_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L31",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_check",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L82",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_eqset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_expectkeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_flaggedat",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_here",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_jiti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_links",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_nodes",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_pkg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L70",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_seen",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_tokeys",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_viaedges",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-impact-trace.mjs",
+      "source_location": "L56",
+      "weight": 1.0,
+      "source": "scripts_check_impact_trace",
+      "target": "scripts_check_impact_trace_vialinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_agent_dir",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_agent_dir"
     },
     {
       "relation": "contains",
@@ -13470,9 +13620,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_cases",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_cases"
     },
     {
       "relation": "contains",
@@ -13480,9 +13630,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_check",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_check"
     },
     {
       "relation": "contains",
@@ -13490,9 +13640,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_here",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_here"
     },
     {
       "relation": "contains",
@@ -13500,9 +13650,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_jiti",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_jiti"
     },
     {
       "relation": "contains",
@@ -13510,9 +13660,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_pkg",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_pkg"
     },
     {
       "relation": "contains",
@@ -13520,9 +13670,9 @@
       "source_file": "scripts/check-graph-first.mjs",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_state",
-      "confidence_score": 1.0
+      "target": "scripts_check_graph_first_state"
     },
     {
       "relation": "contains",
@@ -14435,136 +14585,6 @@
       "confidence_score": 1.0,
       "source": "extensions_graphify_bridge_execute",
       "target": "extensions_graphify_bridge_statustext"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_agent_dir"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L30",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_check"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_eqset"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_expectkeys"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_here"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_jiti"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_links"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L35",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_nodes"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L23",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_pkg"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L69",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_seen"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L52",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_tokeys"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_viaedges"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-impact-trace.mjs",
-      "source_location": "L55",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_vialinks"
     },
     {
       "relation": "references",
@@ -31592,5 +31612,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "d7aee893392a12825df89d8acd76a0ace2bd2b71"
+  "built_at_commit": "6df967ea38cee44fb866dfbe49931754c918b8cc"
 }

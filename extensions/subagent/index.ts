@@ -341,6 +341,39 @@ interface SubagentRunRef {
 	result: SingleResult;
 }
 
+interface ActiveSubagentMeta {
+	mode: SubagentDetails["mode"];
+	batchSize: number;
+	resultIndex: number;
+}
+
+const ACTIVE_SUBAGENT_RUNS = new Map<string, SubagentRunRef>();
+const ACTIVE_SUBAGENT_LISTENERS = new Set<() => void>();
+let nextActiveSubagentId = 1;
+
+function notifyActiveSubagentListeners(): void {
+	for (const listener of ACTIVE_SUBAGENT_LISTENERS) {
+		try {
+			listener();
+		} catch {
+			/* ignore dead UI listeners */
+		}
+	}
+}
+
+function getActiveSubagentRunRefs(): SubagentRunRef[] {
+	return Array.from(ACTIVE_SUBAGENT_RUNS.values()).sort((a, b) => (b.result.startTime ?? 0) - (a.result.startTime ?? 0));
+}
+
+function scheduleActiveSubagentRemoval(id: string, result: SingleResult): void {
+	const timer = setTimeout(() => {
+		if (ACTIVE_SUBAGENT_RUNS.get(id)?.result !== result) return;
+		ACTIVE_SUBAGENT_RUNS.delete(id);
+		notifyActiveSubagentListeners();
+	}, 3000);
+	(timer as { unref?: () => void }).unref?.();
+}
+
 const SHELL_TEXT_CAP = 24 * 1024;
 
 function truncateShellText(text: string, maxBytes = SHELL_TEXT_CAP): string {
