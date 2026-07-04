@@ -185,7 +185,13 @@ pipeline. Its output still goes to `qa-reviewer` like any delegated build.
 
 The lead MUST route through `scope-planner` and/or `architect` first when ANY of:
 
-- The request is ambiguous about what "done" means → `scope-planner`
+- The request is ambiguous about what "done" means AND the ambiguity
+  survives the lead's own investigation → `scope-planner`. Scoping is lead
+  judgment first: read the code, frame the bounded problem yourself, and
+  dispatch `scope-planner` only when the ambiguity genuinely needs
+  negotiation or cannot be resolved from the repo alone. (Verified
+  2026-07: a lead that self-scoped an ambiguous request found a latent
+  root-cause bug unprompted and shipped the right fix.)
 - The change introduces a new API contract, schema, storage decision, or
   dependency → `architect`
 - The wrong approach would be expensive to unwind later → `architect`
