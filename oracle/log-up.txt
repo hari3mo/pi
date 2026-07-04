@@ -1,0 +1,46 @@
+## [2026-07-04] INGEST | Distilled pi concepts (what-is-pi, philosophy, sessions, trust, message queue)
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 5, pages_updated: 0
+- pages: concepts/what-is-pi, concepts/extensibility-philosophy, concepts/message-queue, concepts/session-model, concepts/project-trust
+- sources: pi-coding-agent README.md, docs/index.md, docs/sessions.md, docs/compaction.md, docs/security.md, docs/settings.md
+- notes: what-is-pi and extensibility-philosophy are core-tier hubs; the rest supporting. All reviewed lifecycle (distilled from full authoritative docs).
+
+## [2026-07-04] INGEST | Distilled pi components (extension system, tools, skills, templates, themes)
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 5, pages_updated: 0
+- pages: components/extension-system, components/tools, components/skills-system, components/prompt-templates, components/themes
+- sources: docs/extensions.md, docs/skills.md, docs/prompt-templates.md, docs/themes.md, README.md
+- notes: extension-system is core-tier. Owns the generic pi-feature names per the naming rule (local layer namespaces its *-extension pages).
+
+## [2026-07-04] INGEST | Distilled pi components (keybindings, TUI, providers/models, packages, settings)
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 5, pages_updated: 0
+- pages: components/keybindings, components/tui-components, components/providers-and-models, components/pi-packages, components/settings
+- sources: docs/keybindings.md, docs/tui.md, docs/providers.md, docs/models.md, docs/packages.md, docs/settings.md
+- notes: tui-components marked draft (tui.md skimmed, not fully read); rest reviewed.
+
+## [2026-07-04] INGEST | Distilled pi workflows (write extension, create skill, add model, custom provider, SDK, package)
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 6, pages_updated: 0
+- pages: workflows/write-an-extension, workflows/create-a-skill, workflows/add-a-model, workflows/add-custom-provider, workflows/embed-pi-with-sdk, workflows/create-a-pi-package
+- sources: docs/extensions.md, docs/skills.md, docs/models.md, docs/custom-provider.md, docs/sdk.md, docs/packages.md, examples/
+- notes: embed-pi-with-sdk marked draft (sdk.md partially read). create-a-pi-package added to resolve the pi-packages forward link.
+
+## [2026-07-04] INGEST | Distilled pi references (CLI, RPC, session format, examples catalog)
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 4, pages_updated: 0
+- pages: references/cli-reference, references/rpc-mode, references/session-format, references/examples-catalog
+- sources: README.md, docs/usage.md, docs/rpc.md, docs/session-format.md, examples/README.md, examples/extensions/README.md, examples/sdk/README.md
+- notes: rpc-mode and session-format marked draft (docs read at section granularity, not line-by-line). cli-reference and examples-catalog reviewed.
+
+## [2026-07-04] INGEST | Upstream layer summary
+- source_layer: upstream
+- pi_version: 0.80.3
+- pages_created: 25 (concepts 5, components 10, workflows 6, references 4)
+- deliberately skipped: quickstart.md, usage.md (folded into what-is-pi + cli-reference); json.md (mentioned in cli-reference); containerization.md (folded into project-trust); development.md (contributor setup, out of knowledge scope); platform docs windows/termux/tmux/terminal-setup/shell-aliases.md (environment-specific setup, low durable-knowledge value)
+- fragments: _fragments/index-upstream.md, _fragments/log-upstream.md (index.md and log.md untouched per fragment protocol)
