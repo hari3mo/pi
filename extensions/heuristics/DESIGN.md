@@ -220,10 +220,11 @@ try/catch, never throw:
 - S2 misroute: any result `agentSource === "unknown"`
 - S3 churn: current `agent` seen in last 6 subagent calls this session
   (module Map keyed by session, cap 20 entries, cleared on session_start)
-- S4 edit-after-builder: successful result whose agent matches BUILDER_ROLES
-  (`["builder"]` + substring `build|coder|impl`) sets `builderWatch={remaining:2}`;
-  a READ-ONLY `tool_call` handler decrements per lead tool call; if toolName ∈
-  {edit,write} while remaining>0 → fire S4, clear watch. Must NOT mutate event.input.
+- S4 edit-after-builder: successful result whose agent matches the mechanical-role
+  substring regex (`build|coder|impl|work`, covering role names like "worker") sets
+  `builderWatch={remaining:2}`; a READ-ONLY `tool_call` handler decrements per lead
+  tool call; if toolName ∈ {edit,write} while remaining>0 → fire S4, clear watch.
+  Must NOT mutate event.input.
 
 First firing signal wins; nudge line:
 "A recent delegation had trouble ({reason}); if there is a durable delegation lesson,
@@ -270,7 +271,7 @@ without one, e.g. pre-existing stores). `stats` adds a per-basis count line per 
 - `schema.ts` (~150) — Heuristic type, consts (CAP_GLOBAL=200, CAP_PROJECT=100,
   MAX_INJECT_CHARS=4000, MAX_INJECT_ITEMS=50, MAX_HEURISTIC_CHARS=400, ORCH_RESERVE=900,
   STALE_MS=10000, LOCK_MAX_ATTEMPTS=130 (budget>STALE_MS), HALFLIFE_DAYS=60, JACCARD_NEAR=0.80, JACCARD_MERGE=0.90, CHURN_WINDOW=6,
-  CHURN_CAP=20, BUILDER_WATCH_CALLS=2, BUILDER_ROLES=["builder"]), StringEnums, newId,
+  CHURN_CAP=20, BUILDER_WATCH_CALLS=2, BUILDER_SUBSTRING_RE=/build|coder|impl|work/i), StringEnums, newId,
   normalize, tokens, jaccard, scoreOf.
 - `store.ts` (~300) — path resolution (globalDir via getAgentDir, projectRoot walk,
   projectDir via CONFIG_DIR_NAME), readStore, mutateStore (lock/steal/retry/.bak/
