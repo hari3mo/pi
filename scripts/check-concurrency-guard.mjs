@@ -25,6 +25,9 @@
  *   (i) second edit without a read -> allowed with ONE warning (never wedge)
  *   (j) staleness persists: next turn re-injects the stale block
  *   (k) a read tool result cures the edit gate for that file
+ *   (l) after block+warn, further edits (unobservable bash read) stand fully
+ *       aside — no block, no new warning — so the gate never wedges a session
+ *   (m) another shell DELETING a file this session edited -> collision notice
  *
  * Run: node scripts/check-concurrency-guard.mjs
  */
@@ -166,6 +169,10 @@ check("(i) second edit is NOT blocked (escape hatch)", !r?.block);
 r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
 check("(i) escape hatch warns exactly once", !r?.block && sent.filter((m) => /no re-read was observed/.test(m.content)).length === staleWarnsBefore + 1);
 
+// (l) a THIRD edit with no observed read stands fully aside (never wedge, no new warn).
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
+check("(l) after block+warn, further edits stand aside (no block, no new warning)", !r?.block && sent.filter((m) => /no re-read was observed/.test(m.content)).length === staleWarnsBefore + 1);
+
 // (j) staleness persists across turns with no new commits.
 r = await fire("before_agent_start", startPrompt);
 check("(j) stale block re-injected every turn until reload", !!r?.systemPrompt && /## Stale loaded resources/.test(r.systemPrompt) && !/## Concurrent-session notice/.test(r.systemPrompt));
@@ -178,6 +185,15 @@ check("(k) stale prompt edit blocked before re-read", r?.block === true);
 await fire("tool_result", { toolName: "read", isError: false, input: { path: abs("prompts/p.md") } }, ctx);
 r = await fire("tool_call", { toolName: "edit", input: { path: abs("prompts/p.md") } }, ctx);
 check("(k) read tool result cures the gate — edit allowed", !r?.block);
+
+// (m) another shell DELETES a file this session edited -> collision notice.
+put("del-me.txt", "v1\n"); g("add", "-A"); g("commit", "-qm", "add del-me");
+await fire("before_agent_start", startPrompt); // advance baseline past the add
+put("del-me.txt", "ours\n"); // this session edits it
+await fire("tool_result", { toolName: "edit", isError: false, input: { path: abs("del-me.txt") } }, ctx);
+rmSync(abs("del-me.txt")); g("add", "-A"); g("commit", "-qm", "foreign delete of edited file");
+r = await fire("before_agent_start", startPrompt);
+check("(m) foreign DELETE of an edited file fires a collision notice", !!r?.systemPrompt && /HIGHEST RISK/.test(r.systemPrompt) && /del-me\.txt/.test(r.systemPrompt));
 
 rmSync(REPO, { recursive: true, force: true });
 assert.equal(failed, 0, `${failed} concurrency-guard check(s) failed`);
