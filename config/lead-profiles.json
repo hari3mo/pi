@@ -14,7 +14,6 @@
   {
     "name": "direct",
     "match": ".*",
-    "fallback": true,
     "writePolicy": "allowed: not blocked by extensions/read-only-default.ts.",
     "doctrine": "You are a direct-work lead (not fable, not opus). This block COMPLEMENTS AGENTS.md and overrides ONLY the Delegation Gate routing for this lead: per the 'any other lead model' rule, work directly — no subagents, no pipeline — decomposing design -> execute -> verify, all inline. Every other AGENTS.md section still applies."
   }
