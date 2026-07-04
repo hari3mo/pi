@@ -1049,19 +1049,14 @@
     "ast_hash": "2c223c2bb087ce98b47ef2dee43c2d7c",
     "semantic_hash": "2c223c2bb087ce98b47ef2dee43c2d7c"
   },
-  ".pi-vcs/hooks/post-checkout": {
-    "mtime": 1783158756.1424925,
-    "ast_hash": "e18292d77f18ece96816c58eba451b26",
-    "semantic_hash": ""
-  },
   ".pi-vcs/hooks/post-commit": {
-    "mtime": 1783158766.3717625,
-    "ast_hash": "2c27f77b2891486993f390d848496b3f",
+    "mtime": 1783159007.1684496,
+    "ast_hash": "21288abc3fb02a3fba6f1b1c1868b0d4",
     "semantic_hash": ""
   },
   "extensions/graphify-bridge.ts": {
-    "mtime": 1783158749.66754,
-    "ast_hash": "87a0ac74232d4bf3b742b9a65dc90dec",
+    "mtime": 1783159007.2242186,
+    "ast_hash": "2b09027e997f5b2e86e479e631392275",
     "semantic_hash": ""
   },
   "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
