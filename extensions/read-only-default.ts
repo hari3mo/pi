@@ -199,10 +199,17 @@ export default function (pi: ExtensionAPI) {
 		}),
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
 			const reply = (text: string) => ({ content: [{ type: "text" as const, text }] });
-			if (mode === "write") return reply("Already in write mode; proceed.");
-			if (!ctx.hasUI) {
+			if (mode === "write")
 				return reply(
-					"Headless session: cannot prompt. Subagents stay read-only; restart with `pi --write` for write access.",
+					"Write gate already open (write mode). Proceed; spawned subagents inherit --write.",
+				);
+			// Headless (no UI): nobody can answer a select() prompt, so throwing
+			// (isError:true) forces the agent to stop and report the blocker
+			// instead of improvising a workaround (e.g. editing directly or
+			// spawning writer subagents that will silently run read-only).
+			if (!ctx.hasUI) {
+				throw new Error(
+					"Write gate is closed and this session is non-interactive — no user can open it. STOP: do not edit files directly and do not spawn writer subagents; surface the blocker in your final answer.",
 				);
 			}
 			const reason = (params as { reason?: string }).reason?.trim();
