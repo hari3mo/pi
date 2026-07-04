@@ -9,7 +9,7 @@
  * (getAgentDir() reads it at import time), so every git call the guard makes
  * runs inside the scratch repo.
  *
- * Asserts the two collision-detection fixes:
+ * Asserts the collision-detection semantics:
  *   (a) foreign commit to an UNTOUCHED file        -> plain foreign notice
  *   (b) own-snapshot commit of a TOUCHED file       -> silence (hash matches)
  *   (c) foreign commit to a TOUCHED file (differs)   -> same-file collision notice
@@ -17,10 +17,20 @@
  *                                                       is still a plain notice
  *   (e) >=2 same-file collisions -> exactly one serialize nudge at agent_end
  *
+ * And the stale-loaded-resource handling (lib/change-detection.ts):
+ *   (f) own-snapshot commit of an edited RESOURCE file -> silence, no staleness
+ *   (g) foreign commit to a resource -> stale block in prompt + classified
+ *       staleResources in the config-repo-advanced payload
+ *   (h) first edit to a stale, not-re-read resource -> { block: true }
+ *   (i) second edit without a read -> allowed with ONE warning (never wedge)
+ *   (j) staleness persists: next turn re-injects the stale block
+ *   (k) a read tool result cures the edit gate for that file
+ *
  * Run: node scripts/check-concurrency-guard.mjs
  */
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
+import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from "node:fs";
+import { dirname } from "node:path";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import assert from "node:assert/strict";
@@ -35,7 +45,10 @@ const g = (...args) => execFileSync("git", ["-C", REPO, ...args], { encoding: "u
 g("init", "-q");
 g("config", "user.email", "t@t");
 g("config", "user.name", "t");
-const put = (name, body) => writeFileSync(join(REPO, name), body);
+const put = (name, body) => {
+	mkdirSync(dirname(join(REPO, name)), { recursive: true });
+	writeFileSync(join(REPO, name), body);
+};
 for (const f of ["untouched.txt", "own.txt", "collide.txt", "failed.txt", "collide2.txt"]) put(f, "v1\n");
 g("add", "-A");
 g("commit", "-qm", "init");
@@ -121,6 +134,50 @@ await fire("agent_end", { messages: [] });
 await fire("agent_end", { messages: [] }); // must not nudge twice
 const nudges = sent.filter((m) => /serializing the two sessions/.test(m.content)).length;
 check("(e) >=2 collisions sends exactly one serialize nudge", nudgesBefore === 0 && nudges === 1);
+
+// ── Stale loaded resources (goal-2 semantics) ──────────────────────────────
+
+// (f) own edit + own-snapshot commit of a RESOURCE file -> silence, no staleness.
+put("extensions/own-res.ts", "export default 1;\n");
+await fire("tool_result", { toolName: "write", isError: false, input: { path: abs("extensions/own-res.ts") } }, ctx);
+g("add", "-A");
+g("commit", "-qm", "autocommit own resource snapshot");
+r = await fire("before_agent_start", startPrompt);
+check("(f) own-snapshot of an edited resource stays silent (no staleness)", r === undefined || r.systemPrompt === "BASE");
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/own-res.ts") } }, ctx);
+check("(f) editing own resource is not gated", !r?.block);
+
+// (g) foreign commit to a resource -> stale block + classified event payload.
+foreignCommit("extensions/mod.ts", "export default 2;\n", "foreign resource change");
+r = await fire("before_agent_start", startPrompt);
+check("(g) foreign resource change injects the stale-resources block", !!r?.systemPrompt && /## Stale loaded resources/.test(r.systemPrompt));
+check("(g) stale block names the resource and /refresh", r?.systemPrompt && /extensions\/mod\.ts/.test(r.systemPrompt) && /\/refresh/.test(r.systemPrompt));
+const advEvt = emitted.filter((e) => e.n === "config-repo-advanced").at(-1);
+check("(g) config-repo-advanced payload carries classified staleResources", !!advEvt?.p?.staleResources?.includes("extensions/mod.ts"));
+
+// (h) first edit to a stale, not-re-read resource -> blocked.
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
+check("(h) first edit to a stale resource is BLOCKED", r?.block === true && /stale/i.test(r?.reason ?? ""));
+
+// (i) second edit without a read -> allowed, exactly one warning (never wedge).
+const staleWarnsBefore = sent.filter((m) => /no re-read was observed/.test(m.content)).length;
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
+check("(i) second edit is NOT blocked (escape hatch)", !r?.block);
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
+check("(i) escape hatch warns exactly once", !r?.block && sent.filter((m) => /no re-read was observed/.test(m.content)).length === staleWarnsBefore + 1);
+
+// (j) staleness persists across turns with no new commits.
+r = await fire("before_agent_start", startPrompt);
+check("(j) stale block re-injected every turn until reload", !!r?.systemPrompt && /## Stale loaded resources/.test(r.systemPrompt) && !/## Concurrent-session notice/.test(r.systemPrompt));
+
+// (k) a read tool result cures the edit gate.
+foreignCommit("prompts/p.md", "foreign prompt\n", "foreign prompt change");
+await fire("before_agent_start", startPrompt);
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("prompts/p.md") } }, ctx);
+check("(k) stale prompt edit blocked before re-read", r?.block === true);
+await fire("tool_result", { toolName: "read", isError: false, input: { path: abs("prompts/p.md") } }, ctx);
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("prompts/p.md") } }, ctx);
+check("(k) read tool result cures the gate — edit allowed", !r?.block);
 
 rmSync(REPO, { recursive: true, force: true });
 assert.equal(failed, 0, `${failed} concurrency-guard check(s) failed`);
