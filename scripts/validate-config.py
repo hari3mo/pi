@@ -174,6 +174,89 @@ def check_symlinks() -> None:
             errors.append(f"skills/{entry.name}: dangling symlink -> {os.readlink(entry)}")
 
 
+def _frontmatter(path: Path) -> list[str] | None:
+    try:
+        lines = path.read_text(encoding="utf-8").splitlines()
+    except OSError:
+        return None
+    if not lines or lines[0].strip() != "---":
+        return None
+    end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
+    return lines[1:end] if end is not None else None
+
+
+def check_agent_frontmatter() -> None:
+    agents = AGENT_DIR / "agents"
+    if not agents.is_dir():
+        return
+    for path in sorted(agents.glob("*.md")):
+        fm = _frontmatter(path)
+        if fm is None:
+            errors.append(f"agents/{path.name}: missing YAML frontmatter")
+            continue
+        desc = next((line for line in fm if line.startswith("description:")), None)
+        if desc is None:
+            errors.append(f"agents/{path.name}: missing description frontmatter")
+            continue
+        if not desc.startswith('description: "') or not desc.rstrip().endswith('"'):
+            errors.append(
+                f"agents/{path.name}: description must be double-quoted to keep ': ' from breaking YAML")
+
+
+def check_theme_integrity() -> None:
+    paths = sorted((AGENT_DIR / "themes").glob("*.json"))
+    themes: dict[str, dict] = {}
+    for path in paths:
+        try:
+            obj = load_json(path)
+        except json.JSONDecodeError as e:
+            errors.append(f"themes/{path.name}: invalid JSON — {e}")
+            continue
+        except OSError:
+            continue
+        rel = f"themes/{path.name}"
+        vars_ = obj.get("vars", {}) if isinstance(obj, dict) else {}
+        colors = obj.get("colors", {}) if isinstance(obj, dict) else {}
+        if not isinstance(vars_, dict) or not isinstance(colors, dict):
+            continue  # schema validation reports the shape; avoid duplicate noise
+        for key, value in colors.items():
+            if not isinstance(value, str):
+                continue
+            if value and not value.startswith("#") and value not in vars_:
+                errors.append(f"{rel}: colors.{key} references undefined token '{value}'")
+        themes[path.stem] = obj
+
+    dark = themes.get("porcelain")
+    light = themes.get("porcelain-light")
+    if not dark or not light:
+        return
+    for section in ("colors", "export"):
+        dk = set((dark.get(section) or {}).keys()) if isinstance(dark.get(section), dict) else set()
+        lk = set((light.get(section) or {}).keys()) if isinstance(light.get(section), dict) else set()
+        if dk != lk:
+            missing_light = sorted(dk - lk)
+            missing_dark = sorted(lk - dk)
+            bits = []
+            if missing_light:
+                bits.append(f"missing in porcelain-light: {', '.join(missing_light)}")
+            if missing_dark:
+                bits.append(f"missing in porcelain: {', '.join(missing_dark)}")
+            errors.append(f"themes: {section} token parity mismatch ({'; '.join(bits)})")
+
+
+def check_extension_hygiene() -> None:
+    slash_dispatch = re.compile(r"sendUserMessage\(\s*['\"]/")
+    for path in sorted((AGENT_DIR / "extensions").rglob("*.ts")):
+        try:
+            text = path.read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        if slash_dispatch.search(text):
+            rel = path.relative_to(AGENT_DIR)
+            errors.append(
+                f"{rel}: sendUserMessage('/...') cannot dispatch slash commands; use a real command context")
+
+
 def check_installed_integrity() -> None:
     """Guards for fixes that live OUTSIDE tracked config and can silently vanish.
 
@@ -240,6 +323,9 @@ def main() -> int:
             errors.append(f"manifest: target {tname} raised {type(e).__name__}: {e}")
     check_git_hygiene()
     check_symlinks()
+    check_agent_frontmatter()
+    check_theme_integrity()
+    check_extension_hygiene()
     check_installed_integrity()
     check_layout(manifest.get("layout", {}))
 
