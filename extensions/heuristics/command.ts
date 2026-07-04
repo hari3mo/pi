@@ -157,7 +157,7 @@ async function handleAdd(ctx: ExtensionCommandContext, rest: string): Promise<vo
 		// User-authored entries are by definition user-confirmed (DESIGN.md §10).
 		const result = await saveHeuristic(dir, scope, project, text, category, "user", "user-confirmed");
 		const allWarnings = [...warnings, ...result.warnings];
-		const msg = `Learned (${result.status}) [${result.id}]${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
+		const msg = `Learned (${result.status}) [${result.id}]\n“${result.text}”${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
 		output(ctx, msg, "info");
 	} catch (err) {
 		output(ctx, `Failed to add heuristic: ${err instanceof Error ? err.message : String(err)}`, "error");

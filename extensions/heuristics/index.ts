@@ -135,11 +135,11 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 
 			const result = await saveHeuristic(dir, scope, project, params.text, category, "agent", params.basis as string);
 			const allWarnings = [...warnings, ...result.warnings];
-			const text = `Learned (${result.status}) [${result.id}]${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
+			const text = `Learned (${result.status}) [${result.id}]\n“${result.text}”${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
 
 			return {
 				content: [{ type: "text" as const, text }],
-				details: { status: result.status, id: result.id, scope, warnings: allWarnings },
+				details: { status: result.status, id: result.id, text: result.text, scope, warnings: allWarnings },
 			};
 		},
 	});
