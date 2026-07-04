@@ -564,98 +564,186 @@ function formatSubagentShell(ref: SubagentRunRef): string {
 	return lines.join("\n");
 }
 
-async function showActiveSubagentPanel(ctx: { mode: string; hasUI: boolean; ui: any }): Promise<void> {
+// Detail-view body height used only when the terminal viewport size is
+// unreported. ponytail: constant fallback; the live height derives from
+// tui.terminal.rows in ActiveSubagentPanel.bodyHeight().
+const DETAIL_FALLBACK_BODY_LINES = 28;
+
+// Extracted from the former inline ctx.ui.custom() literal: the keyboard panel
+// for live/recent subagent runs. Owns its own list/detail/scroll state, its
+// data-change listener registration, a spinner-animation timer, and a
+// formatSubagentShell() line cache. render() is pure (no state persisted); all
+// clamping happens in handleInput or as local copies inside render.
+class ActiveSubagentPanel {
+	private selected = 0;
+	private detail = false;
+	private scroll = 0;
+	private readonly onDataChange: () => void;
+	private spinnerTimer?: ReturnType<typeof setInterval>;
+	private disposed = false;
+	// Cache of formatSubagentShell(ref) split into lines, keyed by ref identity
+	// plus (messages.length + endTime) — the only inputs that grow a run's
+	// transcript. Rebuilt when the selected ref or that key changes; the built
+	// string carries no theme colors, so it survives theme invalidate().
+	private cacheRef?: SubagentRunRef;
+	private cacheKey = "";
+	private cacheLines: string[] = [];
+
+	constructor(
+		private readonly tui: TUI,
+		private readonly theme: Theme,
+		private readonly done: () => void,
+	) {
+		// Re-render whenever run data changes; the outer function used to juggle
+		// this via closure mutation — now the panel registers/unregisters itself.
+		this.onDataChange = () => this.tui.requestRender();
+		ACTIVE_SUBAGENT_LISTENERS.add(this.onDataChange);
+	}
+
+	// Detail body height: derive from the terminal viewport (the overlay caps at
+	// maxHeight 85%), minus fixed chrome (title, separator, detail header) and the
+	// margin. Falls back to a constant if the terminal reports no usable size.
+	private bodyHeight(): number {
+		const rows = this.tui.terminal?.rows ?? 0;
+		if (rows < 12) return DETAIL_FALLBACK_BODY_LINES;
+		return Math.max(8, Math.floor(rows * 0.85) - 5);
+	}
+
+	private detailLines(ref: SubagentRunRef): string[] {
+		const key = `${ref.result.messages.length}:${ref.result.endTime ?? ""}`;
+		if (this.cacheRef !== ref || this.cacheKey !== key) {
+			this.cacheRef = ref;
+			this.cacheKey = key;
+			this.cacheLines = formatSubagentShell(ref).split("\n");
+		}
+		return this.cacheLines;
+	}
+
+	// Animate the list spinner while any run is in progress by ticking
+	// requestRender on an interval (mirrors the renderResult spinnerTimer
+	// pattern). Idempotent: stops the moment nothing is running. dispose() and
+	// showActiveSubagentPanel's finally both clear it, so it cannot leak.
+	private syncSpinnerTimer(anyInProgress: boolean): void {
+		if (anyInProgress && !this.spinnerTimer) {
+			this.spinnerTimer = setInterval(() => this.tui.requestRender(), SPINNER_INTERVAL_MS);
+			(this.spinnerTimer as { unref?: () => void }).unref?.();
+		} else if (!anyInProgress && this.spinnerTimer) {
+			clearInterval(this.spinnerTimer);
+			this.spinnerTimer = undefined;
+		}
+	}
+
+	render(width: number): string[] {
+		const theme = this.theme;
+		const refs = getActiveSubagentRunRefs();
+		this.syncSpinnerTimer(refs.some((ref) => runInProgress(ref.result)));
+		// Local clamped copy — render never persists state.
+		const selected = Math.min(this.selected, Math.max(0, refs.length - 1));
+		const lines: string[] = [];
+		const controls = this.detail
+			? "↑↓/Pg scroll • enter list • esc close"
+			: "↑↓ select • enter details • esc close";
+		lines.push(theme.fg("toolTitle", theme.bold("Active subagents")) + theme.fg("dim", `  ${controls}`));
+		lines.push(theme.fg("dim", "─".repeat(Math.max(1, Math.min(width, 120)))));
+
+		if (refs.length === 0) {
+			lines.push(theme.fg("muted", "No active subagents."));
+			return lines.map((line) => truncateToWidth(line, width));
+		}
+
+		if (!this.detail) {
+			refs.forEach((ref, index) => {
+				const r = ref.result;
+				const marker = index === selected ? theme.fg("accent", "›") : " ";
+				const icon = runInProgress(r)
+					? theme.fg("accent", SPINNER_FRAMES[Math.floor(Date.now() / SPINNER_INTERVAL_MS) % SPINNER_FRAMES.length])
+					: isFailedResult(r)
+						? theme.fg("error", "✗")
+						: theme.fg("success", "✓");
+				const elapsed = getElapsedMs(r);
+				const stats = formatRunStatus(r);
+				lines.push(
+					`${marker} ${icon} ${theme.fg("accent", r.agent)} ${theme.fg("muted", `${ref.mode} ${ref.resultIndex + 1}/${ref.batchSize}`)} ${theme.fg("dim", elapsed === undefined ? "" : formatDuration(elapsed))}`,
+				);
+				lines.push(theme.fg("dim", `  ${oneLine(r.task, 110)}`));
+				if (stats) lines.push(theme.fg("dim", `  ${stats}`));
+			});
+			return lines.map((line) => truncateToWidth(line, width));
+		}
+
+		const ref = refs[selected];
+		if (!ref) return lines.map((line) => truncateToWidth(line, width));
+		const raw = this.detailLines(ref);
+		const bodyLines = this.bodyHeight();
+		const scroll = Math.max(0, Math.min(this.scroll, Math.max(0, raw.length - bodyLines)));
+		lines.push(theme.fg("accent", `${ref.result.agent} · ${runStatusWord(ref.result)} · ${scroll + 1}-${Math.min(raw.length, scroll + bodyLines)}/${raw.length}`));
+		for (const line of raw.slice(scroll, scroll + bodyLines)) lines.push(line || " ");
+		return lines.map((line) => truncateToWidth(line, width));
+	}
+
+	invalidate(): void {
+		// No pre-baked theme colors are cached (formatSubagentShell emits none), so
+		// there is nothing to rebuild on theme change.
+	}
+
+	handleInput(data: string): void {
+		const refs = getActiveSubagentRunRefs();
+		// Clamp on each keypress so a run removed while the panel is open can't leave
+		// selected past the end (formerly clamped in render()).
+		this.selected = Math.min(this.selected, Math.max(0, refs.length - 1));
+		if (matchesKey(data, Key.escape) || data === "q") {
+			this.done();
+			return;
+		}
+		if (matchesKey(data, Key.enter)) {
+			this.detail = !this.detail;
+			this.scroll = 0;
+		} else if (this.detail) {
+			const ref = refs[this.selected];
+			const maxScroll = ref ? Math.max(0, this.detailLines(ref).length - this.bodyHeight()) : 0;
+			if (matchesKey(data, Key.up)) this.scroll = Math.max(0, this.scroll - 1);
+			else if (matchesKey(data, Key.down)) this.scroll = Math.min(maxScroll, this.scroll + 1);
+			else if (matchesKey(data, Key.pageUp)) this.scroll = Math.max(0, this.scroll - 10);
+			else if (matchesKey(data, Key.pageDown)) this.scroll = Math.min(maxScroll, this.scroll + 10);
+			else if (matchesKey(data, Key.left)) this.detail = false;
+		} else {
+			if (matchesKey(data, Key.up)) this.selected = Math.max(0, this.selected - 1);
+			else if (matchesKey(data, Key.down)) this.selected = Math.min(Math.max(0, refs.length - 1), this.selected + 1);
+		}
+		this.tui.requestRender();
+	}
+
+	dispose(): void {
+		if (this.disposed) return;
+		this.disposed = true;
+		ACTIVE_SUBAGENT_LISTENERS.delete(this.onDataChange);
+		if (this.spinnerTimer) {
+			clearInterval(this.spinnerTimer);
+			this.spinnerTimer = undefined;
+		}
+	}
+}
+
+async function showActiveSubagentPanel(ctx: ExtensionContext): Promise<void> {
 	if (!ctx.hasUI) return;
 	if (ctx.mode !== "tui") {
 		ctx.ui.notify("Active subagent panel is only available in the TUI.", "warning");
 		return;
 	}
 
-	let removeListener: (() => void) | undefined;
+	let panel: ActiveSubagentPanel | undefined;
 	try {
-		await ctx.ui.custom(
-			(tui: { requestRender(): void }, theme: any, _keybindings: unknown, done: () => void) => {
-				let selected = 0;
-				let detail = false;
-				let scroll = 0;
-				const close = () => done();
-				const requestRender = () => tui.requestRender();
-				ACTIVE_SUBAGENT_LISTENERS.add(requestRender);
-				removeListener = () => ACTIVE_SUBAGENT_LISTENERS.delete(requestRender);
-
-				return {
-					render(width: number): string[] {
-						const refs = getActiveSubagentRunRefs();
-						if (selected >= refs.length) selected = Math.max(0, refs.length - 1);
-						const lines: string[] = [];
-						const controls = detail
-							? "↑↓/Pg scroll • enter list • esc close"
-							: "↑↓ select • enter details • esc close";
-						lines.push(theme.fg("toolTitle", theme.bold("Active subagents")) + theme.fg("dim", `  ${controls}`));
-						lines.push(theme.fg("dim", "─".repeat(Math.max(1, Math.min(width, 120)))));
-
-						if (refs.length === 0) {
-							lines.push(theme.fg("muted", "No active subagents."));
-							return lines.map((line) => truncateToWidth(line, width));
-						}
-
-						if (!detail) {
-							refs.forEach((ref, index) => {
-								const r = ref.result;
-								const marker = index === selected ? theme.fg("accent", "›") : " ";
-								const icon = runInProgress(r)
-									? theme.fg("accent", SPINNER_FRAMES[Math.floor(Date.now() / SPINNER_INTERVAL_MS) % SPINNER_FRAMES.length])
-									: isFailedResult(r)
-										? theme.fg("error", "✗")
-										: theme.fg("success", "✓");
-								const elapsed = getElapsedMs(r);
-								const stats = formatRunStatus(r);
-								lines.push(
-									`${marker} ${icon} ${theme.fg("accent", r.agent)} ${theme.fg("muted", `${ref.mode} ${ref.resultIndex + 1}/${ref.batchSize}`)} ${theme.fg("dim", elapsed === undefined ? "" : formatDuration(elapsed))}`,
-								);
-								lines.push(theme.fg("dim", `  ${oneLine(r.task, 110)}`));
-								if (stats) lines.push(theme.fg("dim", `  ${stats}`));
-							});
-							return lines.map((line) => truncateToWidth(line, width));
-						}
-
-						const ref = refs[selected];
-						if (!ref) return lines.map((line) => truncateToWidth(line, width));
-						const raw = formatSubagentShell(ref).split("\n");
-						const maxBodyLines = 28;
-						scroll = Math.max(0, Math.min(scroll, Math.max(0, raw.length - maxBodyLines)));
-						lines.push(theme.fg("accent", `${ref.result.agent} · ${runStatusWord(ref.result)} · ${scroll + 1}-${Math.min(raw.length, scroll + maxBodyLines)}/${raw.length}`));
-						for (const line of raw.slice(scroll, scroll + maxBodyLines)) lines.push(line || " ");
-						return lines.map((line) => truncateToWidth(line, width));
-					},
-					invalidate(): void {},
-					handleInput(data: string): void {
-						const refs = getActiveSubagentRunRefs();
-						if (matchesKey(data, Key.escape) || data === "q") {
-							close();
-							return;
-						}
-						if (matchesKey(data, Key.enter)) {
-							detail = !detail;
-							scroll = 0;
-						} else if (detail) {
-							if (matchesKey(data, Key.up)) scroll = Math.max(0, scroll - 1);
-							else if (matchesKey(data, Key.down)) scroll++;
-							else if (matchesKey(data, Key.pageUp)) scroll = Math.max(0, scroll - 10);
-							else if (matchesKey(data, Key.pageDown)) scroll += 10;
-							else if (matchesKey(data, Key.left)) detail = false;
-						} else {
-							if (matchesKey(data, Key.up)) selected = Math.max(0, selected - 1);
-							else if (matchesKey(data, Key.down)) selected = Math.min(Math.max(0, refs.length - 1), selected + 1);
-						}
-						tui.requestRender();
-					},
-				};
+		await ctx.ui.custom<void>(
+			(tui, theme, _keybindings, done) => {
+				panel = new ActiveSubagentPanel(tui, theme, done);
+				return panel;
 			},
 			{ overlay: true, overlayOptions: { anchor: "right-center", width: "80%", maxHeight: "85%", margin: 1 } },
 		);
 	} finally {
-		removeListener?.();
+		// Backstop: dispose() also runs when the TUI closes the overlay; both paths
+		// are idempotent, so the listener + spinner timer cannot leak.
+		panel?.dispose();
 	}
 }
 
