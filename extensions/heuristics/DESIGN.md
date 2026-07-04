@@ -229,7 +229,7 @@ First firing signal wins; nudge line:
 "A recent delegation had trouble ({reason}); if there is a durable delegation lesson,
 call learn_heuristic (category: orchestration)."
 {reason} ∈ {"the task failed","an unknown/misrouted role","the same role was
-re-delegated","you edited files right after a builder run"}.
+re-delegated","you edited files right after a worker run"}.
 Orchestration nudge OVERRIDES generic for that turn (single line max). Consumed +
 cleared in before_agent_start. Clear Map/watch/pending on session_start.
 
