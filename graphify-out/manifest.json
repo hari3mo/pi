@@ -1108,5 +1108,10 @@
     "mtime": 1783166448.534771,
     "ast_hash": "35a093df73f2b35c9664dc5136192de3",
     "semantic_hash": ""
+  },
+  "scripts/check-impact-trace.mjs": {
+    "mtime": 1783166467.049558,
+    "ast_hash": "eccd83bc4c86b7d8250a474980bc7efc",
+    "semantic_hash": ""
   }
 }
