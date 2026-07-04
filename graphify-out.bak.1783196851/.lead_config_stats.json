@@ -1,0 +1,514 @@
+[
+  {
+    "id": "2026-07-04T13:19:19.202Z-59544",
+    "ts": 1783171240060,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gemini-3.5-flash"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:19:30.279Z-59855",
+    "ts": 1783171294005,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:21:52.815Z-29968",
+    "ts": 1783171352938,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:21:34.833Z-61132",
+    "ts": 1783171414338,
+    "models": [
+      "gpt-5.5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gpt-5.5"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:22:58.144Z-62451",
+    "ts": 1783171454680,
+    "models": [
+      "claude-fable-5"
+    ],
+    "profiles": [
+      "fable"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:24:59.409Z-62451",
+    "ts": 1783171608638,
+    "models": [
+      "claude-fable-5"
+    ],
+    "profiles": [
+      "fable"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:24:10.947Z-18661",
+    "ts": 1783171702367,
+    "models": [
+      "claude-fable-5",
+      "claude-sonnet-5",
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "fable",
+      "direct",
+      "opus-lead"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:28:25.928Z-18661",
+    "ts": 1783171732444,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:29:55.556Z-64804",
+    "ts": 1783172009041,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:34:59.396Z-66970",
+    "ts": 1783172538764,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:34:59.381Z-66968",
+    "ts": 1783172547710,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:34:59.513Z-66969",
+    "ts": 1783172695344,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:34:59.373Z-66967",
+    "ts": 1783172910789,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:49:08.674Z-98888",
+    "ts": 1783173136481,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:52:17.244Z-3990",
+    "ts": 1783173343885,
+    "models": [
+      "gpt-5.5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gpt-5.5"
+    ]
+  },
+  {
+    "id": "2026-07-04T13:58:20.771Z-9031",
+    "ts": 1783173771829,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T13:56:42.457Z-7274",
+    "ts": 1783173816183,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T14:03:36.850Z-15485",
+    "ts": 1783173950470,
+    "models": [
+      "gpt-5.5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gpt-5.5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:06:21.703Z-17839",
+    "ts": 1783174057554,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:07:38.243Z-19317",
+    "ts": 1783174102606,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gemini-3.5-flash"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:15:03.738Z-24998",
+    "ts": 1783174580681,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T14:13:04.099Z-23241",
+    "ts": 1783174635955,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:13:04.102Z-23242",
+    "ts": 1783174692173,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:13:04.094Z-23243",
+    "ts": 1783174702183,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:17:29.527Z-26555",
+    "ts": 1783174805761,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:10:17.764Z-21532",
+    "ts": 1783175274759,
+    "models": [
+      "claude-opus-4-8",
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "opus-lead",
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T14:20:56.713Z-24998",
+    "ts": 1783174897653,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T14:19:34.015Z-28595",
+    "ts": 1783174939123,
+    "models": [
+      "claude-fable-5"
+    ],
+    "profiles": [
+      "fable"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T14:28:10.413Z-34306",
+    "ts": 1783176439942,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T15:24:33.051Z-44999",
+    "ts": 1783178930450,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gemini-3.5-flash"
+    ]
+  },
+  {
+    "id": "2026-07-04T15:36:57.880Z-46476",
+    "ts": 1783179992583,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T15:36:57.884Z-46477",
+    "ts": 1783180401267,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T15:58:01.200Z-50671",
+    "ts": 1783180961820,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gemini-3.5-flash"
+    ]
+  },
+  {
+    "id": "2026-07-04T15:57:02.887Z-49520",
+    "ts": 1783180961825,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "gemini-3.5-flash"
+    ]
+  },
+  {
+    "id": "2026-07-04T16:27:08.377Z-52458",
+    "ts": 1783183129087,
+    "models": [
+      "claude-sonnet-5"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 1,
+    "fallbackModels": [
+      "claude-sonnet-5"
+    ]
+  },
+  {
+    "id": "2026-07-04T17:04:00.069Z-58456",
+    "ts": 1783185356068,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T19:49:32.069Z-81633",
+    "ts": 1783195843112,
+    "models": [
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T20:10:43.857Z-96723",
+    "ts": 1783195923058,
+    "models": [
+      "gemini-3.5-flash"
+    ],
+    "profiles": [
+      "direct"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  },
+  {
+    "id": "2026-07-04T19:47:58.838Z-28595",
+    "ts": 1783196591632,
+    "models": [
+      "claude-fable-5",
+      "claude-opus-4-8"
+    ],
+    "profiles": [
+      "fable",
+      "opus-lead"
+    ],
+    "fallbacks": 0,
+    "fallbackModels": []
+  }
+]

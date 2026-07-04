@@ -1,0 +1,11 @@
+{
+  "best_giant_fraction": 0.6602052451539339,
+  "last_giant_fraction": 0.6602052451539339,
+  "last_checked": 1783196841,
+  "toolchain": {
+    "pi": "0.80.3",
+    "graphifyy": "0.9.4",
+    "node": "22"
+  },
+  "giant_fraction_scope": "config-repo-v1"
+}

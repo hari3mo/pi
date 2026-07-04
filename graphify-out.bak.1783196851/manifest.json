@@ -1,0 +1,1457 @@
+{
+  ".pi-vcs/autocommit.sh": {
+    "mtime": 1783118461.303355,
+    "ast_hash": "87cc1d75cfdb0540182990a7e4763361",
+    "semantic_hash": "87cc1d75cfdb0540182990a7e4763361"
+  },
+  ".pi-vcs/hooks/pre-commit": {
+    "mtime": 1783125269.9688492,
+    "ast_hash": "b8e5d65a6153bbac17a60c14aa4fe073",
+    "semantic_hash": "b8e5d65a6153bbac17a60c14aa4fe073"
+  },
+  "extensions/chat-title.ts": {
+    "mtime": 1783130344.9480126,
+    "ast_hash": "5820713e76af4497822a38a6fa60a143",
+    "semantic_hash": "5820713e76af4497822a38a6fa60a143"
+  },
+  "extensions/custom-header.ts": {
+    "mtime": 1783151171.7515063,
+    "ast_hash": "b79a1a756a664dc8d9585c9041bf9ce4",
+    "semantic_hash": "b79a1a756a664dc8d9585c9041bf9ce4"
+  },
+  "extensions/focus-chime.ts": {
+    "mtime": 1783117678.533658,
+    "ast_hash": "a92903e12e46a3f82773f2ebbf093572",
+    "semantic_hash": "a92903e12e46a3f82773f2ebbf093572"
+  },
+  "extensions/heuristics/command.ts": {
+    "mtime": 1783130442.4887185,
+    "ast_hash": "6b10433100563b6c5610ad18dee87100",
+    "semantic_hash": "6b10433100563b6c5610ad18dee87100"
+  },
+  "extensions/heuristics/index.ts": {
+    "mtime": 1783159885.6423407,
+    "ast_hash": "c7a4e2c9afbe29b197574fc8e32691e8",
+    "semantic_hash": "c7a4e2c9afbe29b197574fc8e32691e8"
+  },
+  "extensions/heuristics/inject.ts": {
+    "mtime": 1783121234.2450075,
+    "ast_hash": "fc0e87b933f4cd1d501335d029445853",
+    "semantic_hash": "fc0e87b933f4cd1d501335d029445853"
+  },
+  "extensions/heuristics/sanitize.ts": {
+    "mtime": 1783155803.7007086,
+    "ast_hash": "27c6c728172b249302bfbfbbb67f7ad5",
+    "semantic_hash": "27c6c728172b249302bfbfbbb67f7ad5"
+  },
+  "extensions/heuristics/schema.ts": {
+    "mtime": 1783159885.642016,
+    "ast_hash": "cf0aff850982e9ad6ae44711df9a755a",
+    "semantic_hash": "cf0aff850982e9ad6ae44711df9a755a"
+  },
+  "extensions/heuristics/store.ts": {
+    "mtime": 1783130418.6867042,
+    "ast_hash": "46a7283e83c1e1939bad1ff68a724634",
+    "semantic_hash": "46a7283e83c1e1939bad1ff68a724634"
+  },
+  "extensions/lib/format.ts": {
+    "mtime": 1783162182.713009,
+    "ast_hash": "23e9f8a264ca5903daded06fc3a95a57",
+    "semantic_hash": "23e9f8a264ca5903daded06fc3a95a57"
+  },
+  "extensions/minimal-ui.ts": {
+    "mtime": 1783162225.2779148,
+    "ast_hash": "7b8ba867dd90d5f23b860aa2dee2ed58",
+    "semantic_hash": "7b8ba867dd90d5f23b860aa2dee2ed58"
+  },
+  "extensions/model-awareness.ts": {
+    "mtime": 1783125968.7226264,
+    "ast_hash": "2f1449ab0c3e59c317a3fc59cf15b04d",
+    "semantic_hash": "2f1449ab0c3e59c317a3fc59cf15b04d"
+  },
+  "extensions/model-cycle.ts": {
+    "mtime": 1783144287.2066164,
+    "ast_hash": "16d88dc26f933e31f62e204d5df32a20",
+    "semantic_hash": "16d88dc26f933e31f62e204d5df32a20"
+  },
+  "extensions/pi-vcs-breadcrumb.ts": {
+    "mtime": 1783118486.4086504,
+    "ast_hash": "f4ee17a4014ea908fb84b86a6657a6e3",
+    "semantic_hash": "f4ee17a4014ea908fb84b86a6657a6e3"
+  },
+  "extensions/read-only-default.ts": {
+    "mtime": 1783155801.2434208,
+    "ast_hash": "4c14562d7e7251c048147d4fd257967f",
+    "semantic_hash": "4c14562d7e7251c048147d4fd257967f"
+  },
+  "extensions/session-receipt.ts": {
+    "mtime": 1783130333.0580034,
+    "ast_hash": "b7d238c4b5cf743414a36ebc2f33a94d",
+    "semantic_hash": "b7d238c4b5cf743414a36ebc2f33a94d"
+  },
+  "extensions/subagent/agents.ts": {
+    "mtime": 1783140021.2224312,
+    "ast_hash": "db404c40dbe39c3e68b824f30255fc65",
+    "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
+  },
+  "extensions/subagent/index.ts": {
+    "mtime": 1783171237.074446,
+    "ast_hash": "872ae47ff7f74223702b1c45c1b25713",
+    "semantic_hash": "872ae47ff7f74223702b1c45c1b25713"
+  },
+  "extensions/task-tracker.ts": {
+    "mtime": 1783143286.8953173,
+    "ast_hash": "85808822d52f012be39fd61c63785844",
+    "semantic_hash": "85808822d52f012be39fd61c63785844"
+  },
+  "extensions/void-blackhole.ts": {
+    "mtime": 1783151942.9072895,
+    "ast_hash": "38db4b13abb9094946eadc5de799811b",
+    "semantic_hash": "38db4b13abb9094946eadc5de799811b"
+  },
+  "git/github.com/DietrichGebert/ponytail/.agents/plugins/marketplace.json": {
+    "mtime": 1783127535.615609,
+    "ast_hash": "35b3a1858b45313a8700b8568b2b8ba7",
+    "semantic_hash": "35b3a1858b45313a8700b8568b2b8ba7"
+  },
+  "git/github.com/DietrichGebert/ponytail/.claude-plugin/marketplace.json": {
+    "mtime": 1783127535.6159613,
+    "ast_hash": "a3470285be8e466e056841fb31b6575d",
+    "semantic_hash": "a3470285be8e466e056841fb31b6575d"
+  },
+  "git/github.com/DietrichGebert/ponytail/.claude-plugin/plugin.json": {
+    "mtime": 1783127535.6160526,
+    "ast_hash": "6546d2d9aac92efdb815627b4d765f03",
+    "semantic_hash": "6546d2d9aac92efdb815627b4d765f03"
+  },
+  "git/github.com/DietrichGebert/ponytail/.codex-plugin/plugin.json": {
+    "mtime": 1783127535.6163678,
+    "ast_hash": "439fb58a71f2ca57cb769afbc87f7ea6",
+    "semantic_hash": "439fb58a71f2ca57cb769afbc87f7ea6"
+  },
+  "git/github.com/DietrichGebert/ponytail/.devin-plugin/plugin.json": {
+    "mtime": 1783127535.616693,
+    "ast_hash": "3312b279b54e5452a5a4d1a51956cedd",
+    "semantic_hash": "3312b279b54e5452a5a4d1a51956cedd"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/plugin/marketplace.json": {
+    "mtime": 1783127535.6171596,
+    "ast_hash": "1daafe5e8e839e5cc8d2de56cbda5207",
+    "semantic_hash": "1daafe5e8e839e5cc8d2de56cbda5207"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/plugin/plugin.json": {
+    "mtime": 1783127535.6172547,
+    "ast_hash": "9b063f0d2156c1d9bc6c746b52c511f5",
+    "semantic_hash": "9b063f0d2156c1d9bc6c746b52c511f5"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs": {
+    "mtime": 1783127535.6196408,
+    "ast_hash": "bb0b21fe3aaa02b04cb1e488c3cb39aa",
+    "semantic_hash": "bb0b21fe3aaa02b04cb1e488c3cb39aa"
+  },
+  "git/github.com/DietrichGebert/ponytail/__init__.py": {
+    "mtime": 1783127535.6205745,
+    "ast_hash": "0dec43793acdfb2dbbdbed53c769620a",
+    "semantic_hash": "0dec43793acdfb2dbbdbed53c769620a"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/agentic/complete.py": {
+    "mtime": 1783127535.6249707,
+    "ast_hash": "dc121f8f745b1e7be4978efb6840c32a",
+    "semantic_hash": "dc121f8f745b1e7be4978efb6840c32a"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/agentic/judge.py": {
+    "mtime": 1783127535.625068,
+    "ast_hash": "d4838651b31b6683bfc4627ed809d937",
+    "semantic_hash": "d4838651b31b6683bfc4627ed809d937"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/agentic/run.py": {
+    "mtime": 1783127535.62517,
+    "ast_hash": "3ba61084e91bce4b034f6491c021b75d",
+    "semantic_hash": "3ba61084e91bce4b034f6491c021b75d"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/agentic/tasks.py": {
+    "mtime": 1783127535.6253283,
+    "ast_hash": "d68888d519d41f68ee7018ee7e0be9be",
+    "semantic_hash": "d68888d519d41f68ee7018ee7e0be9be"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/arms/baseline.js": {
+    "mtime": 1783127535.62545,
+    "ast_hash": "672d32778f9add3990093d9db31e804a",
+    "semantic_hash": "672d32778f9add3990093d9db31e804a"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js": {
+    "mtime": 1783127535.625613,
+    "ast_hash": "2fd92b6a7178b2a0fea0dabc421d44f6",
+    "semantic_hash": "2fd92b6a7178b2a0fea0dabc421d44f6"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js": {
+    "mtime": 1783127535.6256735,
+    "ast_hash": "d2fee6bd76728b541f778aff89e1d5b8",
+    "semantic_hash": "d2fee6bd76728b541f778aff89e1d5b8"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/behavior.js": {
+    "mtime": 1783127535.6257539,
+    "ast_hash": "937c632d8c4ba6605daa317b2e526942",
+    "semantic_hash": "937c632d8c4ba6605daa317b2e526942"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/benchmark-local.py": {
+    "mtime": 1783127535.6259222,
+    "ast_hash": "7df64cedfdc7c91535314337a4281bb0",
+    "semantic_hash": "7df64cedfdc7c91535314337a4281bb0"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js": {
+    "mtime": 1783127535.6260014,
+    "ast_hash": "05aff78fe30b89657282f41bd60b7b16",
+    "semantic_hash": "05aff78fe30b89657282f41bd60b7b16"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/correctness.js": {
+    "mtime": 1783127535.6260874,
+    "ast_hash": "b9ea8e97033d6fc80acfe486dc1a5298",
+    "semantic_hash": "b9ea8e97033d6fc80acfe486dc1a5298"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/correctness.test.js": {
+    "mtime": 1783127535.6261537,
+    "ast_hash": "ca5de203f4c81e7643ac8035949241ab",
+    "semantic_hash": "ca5de203f4c81e7643ac8035949241ab"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/generate-examples.mjs": {
+    "mtime": 1783127535.6262338,
+    "ast_hash": "f79414e03d6ad55ee5a72c557d7c8c47",
+    "semantic_hash": "f79414e03d6ad55ee5a72c557d7c8c47"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/loc.js": {
+    "mtime": 1783127535.6262975,
+    "ast_hash": "38498595a5f700140a15257df19a7e9e",
+    "semantic_hash": "38498595a5f700140a15257df19a7e9e"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/loc.test.js": {
+    "mtime": 1783127535.6263654,
+    "ast_hash": "9734e06826df0fb5e42e725664c09663",
+    "semantic_hash": "9734e06826df0fb5e42e725664c09663"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js": {
+    "mtime": 1783127535.62642,
+    "ast_hash": "6be5ca044b80b329792877dbf47d184e",
+    "semantic_hash": "6be5ca044b80b329792877dbf47d184e"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/prompts.json": {
+    "mtime": 1783127535.6267529,
+    "ast_hash": "95d2c9d8d889f57bbb31743915af28e1",
+    "semantic_hash": "95d2c9d8d889f57bbb31743915af28e1"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js": {
+    "mtime": 1783127535.6276977,
+    "ast_hash": "2427b166b9fa265c7d902aae598a1670",
+    "semantic_hash": "2427b166b9fa265c7d902aae598a1670"
+  },
+  "git/github.com/DietrichGebert/ponytail/gemini-extension.json": {
+    "mtime": 1783127535.6292586,
+    "ast_hash": "fd8e0aa4a8ced0143c623338526ea1cf",
+    "semantic_hash": "fd8e0aa4a8ced0143c623338526ea1cf"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/claude-codex-hooks.json": {
+    "mtime": 1783127535.6293635,
+    "ast_hash": "07ebb5344d6030a0e776222662b5b894",
+    "semantic_hash": "07ebb5344d6030a0e776222662b5b894"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/copilot-hooks.json": {
+    "mtime": 1783127535.6294248,
+    "ast_hash": "c750eea96b3cd0f6089dc5dec8511e54",
+    "semantic_hash": "c750eea96b3cd0f6089dc5dec8511e54"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js": {
+    "mtime": 1783127535.6294947,
+    "ast_hash": "47e95c1284023fdeeef4679c95008360",
+    "semantic_hash": "47e95c1284023fdeeef4679c95008360"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js": {
+    "mtime": 1783127535.6295676,
+    "ast_hash": "2a0d04b7390c4f4cb6e5f50c18756248",
+    "semantic_hash": "2a0d04b7390c4f4cb6e5f50c18756248"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-instructions.js": {
+    "mtime": 1783127535.629647,
+    "ast_hash": "6bc7902812c09682194f6d7e6c587f6e",
+    "semantic_hash": "6bc7902812c09682194f6d7e6c587f6e"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-mode-tracker.js": {
+    "mtime": 1783127535.629717,
+    "ast_hash": "ee2a24aaba71f040fb1e76aacbeae582",
+    "semantic_hash": "ee2a24aaba71f040fb1e76aacbeae582"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-runtime.js": {
+    "mtime": 1783127535.6297772,
+    "ast_hash": "5b18b8844cd20ff84d81ab5aac651472",
+    "semantic_hash": "5b18b8844cd20ff84d81ab5aac651472"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-statusline.ps1": {
+    "mtime": 1783127535.6298413,
+    "ast_hash": "da5a44c94bfd24e5a9442405f5255617",
+    "semantic_hash": "da5a44c94bfd24e5a9442405f5255617"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-statusline.sh": {
+    "mtime": 1783127535.6299062,
+    "ast_hash": "f1e522f1adb6aaab8698cff727d74ffd",
+    "semantic_hash": "f1e522f1adb6aaab8698cff727d74ffd"
+  },
+  "git/github.com/DietrichGebert/ponytail/hooks/ponytail-subagent.js": {
+    "mtime": 1783127535.629975,
+    "ast_hash": "992428c5ea5d60c19d42b3582cde0193",
+    "semantic_hash": "992428c5ea5d60c19d42b3582cde0193"
+  },
+  "git/github.com/DietrichGebert/ponytail/opencode.json": {
+    "mtime": 1783127535.6300504,
+    "ast_hash": "1551b9a5d6f2483ae79aba123b25793e",
+    "semantic_hash": "1551b9a5d6f2483ae79aba123b25793e"
+  },
+  "git/github.com/DietrichGebert/ponytail/package.json": {
+    "mtime": 1783127535.6301336,
+    "ast_hash": "04157160d94a153e84f0cc9bec7d66e0",
+    "semantic_hash": "04157160d94a153e84f0cc9bec7d66e0"
+  },
+  "git/github.com/DietrichGebert/ponytail/pi-extension/index.js": {
+    "mtime": 1783127535.6302536,
+    "ast_hash": "37c5a59f26be70540ec0455367fdc6b8",
+    "semantic_hash": "37c5a59f26be70540ec0455367fdc6b8"
+  },
+  "git/github.com/DietrichGebert/ponytail/pi-extension/package.json": {
+    "mtime": 1783127535.6303346,
+    "ast_hash": "7cde7bd94bca66b954ab3669f5c83756",
+    "semantic_hash": "7cde7bd94bca66b954ab3669f5c83756"
+  },
+  "git/github.com/DietrichGebert/ponytail/pi-extension/test/extension.test.js": {
+    "mtime": 1783127535.6304607,
+    "ast_hash": "407b55c193c082a5eeff85c1e41a06a9",
+    "semantic_hash": "407b55c193c082a5eeff85c1e41a06a9"
+  },
+  "git/github.com/DietrichGebert/ponytail/pi-extension/test/helpers.test.js": {
+    "mtime": 1783127535.6305637,
+    "ast_hash": "9be67d45cd0a9e3ff824a0192ad4601e",
+    "semantic_hash": "9be67d45cd0a9e3ff824a0192ad4601e"
+  },
+  "git/github.com/DietrichGebert/ponytail/ponytail-mcp/index.js": {
+    "mtime": 1783127535.6308362,
+    "ast_hash": "70677a67ab13bda75300865703f69f4c",
+    "semantic_hash": "70677a67ab13bda75300865703f69f4c"
+  },
+  "git/github.com/DietrichGebert/ponytail/ponytail-mcp/instructions.js": {
+    "mtime": 1783127535.6309059,
+    "ast_hash": "f70d416399a12929b5c08930c247e924",
+    "semantic_hash": "f70d416399a12929b5c08930c247e924"
+  },
+  "git/github.com/DietrichGebert/ponytail/ponytail-mcp/package.json": {
+    "mtime": 1783127535.6309786,
+    "ast_hash": "ae83bf4d237c074b534efb113c2bb729",
+    "semantic_hash": "ae83bf4d237c074b534efb113c2bb729"
+  },
+  "git/github.com/DietrichGebert/ponytail/ponytail-mcp/test/instructions.test.js": {
+    "mtime": 1783127535.6310763,
+    "ast_hash": "1dc37818212ac0e3b2654f3834c20e3f",
+    "semantic_hash": "1dc37818212ac0e3b2654f3834c20e3f"
+  },
+  "git/github.com/DietrichGebert/ponytail/scripts/build-openclaw-skills.js": {
+    "mtime": 1783127535.6311975,
+    "ast_hash": "feba8d960a0cbc211879658c4ae42d3d",
+    "semantic_hash": "feba8d960a0cbc211879658c4ae42d3d"
+  },
+  "git/github.com/DietrichGebert/ponytail/scripts/check-rule-copies.js": {
+    "mtime": 1783127535.631268,
+    "ast_hash": "71b7b439ec43762a5ef976994af0bfdb",
+    "semantic_hash": "71b7b439ec43762a5ef976994af0bfdb"
+  },
+  "git/github.com/DietrichGebert/ponytail/scripts/check-versions.js": {
+    "mtime": 1783127535.6313431,
+    "ast_hash": "33c40c01322b42b4b0f8158929168807",
+    "semantic_hash": "33c40c01322b42b4b0f8158929168807"
+  },
+  "git/github.com/DietrichGebert/ponytail/scripts/publish-openclaw-skills.js": {
+    "mtime": 1783127535.6314127,
+    "ast_hash": "602ed380864c649a378f740bdaa0b390",
+    "semantic_hash": "602ed380864c649a378f740bdaa0b390"
+  },
+  "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js": {
+    "mtime": 1783127535.6314833,
+    "ast_hash": "780945490debf3c652da2ea86eb26b6b",
+    "semantic_hash": "780945490debf3c652da2ea86eb26b6b"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/behavior.test.js": {
+    "mtime": 1783127535.6322825,
+    "ast_hash": "76cdaa610b943355f48db735af9551e8",
+    "semantic_hash": "76cdaa610b943355f48db735af9551e8"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/commands.test.js": {
+    "mtime": 1783127535.6323771,
+    "ast_hash": "fc453303ab6f4ec0db5c6627be6177dc",
+    "semantic_hash": "fc453303ab6f4ec0db5c6627be6177dc"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js": {
+    "mtime": 1783127535.6324584,
+    "ast_hash": "69f7fdf0a761971a777bd28f8de92d51",
+    "semantic_hash": "69f7fdf0a761971a777bd28f8de92d51"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/correctness.test.js": {
+    "mtime": 1783127535.6325626,
+    "ast_hash": "da53f55b1fe964a5d95bd06b8c13444a",
+    "semantic_hash": "da53f55b1fe964a5d95bd06b8c13444a"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/gemini-extension.test.js": {
+    "mtime": 1783127535.6326528,
+    "ast_hash": "8e1a0a33fba04498bd0788c43aba3e71",
+    "semantic_hash": "8e1a0a33fba04498bd0788c43aba3e71"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/hermes-plugin.test.js": {
+    "mtime": 1783127535.6327448,
+    "ast_hash": "e4b2ba3117ef28ee91d9230632dbeb6a",
+    "semantic_hash": "e4b2ba3117ef28ee91d9230632dbeb6a"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/hooks-windows.test.js": {
+    "mtime": 1783127535.632839,
+    "ast_hash": "6a88c879e4a90ce625518e6b452d02ae",
+    "semantic_hash": "6a88c879e4a90ce625518e6b452d02ae"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/hooks.test.js": {
+    "mtime": 1783127535.6329408,
+    "ast_hash": "08a92caeda7cbb153c8ed57f33910f72",
+    "semantic_hash": "08a92caeda7cbb153c8ed57f33910f72"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/openclaw-skills.test.js": {
+    "mtime": 1783127535.633029,
+    "ast_hash": "9ea32e75ac2fb45ea8a0716c5e67560b",
+    "semantic_hash": "9ea32e75ac2fb45ea8a0716c5e67560b"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/opencode-plugin.test.js": {
+    "mtime": 1783127535.6331081,
+    "ast_hash": "84491e991d38778947f28f32efda8bee",
+    "semantic_hash": "84491e991d38778947f28f32efda8bee"
+  },
+  "git/github.com/DietrichGebert/ponytail/tests/uninstall.test.js": {
+    "mtime": 1783127535.6331944,
+    "ast_hash": "c0985f1f4624c285324585a4342deac3",
+    "semantic_hash": "c0985f1f4624c285324585a4342deac3"
+  },
+  "keybindings.json": {
+    "mtime": 1783168866.7855618,
+    "ast_hash": "53be8fc2bca28132d759d82871ec639a",
+    "semantic_hash": "53be8fc2bca28132d759d82871ec639a"
+  },
+  "npm/package.json": {
+    "mtime": 1783125983.3172388,
+    "ast_hash": "895038f41839cce2e4cb25fc12ad0592",
+    "semantic_hash": "895038f41839cce2e4cb25fc12ad0592"
+  },
+  "patches/pi-tui-scrollback-fix-harness.mjs": {
+    "mtime": 1783142470.8828936,
+    "ast_hash": "5b263cc3ea89245ae3c8d9586fd6e479",
+    "semantic_hash": "5b263cc3ea89245ae3c8d9586fd6e479"
+  },
+  "patches/pi-tui-scrollback-fix.harness.mjs": {
+    "mtime": 1783140055.5849886,
+    "ast_hash": "adade592699d4c7e39fc8c6e9941483e",
+    "semantic_hash": "adade592699d4c7e39fc8c6e9941483e"
+  },
+  "schema/heuristic-entry.schema.json": {
+    "mtime": 1783124426.1951785,
+    "ast_hash": "0629b8273071c47444ab587b1e014f76",
+    "semantic_hash": "0629b8273071c47444ab587b1e014f76"
+  },
+  "schema/keybindings.schema.json": {
+    "mtime": 1783124404.3527164,
+    "ast_hash": "c1281d005796ec780ad7c65003d2b86b",
+    "semantic_hash": "c1281d005796ec780ad7c65003d2b86b"
+  },
+  "schema/manifest.json": {
+    "mtime": 1783173101.1400366,
+    "ast_hash": "f0a6d8d38480adb723e974619509131f",
+    "semantic_hash": "f0a6d8d38480adb723e974619509131f"
+  },
+  "schema/settings.schema.json": {
+    "mtime": 1783124398.0703373,
+    "ast_hash": "ebdb90eb7b9bfa04de4fb86972afcadb",
+    "semantic_hash": "ebdb90eb7b9bfa04de4fb86972afcadb"
+  },
+  "schema/trust.schema.json": {
+    "mtime": 1783124411.1863527,
+    "ast_hash": "92b72a7ec0bb018853771afa1b41310a",
+    "semantic_hash": "92b72a7ec0bb018853771afa1b41310a"
+  },
+  "scripts/validate-config.py": {
+    "mtime": 1783169443.3221118,
+    "ast_hash": "51c7f9bfb4b2ed63e7feaa71a5593186",
+    "semantic_hash": "51c7f9bfb4b2ed63e7feaa71a5593186"
+  },
+  "settings.json": {
+    "mtime": 1783196556.0194104,
+    "ast_hash": "725a97f54b09c54d9fc79a4a19d323c9",
+    "semantic_hash": ""
+  },
+  "themes/porcelain-light.json": {
+    "mtime": 1783136869.0226007,
+    "ast_hash": "e39ea6f43358a01676c3f64fb4a4b392",
+    "semantic_hash": "e39ea6f43358a01676c3f64fb4a4b392"
+  },
+  "themes/porcelain.json": {
+    "mtime": 1783137773.58331,
+    "ast_hash": "820dae6e075b3d8ab9d8452b57a06971",
+    "semantic_hash": "820dae6e075b3d8ab9d8452b57a06971"
+  },
+  "AGENTS.md": {
+    "mtime": 1783182738.5718272,
+    "ast_hash": "c14c24a7377e7ccb9637aab36bfc786f",
+    "semantic_hash": ""
+  },
+  "README.md": {
+    "mtime": 1783165223.7896278,
+    "ast_hash": "dce3526bd583d5dbca5e32efa39eb9db",
+    "semantic_hash": "dce3526bd583d5dbca5e32efa39eb9db"
+  },
+  "agents/engineer.md": {
+    "mtime": 1783160724.785895,
+    "ast_hash": "95434508e364fb1b55aa07a413b648a6",
+    "semantic_hash": "95434508e364fb1b55aa07a413b648a6"
+  },
+  "agents/fable-engineer.md": {
+    "mtime": 1783154096.0861049,
+    "ast_hash": "46d179756f688e57e454e39a15fc4668",
+    "semantic_hash": "46d179756f688e57e454e39a15fc4668"
+  },
+  "agents/scout.md": {
+    "mtime": 1783174817.678797,
+    "ast_hash": "3dc15758b56b8252ad20ef599afd3e4e",
+    "semantic_hash": ""
+  },
+  "agents/worker.md": {
+    "mtime": 1783174815.3718302,
+    "ast_hash": "d0cf23e8ca0a3e4c4800cd47ce0f1ff6",
+    "semantic_hash": ""
+  },
+  "docs/config-index.md": {
+    "mtime": 1783195315.490502,
+    "ast_hash": "dc6dce3c80c4e9d8669c637c0f8fa0c7",
+    "semantic_hash": ""
+  },
+  "docs/delegation-contract.md": {
+    "mtime": 1783160724.7861996,
+    "ast_hash": "1780de1e9c5f15b0f38ecff4b800878e",
+    "semantic_hash": "1780de1e9c5f15b0f38ecff4b800878e"
+  },
+  "docs/rework-loop.md": {
+    "mtime": 1783165207.4699345,
+    "ast_hash": "6fdb7b7cbffa1c3081ae011450a7508d",
+    "semantic_hash": "6fdb7b7cbffa1c3081ae011450a7508d"
+  },
+  "extensions/heuristics/DESIGN.md": {
+    "mtime": 1783160724.7867446,
+    "ast_hash": "47c22da1564c7821600902ebbfe0602b",
+    "semantic_hash": "47c22da1564c7821600902ebbfe0602b"
+  },
+  "git/github.com/DietrichGebert/ponytail/.agents/rules/ponytail.md": {
+    "mtime": 1783127535.6157978,
+    "ast_hash": "24f057288b7a18fc4105aaa118a8ef7a",
+    "semantic_hash": "24f057288b7a18fc4105aaa118a8ef7a"
+  },
+  "git/github.com/DietrichGebert/ponytail/.clinerules/ponytail.md": {
+    "mtime": 1783127535.616231,
+    "ast_hash": "24f057288b7a18fc4105aaa118a8ef7a",
+    "semantic_hash": "24f057288b7a18fc4105aaa118a8ef7a"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/FUNDING.yml": {
+    "mtime": 1783127535.6169248,
+    "ast_hash": "e8e3e4b49746d805f0a97f877aefe912",
+    "semantic_hash": "e8e3e4b49746d805f0a97f877aefe912"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/copilot-instructions.md": {
+    "mtime": 1783127535.6170042,
+    "ast_hash": "24f057288b7a18fc4105aaa118a8ef7a",
+    "semantic_hash": "24f057288b7a18fc4105aaa118a8ef7a"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/workflows/publish.yml": {
+    "mtime": 1783127535.617407,
+    "ast_hash": "b6fee7c35dfb2f09ee9ba5520f694e9d",
+    "semantic_hash": "b6fee7c35dfb2f09ee9ba5520f694e9d"
+  },
+  "git/github.com/DietrichGebert/ponytail/.github/workflows/test.yml": {
+    "mtime": 1783127535.617507,
+    "ast_hash": "cd08ad8e62a38614db37ffbeb8f48a41",
+    "semantic_hash": "cd08ad8e62a38614db37ffbeb8f48a41"
+  },
+  "git/github.com/DietrichGebert/ponytail/.kiro/steering/ponytail.md": {
+    "mtime": 1783127535.6178386,
+    "ast_hash": "61c9441534c55fe1c2b7931b1d32405c",
+    "semantic_hash": "61c9441534c55fe1c2b7931b1d32405c"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail-audit/SKILL.md": {
+    "mtime": 1783127535.6181142,
+    "ast_hash": "08915462e4f314a3b0fbfe32ba3ace83",
+    "semantic_hash": "08915462e4f314a3b0fbfe32ba3ace83"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail-debt/SKILL.md": {
+    "mtime": 1783127535.6182456,
+    "ast_hash": "f0e15fa00fa141a035a1aee6e3a02485",
+    "semantic_hash": "f0e15fa00fa141a035a1aee6e3a02485"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail-gain/SKILL.md": {
+    "mtime": 1783127535.6183949,
+    "ast_hash": "7d7470d923795d74cf4a327cb3760972",
+    "semantic_hash": "7d7470d923795d74cf4a327cb3760972"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail-help/SKILL.md": {
+    "mtime": 1783127535.6185374,
+    "ast_hash": "25d4275560e80aaaccbe34e54e802728",
+    "semantic_hash": "25d4275560e80aaaccbe34e54e802728"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail-review/SKILL.md": {
+    "mtime": 1783127535.6186872,
+    "ast_hash": "833c238f7cb14da2b295791d5a69a9e6",
+    "semantic_hash": "833c238f7cb14da2b295791d5a69a9e6"
+  },
+  "git/github.com/DietrichGebert/ponytail/.openclaw/skills/ponytail/SKILL.md": {
+    "mtime": 1783127535.6188533,
+    "ast_hash": "daa6bf5ae4e6e916ccdd02fb831dd333",
+    "semantic_hash": "daa6bf5ae4e6e916ccdd02fb831dd333"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail-audit.md": {
+    "mtime": 1783127535.619048,
+    "ast_hash": "a0ef3e7017d40d8933f92f2069dc3abb",
+    "semantic_hash": "a0ef3e7017d40d8933f92f2069dc3abb"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail-debt.md": {
+    "mtime": 1783127535.6191468,
+    "ast_hash": "a23bd5acee5a039b652967807017577b",
+    "semantic_hash": "a23bd5acee5a039b652967807017577b"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail-gain.md": {
+    "mtime": 1783127535.6192355,
+    "ast_hash": "ef5577d3bd8411b8e5638ae5999176b8",
+    "semantic_hash": "ef5577d3bd8411b8e5638ae5999176b8"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail-help.md": {
+    "mtime": 1783127535.619324,
+    "ast_hash": "eaf3a8458ae326aca900e386898f436b",
+    "semantic_hash": "eaf3a8458ae326aca900e386898f436b"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail-review.md": {
+    "mtime": 1783127535.6194148,
+    "ast_hash": "8232fafb655acddc8449d84f8687430f",
+    "semantic_hash": "8232fafb655acddc8449d84f8687430f"
+  },
+  "git/github.com/DietrichGebert/ponytail/.opencode/command/ponytail.md": {
+    "mtime": 1783127535.6195033,
+    "ast_hash": "b7041a180625953799d0eb63d53c9ec7",
+    "semantic_hash": "b7041a180625953799d0eb63d53c9ec7"
+  },
+  "git/github.com/DietrichGebert/ponytail/.windsurf/rules/ponytail.md": {
+    "mtime": 1783127535.619837,
+    "ast_hash": "24f057288b7a18fc4105aaa118a8ef7a",
+    "semantic_hash": "24f057288b7a18fc4105aaa118a8ef7a"
+  },
+  "git/github.com/DietrichGebert/ponytail/AGENTS.md": {
+    "mtime": 1783127535.6199248,
+    "ast_hash": "70306fdf107a71326c5a569bf6819e86",
+    "semantic_hash": "70306fdf107a71326c5a569bf6819e86"
+  },
+  "git/github.com/DietrichGebert/ponytail/README.es.md": {
+    "mtime": 1783127535.6201918,
+    "ast_hash": "129c80776433925762e5acca0c716954",
+    "semantic_hash": "129c80776433925762e5acca0c716954"
+  },
+  "git/github.com/DietrichGebert/ponytail/README.ko.md": {
+    "mtime": 1783127535.6203148,
+    "ast_hash": "85e39a67ec1ad0aac987b0133a65a843",
+    "semantic_hash": "85e39a67ec1ad0aac987b0133a65a843"
+  },
+  "git/github.com/DietrichGebert/ponytail/README.md": {
+    "mtime": 1783127535.6204622,
+    "ast_hash": "9f72dbb0616e5d9bfd2c4bad4f4db120",
+    "semantic_hash": "9f72dbb0616e5d9bfd2c4bad4f4db120"
+  },
+  "git/github.com/DietrichGebert/ponytail/after-install.md": {
+    "mtime": 1783127535.6206613,
+    "ast_hash": "9eceac71e8c8103e9972ff030dcd3e13",
+    "semantic_hash": "9eceac71e8c8103e9972ff030dcd3e13"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/README.md": {
+    "mtime": 1783127535.6247163,
+    "ast_hash": "a16a45513f3b17dd05ad7f29e7d68ea9",
+    "semantic_hash": "a16a45513f3b17dd05ad7f29e7d68ea9"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/agentic/README.md": {
+    "mtime": 1783127535.6248696,
+    "ast_hash": "215df30a17a7320795089826c7bd052e",
+    "semantic_hash": "215df30a17a7320795089826c7bd052e"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman-SKILL.md": {
+    "mtime": 1783127535.6255407,
+    "ast_hash": "b26bddce73b5dde083c2c6fc387d6e36",
+    "semantic_hash": "b26bddce73b5dde083c2c6fc387d6e36"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/behavior.yaml": {
+    "mtime": 1783127535.6258268,
+    "ast_hash": "30b4993548419615cb83d899d5678a8d",
+    "semantic_hash": "30b4993548419615cb83d899d5678a8d"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/promptfooconfig.gemini.yaml": {
+    "mtime": 1783127535.6264918,
+    "ast_hash": "ecd539096e0c1e2bfba749515b5ae46a",
+    "semantic_hash": "ecd539096e0c1e2bfba749515b5ae46a"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/promptfooconfig.gpt-newest.yaml": {
+    "mtime": 1783127535.626552,
+    "ast_hash": "2b12b496976ccdffe56dfd568d6660cd",
+    "semantic_hash": "2b12b496976ccdffe56dfd568d6660cd"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/promptfooconfig.gpt.yaml": {
+    "mtime": 1783127535.6266155,
+    "ast_hash": "8591daf1457433c61226a651b99f951a",
+    "semantic_hash": "8591daf1457433c61226a651b99f951a"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/promptfooconfig.yaml": {
+    "mtime": 1783127535.626684,
+    "ast_hash": "e25f80a65917bc56b4a671d569f2b99e",
+    "semantic_hash": "e25f80a65917bc56b4a671d569f2b99e"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-12-caveman-vs-ponytail.md": {
+    "mtime": 1783127535.626869,
+    "ast_hash": "29ca8bfb2ec2443fa1d43ddb1a250c15",
+    "semantic_hash": "29ca8bfb2ec2443fa1d43ddb1a250c15"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-12-v4-hardening-vs-caveman.md": {
+    "mtime": 1783127535.6269615,
+    "ast_hash": "f0eed6538b295e683678dbb8e4173eb5",
+    "semantic_hash": "f0eed6538b295e683678dbb8e4173eb5"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-15-llama3.2-local.md": {
+    "mtime": 1783127535.627047,
+    "ast_hash": "da989e87cf1a43aa90e15c394f30cafe",
+    "semantic_hash": "da989e87cf1a43aa90e15c394f30cafe"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-16-correctness-gate-fix.md": {
+    "mtime": 1783127535.6271322,
+    "ast_hash": "709b1c816bbef84ce7e5b745e19f5e2d",
+    "semantic_hash": "709b1c816bbef84ce7e5b745e19f5e2d"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-16-robustness-audit.md": {
+    "mtime": 1783127535.6272213,
+    "ast_hash": "e67112f394a5a285fb55768c6dd37d29",
+    "semantic_hash": "e67112f394a5a285fb55768c6dd37d29"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-17-agentic-safety.md": {
+    "mtime": 1783127535.6273162,
+    "ast_hash": "858745b3dae4c0b5918602abb325c2a3",
+    "semantic_hash": "858745b3dae4c0b5918602abb325c2a3"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-17-cost-verification.md": {
+    "mtime": 1783127535.6273978,
+    "ast_hash": "5aefe112960a1dd3185f623370589f5d",
+    "semantic_hash": "5aefe112960a1dd3185f623370589f5d"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-18-agentic.md": {
+    "mtime": 1783127535.6274867,
+    "ast_hash": "f9eb12d2d3e61a6792ced9f4325e9217",
+    "semantic_hash": "f9eb12d2d3e61a6792ced9f4325e9217"
+  },
+  "git/github.com/DietrichGebert/ponytail/benchmarks/results/2026-06-22-issue-245-217-comprehension.md": {
+    "mtime": 1783127535.627573,
+    "ast_hash": "fa08407f21d436eaa0a6d11cb11816d7",
+    "semantic_hash": "fa08407f21d436eaa0a6d11cb11816d7"
+  },
+  "git/github.com/DietrichGebert/ponytail/docs/agent-portability.md": {
+    "mtime": 1783127535.6282141,
+    "ast_hash": "788ab89c00d1159f0932f5abb962f00b",
+    "semantic_hash": "788ab89c00d1159f0932f5abb962f00b"
+  },
+  "git/github.com/DietrichGebert/ponytail/docs/platform-native.md": {
+    "mtime": 1783127535.6283014,
+    "ast_hash": "07b514b8086d2e9c1682ab931eef7fea",
+    "semantic_hash": "07b514b8086d2e9c1682ab931eef7fea"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/README.md": {
+    "mtime": 1783127535.6284056,
+    "ast_hash": "ddde9173f7a6b662a57798b4fa2c6ec6",
+    "semantic_hash": "ddde9173f7a6b662a57798b4fa2c6ec6"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/csv-sum.md": {
+    "mtime": 1783127535.6284728,
+    "ast_hash": "ff4a4ee30131ea71cad622ecd273147a",
+    "semantic_hash": "ff4a4ee30131ea71cad622ecd273147a"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/debounce.md": {
+    "mtime": 1783127535.6285467,
+    "ast_hash": "0fd780e32b748fdc492e3dc86221b995",
+    "semantic_hash": "0fd780e32b748fdc492e3dc86221b995"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/deep-clone.md": {
+    "mtime": 1783127535.6286066,
+    "ast_hash": "34e0342e442a37fe11c933e9219ba5fc",
+    "semantic_hash": "34e0342e442a37fe11c933e9219ba5fc"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/email-validation.md": {
+    "mtime": 1783127535.6286867,
+    "ast_hash": "ce971a3ea73d6f14505b49e40d9b3f08",
+    "semantic_hash": "ce971a3ea73d6f14505b49e40d9b3f08"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/group-by.md": {
+    "mtime": 1783127535.6287608,
+    "ast_hash": "c43962b02863916c8df4517b48d2b264",
+    "semantic_hash": "c43962b02863916c8df4517b48d2b264"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/infinite-scroll.md": {
+    "mtime": 1783127535.6288292,
+    "ast_hash": "e71ab7b78e443836f211916c75051464",
+    "semantic_hash": "e71ab7b78e443836f211916c75051464"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/modal-dialog.md": {
+    "mtime": 1783127535.6288905,
+    "ast_hash": "47602aacc7a0a7bafc0c2ec4ca66c7a3",
+    "semantic_hash": "47602aacc7a0a7bafc0c2ec4ca66c7a3"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/number-formatting.md": {
+    "mtime": 1783127535.628952,
+    "ast_hash": "b23d1e780d297f27493131917a6a326a",
+    "semantic_hash": "b23d1e780d297f27493131917a6a326a"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/rate-limit.md": {
+    "mtime": 1783127535.6290295,
+    "ast_hash": "0b219261032be06e35aa95a9bd16df1a",
+    "semantic_hash": "0b219261032be06e35aa95a9bd16df1a"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/react-countdown.md": {
+    "mtime": 1783127535.629113,
+    "ast_hash": "cb542a9778348e0765d26470b5a6c3a8",
+    "semantic_hash": "cb542a9778348e0765d26470b5a6c3a8"
+  },
+  "git/github.com/DietrichGebert/ponytail/examples/url-params.md": {
+    "mtime": 1783127535.629185,
+    "ast_hash": "604d518f2a1eab61a9fe6f207f4df34c",
+    "semantic_hash": "604d518f2a1eab61a9fe6f207f4df34c"
+  },
+  "git/github.com/DietrichGebert/ponytail/plugin.yaml": {
+    "mtime": 1783127535.63064,
+    "ast_hash": "21e10d74dfaa8f50cdecb6ada020974e",
+    "semantic_hash": "21e10d74dfaa8f50cdecb6ada020974e"
+  },
+  "git/github.com/DietrichGebert/ponytail/ponytail-mcp/README.md": {
+    "mtime": 1783127535.6307724,
+    "ast_hash": "a5f8ed65ba45d274a25edd777bdc7f17",
+    "semantic_hash": "a5f8ed65ba45d274a25edd777bdc7f17"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail-audit/SKILL.md": {
+    "mtime": 1783127535.6316082,
+    "ast_hash": "2a757432defa9d63639a3aca3bbbf23a",
+    "semantic_hash": "2a757432defa9d63639a3aca3bbbf23a"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail-debt/SKILL.md": {
+    "mtime": 1783127535.6317222,
+    "ast_hash": "33f49652fe513cf08082e9bcf8e2ecf2",
+    "semantic_hash": "33f49652fe513cf08082e9bcf8e2ecf2"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail-gain/SKILL.md": {
+    "mtime": 1783127535.631817,
+    "ast_hash": "e0090358fafc0a4b01716b88399e8405",
+    "semantic_hash": "e0090358fafc0a4b01716b88399e8405"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail-help/SKILL.md": {
+    "mtime": 1783127535.6319094,
+    "ast_hash": "a89c89a1fec6a90c3751302574389d47",
+    "semantic_hash": "a89c89a1fec6a90c3751302574389d47"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail-review/SKILL.md": {
+    "mtime": 1783127535.632029,
+    "ast_hash": "438e2414888145bc0108fa63f64314fd",
+    "semantic_hash": "438e2414888145bc0108fa63f64314fd"
+  },
+  "git/github.com/DietrichGebert/ponytail/skills/ponytail/SKILL.md": {
+    "mtime": 1783127535.6321442,
+    "ast_hash": "31ee4251674290fdaaecf05d487dcf46",
+    "semantic_hash": "31ee4251674290fdaaecf05d487dcf46"
+  },
+  "patches/pi-tui-scrollback-fix.md": {
+    "mtime": 1783142493.9016988,
+    "ast_hash": "83ff840b046edea6607477da981922f2",
+    "semantic_hash": "83ff840b046edea6607477da981922f2"
+  },
+  "prompts/build.md": {
+    "mtime": 1783165230.3171973,
+    "ast_hash": "32d5f0819ff17cabf284e6f34cd76b5b",
+    "semantic_hash": "32d5f0819ff17cabf284e6f34cd76b5b"
+  },
+  "prompts/design.md": {
+    "mtime": 1783155897.4041712,
+    "ast_hash": "a835705f19732e0331472c1a07c81ea4",
+    "semantic_hash": "a835705f19732e0331472c1a07c81ea4"
+  },
+  "prompts/feature.md": {
+    "mtime": 1783174710.5735624,
+    "ast_hash": "60ad153b81a151d08933d94dd10fd956",
+    "semantic_hash": "60ad153b81a151d08933d94dd10fd956"
+  },
+  "prompts/ship.md": {
+    "mtime": 1783155897.4047642,
+    "ast_hash": "e728227f0dc569b554042cb2a9f1a750",
+    "semantic_hash": "e728227f0dc569b554042cb2a9f1a750"
+  },
+  "skills/graphify/SKILL.md": {
+    "mtime": 1783163355.7237625,
+    "ast_hash": "5bc28728a68fa52adb97f26b0ffa1324",
+    "semantic_hash": "5bc28728a68fa52adb97f26b0ffa1324"
+  },
+  "skills/graphify/references/add-watch.md": {
+    "mtime": 1782962460.2289946,
+    "ast_hash": "d59d027fe449f06aa03905a01184e779",
+    "semantic_hash": "d59d027fe449f06aa03905a01184e779"
+  },
+  "skills/graphify/references/exports.md": {
+    "mtime": 1782962460.229538,
+    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
+    "semantic_hash": "9da2a2152e60a22f07f05fed5158f287"
+  },
+  "skills/graphify/references/extraction-spec.md": {
+    "mtime": 1782962460.2301128,
+    "ast_hash": "bf895ec4d4e40f5f66f7d31c2a9bd4a7",
+    "semantic_hash": "bf895ec4d4e40f5f66f7d31c2a9bd4a7"
+  },
+  "skills/graphify/references/github-and-merge.md": {
+    "mtime": 1782962460.2306473,
+    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
+    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
+  },
+  "skills/graphify/references/hooks.md": {
+    "mtime": 1782962460.2310398,
+    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
+    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
+  },
+  "skills/graphify/references/query.md": {
+    "mtime": 1782962460.2318203,
+    "ast_hash": "9e5aadc2c57ab561bc56600fcfa70735",
+    "semantic_hash": "9e5aadc2c57ab561bc56600fcfa70735"
+  },
+  "skills/graphify/references/transcribe.md": {
+    "mtime": 1782962460.2321875,
+    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
+    "semantic_hash": "67b6a5fa6c0974e18f60db9f8932fbd8"
+  },
+  "skills/graphify/references/update.md": {
+    "mtime": 1782962460.232764,
+    "ast_hash": "c698309979460d0f02ba616417844399",
+    "semantic_hash": "c698309979460d0f02ba616417844399"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/benchmark-3model.svg": {
+    "mtime": 1783127535.6208024,
+    "ast_hash": "66fd8752a1afcee31b6f41cbdc51c465",
+    "semantic_hash": "66fd8752a1afcee31b6f41cbdc51c465"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/benchmark-agentic.svg": {
+    "mtime": 1783127535.6209016,
+    "ast_hash": "d5d2d4079f21877bdf1a3e8dcadaa2af",
+    "semantic_hash": "d5d2d4079f21877bdf1a3e8dcadaa2af"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/logo-dark.png": {
+    "mtime": 1783127535.621392,
+    "ast_hash": "04333e49586d3a7e52dc0e99524058c8",
+    "semantic_hash": "04333e49586d3a7e52dc0e99524058c8"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/logo-dark.svg": {
+    "mtime": 1783127535.6216836,
+    "ast_hash": "43b43a7f5d8abc301baa3858293425e9",
+    "semantic_hash": "43b43a7f5d8abc301baa3858293425e9"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/logo-greenpt-dark.svg": {
+    "mtime": 1783127535.6217926,
+    "ast_hash": "6fa30424f2dfd03dad556f5c673ce94e",
+    "semantic_hash": "6fa30424f2dfd03dad556f5c673ce94e"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/logo-greenpt.svg": {
+    "mtime": 1783127535.6218843,
+    "ast_hash": "6e3f4f2c43649dff3efd5b308f9f1ed3",
+    "semantic_hash": "6e3f4f2c43649dff3efd5b308f9f1ed3"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/logo.png": {
+    "mtime": 1783127535.6235023,
+    "ast_hash": "036e892fd1c2bd1bfb329ee7c3b1cd02",
+    "semantic_hash": "036e892fd1c2bd1bfb329ee7c3b1cd02"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/social-preview.png": {
+    "mtime": 1783127535.6237714,
+    "ast_hash": "afeb113daf2e6aa6260af475ac5047a7",
+    "semantic_hash": "afeb113daf2e6aa6260af475ac5047a7"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/waitlist-banner-es.png": {
+    "mtime": 1783127535.6240418,
+    "ast_hash": "329d29850248f06083c9aaf37033bb72",
+    "semantic_hash": "329d29850248f06083c9aaf37033bb72"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/waitlist-banner-ko.png": {
+    "mtime": 1783127535.6243026,
+    "ast_hash": "382b77997d73c537f0b6405d36795add",
+    "semantic_hash": "382b77997d73c537f0b6405d36795add"
+  },
+  "git/github.com/DietrichGebert/ponytail/assets/waitlist-banner.png": {
+    "mtime": 1783127535.6245663,
+    "ast_hash": "2c223c2bb087ce98b47ef2dee43c2d7c",
+    "semantic_hash": "2c223c2bb087ce98b47ef2dee43c2d7c"
+  },
+  ".pi-vcs/hooks/post-commit": {
+    "mtime": 1783159395.7161674,
+    "ast_hash": "23ea23cb5fb5f0a50d33fe3ad0379962",
+    "semantic_hash": "23ea23cb5fb5f0a50d33fe3ad0379962"
+  },
+  "extensions/graphify-bridge.ts": {
+    "mtime": 1783169585.318343,
+    "ast_hash": "c30e769f8c7503b33473ea0c5fa50bfd",
+    "semantic_hash": "c30e769f8c7503b33473ea0c5fa50bfd"
+  },
+  "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
+    "mtime": 1783158099.5084014,
+    "ast_hash": "7fe5b978793317b4cd9cc4684d4a69a4",
+    "semantic_hash": "7fe5b978793317b4cd9cc4684d4a69a4"
+  },
+  "graphify-out/memory/query_20260704_094252_how_fragile_is_the_cross_cluster_connection_betwee.md": {
+    "mtime": 1783158230.4331646,
+    "ast_hash": "5a7ceed86f6b3a995e616ae42cbc33ab",
+    "semantic_hash": "5a7ceed86f6b3a995e616ae42cbc33ab"
+  },
+  "graphify-out/memory/query_20260704_094445_are_the_weakly_connected_nodes_real_orphans_or_ext.md": {
+    "mtime": 1783158285.1930268,
+    "ast_hash": "3b2aefc3af256298f1af5ec6c5b412db",
+    "semantic_hash": "3b2aefc3af256298f1af5ec6c5b412db"
+  },
+  "graphify-out/memory/query_20260704_094626_patch_the_config_index_coverage_gap__stitch_themes.md": {
+    "mtime": 1783158386.3289292,
+    "ast_hash": "de707992d034da2dcc2badceac78bad6",
+    "semantic_hash": "de707992d034da2dcc2badceac78bad6"
+  },
+  "extensions/self-audit.ts": {
+    "mtime": 1783165543.8220062,
+    "ast_hash": "4eaf9242a63b1b85e610d188a781610e",
+    "semantic_hash": "4eaf9242a63b1b85e610d188a781610e"
+  },
+  "scripts/audit-pipelines.py": {
+    "mtime": 1783194875.1525328,
+    "ast_hash": "adccfc37f5356ff190bc5341f3484887",
+    "semantic_hash": ""
+  },
+  "scripts/smoke-extensions.mjs": {
+    "mtime": 1783160407.4749265,
+    "ast_hash": "4e7a31e41337264883aa354501163901",
+    "semantic_hash": "4e7a31e41337264883aa354501163901"
+  },
+  "docs/graph-maintenance.md": {
+    "mtime": 1783160779.584312,
+    "ast_hash": "7856c929e08245fd426b5a8520775bbe",
+    "semantic_hash": "7856c929e08245fd426b5a8520775bbe"
+  },
+  "extensions/concurrency-guard.ts": {
+    "mtime": 1783166849.3025198,
+    "ast_hash": "d686907f569267bd5fe85a5f8f77ea04",
+    "semantic_hash": "d686907f569267bd5fe85a5f8f77ea04"
+  },
+  "extensions/queue-as-followup.ts": {
+    "mtime": 1783168866.7855608,
+    "ast_hash": "74ba7f551bfd60b14e6cae66a7878cdb",
+    "semantic_hash": "74ba7f551bfd60b14e6cae66a7878cdb"
+  },
+  "scripts/check-parse-verdict.mjs": {
+    "mtime": 1783164712.5302024,
+    "ast_hash": "1d8bae96ffb1ba034ffbc0ddc637f158",
+    "semantic_hash": "1d8bae96ffb1ba034ffbc0ddc637f158"
+  },
+  "agents/peer.md": {
+    "mtime": 1783173734.402442,
+    "ast_hash": "7d5809ff8333688c5dfc0696f6ea9296",
+    "semantic_hash": "7d5809ff8333688c5dfc0696f6ea9296"
+  },
+  "extensions/lib/config-paths.ts": {
+    "mtime": 1783165530.6792846,
+    "ast_hash": "ea688f6d80318af4c4e8e3cfaf4b1fc3",
+    "semantic_hash": "ea688f6d80318af4c4e8e3cfaf4b1fc3"
+  },
+  "scripts/test-config-paths.mjs": {
+    "mtime": 1783165596.061307,
+    "ast_hash": "2a27ecc1ffc41302922fe4241ac771d3",
+    "semantic_hash": "2a27ecc1ffc41302922fe4241ac771d3"
+  },
+  "scripts/check-concurrency-guard.mjs": {
+    "mtime": 1783166113.5988417,
+    "ast_hash": "3afaf8e2926f11d55625e966c01eef3f",
+    "semantic_hash": "3afaf8e2926f11d55625e966c01eef3f"
+  },
+  "extensions/lib/graph-lookup.ts": {
+    "mtime": 1783166137.1059628,
+    "ast_hash": "c340c80d3c2ade0268af82d33f0241c3",
+    "semantic_hash": "c340c80d3c2ade0268af82d33f0241c3"
+  },
+  "extensions/graph-first.ts": {
+    "mtime": 1783168944.1152093,
+    "ast_hash": "d26b36970df119596e6183fa28d7c4b8",
+    "semantic_hash": "d26b36970df119596e6183fa28d7c4b8"
+  },
+  "extensions/impact-trace.ts": {
+    "mtime": 1783168962.5682032,
+    "ast_hash": "9ca9e660ee5472244b1c9ec37dff49c5",
+    "semantic_hash": "9ca9e660ee5472244b1c9ec37dff49c5"
+  },
+  "schema/graph-first-stats.schema.json": {
+    "mtime": 1783166404.6117241,
+    "ast_hash": "5fdccaa19d943754524b9ce3b827ef40",
+    "semantic_hash": "5fdccaa19d943754524b9ce3b827ef40"
+  },
+  "scripts/check-graph-first.mjs": {
+    "mtime": 1783168977.1115193,
+    "ast_hash": "ad47effccf04a477b5cda9a73acbe016",
+    "semantic_hash": "ad47effccf04a477b5cda9a73acbe016"
+  },
+  "scripts/check-impact-trace.mjs": {
+    "mtime": 1783168991.5548022,
+    "ast_hash": "0c14e36d428ae1ec32ef45c205406439",
+    "semantic_hash": "0c14e36d428ae1ec32ef45c205406439"
+  },
+  "config/lead-profiles.json": {
+    "mtime": 1783195256.1059353,
+    "ast_hash": "7eb6fd7fb85b65b141032eacd05f9741",
+    "semantic_hash": ""
+  },
+  "schema/lead-config-stats.schema.json": {
+    "mtime": 1783170895.6566567,
+    "ast_hash": "cfa01023e2e75eeb2fc7dbf4b1414623",
+    "semantic_hash": "cfa01023e2e75eeb2fc7dbf4b1414623"
+  },
+  "schema/lead-profiles.schema.json": {
+    "mtime": 1783170895.6566353,
+    "ast_hash": "3f14419d9b689a74272611c9d456b9e6",
+    "semantic_hash": "3f14419d9b689a74272611c9d456b9e6"
+  },
+  "extensions/lead-config.ts": {
+    "mtime": 1783170940.2412903,
+    "ast_hash": "15b411495e6e1397bfa6f3117b40311c",
+    "semantic_hash": "15b411495e6e1397bfa6f3117b40311c"
+  },
+  "scripts/check-lead-config.mjs": {
+    "mtime": 1783183977.1898782,
+    "ast_hash": "05cec2ce22aa9958c22a580d060f6c98",
+    "semantic_hash": ""
+  },
+  "oracle/.obsidian/app.json": {
+    "mtime": 1783171958.0222745,
+    "ast_hash": "61cfdbc2b180cc1525e229ff0f82122e",
+    "semantic_hash": "61cfdbc2b180cc1525e229ff0f82122e"
+  },
+  "oracle/.obsidian/appearance.json": {
+    "mtime": 1783171958.0438948,
+    "ast_hash": "37d1e9df6c51fde985c1accb86e3db65",
+    "semantic_hash": "37d1e9df6c51fde985c1accb86e3db65"
+  },
+  "oracle/SCHEMA.md": {
+    "mtime": 1783174011.9558318,
+    "ast_hash": "d03295f8863ad1a85975a797e06fbf4c",
+    "semantic_hash": "d03295f8863ad1a85975a797e06fbf4c"
+  },
+  "oracle/_meta/taxonomy.md": {
+    "mtime": 1783171958.0014622,
+    "ast_hash": "4ad2248fd775cadc6135b00b27359525",
+    "semantic_hash": "4ad2248fd775cadc6135b00b27359525"
+  },
+  "oracle/hot.md": {
+    "mtime": 1783171958.001425,
+    "ast_hash": "5310eb78dddd24caebea51f652381fd8",
+    "semantic_hash": "5310eb78dddd24caebea51f652381fd8"
+  },
+  "oracle/index.md": {
+    "mtime": 1783174756.3577747,
+    "ast_hash": "464eef09fe8f39da3dc0007a685bb020",
+    "semantic_hash": "464eef09fe8f39da3dc0007a685bb020"
+  },
+  "oracle/log.md": {
+    "mtime": 1783173078.8372297,
+    "ast_hash": "9b016f42d698955df33dcf3c9a0bae41",
+    "semantic_hash": "9b016f42d698955df33dcf3c9a0bae41"
+  },
+  "oracle/components/lead-config-extension.md": {
+    "mtime": 1783172404.9991853,
+    "ast_hash": "eb7214ea151754d4e67606177325e0f5",
+    "semantic_hash": "eb7214ea151754d4e67606177325e0f5"
+  },
+  "oracle/concepts/concurrency-model.md": {
+    "mtime": 1783172366.5640528,
+    "ast_hash": "79aa0816789afd959dd3af40ea5b9e95",
+    "semantic_hash": "79aa0816789afd959dd3af40ea5b9e95"
+  },
+  "oracle/concepts/delegation-gate.md": {
+    "mtime": 1783172277.7005339,
+    "ast_hash": "00bc9cba4f81545113200087cb79be14",
+    "semantic_hash": "00bc9cba4f81545113200087cb79be14"
+  },
+  "oracle/concepts/extensibility-philosophy.md": {
+    "mtime": 1783173587.6691597,
+    "ast_hash": "3bfe8b810206ec3b11082d2b574b998e",
+    "semantic_hash": "3bfe8b810206ec3b11082d2b574b998e"
+  },
+  "oracle/concepts/fable-budget-invariants.md": {
+    "mtime": 1783174756.3578105,
+    "ast_hash": "49639ccd6482087441e81ae100fce4c6",
+    "semantic_hash": "49639ccd6482087441e81ae100fce4c6"
+  },
+  "oracle/concepts/knowledge-graph-integration.md": {
+    "mtime": 1783172385.3441439,
+    "ast_hash": "f3317985cdb6457cbcb112cfb978b5d8",
+    "semantic_hash": "f3317985cdb6457cbcb112cfb978b5d8"
+  },
+  "oracle/concepts/message-queue.md": {
+    "mtime": 1783173587.664829,
+    "ast_hash": "7dfcd18caec38ceb717d7a4027a6770b",
+    "semantic_hash": "7dfcd18caec38ceb717d7a4027a6770b"
+  },
+  "oracle/concepts/orchestration-doctrine.md": {
+    "mtime": 1783172258.5932384,
+    "ast_hash": "c9df9371af91fc0b1ae36af20493a859",
+    "semantic_hash": "c9df9371af91fc0b1ae36af20493a859"
+  },
+  "oracle/concepts/project-trust.md": {
+    "mtime": 1783173587.649991,
+    "ast_hash": "8d98c331361635438ea43bfc3df4e196",
+    "semantic_hash": "8d98c331361635438ea43bfc3df4e196"
+  },
+  "oracle/concepts/rework-loop.md": {
+    "mtime": 1783172312.158296,
+    "ast_hash": "f1fcb6d4e878b25ceb042c1c1b307095",
+    "semantic_hash": "f1fcb6d4e878b25ceb042c1c1b307095"
+  },
+  "oracle/concepts/routing-and-roles.md": {
+    "mtime": 1783174756.3577757,
+    "ast_hash": "d9dc490fe99f50c54abde52ff7d9c1c4",
+    "semantic_hash": "d9dc490fe99f50c54abde52ff7d9c1c4"
+  },
+  "oracle/concepts/self-audit-loop.md": {
+    "mtime": 1783172347.8175797,
+    "ast_hash": "417f3eac8c923036c9a3b435127a6fda",
+    "semantic_hash": "417f3eac8c923036c9a3b435127a6fda"
+  },
+  "oracle/concepts/session-model.md": {
+    "mtime": 1783173587.654386,
+    "ast_hash": "c0f3bfb3138b2121d663fe5437cbe004",
+    "semantic_hash": "c0f3bfb3138b2121d663fe5437cbe004"
+  },
+  "oracle/concepts/what-is-pi.md": {
+    "mtime": 1783173587.6593933,
+    "ast_hash": "2201af729b24b2847bcb243d6c8bd4ee",
+    "semantic_hash": "2201af729b24b2847bcb243d6c8bd4ee"
+  },
+  "oracle/synthesis/graphify-query-craft.md": {
+    "mtime": 1783173603.7217302,
+    "ast_hash": "87bdfe6cd013776e78a4aa0972f360ee",
+    "semantic_hash": "87bdfe6cd013776e78a4aa0972f360ee"
+  },
+  "oracle/synthesis/harness-environment-quirks.md": {
+    "mtime": 1783172513.2191637,
+    "ast_hash": "0edd4f106e06d95d2849f4fe6ddb88e7",
+    "semantic_hash": "0edd4f106e06d95d2849f4fe6ddb88e7"
+  },
+  "oracle/synthesis/orchestration-lessons.md": {
+    "mtime": 1783173614.4050534,
+    "ast_hash": "0924160498de318bf768f9f5a5077aaa",
+    "semantic_hash": "0924160498de318bf768f9f5a5077aaa"
+  },
+  "oracle/synthesis/pi-extension-api-gotchas.md": {
+    "mtime": 1783173627.5796256,
+    "ast_hash": "cf18aadfed661c64e42aa2d95e0c4aa1",
+    "semantic_hash": "cf18aadfed661c64e42aa2d95e0c4aa1"
+  },
+  "oracle/synthesis/pi-tui-rendering-gotchas.md": {
+    "mtime": 1783173621.5143046,
+    "ast_hash": "cf8340dd009f94caddcbc47f4d9a370c",
+    "semantic_hash": "cf8340dd009f94caddcbc47f4d9a370c"
+  },
+  "oracle/synthesis/write-gate-and-read-only-mode.md": {
+    "mtime": 1783172513.2188582,
+    "ast_hash": "125981b6ca03f0a297a19c4fb6d3d35d",
+    "semantic_hash": "125981b6ca03f0a297a19c4fb6d3d35d"
+  },
+  "oracle/components/write-gate-extension.md": {
+    "mtime": 1783172422.797197,
+    "ast_hash": "9c18f76048de3df973da4c4a81b0b5c0",
+    "semantic_hash": "9c18f76048de3df973da4c4a81b0b5c0"
+  },
+  "oracle/synthesis/pi-workflow-conventions.md": {
+    "mtime": 1783172513.2659802,
+    "ast_hash": "0b9b52dcc44825d9f58c4de95182b110",
+    "semantic_hash": "0b9b52dcc44825d9f58c4de95182b110"
+  },
+  "oracle/components/subagent-extension.md": {
+    "mtime": 1783172441.4496686,
+    "ast_hash": "6102d64cfcc3462e1c37368041b8a8e6",
+    "semantic_hash": "6102d64cfcc3462e1c37368041b8a8e6"
+  },
+  "oracle/components/concurrency-guard-extension.md": {
+    "mtime": 1783172460.634221,
+    "ast_hash": "d334b2d5f22b674e7204287e6264b2bc",
+    "semantic_hash": "d334b2d5f22b674e7204287e6264b2bc"
+  },
+  "oracle/components/config-validation.md": {
+    "mtime": 1783172527.9523058,
+    "ast_hash": "b716f31d3b97a401bc27f7a0864222db",
+    "semantic_hash": "b716f31d3b97a401bc27f7a0864222db"
+  },
+  "oracle/components/extension-system.md": {
+    "mtime": 1783173587.6303217,
+    "ast_hash": "af724bd5f4f700a94e91e9a1ba0a192c",
+    "semantic_hash": "af724bd5f4f700a94e91e9a1ba0a192c"
+  },
+  "oracle/components/graph-first-extension.md": {
+    "mtime": 1783172476.9890585,
+    "ast_hash": "e9580c569e5899c1689bd843cc53ff6b",
+    "semantic_hash": "e9580c569e5899c1689bd843cc53ff6b"
+  },
+  "oracle/components/graphify-bridge-extension.md": {
+    "mtime": 1783172507.9601488,
+    "ast_hash": "875f29e234badc470f4333069f6aa500",
+    "semantic_hash": "875f29e234badc470f4333069f6aa500"
+  },
+  "oracle/components/impact-trace-extension.md": {
+    "mtime": 1783172491.481786,
+    "ast_hash": "1b10a6e34622bfeabff613196f67e12c",
+    "semantic_hash": "1b10a6e34622bfeabff613196f67e12c"
+  },
+  "oracle/components/keybindings.md": {
+    "mtime": 1783173587.6368258,
+    "ast_hash": "fbed754cab5640326b90e6bb903dd4b0",
+    "semantic_hash": "fbed754cab5640326b90e6bb903dd4b0"
+  },
+  "oracle/components/pi-packages.md": {
+    "mtime": 1783173587.6158051,
+    "ast_hash": "163114ed034ecddaa0a1fb213e0f4d99",
+    "semantic_hash": "163114ed034ecddaa0a1fb213e0f4d99"
+  },
+  "oracle/components/prompt-templates.md": {
+    "mtime": 1783173587.5907104,
+    "ast_hash": "8c63fee54ea35f6b65161bcad03e42f9",
+    "semantic_hash": "8c63fee54ea35f6b65161bcad03e42f9"
+  },
+  "oracle/components/providers-and-models.md": {
+    "mtime": 1783173587.5970445,
+    "ast_hash": "2cff94ece8f09f4380bad1d05a4e4ba3",
+    "semantic_hash": "2cff94ece8f09f4380bad1d05a4e4ba3"
+  },
+  "oracle/components/settings.md": {
+    "mtime": 1783173587.5843875,
+    "ast_hash": "0058d1fc9088603678d3e42bdccdc2d4",
+    "semantic_hash": "0058d1fc9088603678d3e42bdccdc2d4"
+  },
+  "oracle/components/skills-catalog.md": {
+    "mtime": 1783172557.9208617,
+    "ast_hash": "edc6d69b0945be74d1d48defb3a06ca7",
+    "semantic_hash": "edc6d69b0945be74d1d48defb3a06ca7"
+  },
+  "oracle/components/skills-system.md": {
+    "mtime": 1783173587.6094167,
+    "ast_hash": "96963bcc287d675832c6bb833e3dee77",
+    "semantic_hash": "96963bcc287d675832c6bb833e3dee77"
+  },
+  "oracle/components/themes.md": {
+    "mtime": 1783173587.6230953,
+    "ast_hash": "9be586ba40ada92c0f4084f363b2c315",
+    "semantic_hash": "9be586ba40ada92c0f4084f363b2c315"
+  },
+  "oracle/components/tools.md": {
+    "mtime": 1783173587.6438668,
+    "ast_hash": "408337c661579b0d85f450291d1862a9",
+    "semantic_hash": "408337c661579b0d85f450291d1862a9"
+  },
+  "oracle/components/tui-components.md": {
+    "mtime": 1783173587.6032574,
+    "ast_hash": "e12ba0e9ef778e096c1df2eca8cff70a",
+    "semantic_hash": "e12ba0e9ef778e096c1df2eca8cff70a"
+  },
+  "oracle/references/cli-reference.md": {
+    "mtime": 1783173587.5292242,
+    "ast_hash": "5e7852c8d0ffc93fafb278b3c0bb956b",
+    "semantic_hash": "5e7852c8d0ffc93fafb278b3c0bb956b"
+  },
+  "oracle/references/examples-catalog.md": {
+    "mtime": 1783173587.5226238,
+    "ast_hash": "2b5aec7d748c156970bb42311af0c251",
+    "semantic_hash": "2b5aec7d748c156970bb42311af0c251"
+  },
+  "oracle/references/rpc-mode.md": {
+    "mtime": 1783173587.5160027,
+    "ast_hash": "93d43191d2aeabc04951ed8cfa56553d",
+    "semantic_hash": "93d43191d2aeabc04951ed8cfa56553d"
+  },
+  "oracle/references/session-format.md": {
+    "mtime": 1783173587.535937,
+    "ast_hash": "7719c471428a1d63f2c0957828e9521e",
+    "semantic_hash": "7719c471428a1d63f2c0957828e9521e"
+  },
+  "oracle/synthesis/prose-to-code-promotion.md": {
+    "mtime": 1783172582.520365,
+    "ast_hash": "9f72520e5fba041217121deeb2ac4b56",
+    "semantic_hash": "9f72520e5fba041217121deeb2ac4b56"
+  },
+  "oracle/workflows/add-a-model.md": {
+    "mtime": 1783173587.5583463,
+    "ast_hash": "ac9fd8c7871256a5b49c4899072c6336",
+    "semantic_hash": "ac9fd8c7871256a5b49c4899072c6336"
+  },
+  "oracle/workflows/add-custom-provider.md": {
+    "mtime": 1783173587.542028,
+    "ast_hash": "0903ec18afcf8de09ed76b6af2de50e7",
+    "semantic_hash": "0903ec18afcf8de09ed76b6af2de50e7"
+  },
+  "oracle/workflows/create-a-pi-package.md": {
+    "mtime": 1783173587.5505414,
+    "ast_hash": "ef982fac83d74a7623150de14fec45b8",
+    "semantic_hash": "ef982fac83d74a7623150de14fec45b8"
+  },
+  "oracle/workflows/create-a-skill.md": {
+    "mtime": 1783173587.5651555,
+    "ast_hash": "1be08f371979c6f3d7177341c82e6a30",
+    "semantic_hash": "1be08f371979c6f3d7177341c82e6a30"
+  },
+  "oracle/workflows/embed-pi-with-sdk.md": {
+    "mtime": 1783173587.5783324,
+    "ast_hash": "1170f5bdd1e26352c3c6aab1ee1502de",
+    "semantic_hash": "1170f5bdd1e26352c3c6aab1ee1502de"
+  },
+  "oracle/workflows/write-an-extension.md": {
+    "mtime": 1783173587.5718367,
+    "ast_hash": "3dd0a7cb048a07480348746a70763667",
+    "semantic_hash": "3dd0a7cb048a07480348746a70763667"
+  },
+  "agents/doctor.md": {
+    "mtime": 1783174672.8585217,
+    "ast_hash": "b41aa5d99f377cabf3f0ce9c48e99aef",
+    "semantic_hash": ""
+  },
+  "agents/lawyer.md": {
+    "mtime": 1783174672.8579366,
+    "ast_hash": "c0de348515745c5c4e929d9418df3960",
+    "semantic_hash": ""
+  },
+  "extensions/oracle-first.ts": {
+    "mtime": 1783180568.8502955,
+    "ast_hash": "7cbba78da837d1334a6f8ade798073b8",
+    "semantic_hash": ""
+  },
+  "extensions/knowledge-compound.ts": {
+    "mtime": 1783182458.4908426,
+    "ast_hash": "f9de2ddb68386cc21a82b216f95b76cc",
+    "semantic_hash": ""
+  },
+  "scripts/check-oracle-first.mjs": {
+    "mtime": 1783180591.5135324,
+    "ast_hash": "78d90d51080fd562a9d74a712c1b0243",
+    "semantic_hash": ""
+  },
+  "scripts/check-knowledge-compound.mjs": {
+    "mtime": 1783180621.0552874,
+    "ast_hash": "a66a0853ac86da90b4d5fa1de025373b",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260704_201043_oracle_first_extension.md": {
+    "mtime": 1783195843.1821327,
+    "ast_hash": "ffce345390c3a168ad92efd9d47ad88b",
+    "semantic_hash": ""
+  },
+  "oracle/_raw/graph-20260704-201043-0-oracle-first-extension.md": {
+    "mtime": 1783195843.1153028,
+    "ast_hash": "cf91ea176b5faf8d4be6463305661cc6",
+    "semantic_hash": ""
+  }
+}

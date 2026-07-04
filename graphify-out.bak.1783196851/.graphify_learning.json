@@ -1,0 +1,122 @@
+{
+  "generated_at": "2026-07-04T20:22:46.553031+00:00",
+  "nodes": {
+    "agents_orchestration_doctrine": {
+      "code_fingerprint": "804764ada0ad5e2bd3340d0db52e83940e39beeb750814fb52cc9810c5ecfb03",
+      "label": "Orchestration Doctrine (AGENTS.md)",
+      "last": "2026-07-04T09:41:39.508149+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:41:39.508149+00:00",
+          "outcome": "useful",
+          "q": "Why does the Config Index bridge six communities — is it the de-facto hub of the whole harness?"
+        }
+      ],
+      "score": 0.989765952,
+      "source_file": "AGENTS.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "docs_config_index_audit_map": {
+      "code_fingerprint": "83bc013a13a413220cbcf6ed71f10359afc9ebef79d27edfdbbae64a40f1d0da",
+      "label": "Config Index (semantic audit map)",
+      "last": "2026-07-04T09:46:26.328602+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:46:26.328602+00:00",
+          "outcome": "useful",
+          "q": "Patch the config-index coverage gap: stitch themes/schemas/autocommit/graphify-skill into the giant component"
+        },
+        {
+          "date": "2026-07-04T09:44:45.192747+00:00",
+          "outcome": "useful",
+          "q": "Are the weakly-connected nodes real orphans or extraction gaps?"
+        },
+        {
+          "date": "2026-07-04T09:41:39.508149+00:00",
+          "outcome": "useful",
+          "q": "Why does the Config Index bridge six communities — is it the de-facto hub of the whole harness?"
+        }
+      ],
+      "score": 2.969422923,
+      "source_file": "docs/config-index.md",
+      "status": "preferred",
+      "uses": 3
+    },
+    "extensions_heuristics_design_design": {
+      "code_fingerprint": "bdb734389c3c3723f49e06a91d80a8fda39af5cd96de751c4f4afe4b8fe32aca",
+      "label": "Heuristics extension design (v2, authoritative)",
+      "last": "2026-07-04T09:41:39.508149+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:41:39.508149+00:00",
+          "outcome": "useful",
+          "q": "Why does the Config Index bridge six communities — is it the de-facto hub of the whole harness?"
+        }
+      ],
+      "score": 0.989765952,
+      "source_file": "extensions/heuristics/DESIGN.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "git_github_com_dietrichgebert_ponytail_readme_project": {
+      "code_fingerprint": "9e166f178f56f88d7d16c071d2158ed05cb0557cecc5710f578b77910d4d952e",
+      "label": "Ponytail project (lazy senior dev skill)",
+      "last": "2026-07-04T09:42:52.423850+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:42:52.423850+00:00",
+          "outcome": "useful",
+          "q": "How fragile is the cross-cluster connection between the Ponytail cluster and the pi-config cluster?"
+        }
+      ],
+      "score": 0.989785251,
+      "source_file": "git/github.com/DietrichGebert/ponytail/README.md",
+      "status": "tentative",
+      "uses": 1
+    },
+    "pi_vcs_autocommit": {
+      "code_fingerprint": "1eb04c14841d92651668c717586dda774963f8e97e4e96c259f8f6876c4dc6be",
+      "label": "autocommit.sh",
+      "last": "2026-07-04T09:44:45.192747+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:44:45.192747+00:00",
+          "outcome": "useful",
+          "q": "Are the weakly-connected nodes real orphans or extraction gaps?"
+        }
+      ],
+      "score": 0.9898151,
+      "source_file": ".pi-vcs/autocommit.sh",
+      "status": "tentative",
+      "uses": 1
+    },
+    "readme_pi_config_repo": {
+      "code_fingerprint": "f229610e8455b47ec44ea5190ab7a00875124164831acd6936ddb6aaa27d39ca",
+      "label": "~/.pi/agent config repo overview",
+      "last": "2026-07-04T09:46:26.328602+00:00",
+      "provenance": [
+        {
+          "date": "2026-07-04T09:46:26.328602+00:00",
+          "outcome": "useful",
+          "q": "Patch the config-index coverage gap: stitch themes/schemas/autocommit/graphify-skill into the giant component"
+        },
+        {
+          "date": "2026-07-04T09:42:52.423850+00:00",
+          "outcome": "useful",
+          "q": "How fragile is the cross-cluster connection between the Ponytail cluster and the pi-config cluster?"
+        },
+        {
+          "date": "2026-07-04T09:41:39.508149+00:00",
+          "outcome": "useful",
+          "q": "Why does the Config Index bridge six communities — is it the de-facto hub of the whole harness?"
+        }
+      ],
+      "score": 2.969393074,
+      "source_file": "README.md",
+      "status": "preferred",
+      "uses": 3
+    }
+  },
+  "version": 1
+}
