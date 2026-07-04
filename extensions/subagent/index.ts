@@ -387,11 +387,13 @@ async function runSingleAgent(
 		};
 	}
 
-	const args: string[] = ["--mode", "json", "-p", "--no-session"];
 	// Inherit the parent's write gate (published by extensions/read-only-default.ts).
 	// Only a parent in write mode grants children --write; otherwise children
 	// start headless in confirm mode, where writes are blocked.
-	if ((globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write") {
+	const childGate: "write" | "confirm" =
+		(globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write" ? "write" : "confirm";
+	const args: string[] = ["--mode", "json", "-p", "--no-session"];
+	if (childGate === "write") {
 		args.push("--write");
 	}
 	if (agent.model) args.push("--model", agent.model);
@@ -410,6 +412,7 @@ async function runSingleAgent(
 		stderr: "",
 		usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
 		model: agent.model,
+		mode: childGate,
 		step,
 	};
 

@@ -95,8 +95,8 @@
     "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
   },
   "extensions/subagent/index.ts": {
-    "mtime": 1783165219.1942604,
-    "ast_hash": "0e84f8c65a88e152a47a10c2d0b9eed8",
+    "mtime": 1783166119.5572135,
+    "ast_hash": "18bab56af384f84e8c6c32f460455a1c",
     "semantic_hash": ""
   },
   "extensions/task-tracker.ts": {
@@ -1077,6 +1077,11 @@
   "scripts/test-config-paths.mjs": {
     "mtime": 1783165596.061307,
     "ast_hash": "2a27ecc1ffc41302922fe4241ac771d3",
+    "semantic_hash": ""
+  },
+  "scripts/check-concurrency-guard.mjs": {
+    "mtime": 1783166113.5988417,
+    "ast_hash": "3afaf8e2926f11d55625e966c01eef3f",
     "semantic_hash": ""
   }
 }

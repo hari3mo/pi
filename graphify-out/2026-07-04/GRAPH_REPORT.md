@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 196 files · ~157,598 words
+- 197 files · ~158,589 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1186 nodes · 1655 edges · 73 communities (64 shown, 9 thin omitted)
+- 1207 nodes · 1677 edges · 83 communities (74 shown, 9 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4d16846c`
+- Built from commit: `c2662128`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -83,8 +83,18 @@
 - [[_COMMUNITY_Compact always-on ruleset (AGENTS.md)|Compact always-on ruleset (AGENTS.md)]]
 - [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
 - [[_COMMUNITY_check-parse-verdict.mjs|check-parse-verdict.mjs]]
+- [[_COMMUNITY_check-concurrency-guard.mjs|check-concurrency-guard.mjs]]
 - [[_COMMUNITY_config-paths.ts|config-paths.ts]]
 - [[_COMMUNITY_ponytail-statusline.sh script|ponytail-statusline.sh script]]
+- [[_COMMUNITY_trust.schema.json|trust.schema.json]]
+- [[_COMMUNITY_heuristic-entry.schema.json|heuristic-entry.schema.json]]
+- [[_COMMUNITY_manifest.json|manifest.json]]
+- [[_COMMUNITY_text|text]]
+- [[_COMMUNITY_basis|basis]]
+- [[_COMMUNITY_category|category]]
+- [[_COMMUNITY_created|created]]
+- [[_COMMUNITY_scope|scope]]
+- [[_COMMUNITY_source|source]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `colors` - 52 edges
@@ -119,7 +129,7 @@
 - **Cross-agent rule distribution (aligned mirrors)** — git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules, git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules, git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules, git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_agents_ruleset [EXTRACTED 1.00]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (73 total, 9 thin omitted)
+## Communities (83 total, 9 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -232,8 +242,8 @@ Cohesion: 0.21
 Nodes (12): DESCRIPTIONS, fs, NAMES, outPath(), path, render(), ROOT, sourceBody() (+4 more)
 
 ### Community 26 - "Porcelain Theme Variables"
-Cohesion: 0.06
-Nodes (33): enum, type, enum, type, format, type, minimum, type (+25 more)
+Cohesion: 0.14
+Nodes (14): minimum, type, minLength, type, format, type, type, type (+6 more)
 
 ### Community 27 - "OpenClaw Skill Builder"
 Cohesion: 0.17
@@ -260,8 +270,8 @@ Cohesion: 0.18
 Nodes (11): assert, fs, loadManifest(), path, read(), REUSED_COMMANDS, REUSED_SKILLS, root (+3 more)
 
 ### Community 33 - "Keybindings Schema"
-Cohesion: 0.05
-Nodes (35): additionalProperties, allOf, description, $id, required, $schema, title, type (+27 more)
+Cohesion: 0.17
+Nodes (11): additionalProperties, items, minItems, type, description, $id, minLength, type (+3 more)
 
 ### Community 34 - "Ponytail MCP Server"
 Cohesion: 0.67
@@ -371,28 +381,68 @@ Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 Cohesion: 0.29
 Nodes (6): cases, here, parseQaVerdict, src, start, stripped
 
+### Community 69 - "check-concurrency-guard.mjs"
+Cohesion: 0.10
+Nodes (15): AGENT_DIR, ctx, emitted, foreignCommit(), g(), handlers, here, jiti (+7 more)
+
+### Community 74 - "trust.schema.json"
+Cohesion: 0.20
+Nodes (9): additionalProperties, type, description, $id, propertyNames, pattern, $schema, title (+1 more)
+
+### Community 75 - "heuristic-entry.schema.json"
+Cohesion: 0.22
+Nodes (8): additionalProperties, allOf, description, $id, required, $schema, title, type
+
+### Community 76 - "manifest.json"
+Cohesion: 0.25
+Nodes (7): $comment, layout, $comment, expected, known, schemaVersion, targets
+
+### Community 77 - "text"
+Cohesion: 0.50
+Nodes (4): text, maxLength, minLength, type
+
+### Community 78 - "basis"
+Cohesion: 0.67
+Nodes (3): enum, type, basis
+
+### Community 79 - "category"
+Cohesion: 0.67
+Nodes (3): enum, type, category
+
+### Community 80 - "created"
+Cohesion: 0.67
+Nodes (3): format, type, created
+
+### Community 81 - "scope"
+Cohesion: 0.67
+Nodes (3): scope, enum, type
+
+### Community 82 - "source"
+Cohesion: 0.67
+Nodes (3): source, enum, type
+
 ## Knowledge Gaps
-- **603 isolated node(s):** `AGENT_DIR`, `PKG`, `jiti`, `cases`, `VALIDATOR` (+598 more)
+- **615 isolated node(s):** `QaVerdict`, `UsageStats`, `SingleResult`, `SubagentDetails`, `DisplayItem` (+610 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.993850971)
-- `~/.pi/agent config repo overview` (3× useful, score=2.993820877)
+- `Config Index (semantic audit map)` (3× useful, score=2.993731319)
+- `~/.pi/agent config repo overview` (3× useful, score=2.993701226)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain-light.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Uninstall Script Tests`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.414) - this node is a cross-community bridge._
+- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain-light.json`, `Subagent Dispatch Tool`, `porcelain.json`, `manifest.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Uninstall Script Tests`, `Task Tracker Extension`?**
+  _High betweenness centrality (0.428) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`?**
-  _High betweenness centrality (0.322) - this node is a cross-community bridge._
+  _High betweenness centrality (0.365) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.252) - this node is a cross-community bridge._
-- **What connects `AGENT_DIR`, `PKG`, `jiti` to the rest of the system?**
-  _636 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.286) - this node is a cross-community bridge._
+- **What connects `QaVerdict`, `UsageStats`, `SingleResult` to the rest of the system?**
+  _648 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**

@@ -72,14 +72,5 @@
   "70": "config-paths.ts",
   "71": "ponytail-statusline.sh script",
   "72": "baseline.js",
-  "73": "ponytail-statusline.ps1",
-  "74": "trust.schema.json",
-  "75": "heuristic-entry.schema.json",
-  "76": "manifest.json",
-  "77": "text",
-  "78": "basis",
-  "79": "category",
-  "80": "created",
-  "81": "scope",
-  "82": "source"
+  "73": "ponytail-statusline.ps1"
 }
