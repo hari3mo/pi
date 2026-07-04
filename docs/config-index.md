@@ -71,6 +71,18 @@ change — only the backing model per role. Files: `agents/reviewer.md`, `agents
 
 ### 2026-07-04
 
+**Oracle-first mechanized + query-compounding mechanized: `extensions/oracle-first.ts` +
+`extensions/knowledge-compound.ts`.** `oracle-first.ts` mirrors `graph-first.ts` for the
+ORACLE-FIRST doctrine: reads of pi's own docs (README/docs/examples under the installed
+package) before an oracle consult get a first-offense nudge, then a block with an
+identical-retry bypass; active only when the oracle vault and `~/.obsidian-wiki/config.oracle`
+exist; fail-open. `knowledge-compound.ts` mechanizes query-compounding: it buffers
+substantive `graph` tool query/explain outcomes during the session and on
+`session_shutdown` runs `graphify save-result --outcome` plus stages draft synthesis notes
+into `oracle/_raw/` (≤3/session, deduped, no LLM calls, never blocks shutdown, fail-open).
+Both peer-reviewed: PASS. Files: `extensions/oracle-first.ts` (new),
+`extensions/knowledge-compound.ts` (new), `AGENTS.md`, `docs/config-index.md`.
+
 **Incident + restore: knowledge-graph giant-component collapse (0.79→0.24), semantic
 layer fragmented by an out-of-band full doc re-extraction.** `audit-pipelines.py`'s
 connectivity ratchet ERRORed (blocking config snapshots) and a `graph` query returned only
