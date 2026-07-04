@@ -71,6 +71,25 @@ change — only the backing model per role. Files: `agents/reviewer.md`, `agents
 
 ### 2026-07-04
 
+**Incident + restore: knowledge-graph giant-component collapse (0.79→0.24), semantic
+layer fragmented by an out-of-band full doc re-extraction.** `audit-pipelines.py`'s
+connectivity ratchet ERRORed (blocking config snapshots) and a `graph` query returned only
+vendored-ponytail nodes. Root cause: a manual full graphify doc-update run (`cost.json` 2nd
+run: 93 files, 0 tokens — absent from the 06:40 backup) structurally re-extracted docs,
+replacing the LLM semantic layer per graph-maintenance invariant #1; the config-repo's own
+596 nodes (extensions/themes/config) dropped out of the giant component. NOT a machinery
+fault — the post-commit hook filters docs and the bridge's `/graph update` is code-only
+(both verified sound: they reproduce a config-repo-bridged graph). Restore: reinstated the
+last healthy pre-incident graph (`graphify-out/2026-07-04/graph.json`, giant 0.689) as
+`graph.json`/`.graphify_labels.json`/`GRAPH_REPORT.md`; `graphify-out/` is now untracked so
+the restore neither churns commits nor fires a rebuild. One-off operational mistake → this
+note (no code change). Reminder: refresh code via the guarded paths only; never run a bare
+`graphify` / `graphify --update` that re-extracts docs. Residual: ~41% of graph nodes are
+the vendored 3rd-party `git/github.com/DietrichGebert/ponytail` repo, whose bridge to the
+config-repo hangs on a shared `path` import — a FULL code re-extraction (`/graph update`)
+can detach it and drop the fraction to ~0.48, re-tripping the ratchet (the automatic
+incremental post-commit does not). Files: none (graph artifacts are untracked).
+
 **Model-aware lead profiles: the Delegation Gate is now mechanized per active model.**
 Added `extensions/lead-config.ts`: on `before_agent_start` (every prompt — the model can
 switch mid-session via shift+tab) it reads the active model id (`ctx.model.id`, the field
