@@ -9,10 +9,12 @@ Fast mode (default, <1s, stdlib-only — run at session start):
      post-commit rebuild pipeline did not fire (it is async and silent).
   2. needs_update staleness: doc semantics flagged stale for >24h are rotting.
   3. Autocommit liveness: dirty working tree + old last snapshot = launchd dead.
-  4. Graph connectivity ratchet: giant-component fraction is compared against
-     the best value ever recorded (graphify-out/.pipeline_baseline.json);
-     a >20% drop below baseline means structural regression (e.g. the
-     semantic-layer wipe of 2026-07-04: giant 615 -> 126).
+  4. Graph connectivity ratchet: giant-component fraction (over CONFIG-REPO
+     nodes only — the vendored git/ subtree is excluded, see GIANT_SCOPE) is
+     compared against the best value ever recorded
+     (graphify-out/.pipeline_baseline.json); a >20% drop below baseline means
+     structural regression (e.g. the semantic-layer wipe of 2026-07-04:
+     giant 615 -> 126).
   5. Reflection drift: graph memory newer than LESSONS.md means reflect stopped.
   5b. Graph-first bypass drift: a high recorded bypass ratio in
      .graph_first_stats.json means the graph keeps failing to answer structure
@@ -60,6 +62,16 @@ REBUILD_SLACK_S = 15 * 60
 FLAG_STALE_S = 24 * 3600
 AUTOCOMMIT_STALE_S = 2 * 3600
 RATCHET_TOLERANCE = 0.8  # warn when giant fraction < 80% of best-ever
+# The ratchet measures CONFIG-REPO cohesion only. Nodes under the vendored git/
+# subtree (git/github.com/DietrichGebert/ponytail — a registered pi extension
+# package) are excluded from the fraction: they are legitimately present but
+# their sole bridge to the config repo is a shared `path` import, so a full
+# rebuild that detaches them can crater an all-nodes fraction (~0.48 residual,
+# docs/config-index.md 2026-07-04) with zero real config-repo regression.
+# Bumping GIANT_SCOPE invalidates the recorded best-ever and recalibrates the
+# baseline to the current scoped fraction — the pre-scoping best (0.79) was
+# computed over the un-scoped node set and is incomparable.
+GIANT_SCOPE = "config-repo-v1"
 
 CODE_SUFFIXES = {".py", ".ts", ".js", ".mjs", ".mts", ".sh", ".json", ".yaml", ".yml"}
 
@@ -119,7 +131,11 @@ def check_connectivity_ratchet() -> None:
         return
     try:
         data = json.loads(graph.read_text(encoding="utf-8"))
-        ids = [n["id"] for n in data["nodes"]]
+        # Scope to config-repo nodes; the vendored git/ subtree is connectivity
+        # noise (see GIANT_SCOPE). Links touching a dropped node auto-skip below
+        # via the idx.get(...) is None guard, so no separate link filter is needed.
+        ids = [n["id"] for n in data["nodes"]
+               if not str(n.get("source_file") or "").startswith("git/")]
         idx = {i: k for k, i in enumerate(ids)}
         parent = list(range(len(ids)))
 
@@ -144,6 +160,11 @@ def check_connectivity_ratchet() -> None:
         return
 
     baseline = _read_baseline()
+    # Recalibrate when the metric definition changes: a best recorded under a
+    # different scope is incomparable, so discard it (see GIANT_SCOPE).
+    if baseline.get("giant_fraction_scope") != GIANT_SCOPE:
+        baseline["best_giant_fraction"] = 0.0
+        baseline["giant_fraction_scope"] = GIANT_SCOPE
     best = baseline.get("best_giant_fraction", 0.0)
     if best and giant < best * RATCHET_TOLERANCE:
         errors.append(
