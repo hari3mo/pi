@@ -1158,6 +1158,12 @@ class BlackHoleComponent {
 	}
 }
 
+// Module-scoped: setVoidHeader can run more than once per process (a
+// non-startup session_start, then again once the splash closes), and each
+// header instance would otherwise start its own ticker — cleared and
+// restarted on every install so intervals never stack.
+let shimmerInterval: ReturnType<typeof setInterval> | null = null;
+
 // ------------------------------------------------------------- extension ----
 export default function (pi: ExtensionAPI) {
 	// Landing page: the void greets you on startup and holds the screen
@@ -1165,24 +1171,60 @@ export default function (pi: ExtensionAPI) {
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
 		if (ctx.mode !== "tui") return;
-		const setVoidHeader = () =>
-			ctx.ui.setHeader((_tui, theme) => ({
-				render(width: number): string[] {
-					const subtitle = theme.fg("dim", `   pi v${VERSION}`);
-					const markW = Math.max(...WORDMARK.map((l) => l.length));
-					if (width < markW + 1) {
-						// Too narrow for the wordmark — no fallback text, just the version.
-						return ["", subtitle, ""];
-					}
-					return [
-						"",
-						...WORDMARK.map((l) => BLACK + l + RESET),
-						subtitle,
-						"",
-					];
-				},
-				invalidate() {},
-			}));
+		const setVoidHeader = () => {
+			let phase = 0;
+			if (shimmerInterval) clearInterval(shimmerInterval);
+			ctx.ui.setHeader((tui, theme) => {
+				shimmerInterval = setInterval(() => {
+					phase++;
+					tui.requestRender();
+				}, 120);
+				return {
+					render(width: number): string[] {
+						const subtitle = theme.fg("dim", `   pi v${VERSION}`);
+						const markW = Math.max(...WORDMARK.map((l) => l.length));
+						if (width < markW + 1) {
+							// Too narrow for the wordmark — no fallback text, just the version.
+							return ["", subtitle, ""];
+						}
+						// Diagonal glint sweeping over the extruded letterforms: a band
+						// of columns (x + y near pos) renders bright against the BLACK
+						// base ink. Extra padding on the range gives the mark a dark
+						// resting beat between sweeps instead of looping back-to-back.
+						const range = markW + WORDMARK.length + 40;
+						const pos = phase % range;
+						const bandWidth = 3;
+						const shimmerLine = (line: string, y: number): string => {
+							let out = "";
+							let tier = ""; // "" | BLACK | glint (RESET + BOLD)
+							for (let x = 0; x < line.length; x++) {
+								const ch = line[x];
+								if (ch === " ") {
+									out += " ";
+									continue;
+								}
+								const want =
+									Math.abs(x + y - pos) < bandWidth ? BOLD : BLACK;
+								if (want !== tier) {
+									out += RESET + want;
+									tier = want;
+								}
+								out += ch;
+							}
+							if (tier !== "") out += RESET;
+							return out;
+						};
+						return [
+							"",
+							...WORDMARK.map((l, y) => shimmerLine(l, y)),
+							subtitle,
+							"",
+						];
+					},
+					invalidate() {},
+				};
+			});
+		};
 		if (event.reason !== "startup") {
 			setVoidHeader();
 			return;
