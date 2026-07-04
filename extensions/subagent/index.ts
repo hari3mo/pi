@@ -36,6 +36,13 @@ const MAX_CONCURRENCY = 4;
 const COLLAPSED_ITEM_COUNT = 10;
 const PER_TASK_OUTPUT_CAP = 50 * 1024;
 
+// pi's "Working..." spinner, reused verbatim so in-progress subagent rows
+// animate identically to the native indicator: same braille frame set and 80ms
+// cadence as pi-tui's Loader (@earendil-works/pi-tui DEFAULT_FRAMES /
+// DEFAULT_INTERVAL_MS), drawn in the accent color like WorkingStatusIndicator.
+const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+const SPINNER_INTERVAL_MS = 80;
+
 function isSonnetModel(model: { id?: string; name?: string } | undefined): boolean {
 	if (!model) return false;
 	return /sonnet/i.test(model.id ?? "") || /sonnet/i.test(model.name ?? "");
@@ -210,6 +217,15 @@ function getFinalOutput(messages: Message[]): string {
 
 function isFailedResult(result: SingleResult): boolean {
 	return result.exitCode !== 0 || result.stopReason === "error" || result.stopReason === "aborted";
+}
+
+// A run is in progress until its subprocess exits (endTime lands). A pending
+// parallel placeholder (exitCode -1, never started) also counts as in progress;
+// an unknown-agent failure (exitCode 1, never started, no endTime) does NOT.
+function runInProgress(result: SingleResult): boolean {
+	if (result.endTime !== undefined) return false;
+	if (result.startTime !== undefined) return true;
+	return result.exitCode === -1;
 }
 
 function getResultOutput(result: SingleResult): string {
@@ -809,6 +825,24 @@ export default function (pi: ExtensionAPI) {
 
 			const mdTheme = getMarkdownTheme();
 
+			// Animate the "working" glyph for any in-progress run; freeze to ✓/✗ once
+			// done. Drive the animation by re-invalidating this tool row on an interval
+			// (pi-tui's Loader animates the same way via requestRender). The timer lives
+			// in the persistent per-row render state and is cleared the instant nothing
+			// is running — including the final done-render — so it never leaks.
+			const spinner = () =>
+				theme.fg("accent", SPINNER_FRAMES[Math.floor(Date.now() / SPINNER_INTERVAL_MS) % SPINNER_FRAMES.length]);
+			const spinnerState = _context.state as { spinnerTimer?: ReturnType<typeof setInterval> };
+			if (details.results.some(runInProgress)) {
+				if (!spinnerState.spinnerTimer) {
+					const invalidate = _context.invalidate;
+					spinnerState.spinnerTimer = setInterval(invalidate, SPINNER_INTERVAL_MS);
+				}
+			} else if (spinnerState.spinnerTimer) {
+				clearInterval(spinnerState.spinnerTimer);
+				spinnerState.spinnerTimer = undefined;
+			}
+
 			const renderDisplayItems = (items: DisplayItem[], limit?: number) => {
 				const toShow = limit ? items.slice(-limit) : items;
 				const skipped = limit && items.length > limit ? items.length - limit : 0;
@@ -828,7 +862,11 @@ export default function (pi: ExtensionAPI) {
 			if (details.mode === "single" && details.results.length === 1) {
 				const r = details.results[0];
 				const isError = isFailedResult(r);
-				const icon = isError ? theme.fg("error", "✗") : theme.fg("success", "✓");
+				const icon = runInProgress(r)
+					? spinner()
+					: isError
+						? theme.fg("error", "✗")
+						: theme.fg("success", "✓");
 				const displayItems = getDisplayItems(r.messages);
 				const finalOutput = getFinalOutput(r.messages);
 				const elapsedMs = getElapsedMs(r);
@@ -900,7 +938,11 @@ export default function (pi: ExtensionAPI) {
 
 			if (details.mode === "chain") {
 				const successCount = details.results.filter((r) => r.exitCode === 0).length;
-				const icon = successCount === details.results.length ? theme.fg("success", "✓") : theme.fg("error", "✗");
+				const icon = details.results.some(runInProgress)
+					? spinner()
+					: successCount === details.results.length
+						? theme.fg("success", "✓")
+						: theme.fg("error", "✗");
 
 				if (expanded) {
 					const container = new Container();
@@ -916,7 +958,11 @@ export default function (pi: ExtensionAPI) {
 					);
 
 					for (const r of details.results) {
-						const rIcon = r.exitCode === 0 ? theme.fg("success", "✓") : theme.fg("error", "✗");
+						const rIcon = runInProgress(r)
+							? spinner()
+							: r.exitCode === 0
+								? theme.fg("success", "✓")
+								: theme.fg("error", "✗");
 						const displayItems = getDisplayItems(r.messages);
 						const finalOutput = getFinalOutput(r.messages);
 						const rElapsed = getElapsedMs(r);
@@ -970,7 +1016,11 @@ export default function (pi: ExtensionAPI) {
 					theme.fg("toolTitle", theme.bold("chain ")) +
 					theme.fg("accent", `${successCount}/${details.results.length} steps`);
 				for (const r of details.results) {
-					const rIcon = r.exitCode === 0 ? theme.fg("success", "✓") : theme.fg("error", "✗");
+					const rIcon = runInProgress(r)
+						? spinner()
+						: r.exitCode === 0
+							? theme.fg("success", "✓")
+							: theme.fg("error", "✗");
 					const displayItems = getDisplayItems(r.messages);
 					const rElapsed = getElapsedMs(r);
 					const rElapsedSuffix = rElapsed !== undefined ? theme.fg("dim", ` · ${formatDuration(rElapsed)}`) : "";
@@ -985,12 +1035,12 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			if (details.mode === "parallel") {
-				const running = details.results.filter((r) => r.exitCode === -1).length;
-				const successCount = details.results.filter((r) => r.exitCode !== -1 && !isFailedResult(r)).length;
-				const failCount = details.results.filter((r) => r.exitCode !== -1 && isFailedResult(r)).length;
+				const running = details.results.filter(runInProgress).length;
+				const successCount = details.results.filter((r) => !runInProgress(r) && !isFailedResult(r)).length;
+				const failCount = details.results.filter((r) => !runInProgress(r) && isFailedResult(r)).length;
 				const isRunning = running > 0;
 				const icon = isRunning
-					? theme.fg("warning", "⏳")
+					? spinner()
 					: failCount > 0
 						? theme.fg("warning", "◐")
 						: theme.fg("success", "✓");
@@ -1057,18 +1107,17 @@ export default function (pi: ExtensionAPI) {
 				// Collapsed view (or still running)
 				let text = `${icon} ${theme.fg("toolTitle", theme.bold("parallel "))}${theme.fg("accent", status)}`;
 				for (const r of details.results) {
-					const rIcon =
-						r.exitCode === -1
-							? theme.fg("warning", "⏳")
-							: isFailedResult(r)
-								? theme.fg("error", "✗")
-								: theme.fg("success", "✓");
+					const rIcon = runInProgress(r)
+						? spinner()
+						: isFailedResult(r)
+							? theme.fg("error", "✗")
+							: theme.fg("success", "✓");
 					const displayItems = getDisplayItems(r.messages);
 					const rElapsed = getElapsedMs(r);
 					const rElapsedSuffix = rElapsed !== undefined ? theme.fg("dim", ` · ${formatDuration(rElapsed)}`) : "";
 					text += `\n\n${theme.fg("muted", "─── ")}${theme.fg("accent", r.agent)} ${rIcon}${rElapsedSuffix}`;
 					if (displayItems.length === 0)
-						text += `\n${theme.fg("muted", r.exitCode === -1 ? "(running...)" : "(no output)")}`;
+						text += `\n${theme.fg("muted", runInProgress(r) ? "(running...)" : "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
 				}
 				if (!isRunning) {
