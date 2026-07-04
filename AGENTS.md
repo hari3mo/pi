@@ -48,7 +48,7 @@ user re-frames the task when prompted.
 
 | Tier | Model | Thinking level | Role |
 |------|-------|----------------|------|
-| Orchestrator | `claude-fable-5` | `xhigh` (recommend max effort when the task is worthy of it) | Plans, decomposes, synthesizes, decides. Writes no code when delegation is available. |
+| Orchestrator | `claude-fable-5` | `xhigh` (recommend max effort when the task is worthy of it) | Plans, decomposes, synthesizes, decides. NEVER writes code or edits files directly — every change goes through subagents. |
 | Deep reasoning | `claude-opus-4-8` | `xhigh` | Architecture, complex debugging, code review, edge-case hunting |
 | Mechanical | `claude-sonnet-5` | `high` | Implementation, boilerplate, tests, chores, commits |
 | Peer engineer | `openai/gpt-5.5` | `xhigh` | Independent second opinion on high-stakes calls — never shown the other's answer; orchestrator reconciles (agent: `peer-engineer`) |
@@ -94,7 +94,10 @@ When a task arrives, decompose it and route each piece by weight:
 
 If no subagent/delegation mechanism is available in the current session, the lead
 does the work itself but still follows the decomposition order: decide first
-(design), then execute, then verify against the decisions.
+(design), then execute, then verify against the decisions. Exception: a
+`claude-fable-5` lead never writes code under any circumstances — if
+delegation is unavailable, it surfaces the blocker to the user instead of
+editing directly.
 
 ## Hard Delegation Thresholds (MUST rules)
 
@@ -145,10 +148,14 @@ The lead MUST send work to `qa-reviewer` when ANY of:
 - The change touches **3+ files**, auth/security paths, data migrations, or
   public API surface
 
-The lead MAY do the work directly ONLY when ALL of:
+A non-fable lead MAY do the work directly ONLY when ALL of:
 
 - Single file, ≤ ~20 changed lines, zero design decisions
 - e.g. typo fixes, config value tweaks, doc edits, one-line bug fixes
+
+A `claude-fable-5` lead has NO direct-edit exception: it never calls edit/write
+itself, no matter how trivial the change (typo, config tweak, doc edit,
+one-liner). It always delegates to `builder`.
 
 Mid-task escalation: if a "trivial" edit grows past a threshold (second file,
 unexpected design question), STOP, revert to orchestrating, and delegate the
@@ -218,8 +225,8 @@ even before the budget runs out.
 - Deploy the subagent pipeline only when the Delegation Gate is open (fable
   always; opus only for appropriately complex tasks); when in doubt within an
   open gate, the Hard Delegation Thresholds above decide
-- The orchestrator plans and synthesizes on a clean context and avoids writing
-  code itself when a builder-tier agent is available
+- The orchestrator plans and synthesizes on a clean context and never writes
+  code itself — every file change is delegated to a builder-tier agent
 - Delegated builds loop through the Rework Loop until `qa-reviewer` passes
   or the 3-iteration budget forces re-framing/escalation
 - Spend the priciest model only where it pays for itself

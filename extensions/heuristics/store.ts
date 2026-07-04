@@ -23,7 +23,6 @@ import {
 	MAX_READ_LINES,
 	newId,
 	normalize,
-	READ_RETRY_MS,
 	type Scope,
 	type Source,
 	STALE_MS,
@@ -255,7 +254,7 @@ export async function mutateStore<T>(
 ): Promise<T> {
 	const lockPath = await acquireLock(dir);
 	try {
-		const { list } = await readStore(dir);
+		const list = await readStore(dir);
 		const { list: mutated, result } = fn(list);
 		const { list: finalList, archived } = evict(mutated, scope);
 
