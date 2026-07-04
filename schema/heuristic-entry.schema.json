@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/heuristic-entry.schema.json",
+  "title": "Heuristics JSONL entry",
+  "description": "One line of heuristics.jsonl. Mirrors extensions/heuristics/schema.ts (Heuristic interface, DESIGN.md §1). Malleable: extra fields allowed so schema.ts can grow without breaking validation; 'basis' is optional for pre-existing entries.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["id", "text", "scope", "project", "category", "created", "lastReinforced", "hits", "source", "pinned"],
+  "properties": {
+    "id": { "type": "string", "minLength": 1 },
+    "text": { "type": "string", "minLength": 1, "maxLength": 400 },
+    "scope": { "type": "string", "enum": ["global", "project"] },
+    "project": { "type": ["string", "null"] },
+    "category": {
+      "type": "string",
+      "enum": ["correction", "gotcha", "environment", "workflow", "convention", "orchestration"]
+    },
+    "created": { "type": "string", "format": "date-time" },
+    "lastReinforced": { "type": "string", "format": "date-time" },
+    "hits": { "type": "integer", "minimum": 0 },
+    "source": { "type": "string", "enum": ["agent", "user"] },
+    "pinned": { "type": "boolean" },
+    "basis": {
+      "type": "string",
+      "enum": ["user-confirmed", "directly-observed", "reproduced", "documented"]
+    }
+  },
+  "allOf": [
+    {
+      "description": "Scope/project coherence: global entries have project=null; project entries have a non-null project path.",
+      "if": { "properties": { "scope": { "const": "global" } } },
+      "then": { "properties": { "project": { "type": "null" } } },
+      "else": { "properties": { "project": { "type": "string", "minLength": 1 } } }
+    }
+  ]
+}
