@@ -11,11 +11,15 @@ Checks (driven by schema/manifest.json — add targets there, not here):
      scope drift (project-scoped lesson whose project is the home dir —
      almost always should have been global).
   3. Git hygiene: no tracked file matches a credential-shaped pattern;
-     sensitive paths (auth.json, trust.json, sessions/) are ignored.
+     sensitive paths (auth.json, trust.json, sessions/) are ignored, and
+     derived graphify-out/ artifacts stay untracked.
   4. No dangling symlinks under skills/.
-  5. Standard layout: expected directories exist; unknown entries are
+  5. Agent frontmatter hygiene: agent descriptions stay double-quoted.
+  6. Theme integrity: sibling themes keep matching color/export token sets and
+     all color references resolve.
+  7. Standard layout: expected directories exist; unknown entries are
      reported as info only (the layout is malleable by design).
-  6. Installed-artifact integrity: graphify hook keeps its doc filter, no
+  8. Installed-artifact integrity: graphify hook keeps its doc filter, no
      post-checkout rebuild hook, pi-tui scrollback patch still applied.
 
 Exit codes: 0 = clean (or warnings without --strict), 1 = errors.
@@ -27,6 +31,7 @@ import argparse
 import fnmatch
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -148,6 +153,8 @@ def check_git_hygiene() -> None:
         errors.append(f"git ls-files failed: {r.stderr.strip()}")
         return
     for f in r.stdout.splitlines():
+        if f.startswith("graphify-out/"):
+            errors.append(f"git: derived graph artifact '{f}' is tracked; untrack graphify-out outputs")
         base = os.path.basename(f)
         for pat in CREDENTIAL_GLOBS:
             if fnmatch.fnmatch(base.lower(), pat):
