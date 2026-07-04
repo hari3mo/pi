@@ -41,8 +41,8 @@ the user interview and the lead's own dispatch-spec authoring, nothing else.
 | Scale | Route | Fable turns |
 |---|---|---|
 | **Micro** — 1 file, ≤20 lines, zero design decisions | ONE `worker` dispatch; the lead judges the RETURNED diff; chain a `verifier` only if there is a runnable acceptance path | 2 |
-| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `engineer` → `verifier` (greenfield with a runnable acceptance path) or `engineer` → `reviewer` (touches existing behavior). The verifier/reviewer MUST be the FINAL chain step — verdict normalization applies only to the last step, and only when that step is a reviewer | 2 |
-| **Large** — scope exceeds one context window, genuine concurrency, or ambiguity surviving the user interview | interview → optional design-only `engineer` dispatch (only when 2+ implementers consume the design) → ONE parallel fan-out (max 8, independent tasks) and/or chains → `reviewer` gate | 4–6 |
+| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `engineer` → `verifier` (greenfield with a runnable acceptance path) or `engineer` → `peer` (touches existing behavior). The verifier/peer MUST be the FINAL chain step — verdict normalization applies only to the last step, and only when that step is a peer | 2 |
+| **Large** — scope exceeds one context window, genuine concurrency, or ambiguity surviving the user interview | interview → optional design-only `engineer` dispatch (only when 2+ implementers consume the design) → ONE parallel fan-out (max 8, independent tasks) and/or chains → `peer` gate | 4–6 |
 
 The single chain is the default that gets escalated up — the pipeline is NOT a default
 that gets pruned down.
@@ -55,8 +55,8 @@ that gets pruned down.
 | `worker` | Mechanical | Fully-specified mechanical edits ONLY, zero residual design decisions; ships (commits) after review passes |
 | `engineer` | Deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE: whole bounded tasks at single-session scope end-to-end, design inline; also design-only dispatches when 2+ implementers consume the design |
 | `verifier` | Mechanical | Runs the acceptance path, PASS/FAIL + `file:line` evidence; never edits. Only dispatched when something is RUNNABLE — for a small returned diff with nothing to run, the lead judges the diff directly |
-| `reviewer` | Deep reasoning | Gate-tier verification: changes to existing behavior, 3+ files of existing code, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design |
-| `peer-engineer` | Peer (`openai/gpt-5.5-pro:xhigh`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
+| `peer` | Deep reasoning | Gate-tier verification: changes to existing behavior, 3+ files of existing code, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design |
+| `reviewer` | Peer (`openai/gpt-5.5-pro:xhigh`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
 | `fable-engineer` | Orchestrator-tier, opt-in | Highest-stakes solo builds, dispatched ONLY with explicit user approval; its task must inline repo conventions (loads no context files) |
 
 There is no standing architect role: when 2+ implementers will consume a design,
@@ -66,12 +66,12 @@ dispatch `engineer` with a design-only task returning the design artifact
 ## Fable Budget Invariants (MUST)
 
 - ≤1 targeted read ≤50 lines before dispatch; after the graph tool has been tried for structure questions, a locating grep that misses once → `scout`.
-- Never verify by reading — verification goes to `verifier`/`reviewer`.
+- Never verify by reading — verification goes to `verifier`/`peer`.
 - Batch all independent dispatches in ONE parallel call, dependent steps in ONE chain;
   sequential singles only when one result determines the next.
 - FRONT-LOAD SPEC QUALITY: fable's highest-leverage tokens are the dispatch spec itself.
   A generous, precise spec that one-shots beats a terse one that triggers rework chains.
-- Blind fan-out (`engineer` + `peer-engineer` in parallel, neither sees the other)
+- Blind fan-out (`engineer` + `reviewer` in parallel, neither sees the other)
   for expensive-to-unwind calls; fable spends only on reconciliation.
 - GRAPH-FIRST: when `graphify-out/graph.json` exists, answer structure/architecture
   questions with the `graph` tool (query/explain/path) BEFORE dispatching scout or
@@ -93,15 +93,15 @@ restate it. Template: `docs/delegation-contract.md`.
 
 ## Rework Loop
 
-`reviewer` verdict contract (details: `docs/rework-loop.md`):
+`peer` verdict contract (details: `docs/rework-loop.md`):
 
 - `PASS` — ship (the implementing agent commits).
 - `FAIL: implementation` — ONE chain: worker-or-engineer fix given the findings verbatim
-  plus an explicit fix-ONLY-the-findings instruction → fresh `reviewer` as the FINAL
+  plus an explicit fix-ONLY-the-findings instruction → fresh `peer` as the FINAL
   chain step.
 - `FAIL: design` — re-frame the problem; do not patch around it.
 
-Budget: a session-level ceiling of 3 consecutive reviewer FAILs (not per-work-item), then re-frame or surface the impasse to the user.
+Budget: a session-level ceiling of 3 consecutive peer FAILs (not per-work-item), then re-frame or surface the impasse to the user.
 Convergence discipline: unrelated new findings each iteration = design smell — escalate
 early, before the budget runs out.
 
@@ -164,7 +164,7 @@ The harness audits itself; problems become prompts:
 - `extensions/read-only-default.ts` hard-blocks fable `edit`/`write` calls in all gate
   modes; spawned children are exempt via `PI_SUBAGENT=1`.
 - `extensions/subagent/index.ts` appends `STANDING_CONTRACT_FOOTER` to every dispatched
-  task, normalizes `reviewer` returns with a `[VERDICT: ...]` first line, and annotates
+  task, normalizes `peer` returns with a `[VERDICT: ...]` first line, and annotates
   the session-level 3-consecutive-FAIL loop budget.
 - The write-gate prompts on `subagent` calls in confirm/read-only mode so children can
   inherit write access.
