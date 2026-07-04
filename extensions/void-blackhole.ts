@@ -99,14 +99,17 @@ const TICK_MS = 50; // 20 fps — plenty for glyphs
 const ART_MAX_W = 280; // wide: fill the terminal, centered, landing-page scale
 const ART_MAX_ROWS = 64;
 
-// Landing-page chrome: the wordmark (figlet "smslant" — its oblique strokes
-// echo the spiral arms), stamped into the art as exact glyphs on a cleared
-// plate so the letterforms stay crisp against the starfield.
+// Landing-page chrome: the wordmark (figlet "larry3d" — extruded 3D
+// letterforms), stamped into the art as exact glyphs on a cleared plate so
+// the letterforms stay crisp against the starfield. Rendered in ANSI black.
 const WORDMARK = [
-	"   __            _",
-	"  / /  ___ _____(_)_ _  ___",
-	" / _ \\/ _ `/ __/ /  ' \\/ _ \\",
-	"/_//_/\\_,_/_/ /_/_/_/_/\\___/",
+	" __",
+	"/\\ \\                       __",
+	"\\ \\ \\___      __     _ __ /\\_\\    ___ ___     ___",
+	" \\ \\  _ `\\  /'__`\\  /\\`'__\\/\\ \\ /' __` __`\\  / __`\\",
+	"  \\ \\ \\ \\ \\/\\ \\L\\.\\_\\ \\ \\/ \\ \\ \\/\\ \\/\\ \\/\\ \\/\\ \\L\\ \\",
+	"   \\ \\_\\ \\_\\ \\__/.\\_\\\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\____/",
+	"    \\/_/\\/_/\\/__/\\/_/ \\/_/   \\/_/\\/_/\\/_/\\/_/\\/___/",
 ];
 
 // Orbiting planets (planets.js PLANET_DEFS, nav words dropped) — irregular
@@ -309,6 +312,7 @@ const smoothstep = (e0: number, e1: number, x: number): number => {
 
 const DIM = "\x1b[2m";
 const BOLD = "\x1b[1m";
+const BLACK = "\x1b[30m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
 const RESET = "\x1b[0m";
 
 // ------------------------------------------------------------ component ----
@@ -1079,11 +1083,11 @@ class BlackHoleComponent {
 		if (rows >= 16 && artW >= markW + 6) {
 			const markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
-				stampAt(markCol, 1 + i, WORDMARK[i], 0.9, markW);
+				stampAt(markCol, 1 + i, WORDMARK[i], 2, markW);
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
-			stampCentered("h a r i m o", 1, 0.9);
+			stampCentered("h a r i m o", 1, 2);
 			stampCentered(tagline, 2, 0.14);
 		}
 
@@ -1101,7 +1105,7 @@ class BlackHoleComponent {
 				const ch =
 					overlay[row * artW + col] ??
 					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.85) * RAMP_MAX))];
-				const want = b < 0.3 ? DIM : b < 0.8 ? "" : BOLD;
+				const want = b >= 2 ? BLACK : b < 0.3 ? DIM : b < 0.8 ? "" : BOLD;
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
@@ -1137,11 +1141,11 @@ export default function (pi: ExtensionAPI) {
 			render(width: number): string[] {
 				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
 				if (width < 30) {
-					return ["", theme.fg("accent", "harimo"), subtitle, ""];
+					return ["", BLACK + "harimo" + RESET, subtitle, ""];
 				}
 				return [
 					"",
-					...WORDMARK.map((l) => theme.fg("accent", l)),
+					...WORDMARK.map((l) => BLACK + l + RESET),
 					subtitle,
 					"",
 				];
