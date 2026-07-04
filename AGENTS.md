@@ -95,7 +95,7 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into seven roles. Do not collapse verification into the builder —
+Real work splits into eight roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
@@ -103,6 +103,7 @@ an agent must not review its own code.
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
 | `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
+| `scout` | Read-only bulk investigation: map structure, extract facts, return compressed `file:line` findings for the orchestrator — never edits | Mechanical |
 | `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
 | `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
