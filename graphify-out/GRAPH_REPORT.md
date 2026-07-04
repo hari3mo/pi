@@ -5,12 +5,12 @@
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1137 nodes · 1561 edges · 66 communities (60 shown, 6 thin omitted)
+- 1145 nodes · 1570 edges · 66 communities (60 shown, 6 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.66)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `c7a251b9`
+- Built from commit: `eae9cb2b`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -135,7 +135,7 @@ Nodes (9): applyTools(), DESTRUCTIVE_PATTERNS, execute(), GateState, Mode, persi
 
 ### Community 5 - "Subagent Dispatch Tool"
 Cohesion: 0.08
-Nodes (38): fmtDuration(), AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir() (+30 more)
+Nodes (38): fmtDuration(), AgentScopeSchema, ChainItem, DisplayItem, execute(), finalizeQaOutput(), formatTokens(), formatToolCall() (+30 more)
 
 ### Community 6 - "Heuristic Entry Schema"
 Cohesion: 0.06
@@ -184,8 +184,8 @@ Cohesion: 0.11
 Nodes (11): BlackHoleComponent, COMET_DEFS, CometDef, Constellation, CONSTELLATIONS, COS_T, DeepGalaxy, PLANETS (+3 more)
 
 ### Community 16 - "Porcelain Light Theme"
-Cohesion: 0.12
-Nodes (17): vars, amber, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bronze (+9 more)
+Cohesion: 0.08
+Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, amber (+15 more)
 
 ### Community 17 - "Hermes Plugin"
 Cohesion: 0.19
@@ -340,30 +340,30 @@ Cohesion: 0.36
 Nodes (7): execute(), findGraphRoot(), fmtAge(), GraphParams, GraphStats, runGraphify(), statusText()
 
 ### Community 65 - "porcelain-light.json"
-Cohesion: 0.29
-Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
+Cohesion: 0.36
+Nodes (7): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir()
 
 ## Knowledge Gaps
-- **583 isolated node(s):** `GraphParams`, `Feature index`, `2026-07-04`, `2026-07-03`, `2026-07-02` (+578 more)
+- **586 isolated node(s):** `autocommit.sh script`, `BANNER_LINES`, `APHORISMS`, `BANNER_WIDTH`, `GraphParams` (+581 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `~/.pi/agent config repo overview` (3× useful, score=2.999539767)
+- `~/.pi/agent config repo overview` (3× useful, score=2.999366278)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `properties` connect `Heuristic Entry Schema` to `Keybindings Schema`?**
-  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+  _High betweenness centrality (0.007) - this node is a cross-community bridge._
 - **Why does `Ponytail project (lazy senior dev skill)` connect `Trust Schema` to `Brand & Chart Assets`, `Graphify Skill (nested copy)`?**
-  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Graphify Skill (nested copy)` to `Trust Schema`?**
   _High betweenness centrality (0.004) - this node is a cross-community bridge._
-- **What connects `GraphParams`, `Feature index`, `2026-07-04` to the rest of the system?**
-  _611 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `autocommit.sh script`, `BANNER_LINES`, `APHORISMS` to the rest of the system?**
+  _614 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**
