@@ -154,10 +154,20 @@
       "norm_label": "formatusagestats()"
     },
     {
+      "label": "formatRunStatus()",
+      "file_type": "code",
+      "source_file": "extensions/subagent/index.ts",
+      "source_location": "L143",
+      "_origin": "ast",
+      "id": "extensions_subagent_index_formatrunstatus",
+      "community": 3,
+      "norm_label": "formatrunstatus()"
+    },
+    {
       "label": "formatToolCall()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L139",
+      "source_location": "L149",
       "_origin": "ast",
       "id": "extensions_subagent_index_formattoolcall",
       "community": 3,
@@ -167,7 +177,7 @@
       "label": "UsageStats",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L207",
+      "source_location": "L217",
       "_origin": "ast",
       "id": "extensions_subagent_index_usagestats",
       "community": 3,
@@ -177,7 +187,7 @@
       "label": "SingleResult",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L217",
+      "source_location": "L227",
       "_origin": "ast",
       "id": "extensions_subagent_index_singleresult",
       "community": 3,
@@ -187,7 +197,7 @@
       "label": "SubagentDetails",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L240",
+      "source_location": "L250",
       "_origin": "ast",
       "id": "extensions_subagent_index_subagentdetails",
       "community": 3,
@@ -197,7 +207,7 @@
       "label": "getFinalOutput()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L247",
+      "source_location": "L257",
       "_origin": "ast",
       "id": "extensions_subagent_index_getfinaloutput",
       "community": 3,
@@ -207,7 +217,7 @@
       "label": "isFailedResult()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L259",
+      "source_location": "L269",
       "_origin": "ast",
       "id": "extensions_subagent_index_isfailedresult",
       "community": 3,
@@ -217,7 +227,7 @@
       "label": "runInProgress()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L266",
+      "source_location": "L276",
       "_origin": "ast",
       "id": "extensions_subagent_index_runinprogress",
       "community": 3,
@@ -227,7 +237,7 @@
       "label": "getResultOutput()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L272",
+      "source_location": "L282",
       "_origin": "ast",
       "id": "extensions_subagent_index_getresultoutput",
       "community": 3,
@@ -237,7 +247,7 @@
       "label": "truncateParallelOutput()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L279",
+      "source_location": "L289",
       "_origin": "ast",
       "id": "extensions_subagent_index_truncateparalleloutput",
       "community": 3,
@@ -247,7 +257,7 @@
       "label": "DisplayItem",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L290",
+      "source_location": "L300",
       "_origin": "ast",
       "id": "extensions_subagent_index_displayitem",
       "community": 3,
@@ -257,7 +267,7 @@
       "label": "getDisplayItems()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L292",
+      "source_location": "L302",
       "_origin": "ast",
       "id": "extensions_subagent_index_getdisplayitems",
       "community": 3,
@@ -267,7 +277,7 @@
       "label": "mapWithConcurrencyLimit()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L305",
+      "source_location": "L315",
       "_origin": "ast",
       "id": "extensions_subagent_index_mapwithconcurrencylimit",
       "community": 3,
@@ -277,7 +287,7 @@
       "label": "writePromptToTempFile()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L325",
+      "source_location": "L335",
       "_origin": "ast",
       "id": "extensions_subagent_index_writeprompttotempfile",
       "community": 3,
@@ -287,7 +297,7 @@
       "label": "getPiInvocation()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L335",
+      "source_location": "L345",
       "_origin": "ast",
       "id": "extensions_subagent_index_getpiinvocation",
       "community": 3,
@@ -297,7 +307,7 @@
       "label": "OnUpdateCallback",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L351",
+      "source_location": "L361",
       "_origin": "ast",
       "id": "extensions_subagent_index_onupdatecallback",
       "community": 3,
@@ -307,7 +317,7 @@
       "label": "runSingleAgent()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L353",
+      "source_location": "L363",
       "_origin": "ast",
       "id": "extensions_subagent_index_runsingleagent",
       "community": 3,
@@ -317,7 +327,7 @@
       "label": "TaskItem",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L539",
+      "source_location": "L549",
       "_origin": "ast",
       "id": "extensions_subagent_index_taskitem",
       "community": 3,
@@ -327,7 +337,7 @@
       "label": "ChainItem",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L545",
+      "source_location": "L555",
       "_origin": "ast",
       "id": "extensions_subagent_index_chainitem",
       "community": 3,
@@ -337,7 +347,7 @@
       "label": "AgentScopeSchema",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L551",
+      "source_location": "L561",
       "_origin": "ast",
       "id": "extensions_subagent_index_agentscopeschema",
       "community": 3,
@@ -347,7 +357,7 @@
       "label": "SubagentParams",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L556",
+      "source_location": "L566",
       "_origin": "ast",
       "id": "extensions_subagent_index_subagentparams",
       "community": 3,
@@ -357,7 +367,7 @@
       "label": "persistReworkCount()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L577",
+      "source_location": "L587",
       "_origin": "ast",
       "id": "extensions_subagent_index_persistreworkcount",
       "community": 3,
@@ -367,7 +377,7 @@
       "label": "finalizeQaOutput()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L604",
+      "source_location": "L614",
       "_origin": "ast",
       "id": "extensions_subagent_index_finalizeqaoutput",
       "community": 3,
@@ -377,7 +387,7 @@
       "label": "execute()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L642",
+      "source_location": "L652",
       "_origin": "ast",
       "id": "extensions_subagent_index_execute",
       "community": 3,
@@ -387,7 +397,7 @@
       "label": "renderCall()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L888",
+      "source_location": "L898",
       "_origin": "ast",
       "id": "extensions_subagent_index_rendercall",
       "community": 3,
@@ -397,7 +407,7 @@
       "label": "renderResult()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L932",
+      "source_location": "L942",
       "_origin": "ast",
       "id": "extensions_subagent_index_renderresult",
       "community": 3,
@@ -409,9 +419,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard",
       "community": 69,
-      "norm_label": "check-concurrency-guard.mjs"
+      "norm_label": "check-concurrency-guard.mjs",
+      "id": "scripts_check_concurrency_guard"
     },
     {
       "label": "here",
@@ -419,9 +429,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_here",
       "community": 69,
-      "norm_label": "here"
+      "norm_label": "here",
+      "id": "scripts_check_concurrency_guard_here"
     },
     {
       "label": "AGENT_DIR",
@@ -429,9 +439,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_agent_dir",
       "community": 69,
-      "norm_label": "agent_dir"
+      "norm_label": "agent_dir",
+      "id": "scripts_check_concurrency_guard_agent_dir"
     },
     {
       "label": "PKG",
@@ -439,9 +449,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_pkg",
       "community": 69,
-      "norm_label": "pkg"
+      "norm_label": "pkg",
+      "id": "scripts_check_concurrency_guard_pkg"
     },
     {
       "label": "nm",
@@ -449,9 +459,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_nm",
       "community": 69,
-      "norm_label": "nm"
+      "norm_label": "nm",
+      "id": "scripts_check_concurrency_guard_nm"
     },
     {
       "label": "link()",
@@ -459,9 +469,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_link",
       "community": 69,
-      "norm_label": "link()"
+      "norm_label": "link()",
+      "id": "scripts_check_concurrency_guard_link"
     },
     {
       "label": "REPO",
@@ -469,9 +479,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L46",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_repo",
       "community": 69,
-      "norm_label": "repo"
+      "norm_label": "repo",
+      "id": "scripts_check_concurrency_guard_repo"
     },
     {
       "label": "g()",
@@ -479,9 +489,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L47",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_g",
       "community": 69,
-      "norm_label": "g()"
+      "norm_label": "g()",
+      "id": "scripts_check_concurrency_guard_g"
     },
     {
       "label": "put()",
@@ -489,9 +499,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_put",
       "community": 69,
-      "norm_label": "put()"
+      "norm_label": "put()",
+      "id": "scripts_check_concurrency_guard_put"
     },
     {
       "label": "jiti",
@@ -499,9 +509,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L60",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_jiti",
       "community": 69,
-      "norm_label": "jiti"
+      "norm_label": "jiti",
+      "id": "scripts_check_concurrency_guard_jiti"
     },
     {
       "label": "handlers",
@@ -509,9 +519,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L63",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_handlers",
       "community": 69,
-      "norm_label": "handlers"
+      "norm_label": "handlers",
+      "id": "scripts_check_concurrency_guard_handlers"
     },
     {
       "label": "sent",
@@ -519,9 +529,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L64",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_sent",
       "community": 69,
-      "norm_label": "sent"
+      "norm_label": "sent",
+      "id": "scripts_check_concurrency_guard_sent"
     },
     {
       "label": "emitted",
@@ -529,9 +539,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L65",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_emitted",
       "community": 69,
-      "norm_label": "emitted"
+      "norm_label": "emitted",
+      "id": "scripts_check_concurrency_guard_emitted"
     },
     {
       "label": "noop()",
@@ -539,9 +549,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L66",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_noop",
       "community": 69,
-      "norm_label": "noop()"
+      "norm_label": "noop()",
+      "id": "scripts_check_concurrency_guard_noop"
     },
     {
       "label": "pi",
@@ -549,9 +559,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_pi",
       "community": 69,
-      "norm_label": "pi"
+      "norm_label": "pi",
+      "id": "scripts_check_concurrency_guard_pi"
     },
     {
       "label": "fire()",
@@ -559,9 +569,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L80",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_fire",
       "community": 69,
-      "norm_label": "fire()"
+      "norm_label": "fire()",
+      "id": "scripts_check_concurrency_guard_fire"
     },
     {
       "label": "ctx",
@@ -569,9 +579,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L85",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_ctx",
       "community": 69,
-      "norm_label": "ctx"
+      "norm_label": "ctx",
+      "id": "scripts_check_concurrency_guard_ctx"
     },
     {
       "label": "abs()",
@@ -579,9 +589,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_abs",
       "community": 69,
-      "norm_label": "abs()"
+      "norm_label": "abs()",
+      "id": "scripts_check_concurrency_guard_abs"
     },
     {
       "label": "foreignCommit()",
@@ -589,9 +599,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L87",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_foreigncommit",
       "community": 69,
-      "norm_label": "foreigncommit()"
+      "norm_label": "foreigncommit()",
+      "id": "scripts_check_concurrency_guard_foreigncommit"
     },
     {
       "label": "startPrompt",
@@ -599,9 +609,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L88",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_startprompt",
       "community": 69,
-      "norm_label": "startprompt"
+      "norm_label": "startprompt",
+      "id": "scripts_check_concurrency_guard_startprompt"
     },
     {
       "label": "check()",
@@ -609,9 +619,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "scripts_check_concurrency_guard_check",
       "community": 69,
-      "norm_label": "check()"
+      "norm_label": "check()",
+      "id": "scripts_check_concurrency_guard_check"
     },
     {
       "label": "concurrency-guard.ts",
@@ -8095,7 +8105,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "heuristic-entry.schema.json",
       "id": "schema_heuristic_entry_schema"
     },
@@ -8105,7 +8115,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "$schema",
       "id": "schema_heuristic_entry_schema_schema"
     },
@@ -8115,7 +8125,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "$id",
       "id": "schema_heuristic_entry_schema_id"
     },
@@ -8125,7 +8135,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "title",
       "id": "schema_heuristic_entry_schema_title"
     },
@@ -8135,7 +8145,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "description",
       "id": "schema_heuristic_entry_schema_description"
     },
@@ -8145,7 +8155,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_type"
     },
@@ -8155,7 +8165,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "additionalproperties",
       "id": "schema_heuristic_entry_schema_additionalproperties"
     },
@@ -8165,7 +8175,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "required",
       "id": "schema_heuristic_entry_schema_required"
     },
@@ -8215,7 +8225,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 77,
+      "community": 26,
       "norm_label": "text",
       "id": "schema_heuristic_entry_schema_properties_text"
     },
@@ -8225,7 +8235,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 77,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_text_type"
     },
@@ -8235,7 +8245,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 77,
+      "community": 26,
       "norm_label": "minlength",
       "id": "schema_heuristic_entry_schema_text_minlength"
     },
@@ -8245,7 +8255,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 77,
+      "community": 26,
       "norm_label": "maxlength",
       "id": "schema_heuristic_entry_schema_text_maxlength"
     },
@@ -8255,7 +8265,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 81,
+      "community": 26,
       "norm_label": "scope",
       "id": "schema_heuristic_entry_schema_properties_scope"
     },
@@ -8265,7 +8275,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 81,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_scope_type"
     },
@@ -8275,7 +8285,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 81,
+      "community": 26,
       "norm_label": "enum",
       "id": "schema_heuristic_entry_schema_scope_enum"
     },
@@ -8305,7 +8315,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 79,
+      "community": 26,
       "norm_label": "category",
       "id": "schema_heuristic_entry_schema_properties_category"
     },
@@ -8315,7 +8325,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L15",
       "_origin": "ast",
-      "community": 79,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_category_type"
     },
@@ -8325,7 +8335,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L16",
       "_origin": "ast",
-      "community": 79,
+      "community": 26,
       "norm_label": "enum",
       "id": "schema_heuristic_entry_schema_category_enum"
     },
@@ -8335,7 +8345,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 80,
+      "community": 26,
       "norm_label": "created",
       "id": "schema_heuristic_entry_schema_properties_created"
     },
@@ -8345,7 +8355,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 80,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_created_type"
     },
@@ -8355,7 +8365,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 80,
+      "community": 26,
       "norm_label": "format",
       "id": "schema_heuristic_entry_schema_created_format"
     },
@@ -8425,7 +8435,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 82,
+      "community": 26,
       "norm_label": "source",
       "id": "schema_heuristic_entry_schema_properties_source"
     },
@@ -8435,7 +8445,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 82,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_source_type"
     },
@@ -8445,7 +8455,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 82,
+      "community": 26,
       "norm_label": "enum",
       "id": "schema_heuristic_entry_schema_source_enum"
     },
@@ -8475,7 +8485,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 78,
+      "community": 26,
       "norm_label": "basis",
       "id": "schema_heuristic_entry_schema_properties_basis"
     },
@@ -8485,7 +8495,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L24",
       "_origin": "ast",
-      "community": 78,
+      "community": 26,
       "norm_label": "type",
       "id": "schema_heuristic_entry_schema_basis_type"
     },
@@ -8495,7 +8505,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 78,
+      "community": 26,
       "norm_label": "enum",
       "id": "schema_heuristic_entry_schema_basis_enum"
     },
@@ -8505,7 +8515,7 @@
       "source_file": "schema/heuristic-entry.schema.json",
       "source_location": "L28",
       "_origin": "ast",
-      "community": 75,
+      "community": 33,
       "norm_label": "allof",
       "id": "schema_heuristic_entry_schema_allof"
     },
@@ -8635,7 +8645,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "manifest.json",
       "id": "schema_manifest"
     },
@@ -8645,7 +8655,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "$comment",
       "id": "schema_manifest_comment"
     },
@@ -8655,7 +8665,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "schemaversion",
       "id": "schema_manifest_schemaversion"
     },
@@ -8665,7 +8675,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "targets",
       "id": "schema_manifest_targets"
     },
@@ -8675,7 +8685,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "layout",
       "id": "schema_manifest_layout"
     },
@@ -8685,7 +8695,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L41",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "$comment",
       "id": "schema_manifest_layout_comment"
     },
@@ -8695,7 +8705,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "expected",
       "id": "schema_manifest_layout_expected"
     },
@@ -8705,7 +8715,7 @@
       "source_file": "schema/manifest.json",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 76,
+      "community": 33,
       "norm_label": "known",
       "id": "schema_manifest_layout_known"
     },
@@ -8975,7 +8985,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "trust.schema.json",
       "id": "schema_trust_schema"
     },
@@ -8985,7 +8995,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "$schema",
       "id": "schema_trust_schema_schema"
     },
@@ -8995,7 +9005,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "$id",
       "id": "schema_trust_schema_id"
     },
@@ -9005,7 +9015,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "title",
       "id": "schema_trust_schema_title"
     },
@@ -9015,7 +9025,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "description",
       "id": "schema_trust_schema_description"
     },
@@ -9025,7 +9035,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "type",
       "id": "schema_trust_schema_type"
     },
@@ -9035,7 +9045,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "propertynames",
       "id": "schema_trust_schema_propertynames"
     },
@@ -9045,7 +9055,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "pattern",
       "id": "schema_trust_schema_propertynames_pattern"
     },
@@ -9055,7 +9065,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "additionalproperties",
       "id": "schema_trust_schema_additionalproperties"
     },
@@ -9065,7 +9075,7 @@
       "source_file": "schema/trust.schema.json",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 74,
+      "community": 33,
       "norm_label": "type",
       "id": "schema_trust_schema_additionalproperties_type"
     },
@@ -11304,7 +11314,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -11388,7 +11398,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "opencode /ponytail command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -11472,7 +11482,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -11570,7 +11580,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "hermes after-install notes",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -11794,7 +11804,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -12074,7 +12084,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "hermes plugin manifest",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -12172,7 +12182,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -12186,7 +12196,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -12298,7 +12308,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify skill (knowledge-graph pipeline)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_skill"
@@ -12312,7 +12322,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_pipeline"
@@ -12326,7 +12336,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify honesty rules (extracted/inferred/ambiguous)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_honesty_rules"
@@ -12340,7 +12350,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: url add + folder watch",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_add_watch_ref"
@@ -12354,7 +12364,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: extra exports + benchmark",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_exports_ref"
@@ -12368,7 +12378,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: extraction subagent prompt spec",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_extraction_spec_ref"
@@ -12382,7 +12392,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: github clone + cross-repo merge",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_github_and_merge_ref"
@@ -12396,7 +12406,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: commit hook + claude.md integration",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_hooks_ref"
@@ -12410,7 +12420,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_ref"
@@ -12424,7 +12434,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -12438,7 +12448,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -12452,7 +12462,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: whisper video transcription",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_transcribe_ref"
@@ -12466,7 +12476,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: incremental update + cluster-only",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_update_ref"
@@ -12758,7 +12768,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L551",
+      "source_location": "L561",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_agentscopeschema",
@@ -12768,7 +12778,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L545",
+      "source_location": "L555",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_chainitem",
@@ -12778,7 +12788,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L290",
+      "source_location": "L300",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_displayitem",
@@ -12788,7 +12798,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L642",
+      "source_location": "L652",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_execute",
@@ -12798,10 +12808,20 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L604",
+      "source_location": "L614",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_finalizeqaoutput",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/subagent/index.ts",
+      "source_location": "L143",
+      "weight": 1.0,
+      "source": "extensions_subagent_index",
+      "target": "extensions_subagent_index_formatrunstatus",
       "confidence_score": 1.0
     },
     {
@@ -12818,7 +12838,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L139",
+      "source_location": "L149",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_formattoolcall",
@@ -12838,7 +12858,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L292",
+      "source_location": "L302",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_getdisplayitems",
@@ -12858,7 +12878,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L247",
+      "source_location": "L257",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_getfinaloutput",
@@ -12868,7 +12888,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L335",
+      "source_location": "L345",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_getpiinvocation",
@@ -12878,7 +12898,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L272",
+      "source_location": "L282",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_getresultoutput",
@@ -12888,7 +12908,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L259",
+      "source_location": "L269",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_isfailedresult",
@@ -12908,7 +12928,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L305",
+      "source_location": "L315",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_mapwithconcurrencylimit",
@@ -12918,7 +12938,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L351",
+      "source_location": "L361",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_onupdatecallback",
@@ -12938,7 +12958,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L577",
+      "source_location": "L587",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_persistreworkcount",
@@ -12958,7 +12978,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L888",
+      "source_location": "L898",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_rendercall",
@@ -12968,7 +12988,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L932",
+      "source_location": "L942",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_renderresult",
@@ -12978,7 +12998,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L266",
+      "source_location": "L276",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_runinprogress",
@@ -12988,7 +13008,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L353",
+      "source_location": "L363",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_runsingleagent",
@@ -12998,7 +13018,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L217",
+      "source_location": "L227",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_singleresult",
@@ -13008,7 +13028,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L240",
+      "source_location": "L250",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_subagentdetails",
@@ -13018,7 +13038,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L556",
+      "source_location": "L566",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_subagentparams",
@@ -13028,7 +13048,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L539",
+      "source_location": "L549",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_taskitem",
@@ -13038,7 +13058,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L279",
+      "source_location": "L289",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_truncateparalleloutput",
@@ -13048,7 +13068,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L207",
+      "source_location": "L217",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_usagestats",
@@ -13068,7 +13088,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L325",
+      "source_location": "L335",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_writeprompttotempfile",
@@ -13079,7 +13099,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L643",
+      "source_location": "L653",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_issonnetmodel",
@@ -13090,7 +13110,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L607",
+      "source_location": "L617",
       "weight": 1.0,
       "source": "extensions_subagent_index_finalizeqaoutput",
       "target": "extensions_subagent_index_parseqaverdict",
@@ -13112,7 +13132,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L985",
+      "source_location": "L995",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getelapsedms",
@@ -13123,7 +13143,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1117",
+      "source_location": "L1127",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_wallclockelapsedms",
@@ -13134,7 +13154,18 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1018",
+      "source_location": "L144",
+      "weight": 1.0,
+      "source": "extensions_subagent_index_formatrunstatus",
+      "target": "extensions_subagent_index_formatusagestats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/subagent/index.ts",
+      "source_location": "L1028",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_formatusagestats",
@@ -13145,7 +13176,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1007",
+      "source_location": "L1017",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_formattoolcall",
@@ -13156,7 +13187,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L757",
+      "source_location": "L767",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_getfinaloutput",
@@ -13167,7 +13198,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L274",
+      "source_location": "L284",
       "weight": 1.0,
       "source": "extensions_subagent_index_getresultoutput",
       "target": "extensions_subagent_index_getfinaloutput",
@@ -13178,7 +13209,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L984",
+      "source_location": "L994",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getfinaloutput",
@@ -13189,7 +13220,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L748",
+      "source_location": "L758",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_isfailedresult",
@@ -13200,7 +13231,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L273",
+      "source_location": "L283",
       "weight": 1.0,
       "source": "extensions_subagent_index_getresultoutput",
       "target": "extensions_subagent_index_isfailedresult",
@@ -13211,7 +13242,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L977",
+      "source_location": "L987",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_isfailedresult",
@@ -13222,7 +13253,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L949",
+      "source_location": "L959",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_runinprogress",
@@ -13233,7 +13264,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L750",
+      "source_location": "L760",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_getresultoutput",
@@ -13244,7 +13275,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L983",
+      "source_location": "L993",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getdisplayitems",
@@ -13255,7 +13286,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L809",
+      "source_location": "L819",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_mapwithconcurrencylimit",
@@ -13266,7 +13297,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L421",
+      "source_location": "L431",
       "weight": 1.0,
       "source": "extensions_subagent_index_runsingleagent",
       "target": "extensions_subagent_index_writeprompttotempfile",
@@ -13277,7 +13308,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L735",
+      "source_location": "L745",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_runsingleagent",
@@ -13288,7 +13319,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L614",
+      "source_location": "L624",
       "weight": 1.0,
       "source": "extensions_subagent_index_finalizeqaoutput",
       "target": "extensions_subagent_index_persistreworkcount",
@@ -13299,7 +13330,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L762",
+      "source_location": "L772",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_finalizeqaoutput",
@@ -13311,9 +13342,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_abs",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_abs"
     },
     {
       "relation": "contains",
@@ -13321,9 +13352,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_agent_dir",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_agent_dir"
     },
     {
       "relation": "contains",
@@ -13331,9 +13362,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_check",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_check"
     },
     {
       "relation": "contains",
@@ -13341,9 +13372,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L85",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_ctx",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_ctx"
     },
     {
       "relation": "contains",
@@ -13351,9 +13382,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L65",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_emitted",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_emitted"
     },
     {
       "relation": "contains",
@@ -13361,9 +13392,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L80",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_fire",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_fire"
     },
     {
       "relation": "contains",
@@ -13371,9 +13402,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_foreigncommit",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_foreigncommit"
     },
     {
       "relation": "contains",
@@ -13381,9 +13412,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_g",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_g"
     },
     {
       "relation": "contains",
@@ -13391,9 +13422,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L63",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_handlers",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_handlers"
     },
     {
       "relation": "contains",
@@ -13401,9 +13432,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_here",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_here"
     },
     {
       "relation": "contains",
@@ -13411,9 +13442,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_jiti",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_jiti"
     },
     {
       "relation": "contains",
@@ -13421,9 +13452,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_link",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_link"
     },
     {
       "relation": "contains",
@@ -13431,9 +13462,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_nm",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_nm"
     },
     {
       "relation": "contains",
@@ -13441,9 +13472,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L66",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_noop",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_noop"
     },
     {
       "relation": "contains",
@@ -13451,9 +13482,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_pi",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_pi"
     },
     {
       "relation": "contains",
@@ -13461,9 +13492,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_pkg",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_pkg"
     },
     {
       "relation": "contains",
@@ -13471,9 +13502,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_put",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_put"
     },
     {
       "relation": "contains",
@@ -13481,9 +13512,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L46",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_repo",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_repo"
     },
     {
       "relation": "contains",
@@ -13491,9 +13522,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_sent",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_sent"
     },
     {
       "relation": "contains",
@@ -13501,9 +13532,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L88",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard",
-      "target": "scripts_check_concurrency_guard_startprompt",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_startprompt"
     },
     {
       "relation": "calls",
@@ -13512,9 +13543,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard_foreigncommit",
-      "target": "scripts_check_concurrency_guard_g",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_g"
     },
     {
       "relation": "calls",
@@ -13523,9 +13554,9 @@
       "source_file": "scripts/check-concurrency-guard.mjs",
       "source_location": "L87",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_concurrency_guard_foreigncommit",
-      "target": "scripts_check_concurrency_guard_put",
-      "confidence_score": 1.0
+      "target": "scripts_check_concurrency_guard_put"
     },
     {
       "relation": "contains",
@@ -30115,5 +30146,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "c2662128fd50b1ed85c81f850b41070cb92c0e5d"
+  "built_at_commit": "90a81b2ae1db694c1ed460d380a18986ef3c252a"
 }
