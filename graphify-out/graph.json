@@ -74,14 +74,74 @@
   },
   "nodes": [
     {
+      "label": "self-audit.ts",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_self_audit",
+      "community": 52,
+      "norm_label": "self-audit.ts"
+    },
+    {
+      "label": "VALIDATOR",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "extensions_self_audit_validator",
+      "community": 52,
+      "norm_label": "validator"
+    },
+    {
+      "label": "PIPELINE_AUDIT",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "extensions_self_audit_pipeline_audit",
+      "community": 52,
+      "norm_label": "pipeline_audit"
+    },
+    {
+      "label": "AuditResult",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "extensions_self_audit_auditresult",
+      "community": 52,
+      "norm_label": "auditresult"
+    },
+    {
+      "label": "runScript()",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L38",
+      "_origin": "ast",
+      "id": "extensions_self_audit_runscript",
+      "community": 52,
+      "norm_label": "runscript()"
+    },
+    {
+      "label": "runValidator()",
+      "file_type": "code",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "extensions_self_audit_runvalidator",
+      "community": 52,
+      "norm_label": "runvalidator()"
+    },
+    {
       "label": "audit-pipelines.py",
       "file_type": "code",
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines",
       "community": 44,
-      "norm_label": "audit-pipelines.py"
+      "norm_label": "audit-pipelines.py",
+      "id": "scripts_audit_pipelines"
     },
     {
       "label": "git()",
@@ -89,9 +149,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_git",
       "community": 44,
-      "norm_label": "git()"
+      "norm_label": "git()",
+      "id": "scripts_audit_pipelines_git"
     },
     {
       "label": "check_graph_freshness()",
@@ -99,9 +159,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_graph_freshness",
       "community": 44,
-      "norm_label": "check_graph_freshness()"
+      "norm_label": "check_graph_freshness()",
+      "id": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "label": "check_flag_staleness()",
@@ -109,9 +169,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L78",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_flag_staleness",
       "community": 44,
-      "norm_label": "check_flag_staleness()"
+      "norm_label": "check_flag_staleness()",
+      "id": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "label": "check_autocommit_liveness()",
@@ -119,9 +179,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_autocommit_liveness",
       "community": 44,
-      "norm_label": "check_autocommit_liveness()"
+      "norm_label": "check_autocommit_liveness()",
+      "id": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "label": "check_connectivity_ratchet()",
@@ -129,9 +189,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L99",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_connectivity_ratchet",
       "community": 44,
-      "norm_label": "check_connectivity_ratchet()"
+      "norm_label": "check_connectivity_ratchet()",
+      "id": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "label": "check_reflection_drift()",
@@ -139,9 +199,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_reflection_drift",
       "community": 44,
-      "norm_label": "check_reflection_drift()"
+      "norm_label": "check_reflection_drift()",
+      "id": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "label": "check_semantic_cache_drift()",
@@ -149,9 +209,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_semantic_cache_drift",
       "community": 44,
-      "norm_label": "check_semantic_cache_drift()"
+      "norm_label": "check_semantic_cache_drift()",
+      "id": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "label": "main()",
@@ -159,9 +219,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L193",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_main",
       "community": 44,
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "scripts_audit_pipelines_main"
     },
     {
       "label": "autocommit.sh",
@@ -1550,46 +1610,6 @@
       "community": 35,
       "norm_label": "execute()",
       "id": "extensions_read_only_default_execute"
-    },
-    {
-      "label": "self-audit.ts",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "self-audit.ts",
-      "id": "extensions_self_audit"
-    },
-    {
-      "label": "VALIDATOR",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "validator",
-      "id": "extensions_self_audit_validator"
-    },
-    {
-      "label": "AuditResult",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "auditresult",
-      "id": "extensions_self_audit_auditresult"
-    },
-    {
-      "label": "runValidator()",
-      "file_type": "code",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 52,
-      "norm_label": "runvalidator()",
-      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "session-receipt.ts",
@@ -3807,7 +3827,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "claude-email.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email"
     },
@@ -3817,7 +3837,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_fs"
     },
@@ -3827,7 +3847,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_path"
     },
@@ -3837,7 +3857,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "{ checkpy, pyblock, tasks }",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_checkpy_pyblock_tasks"
     },
@@ -3847,7 +3867,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "skill",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_skill"
     },
@@ -3857,7 +3877,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "email",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_email"
     },
@@ -3867,7 +3887,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "models",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_models"
     },
@@ -3877,7 +3897,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "kv",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_kv"
     },
@@ -3887,7 +3907,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "call()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_call"
     },
@@ -4197,7 +4217,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "model-email.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email"
     },
@@ -4207,7 +4227,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_fs"
     },
@@ -4217,7 +4237,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_path"
     },
@@ -4227,7 +4247,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "{ checkpy, pyblock, tasks }",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_checkpy_pyblock_tasks"
     },
@@ -4237,7 +4257,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "skill",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_skill"
     },
@@ -4247,7 +4267,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "email",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_email"
     },
@@ -4257,7 +4277,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "models",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_models"
     },
@@ -4267,7 +4287,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "kv",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_kv"
     },
@@ -4277,7 +4297,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "call()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_call"
     },
@@ -4377,7 +4397,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 6,
+      "community": 61,
       "norm_label": "tasks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_tasks"
     },
@@ -4387,7 +4407,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 6,
+      "community": 53,
       "norm_label": "pyblock()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_pyblock"
     },
@@ -8605,7 +8625,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8615,7 +8635,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8625,7 +8645,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9325,7 +9345,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9335,7 +9355,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9345,7 +9365,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9355,7 +9375,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 15,
+      "community": 66,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -9365,7 +9385,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "porcelain.json",
       "id": "themes_porcelain"
     },
@@ -9375,7 +9395,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "$schema",
       "id": "themes_porcelain_schema"
     },
@@ -9385,7 +9405,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "name",
       "id": "themes_porcelain_name"
     },
@@ -10085,7 +10105,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "export",
       "id": "themes_porcelain_export"
     },
@@ -10095,7 +10115,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "pagebg",
       "id": "themes_porcelain_export_pagebg"
     },
@@ -10105,7 +10125,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "cardbg",
       "id": "themes_porcelain_export_cardbg"
     },
@@ -10115,7 +10135,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 24,
+      "community": 63,
       "norm_label": "infobg",
       "id": "themes_porcelain_export_infobg"
     },
@@ -12165,12 +12185,73 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L30",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_auditresult",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_pipeline_audit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L38",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_runscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_runvalidator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "extensions_self_audit",
+      "target": "extensions_self_audit_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/self-audit.ts",
+      "source_location": "L61",
+      "weight": 1.0,
+      "source": "extensions_self_audit_runvalidator",
+      "target": "extensions_self_audit_runscript",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "relation": "contains",
@@ -12178,9 +12259,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "relation": "contains",
@@ -12188,9 +12269,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L78",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_flag_staleness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "relation": "contains",
@@ -12198,9 +12279,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_graph_freshness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "relation": "contains",
@@ -12208,9 +12289,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L150",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_reflection_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "relation": "contains",
@@ -12218,9 +12299,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "relation": "contains",
@@ -12228,9 +12309,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "contains",
@@ -12238,9 +12319,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L193",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_main",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_main"
     },
     {
       "relation": "calls",
@@ -12249,9 +12330,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L89",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_autocommit_liveness",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "calls",
@@ -12260,9 +12341,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L64",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_graph_freshness",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "calls",
@@ -12271,9 +12352,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L198",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_graph_freshness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "relation": "calls",
@@ -12282,9 +12363,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L199",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_flag_staleness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "relation": "calls",
@@ -12293,9 +12374,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L200",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "relation": "calls",
@@ -12304,9 +12385,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L201",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "relation": "calls",
@@ -12315,9 +12396,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_reflection_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "relation": "calls",
@@ -12326,9 +12407,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L204",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "relation": "contains",
@@ -15567,36 +15648,6 @@
       "confidence_score": 1.0,
       "source": "extensions_read_only_default_execute",
       "target": "extensions_read_only_default_setmode"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/self-audit.ts",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator"
     },
     {
       "relation": "references",
@@ -29065,5 +29116,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "1be32f4193e51eb9270e13aac413ab8ef32354eb"
+  "built_at_commit": "7177eef2bf1d409512e5fdb2b3ffbe5c137a054a"
 }
