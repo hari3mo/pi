@@ -736,8 +736,11 @@ export default function (pi: ExtensionAPI) {
 					}
 					previousOutput = getFinalOutput(result.messages);
 				}
+				const lastResult = results[results.length - 1];
 				return {
-					content: [{ type: "text", text: getFinalOutput(results[results.length - 1].messages) || "(no output)" }],
+					content: [
+						{ type: "text", text: finalizeQaOutput(lastResult.agent, getFinalOutput(lastResult.messages) || "(no output)") },
+					],
 					details: makeDetails("chain")(results),
 				};
 			}
@@ -808,7 +811,7 @@ export default function (pi: ExtensionAPI) {
 
 				const successCount = results.filter((r) => !isFailedResult(r)).length;
 				const summaries = results.map((r) => {
-					const output = truncateParallelOutput(getResultOutput(r));
+					const output = truncateParallelOutput(finalizeQaOutput(r.agent, getResultOutput(r)));
 					const status = isFailedResult(r)
 						? `failed${r.stopReason && r.stopReason !== "end" ? ` (${r.stopReason})` : ""}`
 						: "completed";
@@ -847,7 +850,9 @@ export default function (pi: ExtensionAPI) {
 					};
 				}
 				return {
-					content: [{ type: "text", text: getFinalOutput(result.messages) || "(no output)" }],
+					content: [
+						{ type: "text", text: finalizeQaOutput(result.agent, getFinalOutput(result.messages) || "(no output)") },
+					],
 					details: makeDetails("single")([result]),
 				};
 			}
