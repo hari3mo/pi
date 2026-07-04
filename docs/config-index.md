@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit`, `.pi-vcs/hooks/post-checkout` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
 | Chat title | `extensions/chat-title.ts` | Sets the terminal tab/window title to project + condensed last prompt, prefixed with a live session timer. |
 | Custom header | `extensions/custom-header.ts` | Replaces pi's built-in header with a figlet "harimo" banner + greeting/cwd/aphorism subtitle lines. |
@@ -49,6 +50,24 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Graphify native integration: self-auditing knowledge graph of the harness.**
+Built a graphify knowledge graph of `~/.pi/agent` (1,123 nodes / 1,564 edges, AST +
+inline semantic extraction, fable-only) into `graphify-out/` (gitignored — derived).
+Added `extensions/graphify-bridge.ts`: system-prompt graph block (~600 chars: counts,
+top hubs, staleness), a `graph` tool (query/explain/path/status via the pinned graphify
+Python), `/graph` + `/graph update`, and session-start `graphify reflect --if-stale`.
+`graphify hook install` wired post-commit/post-checkout hooks into `.pi-vcs/hooks/`
+(AST re-extract + recluster on every autocommit snapshot, no LLM); appended a
+doc-flag section that touches `graphify-out/needs_update` when .md/image files change
+so the bridge surfaces "STALE — run /graphify --update". `schema/manifest.json`
+layout.known += `graphify-out`, `git`, `npm`; `.gitignore` += `graphify-out/`. Files:
+`extensions/graphify-bridge.ts` (new), `.pi-vcs/hooks/post-commit` (new),
+`.pi-vcs/hooks/post-checkout` (new), `.gitignore`, `schema/manifest.json`,
+`docs/config-index.md`. Why: the harness now retrieves knowledge about itself from a
+~30x-cheaper graph instead of re-reading files, keeps that graph current
+automatically, and audits its own structure (hubs, staleness, query lessons).
+
 
 **Role rename: `solo-engineer` → `engineer`, `builder` → `worker`; peer-engineer bumped to gpt-5.5-pro.**
 `agents/solo-engineer.md` renamed to `agents/engineer.md` and `agents/builder.md` renamed
