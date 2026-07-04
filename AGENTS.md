@@ -88,7 +88,9 @@ dispatch `engineer` with a design-only task returning the design artifact
   reading pi docs or dispatching a scout — compiled knowledge beats re-derivation.
   Durable lessons and valuable query answers are filed BACK into oracle per its
   `SCHEMA.md` (query-compounding: the next identical question is a read, not a
-  re-derivation). Oracle `upstream` pages are pi-version-stamped; the session-start
+  re-derivation) — staging into `oracle/_raw/` is mechanized at session end
+  (`extensions/knowledge-compound.ts`); promotion to final pages stays a reviewed step.
+  Oracle `upstream` pages are pi-version-stamped; the session-start
   self-audit flags them stale after a `pi update`.
 
 ## Escalation
@@ -158,7 +160,7 @@ The harness audits itself; problems become prompts:
   of this config: answer structure/architecture questions with the `graph` tool before
   reading files. Code commits rebuild it automatically (post-commit hook); doc changes
   mark it STALE until `/graphify --update`.
-- Lessons close the loop: query outcomes can be saved back via `graphify save-result --outcome` — a MANUAL step (the pi `graph` tool never calls it); `reflect --if-stale` distills them automatically at session start, and `learn_heuristic` persists durable ones.
+- Lessons close the loop: substantive `graph` outcomes are auto-flushed at session shutdown by `extensions/knowledge-compound.ts` (`graphify save-result --outcome` plus draft notes staged into `oracle/_raw/`; capped, deduped, fail-open); mid-session manual `save-result` remains available; `reflect --if-stale` distills them automatically at session start, and `learn_heuristic` persists durable ones.
 - When a standing order or prompt rule can be enforced mechanically, promote it to
   code (extension, validator check, or hook) — prompts drift, enforcement does not.
 - Errors are never just worked around: root-cause the failure, then integrate the fix
@@ -200,3 +202,11 @@ The harness audits itself; problems become prompts:
   (the fable edit-block) is untouched. Self-improving: per-session model/profile/fallback
   stats land in `graphify-out/.lead_config_stats.json` and
   `audit-pipelines.py:check_lead_profile_coverage()` WARNs on repeated fallback drift.
+- `extensions/oracle-first.ts` mirrors graph-first for the oracle: reads of pi's own
+  docs (README/docs/examples under the installed package) before an oracle consult get
+  a first-offense nudge, then a block with the identical-retry bypass; active only when
+  the oracle vault and `~/.obsidian-wiki/config.oracle` exist; fail-open.
+- `extensions/knowledge-compound.ts` mechanizes query-compounding: it buffers
+  substantive `graph` tool outcomes during the session and on shutdown runs `graphify
+  save-result --outcome` and stages draft notes into `oracle/_raw/` (≤3/session,
+  deduped, no LLM calls, never blocks shutdown, fail-open).
