@@ -40,7 +40,7 @@
  * the optional self-improving closure graph-first has).
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import {
@@ -57,9 +57,33 @@ import {
 
 /** The three doc roots under PI_PKG the ORACLE-FIRST doctrine names. */
 const DOC_SUBPATHS = ["README.md", "docs/", "examples/"];
+const WIKI_CONFIG = "/Users/harissaif/.obsidian-wiki/config";
 
 /** File-reading utilities whose target under PI_PKG counts as "reading pi docs". */
 const READ_CMD_RE = /\b(cat|sed|head|tail|less|more|bat|nl|view)\b/;
+
+function vaultPathFromConfig(configPath: string): string {
+	try {
+		const match = readFileSync(configPath, "utf8").match(/^OBSIDIAN_VAULT_PATH=(.+)$/m);
+		return match?.[1]?.trim() || "(vault path not set)";
+	} catch {
+		return "(unreadable)";
+	}
+}
+
+function wikiLinkBlock(): string | undefined {
+	const lines: string[] = [];
+	if (existsSync(WIKI_CONFIG)) {
+		lines.push(`Active wiki: ${vaultPathFromConfig(WIKI_CONFIG)} (config ${WIKI_CONFIG}).`);
+	}
+	if (existsSync(ORACLE_CONFIG) && existsSync(ORACLE_VAULT)) {
+		lines.push(
+			`Pi oracle: ${ORACLE_VAULT} (config ${ORACLE_CONFIG}); use wiki-query here for durable pi knowledge.`,
+		);
+	}
+	if (lines.length === 0) return undefined;
+	return `\n\n## Wiki links (cwd-independent)\n\n${lines.join("\n")}\nThese are absolute links; keep using them even when cwd is an unrelated project.`;
+}
 
 // ---------------------------------------------------------------------------
 // Pure classifiers + escalation decision (unit-tested: scripts/check-oracle-first.mjs)
@@ -195,6 +219,12 @@ export default function (pi: ExtensionAPI) {
 	// Cheap existsSync each check (mirrors graph-first's active()); the vault or
 	// config could appear/vanish mid-session.
 	const active = (): boolean => existsSync(ORACLE_VAULT) && existsSync(ORACLE_CONFIG);
+
+	pi.on("before_agent_start", async (event) => {
+		const block = wikiLinkBlock();
+		if (!block) return;
+		return { systemPrompt: event.systemPrompt + block };
+	});
 
 	pi.on("session_start", async (_event, ctx) => {
 		cwd = ctx.cwd || "/";
