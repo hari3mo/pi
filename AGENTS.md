@@ -328,9 +328,6 @@ inside `~/.pi/agent`:
   The validator is manifest-driven; no code change needed.
 - Heuristics about pi itself (harness, delegation, tooling) belong in the
   global store — pass scope `global` to `learn_heuristic`.
-- After changing AGENTS.md, agents/, or delegation-related extensions, run the
-  doctrine regression suite: `python3 ~/orch-bench/probes/run_probes.py --tier
-  smoke` (~$1); use `--tier full` (~$8) before major restructuring.
 
 ## Standing Orders
 
