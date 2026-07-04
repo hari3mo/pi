@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 189 files · ~152,144 words
+- 190 files · ~152,821 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1153 nodes · 1631 edges · 70 communities (63 shown, 7 thin omitted)
+- 1160 nodes · 1637 edges · 67 communities (60 shown, 7 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `7177eef2`
+- Built from commit: `8ced24df`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -76,12 +76,9 @@
 - [[_COMMUNITY_Autocommit Script|Autocommit Script]]
 - [[_COMMUNITY_Baseline Arm|Baseline Arm]]
 - [[_COMMUNITY_Publish Workflow|Publish Workflow]]
-- [[_COMMUNITY_model-email.js|model-email.js]]
 - [[_COMMUNITY_execute|execute]]
 - [[_COMMUNITY_porcelain.json|porcelain.json]]
 - [[_COMMUNITY_graphify-bridge.ts|graphify-bridge.ts]]
-- [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
-- [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
 - [[_COMMUNITY_ponytail-statusline.sh script|ponytail-statusline.sh script]]
 
 ## God Nodes (most connected - your core abstractions)
@@ -99,14 +96,14 @@
 ## Surprising Connections (you probably didn't know these)
 - `Ponytail project (lazy senior dev skill)` --conceptually_related_to--> `~/.pi/agent config repo overview`  [INFERRED]
   git/github.com/DietrichGebert/ponytail/README.md → README.md
-- `Config Index (semantic audit map)` --references--> `pi-tui scrollback-wipe fix`  [EXTRACTED]
-  docs/config-index.md → patches/pi-tui-scrollback-fix.md
 - `fable-engineer role card — Opt-in orchestrator-tier solo executor` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
   agents/fable-engineer.md → AGENTS.md
 - `Orchestration Doctrine (AGENTS.md)` --references--> `Delegation Contract Template`  [EXTRACTED]
   AGENTS.md → docs/delegation-contract.md
 - `peer-engineer role card — Blind second opinion (GPT lineage)` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
   agents/peer-engineer.md → AGENTS.md
+- `reviewer role card — Deep-reasoning gate: PASS / FAIL:implementation / FAIL:design` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
+  agents/reviewer.md → AGENTS.md
 
 ## Import Cycles
 - None detected.
@@ -117,7 +114,7 @@
 - **Cross-agent rule distribution (aligned mirrors)** — git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules, git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules, git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules, git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_agents_ruleset [EXTRACTED 1.00]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (70 total, 7 thin omitted)
+## Communities (67 total, 7 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -144,8 +141,8 @@ Cohesion: 0.06
 Nodes (37): Hermes after-install notes, ponytail: ceiling-comment convention, Bug fix = root cause, not symptom (grep every caller), Ruleset mirror for agents, Compact always-on ruleset (AGENTS.md), Never-lazy floor (validation, data loss, security, a11y), Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, Benchmark result: parseaddr email slip is provider-specific (OpenAI), Claude 100% (+29 more)
 
 ### Community 6 - "Heuristic Entry Schema"
-Cohesion: 0.20
-Nodes (9): checkPy(), { execSync }, fs, kv, os, path, python(), ROOT (+1 more)
+Cohesion: 0.08
+Nodes (25): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, { checkPy, pyBlock, TASKS } (+17 more)
 
 ### Community 7 - "Ponytail Benchmarks & Ladder"
 Cohesion: 0.17
@@ -186,8 +183,8 @@ Cohesion: 0.11
 Nodes (11): BlackHoleComponent, COMET_DEFS, CometDef, Constellation, CONSTELLATIONS, COS_T, DeepGalaxy, PLANETS (+3 more)
 
 ### Community 15 - "Void Black-Hole TUI"
-Cohesion: 0.12
-Nodes (17): vars, amber, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bronze (+9 more)
+Cohesion: 0.08
+Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, amber (+15 more)
 
 ### Community 16 - "Porcelain Light Theme"
 Cohesion: 0.19
@@ -238,8 +235,8 @@ Cohesion: 0.17
 Nodes (8): j, meta, rows, tbl, assert, cases, loc, score()
 
 ### Community 28 - "Example Generator & LOC Metric"
-Cohesion: 0.17
-Nodes (7): Config Index (semantic audit map), Config changelog (backfilled history), MODEL_CYCLE, Q&A: Why does the config index bridge six com, Q&A: How fragile is the cross cluster connect, Q&A: Are the weakly connected nodes real orph, Q&A: Patch the config index coverage gap  sti
+Cohesion: 0.13
+Nodes (10): Config Index (semantic audit map), Config changelog (backfilled history), MODEL_CYCLE, Q&A: Why does the config index bridge six com, Q&A: How fragile is the cross cluster connect, Q&A: Are the weakly connected nodes real orph, Q&A: Patch the config index coverage gap  sti, doRender off-screen clamp (+2 more)
 
 ### Community 29 - "Task Tracker Extension"
 Cohesion: 0.17
@@ -334,8 +331,8 @@ Cohesion: 0.40
 Nodes (5): AuditResult, PIPELINE_AUDIT, runScript(), runValidator(), VALIDATOR
 
 ### Community 53 - "claude-email.js"
-Cohesion: 0.20
-Nodes (8): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, pyBlock()
+Cohesion: 0.29
+Nodes (4): candidates, extDir, nm, PKG
 
 ### Community 55 - "Scrollback Harness Copy"
 Cohesion: 0.33
@@ -353,44 +350,32 @@ Nodes (3): fireChime(), fmtDuration(), sanitize()
 Cohesion: 0.22
 Nodes (7): fs, path, system, fs, path, system, Path
 
-### Community 61 - "model-email.js"
-Cohesion: 0.20
-Nodes (8): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, TASKS
-
 ### Community 63 - "porcelain.json"
 Cohesion: 0.29
 Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 
-### Community 65 - "porcelain-light.json"
-Cohesion: 0.67
-Nodes (3): doRender off-screen clamp, pi-tui scrollback-wipe fix, Viewport reflow on content collapse
-
-### Community 66 - "porcelain-light.json"
-Cohesion: 0.29
-Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
-
 ## Knowledge Gaps
-- **583 isolated node(s):** `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult`, `autocommit.sh script`, `BANNER_LINES` (+578 more)
+- **587 isolated node(s):** `PKG`, `nm`, `extDir`, `candidates`, `VALIDATOR` (+582 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.998491696)
-- `~/.pi/agent config repo overview` (3× useful, score=2.998461555)
+- `Config Index (semantic audit map)` (3× useful, score=2.998383359)
+- `~/.pi/agent config repo overview` (3× useful, score=2.998353219)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `porcelain-light.json`, `Ponytail MCP Server`, `Hermes Plugin Tests`, `TUI Extensions & Config Index`, `Keybindings Schema`, `porcelain-light.json`, `Ponytail Ruleset & Mirrors`, `Windows Hook Tests`, `Command Tests`, `Ponytail Hook Tests`, `Correctness Gate`, `OpenCode Config`, `Baseline Arm`, `Task Tracker Extension`, `porcelain.json`?**
-  _High betweenness centrality (0.255) - this node is a cross-community bridge._
+- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `Hermes Plugin Tests`, `TUI Extensions & Config Index`, `Ponytail Ruleset & Mirrors`, `Windows Hook Tests`, `Command Tests`, `Ponytail Hook Tests`, `Void Black-Hole TUI`, `Correctness Gate`, `OpenCode Config`, `Baseline Arm`, `Task Tracker Extension`, `porcelain.json`?**
+  _High betweenness centrality (0.248) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Ponytail Ruleset & Mirrors` to `Example Generator & LOC Metric`, `Subagent Dispatch Tool`?**
-  _High betweenness centrality (0.077) - this node is a cross-community bridge._
+  _High betweenness centrality (0.085) - this node is a cross-community bridge._
 - **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`, `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.061) - this node is a cross-community bridge._
-- **What connects `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult` to the rest of the system?**
-  _616 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.060) - this node is a cross-community bridge._
+- **What connects `PKG`, `nm`, `extDir` to the rest of the system?**
+  _620 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**

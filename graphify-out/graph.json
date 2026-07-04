@@ -74,14 +74,84 @@
   },
   "nodes": [
     {
+      "label": "smoke-extensions.mjs",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions",
+      "community": 53,
+      "norm_label": "smoke-extensions.mjs"
+    },
+    {
+      "label": "PKG",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_pkg",
+      "community": 53,
+      "norm_label": "pkg"
+    },
+    {
+      "label": "nm",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_nm",
+      "community": 53,
+      "norm_label": "nm"
+    },
+    {
+      "label": "link()",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L28",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_link",
+      "community": 53,
+      "norm_label": "link()"
+    },
+    {
+      "label": "noopProxy()",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_noopproxy",
+      "community": 53,
+      "norm_label": "noopproxy()"
+    },
+    {
+      "label": "extDir",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_extdir",
+      "community": 53,
+      "norm_label": "extdir"
+    },
+    {
+      "label": "candidates",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L54",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_candidates",
+      "community": 53,
+      "norm_label": "candidates"
+    },
+    {
       "label": "self-audit.ts",
       "file_type": "code",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_self_audit",
       "community": 52,
-      "norm_label": "self-audit.ts"
+      "norm_label": "self-audit.ts",
+      "id": "extensions_self_audit"
     },
     {
       "label": "VALIDATOR",
@@ -89,9 +159,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "extensions_self_audit_validator",
       "community": 52,
-      "norm_label": "validator"
+      "norm_label": "validator",
+      "id": "extensions_self_audit_validator"
     },
     {
       "label": "PIPELINE_AUDIT",
@@ -99,9 +169,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "extensions_self_audit_pipeline_audit",
       "community": 52,
-      "norm_label": "pipeline_audit"
+      "norm_label": "pipeline_audit",
+      "id": "extensions_self_audit_pipeline_audit"
     },
     {
       "label": "AuditResult",
@@ -109,9 +179,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "extensions_self_audit_auditresult",
       "community": 52,
-      "norm_label": "auditresult"
+      "norm_label": "auditresult",
+      "id": "extensions_self_audit_auditresult"
     },
     {
       "label": "runScript()",
@@ -119,9 +189,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "extensions_self_audit_runscript",
       "community": 52,
-      "norm_label": "runscript()"
+      "norm_label": "runscript()",
+      "id": "extensions_self_audit_runscript"
     },
     {
       "label": "runValidator()",
@@ -129,9 +199,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "extensions_self_audit_runvalidator",
       "community": 52,
-      "norm_label": "runvalidator()"
+      "norm_label": "runvalidator()",
+      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "audit-pipelines.py",
@@ -3827,7 +3897,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "claude-email.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email"
     },
@@ -3837,7 +3907,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_fs"
     },
@@ -3847,7 +3917,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_path"
     },
@@ -3857,7 +3927,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "{ checkpy, pyblock, tasks }",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_checkpy_pyblock_tasks"
     },
@@ -3867,7 +3937,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "skill",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_skill"
     },
@@ -3877,7 +3947,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "email",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_email"
     },
@@ -3887,7 +3957,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "models",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_models"
     },
@@ -3897,7 +3967,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "kv",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_kv"
     },
@@ -3907,7 +3977,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "call()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email_call"
     },
@@ -4217,7 +4287,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "model-email.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email"
     },
@@ -4227,7 +4297,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_fs"
     },
@@ -4237,7 +4307,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_path"
     },
@@ -4247,7 +4317,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "{ checkpy, pyblock, tasks }",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_checkpy_pyblock_tasks"
     },
@@ -4257,7 +4327,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "skill",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_skill"
     },
@@ -4267,7 +4337,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "email",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_email"
     },
@@ -4277,7 +4347,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "models",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_models"
     },
@@ -4287,7 +4357,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "kv",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_kv"
     },
@@ -4297,7 +4367,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
       "source_location": "L14",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "call()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email_call"
     },
@@ -4397,7 +4467,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
       "source_location": "L35",
       "_origin": "ast",
-      "community": 61,
+      "community": 6,
       "norm_label": "tasks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_tasks"
     },
@@ -4407,7 +4477,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 53,
+      "community": 6,
       "norm_label": "pyblock()",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_pyblock"
     },
@@ -8625,7 +8695,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8635,7 +8705,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8645,7 +8715,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9345,7 +9415,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9355,7 +9425,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9365,7 +9435,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9375,7 +9445,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 66,
+      "community": 15,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -11671,7 +11741,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 28,
       "norm_label": "pi-tui scrollback-wipe fix",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_patch"
@@ -11685,7 +11755,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 28,
       "norm_label": "dorender off-screen clamp",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_clamp"
@@ -11699,7 +11769,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 65,
+      "community": 28,
       "norm_label": "viewport reflow on content collapse",
       "community_name": "porcelain-light.json",
       "id": "patches_pi_tui_scrollback_fix_viewport_reflow"
@@ -12185,12 +12255,72 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L54",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_candidates",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_extdir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L28",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_link",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L27",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_nm",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_noopproxy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_pkg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_auditresult"
     },
     {
       "relation": "contains",
@@ -12198,9 +12328,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_pipeline_audit",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_pipeline_audit"
     },
     {
       "relation": "contains",
@@ -12208,9 +12338,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -12218,9 +12348,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runvalidator"
     },
     {
       "relation": "contains",
@@ -12228,9 +12358,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_validator"
     },
     {
       "relation": "calls",
@@ -12239,9 +12369,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit_runvalidator",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -29116,5 +29246,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "7177eef2bf1d409512e5fdb2b3ffbe5c137a054a"
+  "built_at_commit": "8ced24dfec8b67d125c1e41e0823d75b072cc808"
 }
