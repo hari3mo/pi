@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
 | Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
 | Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
@@ -51,6 +52,23 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Pipeline meta-audit: the audit layer now audits the pipelines themselves.**
+Added `scripts/audit-pipelines.py` — dynamics checks the static validator cannot see:
+graph freshness vs last code commit (silent async hook failure), needs_update flag
+staleness (>24h = doc semantics rotting), autocommit liveness (dirty tree + old
+snapshot = launchd dead), reflection drift, semantic-cache drift (`--full` mode,
+via the pinned graphify python), and a graph-connectivity RATCHET — best-ever
+giant-component fraction persisted in `graphify-out/.pipeline_baseline.json`; a >20%
+drop below best is an ERROR (would have caught today's 615→126 semantic wipe
+automatically). `extensions/self-audit.ts` now runs both auditors in parallel at
+session start and merges their ERROR/WARN lines into one injected block; `/audit`
+runs the full suite. Negative-tested: ratchet fires on regression and never lowers
+its best. Files: `scripts/audit-pipelines.py` (new), `extensions/self-audit.ts`,
+`AGENTS.md`, `docs/config-index.md`. Why: user directive — an audit layer on top of
+everything that maintains and improves the pipelines themselves; machinery
+regressions now become prompts exactly like config errors.
+
 
 **Error-integration signal S5: repeated tool errors nudge downstream persistence.**
 `extensions/heuristics/{index.ts,schema.ts}`: non-subagent tool errors are counted per

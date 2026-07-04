@@ -134,6 +134,11 @@ The harness audits itself; problems become prompts:
   downstream — a `learn_heuristic` lesson, a `validate-config.py` guard, a hook fix, or
   a graph re-cache. Repeated tool errors in one run trigger a nudge enforcing this
   (heuristics S5).
+- The pipelines audit themselves: `scripts/audit-pipelines.py` (run with the validator
+  at session start; `--full` via `/audit`) checks pipeline DYNAMICS — rebuild-hook
+  firing, staleness flags, autocommit liveness, semantic-cache drift, and a
+  graph-connectivity ratchet (best-ever giant fraction; >20% drop = ERROR). Regressions
+  in the machinery become prompts just like config errors.
 
 ## Enforced in Code (no action needed)
 
