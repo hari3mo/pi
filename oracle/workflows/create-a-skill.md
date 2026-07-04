@@ -82,4 +82,3 @@ Pass args: `/skill:pdf-tools extract` (appended as `User: extract`). Toggle
 - Loading model, locations, validation: [[components/skills-system]]
 - Lighter, code-free alternative: [[components/prompt-templates]]
 - Package skills to share: [[workflows/create-a-pi-package]]
-</content>

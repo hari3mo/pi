@@ -81,4 +81,3 @@ example in [[references/examples-catalog]].
 
 - File format, entry types, parsing, `SessionManager`: [[references/session-format]]
 - Session storage/dir settings: [[components/settings]]
-</content>

@@ -84,4 +84,3 @@ toggles `/skill:name`. See [[components/pi-packages]] for `packages` object-form
 
 - Env vars, CLI flags, and modes: [[references/cli-reference]]
 - Trust that gates project settings: [[concepts/project-trust]]
-</content>

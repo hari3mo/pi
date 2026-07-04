@@ -100,4 +100,3 @@ Edit the file, run `/reload` to pick up changes without restarting the session.
 - Full ExtensionAPI + events: [[components/extension-system]]
 - 70+ working extensions: [[references/examples-catalog]]
 - Ship it as a package: [[workflows/create-a-pi-package]]
-</content>

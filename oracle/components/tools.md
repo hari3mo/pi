@@ -101,4 +101,3 @@ via `keyHint()`. A fallback renderer applies when none is provided.
 - Registration API in context: [[components/extension-system]]
 - Read-only and tool-scoping flags: [[references/cli-reference]]
 - SDK tool allowlists: [[workflows/embed-pi-with-sdk]]
-</content>

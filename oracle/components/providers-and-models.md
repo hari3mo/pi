@@ -79,4 +79,3 @@ Model fields include `id` (only required), `name`, `api`, `reasoning`, `input`
 - Step-by-step model addition: [[workflows/add-a-model]]
 - Custom API/OAuth providers via extension: [[workflows/add-custom-provider]]
 - `defaultProvider`/`defaultModel`/`enabledModels`: [[components/settings]]
-</content>

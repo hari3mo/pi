@@ -74,4 +74,3 @@ the `packages` setting and toggle resources with `pi config`.
 
 - Full package system (sources, filtering, scope/dedup): [[components/pi-packages]]
 - Build the resources first: [[workflows/write-an-extension]] · [[workflows/create-a-skill]]
-</content>

@@ -84,4 +84,3 @@ enable with `showHardwareCursor` / `setShowHardwareCursor(true)` / `PI_HARDWARE_
 - Capability context and `ctx.ui`: [[components/extension-system]]
 - Theme tokens for styling: [[components/themes]]
 - Concrete UI extensions (overlays, editors, footers): [[references/examples-catalog]]
-</content>

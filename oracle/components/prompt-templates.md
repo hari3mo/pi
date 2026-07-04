@@ -71,4 +71,3 @@ settings or a package manifest.
 - On-demand capability packages: [[components/skills-system]]
 - Bundling templates to share: [[components/pi-packages]]
 - SDK template control: [[workflows/embed-pi-with-sdk]]
-</content>

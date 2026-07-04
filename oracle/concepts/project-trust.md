@@ -79,4 +79,3 @@ pass minimal/short-lived credentials.
 - `defaultProjectTrust` and the trust-related settings: [[components/settings]]
 - `project_trust` event handling: [[components/extension-system]]
 - Why the core is minimal and unsandboxed: [[concepts/extensibility-philosophy]]
-</content>

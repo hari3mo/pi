@@ -79,4 +79,3 @@ surface is catalogued in [[references/cli-reference]].
 - Extend, don't fork: [[concepts/extensibility-philosophy]]
 - Session persistence and branching: [[concepts/session-model]]
 - Provider/model configuration: [[components/providers-and-models]]
-</content>

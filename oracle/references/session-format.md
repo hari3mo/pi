@@ -86,4 +86,3 @@ the summary first, then messages from `firstKeptEntryId` onward; `BranchSummaryE
 - The conceptual model: [[concepts/session-model]]
 - SDK usage of `SessionManager`: [[workflows/embed-pi-with-sdk]]
 - Extension state persistence (`custom` entries): [[components/extension-system]]
-</content>

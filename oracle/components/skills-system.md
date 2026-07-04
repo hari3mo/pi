@@ -87,4 +87,3 @@ Most issues warn but still load; unknown frontmatter fields are ignored. **Missi
 - Authoring guide: [[workflows/create-a-skill]]
 - Slash-command siblings: [[components/prompt-templates]]
 - Bundling skills to share: [[components/pi-packages]]
-</content>

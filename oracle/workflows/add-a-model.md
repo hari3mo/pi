@@ -83,4 +83,3 @@ Ctrl+P cycling.
 
 - Full field/compat reference and auth: [[components/providers-and-models]]
 - Custom streaming / OAuth providers: [[workflows/add-custom-provider]]
-</content>

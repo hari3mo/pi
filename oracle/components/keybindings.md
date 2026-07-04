@@ -74,4 +74,3 @@ control); WSL keeps normal `ctrl+z`/`fg`.
 
 - Queue keys and semantics: [[concepts/message-queue]]
 - `keyHint()` in custom rendering: [[components/tui-components]]
-</content>

@@ -74,4 +74,3 @@ Extensions' `ctx.ui` calls surface as protocol messages the client must render/a
 
 - In-process alternative: [[workflows/embed-pi-with-sdk]]
 - The four run modes: [[concepts/what-is-pi]]
-</content>

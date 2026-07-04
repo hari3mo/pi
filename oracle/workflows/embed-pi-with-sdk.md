@@ -91,4 +91,3 @@ cwd. **Gotchas after replacement:** `runtime.session` changes, so re-`subscribe(
 - Session persistence details: [[references/session-format]]
 - Process-integration alternative: [[references/rpc-mode]]
 - In-process behavior hooks: [[components/extension-system]]
-</content>

@@ -119,4 +119,3 @@ idempotent `session_shutdown` handler to close them.
 - Tool registration/override detail: [[components/tools]]
 - Rendering custom UI: [[components/tui-components]]
 - The full example set: [[references/examples-catalog]]
-</content>

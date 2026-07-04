@@ -78,4 +78,3 @@ Built-in `dark`/`light`; global `~/.pi/agent/themes/*.json`; project `.pi/themes
 
 - Rendering primitives that consume theme tokens: [[components/tui-components]]
 - The `theme` and display settings: [[components/settings]]
-</content>

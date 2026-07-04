@@ -98,4 +98,3 @@ settings, **project wins** (identity: npm name / git URL sans ref / resolved loc
 
 - Authoring guide: [[workflows/create-a-pi-package]]
 - The `packages` settings key: [[components/settings]]
-</content>

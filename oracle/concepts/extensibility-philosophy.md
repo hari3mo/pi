@@ -59,4 +59,3 @@ in-process sandbox.
 - The subsystem that makes this possible: [[components/extension-system]]
 - Bundling and sharing your workflow: [[components/pi-packages]]
 - Local orchestration doctrine built on top of this: [[concepts/orchestration-doctrine]]
-</content>

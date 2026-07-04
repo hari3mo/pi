@@ -71,4 +71,3 @@ widgets instead.
 
 - Keybinding ids `app.message.followUp` / `app.message.dequeue`: [[components/keybindings]]
 - Transport preference (`transport` setting) also lives with delivery config: [[components/settings]]
-</content>

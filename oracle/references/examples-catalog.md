@@ -89,4 +89,3 @@ micro-VM).
 
 - The API these use: [[components/extension-system]]
 - Build your own: [[workflows/write-an-extension]]
-</content>

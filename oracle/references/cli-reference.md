@@ -96,4 +96,3 @@ vars are catalogued in [[components/providers-and-models]].
 - Keyboard shortcuts: [[components/keybindings]]
 - Message-queue keys: [[concepts/message-queue]]
 - Settings JSON: [[components/settings]]
-</content>
