@@ -48,6 +48,27 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 	return /sonnet/i.test(model.id ?? "") || /sonnet/i.test(model.name ?? "");
 }
 
+type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
+
+// Parse a qa-reviewer verdict from free text per docs/rework-loop.md. Verdict
+// keywords match anywhere (e.g. after "Verdict:"), with flexible whitespace
+// after the colon; when several appear the LAST wins (reviewers state it last).
+function parseQaVerdict(text: string): QaVerdict | null {
+	const re = /\bFAIL:\s*(implementation|design)\b|\bPASS\b/g;
+	let verdict: QaVerdict | null = null;
+	for (const m of text.matchAll(re)) {
+		verdict = m[1] === "design" ? "FAIL: design" : m[1] === "implementation" ? "FAIL: implementation" : "PASS";
+	}
+	return verdict;
+}
+
+// Auto-appended to every dispatched agent's task (AGENTS.md Delegation Contracts).
+const STANDING_CONTRACT_FOOTER =
+	"--- standing contract (auto-appended by orchestrator harness) ---\n" +
+	"Never delete, move, or overwrite files you did not create unless the task explicitly asks. " +
+	"Logs, notes, and unfamiliar artifacts in the working directory belong to the user or the harness — workspace tidying is out of scope. " +
+	"Return exactly what the task asks for (a conclusion, a diff, or file:line findings), never a raw dump.";
+
 function formatTokens(count: number): string {
 	if (count < 1000) return count.toString();
 	if (count < 10000) return `${(count / 1000).toFixed(1)}k`;
