@@ -1,7 +1,8 @@
-# Graph Report - .  (2026-07-04)
+# Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 197 files · ~159,918 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
 - 1123 nodes · 1564 edges · 67 communities (62 shown, 5 thin omitted)
@@ -9,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d09ede8b`
+- Built from commit: `01297d61`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -74,11 +75,11 @@
 - [[_COMMUNITY_Statusline Script|Statusline Script]]
 - [[_COMMUNITY_Autocommit Script|Autocommit Script]]
 - [[_COMMUNITY_Publish Workflow|Publish Workflow]]
-- [[_COMMUNITY_Community 62|Community 62]]
-- [[_COMMUNITY_Community 63|Community 63]]
-- [[_COMMUNITY_Community 64|Community 64]]
-- [[_COMMUNITY_Community 65|Community 65]]
-- [[_COMMUNITY_Community 66|Community 66]]
+- [[_COMMUNITY_execute|execute]]
+- [[_COMMUNITY_ponytail-debt skill — ponytail comment debt ledger|ponytail-debt skill — ponytail: comment debt ledger]]
+- [[_COMMUNITY_graphify ref Querypathexplain traversal|graphify ref: Query/path/explain traversal]]
+- [[_COMMUNITY_finalizeQaOutput|finalizeQaOutput]]
+- [[_COMMUNITY_ponytail-help skill — Quick-reference card|ponytail-help skill — Quick-reference card]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `colors` - 52 edges
@@ -341,30 +342,36 @@ Nodes (4): autocommit.sh script, Autocommit snapshot infra (launchd + pre-commit
 Cohesion: 0.31
 Nodes (8): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir(), SubagentDetails
 
-### Community 62 - "Community 62"
+### Community 62 - "execute"
 Cohesion: 0.32
 Nodes (8): execute(), getFinalOutput(), getResultOutput(), isFailedResult(), isSonnetModel(), mapWithConcurrencyLimit(), runSingleAgent(), writePromptToTempFile()
 
-### Community 63 - "Community 63"
+### Community 63 - "ponytail-debt skill — ponytail: comment debt ledger"
 Cohesion: 0.40
 Nodes (5): ponytail: ceiling-comment convention, Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, OpenClaw copy of ponytail-debt skill (generated), OpenCode /ponytail-debt command, ponytail-debt skill — ponytail: comment debt ledger
 
-### Community 64 - "Community 64"
+### Community 64 - "graphify ref: Query/path/explain traversal"
 Cohesion: 0.50
 Nodes (4): graphify references/query.md (nested duplicate copy), graphify ref: Query/path/explain traversal, save-result self-improving feedback loop, Constrained query vocab expansion
 
-### Community 65 - "Community 65"
+### Community 65 - "finalizeQaOutput"
 Cohesion: 0.67
 Nodes (3): finalizeQaOutput(), parseQaVerdict(), persistReworkCount()
 
-### Community 66 - "Community 66"
+### Community 66 - "ponytail-help skill — Quick-reference card"
 Cohesion: 0.67
 Nodes (3): OpenClaw copy of ponytail-help skill (generated), OpenCode /ponytail-help command, ponytail-help skill — Quick-reference card
 
 ## Knowledge Gaps
-- **578 isolated node(s):** `autocommit.sh script`, `BANNER_LINES`, `APHORISMS`, `BANNER_WIDTH`, `SUBCOMMANDS` (+573 more)
+- **578 isolated node(s):** `$comment`, `schemaVersion`, `targets`, `$comment`, `expected` (+573 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+
+## Work-memory lessons
+
+**Preferred sources** — corroborated by past sessions; start here.
+- `Config Index (semantic audit map)` (3× useful, score=2.999594455)
+- `~/.pi/agent config repo overview` (3× useful, score=2.999564303)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -373,9 +380,9 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.261) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Autocommit Script` to `TUI Extensions & Config Index`, `Graphify Skill (nested copy)`, `Trust Schema`?**
   _High betweenness centrality (0.100) - this node is a cross-community bridge._
-- **Why does `Ponytail project (lazy senior dev skill)` connect `Trust Schema` to `Community 66`, `Schema Manifest`, `Brand & Chart Assets`, `Autocommit Script`, `Community 63`?**
+- **Why does `Ponytail project (lazy senior dev skill)` connect `Trust Schema` to `ponytail-help skill — Quick-reference card`, `Schema Manifest`, `Brand & Chart Assets`, `Autocommit Script`, `ponytail-debt skill — ponytail: comment debt ledger`?**
   _High betweenness centrality (0.067) - this node is a cross-community bridge._
-- **What connects `autocommit.sh script`, `BANNER_LINES`, `APHORISMS` to the rest of the system?**
+- **What connects `$comment`, `schemaVersion`, `targets` to the rest of the system?**
   _606 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
