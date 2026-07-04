@@ -31,10 +31,11 @@
  * graph-first.ts check pattern).
  */
 
-import { existsSync, readFileSync, renameSync, statSync, writeFileSync } from "node:fs";
+import { readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { persistStatsRecord } from "./lib/stats-store.ts";
 
 // ---------------------------------------------------------------------------
 // Pure profile matching + block building (unit-tested: check-lead-config.mjs)
@@ -124,45 +125,6 @@ function describeModel(model: { provider?: string; id?: string; name?: string } 
 	return `${model.provider ?? "?"}/${model.id ?? model.name ?? "?"}`;
 }
 
-interface StatsRecord {
-	id: string;
-	ts: number;
-	models: string[];
-	profiles: string[];
-	fallbacks: number;
-	fallbackModels: string[];
-}
-
-/**
- * ponytail: atomic replace, last-writer-wins (mirrors graph-first.ts /
- * audit-pipelines.py _write_baseline). Parallel subagents may race this file; a
- * lost record is acceptable for advisory stats — upgrade to a lock only if the
- * coverage audit proves lossy.
- */
-function persistStats(dir: string, record: StatsRecord): void {
-	try {
-		const outDir = join(dir, OUT);
-		if (!existsSync(outDir)) return; // no graphify-out here — nothing to close the loop with
-		const path = join(outDir, STATS_FILE);
-		let arr: StatsRecord[] = [];
-		try {
-			const parsed = JSON.parse(readFileSync(path, "utf8"));
-			if (Array.isArray(parsed)) arr = parsed;
-		} catch {
-			// absent/corrupt → start fresh
-		}
-		const i = arr.findIndex((r) => r && r.id === record.id);
-		if (i >= 0) arr[i] = record;
-		else arr.push(record);
-		if (arr.length > MAX_RECORDS) arr = arr.slice(arr.length - MAX_RECORDS);
-		const tmp = `${path}.${process.pid}.tmp`;
-		writeFileSync(tmp, JSON.stringify(arr, null, 2));
-		renameSync(tmp, path);
-	} catch {
-		// fail open: stats are never worth wedging a session
-	}
-}
-
 export default function (pi: ExtensionAPI) {
 	let profilesPath = join(agentDir(), "config", "lead-profiles.json");
 	let sessionId = "";
@@ -226,14 +188,18 @@ export default function (pi: ExtensionAPI) {
 		try {
 			const total = seen.models.size + seen.profiles.size + seen.fallbacks;
 			if (total === 0 || total === lastPersistedTotal) return;
-			persistStats(agentDir(), {
-				id: sessionId,
-				ts: Date.now(),
-				models: [...seen.models],
-				profiles: [...seen.profiles],
-				fallbacks: seen.fallbacks,
-				fallbackModels: [...seen.fallbackModels],
-			});
+			persistStatsRecord(
+				join(agentDir(), OUT, STATS_FILE),
+				{
+					id: sessionId,
+					ts: Date.now(),
+					models: [...seen.models],
+					profiles: [...seen.profiles],
+					fallbacks: seen.fallbacks,
+					fallbackModels: [...seen.fallbackModels],
+				},
+				MAX_RECORDS,
+			);
 			lastPersistedTotal = total;
 		} catch {
 			// never block a turn
