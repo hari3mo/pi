@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 192 files · ~155,150 words
+- 192 files · ~155,095 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1171 nodes · 1655 edges · 76 communities (69 shown, 7 thin omitted)
+- 1170 nodes · 1646 edges · 68 communities (61 shown, 7 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `659a4f2a`
+- Built from commit: `22a3d514`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -74,21 +74,13 @@
 - [[_COMMUNITY_doRender off-screen clamp|doRender off-screen clamp]]
 - [[_COMMUNITY_Statusline Script|Statusline Script]]
 - [[_COMMUNITY_Autocommit Script|Autocommit Script]]
-- [[_COMMUNITY_manifest.json|manifest.json]]
 - [[_COMMUNITY_Publish Workflow|Publish Workflow]]
 - [[_COMMUNITY_check-versions.js|check-versions.js]]
 - [[_COMMUNITY_execute|execute]]
 - [[_COMMUNITY_commands.test.js|commands.test.js]]
 - [[_COMMUNITY_graphify-bridge.ts|graphify-bridge.ts]]
 - [[_COMMUNITY_copilot-plugin.test.js|copilot-plugin.test.js]]
-- [[_COMMUNITY_porcelain.json|porcelain.json]]
-- [[_COMMUNITY_text|text]]
-- [[_COMMUNITY_basis|basis]]
-- [[_COMMUNITY_category|category]]
-- [[_COMMUNITY_created|created]]
 - [[_COMMUNITY_ponytail-statusline.sh script|ponytail-statusline.sh script]]
-- [[_COMMUNITY_scope|scope]]
-- [[_COMMUNITY_source|source]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `colors` - 52 edges
@@ -103,8 +95,8 @@
 10. `_fail()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Config Index (semantic audit map)` --references--> `pi-tui scrollback-wipe fix`  [EXTRACTED]
-  docs/config-index.md → patches/pi-tui-scrollback-fix.md
+- `Ponytail project (lazy senior dev skill)` --conceptually_related_to--> `~/.pi/agent config repo overview`  [INFERRED]
+  git/github.com/DietrichGebert/ponytail/README.md → README.md
 - `fable-engineer role card — Opt-in orchestrator-tier solo executor` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
   agents/fable-engineer.md → AGENTS.md
 - `Orchestration Doctrine (AGENTS.md)` --references--> `Delegation Contract Template`  [EXTRACTED]
@@ -123,7 +115,7 @@
 - **Cross-agent rule distribution (aligned mirrors)** — git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules, git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules, git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules, git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_agents_ruleset [EXTRACTED 1.00]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (76 total, 7 thin omitted)
+## Communities (68 total, 7 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -138,20 +130,20 @@ Cohesion: 0.04
 Nodes (52): colors, accent, bashMode, border, borderAccent, borderMuted, customMessageBg, customMessageLabel (+44 more)
 
 ### Community 3 - "TUI Extensions & Config Index"
-Cohesion: 0.08
-Nodes (38): fmtDuration(), AgentScopeSchema, ChainItem, DisplayItem, execute(), finalizeQaOutput(), formatTokens(), formatToolCall() (+30 more)
+Cohesion: 0.06
+Nodes (50): Blind Fan-Out (peer second opinion), Delegation Gate, engineer role card — THE DEFAULT WORKHORSE: whole bounded tasks end-to-end, Fable Budget Invariants, fable-engineer role card — Opt-in orchestrator-tier solo executor, Intent Interview, Orchestration Doctrine (AGENTS.md), peer-engineer role card — Blind second opinion (GPT lineage) (+42 more)
 
 ### Community 4 - "Ponytail Ruleset & Mirrors"
-Cohesion: 0.20
-Nodes (9): additionalProperties, type, description, $id, propertyNames, pattern, $schema, title (+1 more)
+Cohesion: 0.09
+Nodes (31): autocommit.sh script, Autocommit snapshot infra (launchd + pre-commit), ~/.pi/agent config repo overview, Malleable schema policy, check_git_hygiene(), check_heuristics_hygiene(), check_installed_integrity(), check_layout() (+23 more)
 
 ### Community 5 - "Subagent Dispatch Tool"
-Cohesion: 0.05
-Nodes (47): ponytail: ceiling-comment convention, Bug fix = root cause, not symptom (grep every caller), Ruleset mirror for agents, Compact always-on ruleset (AGENTS.md), Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, Benchmark result: Root-cause directive validated 6/6; reuse rung shipped, Ruleset mirror for clinerules, Ruleset mirror for github (+39 more)
+Cohesion: 0.06
+Nodes (37): Hermes after-install notes, ponytail: ceiling-comment convention, Bug fix = root cause, not symptom (grep every caller), Ruleset mirror for agents, Compact always-on ruleset (AGENTS.md), Never-lazy floor (validation, data loss, security, a11y), Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, Benchmark result: parseaddr email slip is provider-specific (OpenAI), Claude 100% (+29 more)
 
 ### Community 6 - "Heuristic Entry Schema"
-Cohesion: 0.08
-Nodes (25): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, { checkPy, pyBlock, TASKS } (+17 more)
+Cohesion: 0.11
+Nodes (17): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, checkPy() (+9 more)
 
 ### Community 7 - "Ponytail Benchmarks & Ladder"
 Cohesion: 0.17
@@ -172,8 +164,8 @@ Cohesion: 0.14
 Nodes (27): aggregate(), chat_code_loc(), _claude_version(), code_stats(), _count(), _git(), git_diff_stats(), _git_snapshot() (+19 more)
 
 ### Community 10 - "Ponytail Activation Hooks"
-Cohesion: 0.09
-Nodes (35): Hermes after-install notes, The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum), Never-lazy floor (validation, data loss, security, a11y), Chart: median LOC per arm (518/116/39 Haiku etc.), Vendored caveman skill (terse-prose control arm), benchmark config: Behavior gates (hardware/explanation/one-check probes), benchmark config: Claude 3-arm config, benchmark config: Gemini config (+27 more)
+Cohesion: 0.13
+Nodes (27): The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum), Chart: median LOC per arm (518/116/39 Haiku etc.), Vendored caveman skill (terse-prose control arm), benchmark config: Behavior gates (hardware/explanation/one-check probes), benchmark config: Claude 3-arm config, benchmark config: Gemini config, benchmark config: GPT-mini issue-65 repro config, benchmark config: Newest-OpenAI config (+19 more)
 
 ### Community 11 - "Agentic Benchmark Harness"
 Cohesion: 0.07
@@ -192,8 +184,8 @@ Cohesion: 0.11
 Nodes (11): BlackHoleComponent, COMET_DEFS, CometDef, Constellation, CONSTELLATIONS, COS_T, DeepGalaxy, PLANETS (+3 more)
 
 ### Community 15 - "Void Black-Hole TUI"
-Cohesion: 0.08
-Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, amber (+15 more)
+Cohesion: 0.12
+Nodes (17): vars, amber, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bronze (+9 more)
 
 ### Community 16 - "Porcelain Light Theme"
 Cohesion: 0.19
@@ -228,24 +220,24 @@ Cohesion: 0.14
 Nodes (15): fs, getClaudeDir(), getConfigDir(), getConfigPath(), getDefaultMode(), isShellSafe(), os, path (+7 more)
 
 ### Community 24 - "Uninstall Script Tests"
-Cohesion: 0.12
-Nodes (17): vars, ash, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bright (+9 more)
+Cohesion: 0.08
+Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, ash (+15 more)
 
 ### Community 25 - "Ponytail Config Loader"
 Cohesion: 0.21
 Nodes (12): DESCRIPTIONS, fs, NAMES, outPath(), path, render(), ROOT, sourceBody() (+4 more)
 
 ### Community 26 - "Porcelain Theme Variables"
-Cohesion: 0.14
-Nodes (14): minimum, type, minLength, type, format, type, type, type (+6 more)
+Cohesion: 0.06
+Nodes (33): enum, type, enum, type, format, type, minimum, type (+25 more)
 
 ### Community 27 - "OpenClaw Skill Builder"
 Cohesion: 0.17
 Nodes (8): j, meta, rows, tbl, assert, cases, loc, score()
 
 ### Community 28 - "Example Generator & LOC Metric"
-Cohesion: 0.17
-Nodes (7): Config Index (semantic audit map), Config changelog (backfilled history), MODEL_CYCLE, Q&A: Why does the config index bridge six com, Q&A: How fragile is the cross cluster connect, Q&A: Are the weakly connected nodes real orph, Q&A: Patch the config index coverage gap  sti
+Cohesion: 0.13
+Nodes (10): Config Index (semantic audit map), Config changelog (backfilled history), MODEL_CYCLE, Q&A: Why does the config index bridge six com, Q&A: How fragile is the cross cluster connect, Q&A: Are the weakly connected nodes real orph, Q&A: Patch the config index coverage gap  sti, doRender off-screen clamp (+2 more)
 
 ### Community 29 - "Task Tracker Extension"
 Cohesion: 0.17
@@ -264,12 +256,12 @@ Cohesion: 0.18
 Nodes (11): assert, fs, loadManifest(), path, read(), REUSED_COMMANDS, REUSED_SKILLS, root (+3 more)
 
 ### Community 33 - "Keybindings Schema"
-Cohesion: 0.17
-Nodes (11): additionalProperties, items, minItems, type, description, $id, minLength, type (+3 more)
+Cohesion: 0.05
+Nodes (35): additionalProperties, allOf, description, $id, required, $schema, title, type (+27 more)
 
 ### Community 34 - "Ponytail MCP Server"
-Cohesion: 0.12
-Nodes (21): Blind Fan-Out (peer second opinion), Delegation Gate, engineer role card — THE DEFAULT WORKHORSE: whole bounded tasks end-to-end, Fable Budget Invariants, fable-engineer role card — Opt-in orchestrator-tier solo executor, Intent Interview, Orchestration Doctrine (AGENTS.md), peer-engineer role card — Blind second opinion (GPT lineage) (+13 more)
+Cohesion: 0.20
+Nodes (8): { checkPy, pyBlock, TASKS }, email, fs, kv, MODELS, path, skill, pyBlock()
 
 ### Community 35 - "read-only-default.ts"
 Cohesion: 0.25
@@ -304,8 +296,8 @@ Cohesion: 0.25
 Nodes (5): __dirname, { getDefaultMode, normalizePersistedMode }, { getPonytailInstructions }, require, statePath
 
 ### Community 44 - "porcelain.json"
-Cohesion: 0.09
-Nodes (33): Graph Maintenance Runbook, execute(), findGraphRoot(), fmtAge(), GraphParams, GraphStats, runGraphify(), statusText() (+25 more)
+Cohesion: 0.16
+Nodes (20): Graph Maintenance Runbook, execute(), findGraphRoot(), fmtAge(), GraphParams, GraphStats, runGraphify(), statusText() (+12 more)
 
 ### Community 45 - "execute"
 Cohesion: 0.22
@@ -320,12 +312,12 @@ Cohesion: 0.25
 Nodes (7): description, name, owner, name, url, plugins, $schema
 
 ### Community 48 - "heuristic-entry.schema.json"
-Cohesion: 0.22
-Nodes (8): additionalProperties, allOf, description, $id, required, $schema, title, type
+Cohesion: 0.36
+Nodes (7): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir()
 
 ### Community 49 - "Pi Extension (Ponytail)"
-Cohesion: 0.31
-Nodes (3): fmtTokens(), SPINNER_FRAMES, applyMinimalChrome()
+Cohesion: 0.29
+Nodes (4): fmtDuration(), fmtTokens(), SPINNER_FRAMES, applyMinimalChrome()
 
 ### Community 51 - "focus-chime.ts"
 Cohesion: 0.83
@@ -344,16 +336,12 @@ Cohesion: 0.33
 Nodes (5): name, private, scripts, test, type
 
 ### Community 56 - "doRender off-screen clamp"
-Cohesion: 0.67
-Nodes (3): doRender off-screen clamp, pi-tui scrollback-wipe fix, Viewport reflow on content collapse
+Cohesion: 0.29
+Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 
 ### Community 57 - "Statusline Script"
 Cohesion: 0.40
 Nodes (4): dependencies, pi-rewind, name, private
-
-### Community 59 - "manifest.json"
-Cohesion: 0.25
-Nodes (7): $comment, layout, $comment, expected, known, schemaVersion, targets
 
 ### Community 60 - "Publish Workflow"
 Cohesion: 0.22
@@ -371,56 +359,28 @@ Nodes (7): assert, commands, fs, path, piSource, root, test
 Cohesion: 0.25
 Nodes (6): assert, fs, path, REQUIRED_COMMAND_FILES, root, test
 
-### Community 66 - "porcelain.json"
-Cohesion: 0.29
-Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
-
-### Community 67 - "text"
-Cohesion: 0.50
-Nodes (4): text, maxLength, minLength, type
-
-### Community 68 - "basis"
-Cohesion: 0.67
-Nodes (3): enum, type, basis
-
-### Community 69 - "category"
-Cohesion: 0.67
-Nodes (3): enum, type, category
-
-### Community 70 - "created"
-Cohesion: 0.67
-Nodes (3): format, type, created
-
-### Community 74 - "scope"
-Cohesion: 0.67
-Nodes (3): scope, enum, type
-
-### Community 75 - "source"
-Cohesion: 0.67
-Nodes (3): source, enum, type
-
 ## Knowledge Gaps
-- **590 isolated node(s):** `SPINNER_FRAMES`, `AGENT_DIR`, `autocommit.sh script`, `BANNER_LINES`, `APHORISMS` (+585 more)
+- **592 isolated node(s):** `QaVerdict`, `UsageStats`, `SingleResult`, `SubagentDetails`, `DisplayItem` (+587 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **7 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.997036404)
-- `~/.pi/agent config repo overview` (3× useful, score=2.997006277)
+- `Config Index (semantic audit map)` (3× useful, score=2.996850621)
+- `~/.pi/agent config repo overview` (3× useful, score=2.996820497)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Ponytail MCP Server`, `read-only-default.ts`, `TUI Extensions & Config Index`, `porcelain.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Void Black-Hole TUI`, `Pi Extension (Ponytail)`, `Package Scripts`, `focus-chime.ts`, `Correctness Gate`, `doRender off-screen clamp`, `manifest.json`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.255) - this node is a cross-community bridge._
-- **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`, `porcelain.json`?**
-  _High betweenness centrality (0.098) - this node is a cross-community bridge._
-- **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`?**
-  _High betweenness centrality (0.065) - this node is a cross-community bridge._
-- **What connects `SPINNER_FRAMES`, `AGENT_DIR`, `autocommit.sh script` to the rest of the system?**
-  _623 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `TUI Extensions & Config Index`, `read-only-default.ts`, `Ponytail Ruleset & Mirrors`, `porcelain.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Uninstall Script Tests`, `doRender off-screen clamp`, `Task Tracker Extension`?**
+  _High betweenness centrality (0.243) - this node is a cross-community bridge._
+- **Why does `~/.pi/agent config repo overview` connect `Ponytail Ruleset & Mirrors` to `Example Generator & LOC Metric`, `Subagent Dispatch Tool`?**
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
+- **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`, `Ponytail Ruleset & Mirrors`?**
+  _High betweenness centrality (0.063) - this node is a cross-community bridge._
+- **What connects `QaVerdict`, `UsageStats`, `SingleResult` to the rest of the system?**
+  _625 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**

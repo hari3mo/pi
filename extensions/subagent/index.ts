@@ -110,7 +110,18 @@ function formatUsageStats(
 	if (usage.contextTokens && usage.contextTokens > 0) {
 		parts.push(`ctx:${formatTokens(usage.contextTokens)}`);
 	}
-	if (model) parts.push(model);
+	if (model) {
+		// Model strings carry the thinking level as a trailing ":level" (e.g.
+		// "anthropic/claude-opus-4-8:xhigh"); the provider/model uses "/", so the
+		// last ":" cleanly separates the thinking level. Show them as distinct
+		// fields, mirroring the status-bar footer's "model · thinking".
+		const sep = model.lastIndexOf(":");
+		if (sep > 0) {
+			parts.push(model.slice(0, sep), model.slice(sep + 1));
+		} else {
+			parts.push(model);
+		}
+	}
 	return parts.join(" ");
 }
 
