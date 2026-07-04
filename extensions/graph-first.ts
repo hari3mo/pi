@@ -27,10 +27,11 @@
  * everything is wrapped fail-open so it can never wedge a session.
  */
 
-import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
+import { persistStatsRecord } from "./lib/stats-store.ts";
 import {
 	CROSS_STORE_GUIDANCE,
 	decide,
@@ -266,42 +267,6 @@ export function buildBlock(identifier: string, command: string): string {
 // Session wiring
 // ---------------------------------------------------------------------------
 
-interface StatsRecord {
-	id: string;
-	ts: number;
-	nudges: number;
-	blocks: number;
-	bypasses: number;
-}
-
-/**
- * ponytail: atomic replace, last-writer-wins (mirrors audit-pipelines.py
- * _write_baseline). Parallel subagents may race this file; a lost record is
- * acceptable for advisory stats — upgrade to a lock only if the drift audit
- * proves lossy.
- */
-function persistStats(root: string, record: StatsRecord): void {
-	try {
-		const path = join(root, OUT, STATS_FILE);
-		let arr: StatsRecord[] = [];
-		try {
-			const parsed = JSON.parse(readFileSync(path, "utf8"));
-			if (Array.isArray(parsed)) arr = parsed;
-		} catch {
-			// absent/corrupt → start fresh
-		}
-		const i = arr.findIndex((r) => r && r.id === record.id);
-		if (i >= 0) arr[i] = record;
-		else arr.push(record);
-		if (arr.length > MAX_RECORDS) arr = arr.slice(arr.length - MAX_RECORDS);
-		const tmp = `${path}.${process.pid}.tmp`;
-		writeFileSync(tmp, JSON.stringify(arr, null, 2));
-		renameSync(tmp, path);
-	} catch {
-		// fail open: stats are never worth wedging a session
-	}
-}
-
 export default function (pi: ExtensionAPI) {
 	let root: string | undefined;
 	let sessionId = "";
@@ -366,13 +331,17 @@ export default function (pi: ExtensionAPI) {
 			if (!r) return;
 			const total = counts.nudges + counts.blocks + counts.bypasses;
 			if (total > 0 && total !== lastPersistedTotal) {
-				persistStats(r, {
-					id: sessionId,
-					ts: Date.now(),
-					nudges: counts.nudges,
-					blocks: counts.blocks,
-					bypasses: counts.bypasses,
-				});
+				persistStatsRecord(
+					join(r, OUT, STATS_FILE),
+					{
+						id: sessionId,
+						ts: Date.now(),
+						nudges: counts.nudges,
+						blocks: counts.blocks,
+						bypasses: counts.bypasses,
+					},
+					MAX_RECORDS,
+				);
 				lastPersistedTotal = total;
 			}
 			if (!endNudgeSent && counts.blocks > 0 && counts.bypasses >= counts.blocks) {
