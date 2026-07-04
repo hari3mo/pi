@@ -123,7 +123,8 @@ export default function (pi: ExtensionAPI) {
 
 	const applyDetails = (details: TaskDetails) => {
 		tasks = cloneTasks(details.tasks ?? []);
-		nextId = Number.isFinite(details.nextId) && details.nextId > 0 ? Math.floor(details.nextId) : 1;
+		const nextFromTasks = tasks.reduce((max, task) => Math.max(max, task.id), 0) + 1;
+		nextId = Number.isFinite(details.nextId) && details.nextId > 0 ? Math.max(Math.floor(details.nextId), nextFromTasks) : nextFromTasks;
 	};
 
 	const renderWidget = (theme: Theme, width: number): string[] => {
