@@ -210,6 +210,21 @@ even before the budget runs out.
   or the 3-iteration budget forces re-framing/escalation
 - Spend the priciest model only where it pays for itself
 
+## Config Maintenance (~/.pi/agent)
+
+The config repo is schema-audited (see `~/.pi/agent/README.md`). When working
+inside `~/.pi/agent`:
+
+- After editing config, run `python3 ~/.pi/agent/scripts/validate-config.py`
+  and fix any errors — the pre-commit hook blocks snapshots on validation
+  failure, which silently halts the audit trail until fixed.
+- When creating a NEW machine-readable config artifact, author a malleable
+  JSON Schema for it in `schema/` (known keys typed,
+  `additionalProperties: true`) and register it in `schema/manifest.json`.
+  The validator is manifest-driven; no code change needed.
+- Heuristics about pi itself (harness, delegation, tooling) belong in the
+  global store — pass scope `global` to `learn_heuristic`.
+
 ## Standing Orders
 
 - (Enforced in config, no action needed: the heuristics extension itself now
