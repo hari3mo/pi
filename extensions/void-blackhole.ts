@@ -634,11 +634,13 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- starfield (behind everything, blocked by the shadow): three
+		// -- starfield (behind everything, blocked by the shadow): four
 		// populations — field stars rejection-sampled toward a broad Milky
-		// Way band running diagonally behind the system, a sparse handful of
-		// bright stars with their own glyphs and harder twinkle, and a couple
-		// of tight open clusters in the quiet corners --
+		// Way band running diagonally behind the system (with enough baseline
+		// acceptance that the off-band corners still fill in), a sparse
+		// handful of bright stars with their own glyphs and harder twinkle,
+		// three tight open clusters in the quiet corners, and an ultra-dim
+		// scatter so even the emptiest corners read faintly populated --
 		const key = `${artW}x${rows}`;
 		if (this.starsKey !== key) {
 			this.starsKey = key;
@@ -649,13 +651,13 @@ class BlackHoleComponent {
 				const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
 				return Math.exp(-d * d);
 			};
-			const nField = Math.floor((artW * rows) / 26);
+			const nField = Math.floor((artW * rows) / 16);
 			let placed = 0;
 			let guard = 0;
 			while (placed < nField && guard++ < nField * 20) {
 				const nx = Math.random();
 				const ny = Math.random();
-				if (Math.random() > 0.45 + 0.55 * bandW(nx, ny)) continue;
+				if (Math.random() > 0.62 + 0.38 * bandW(nx, ny)) continue;
 				this.stars.push({
 					col: Math.floor(nx * artW),
 					row: Math.floor(ny * rows),
@@ -666,7 +668,7 @@ class BlackHoleComponent {
 				});
 				placed++;
 			}
-			const nBright = Math.max(3, Math.floor((artW * rows) / 170));
+			const nBright = Math.max(5, Math.floor((artW * rows) / 120));
 			for (let i = 0; i < nBright; i++) {
 				const b = 0.2 + Math.random() * 0.3;
 				this.stars.push({
@@ -678,7 +680,7 @@ class BlackHoleComponent {
 					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
 				});
 			}
-			for (let c = 0; c < 2; c++) {
+			for (let c = 0; c < 3; c++) {
 				let ccol = 0;
 				let crow = 0;
 				for (let tries = 0; tries < 16; tries++) {
@@ -704,6 +706,19 @@ class BlackHoleComponent {
 						ch: null,
 					});
 				}
+			}
+			// Ultra-dim uniform scatter: fills in even the corners the band
+			// and clusters skip, so nowhere in the frame reads truly empty.
+			const nScatter = Math.floor(nField / 3);
+			for (let i = 0; i < nScatter; i++) {
+				this.stars.push({
+					col: Math.floor(Math.random() * artW),
+					row: Math.floor(Math.random() * rows),
+					b: 0.015 + Math.random() * 0.03,
+					p: Math.random() * Math.PI * 2,
+					tw: 0.8 + Math.random() * 1.4,
+					ch: null,
+				});
 			}
 		}
 		const holeRx = EVENT_HORIZON * sX;
