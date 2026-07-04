@@ -562,6 +562,101 @@ function formatSubagentShell(ref: SubagentRunRef): string {
 	return lines.join("\n");
 }
 
+async function showActiveSubagentPanel(ctx: { mode: string; hasUI: boolean; ui: any }): Promise<void> {
+	if (!ctx.hasUI) return;
+	if (ctx.mode !== "tui") {
+		ctx.ui.notify("Active subagent panel is only available in the TUI.", "warning");
+		return;
+	}
+
+	let removeListener: (() => void) | undefined;
+	try {
+		await ctx.ui.custom<void>(
+			(tui: { requestRender(): void }, theme: any, _keybindings: unknown, done: () => void) => {
+				let selected = 0;
+				let detail = false;
+				let scroll = 0;
+				const close = () => done();
+				const requestRender = () => tui.requestRender();
+				ACTIVE_SUBAGENT_LISTENERS.add(requestRender);
+				removeListener = () => ACTIVE_SUBAGENT_LISTENERS.delete(requestRender);
+
+				return {
+					render(width: number): string[] {
+						const refs = getActiveSubagentRunRefs();
+						if (selected >= refs.length) selected = Math.max(0, refs.length - 1);
+						const lines: string[] = [];
+						const controls = detail
+							? "↑↓/Pg scroll • enter list • esc close"
+							: "↑↓ select • enter details • esc close";
+						lines.push(theme.fg("toolTitle", theme.bold("Active subagents")) + theme.fg("dim", `  ${controls}`));
+						lines.push(theme.fg("dim", "─".repeat(Math.max(1, Math.min(width, 120)))));
+
+						if (refs.length === 0) {
+							lines.push(theme.fg("muted", "No active subagents."));
+							return lines.map((line) => truncateToWidth(line, width));
+						}
+
+						if (!detail) {
+							refs.forEach((ref, index) => {
+								const r = ref.result;
+								const marker = index === selected ? theme.fg("accent", "›") : " ";
+								const icon = runInProgress(r)
+									? theme.fg("accent", SPINNER_FRAMES[Math.floor(Date.now() / SPINNER_INTERVAL_MS) % SPINNER_FRAMES.length])
+									: isFailedResult(r)
+										? theme.fg("error", "✗")
+										: theme.fg("success", "✓");
+								const elapsed = getElapsedMs(r);
+								const stats = formatRunStatus(r);
+								lines.push(
+									`${marker} ${icon} ${theme.fg("accent", r.agent)} ${theme.fg("muted", `${ref.mode} ${ref.resultIndex + 1}/${ref.batchSize}`)} ${theme.fg("dim", elapsed === undefined ? "" : formatDuration(elapsed))}`,
+								);
+								lines.push(theme.fg("dim", `  ${oneLine(r.task, 110)}`));
+								if (stats) lines.push(theme.fg("dim", `  ${stats}`));
+							});
+							return lines.map((line) => truncateToWidth(line, width));
+						}
+
+						const ref = refs[selected];
+						if (!ref) return lines.map((line) => truncateToWidth(line, width));
+						const raw = formatSubagentShell(ref).split("\n");
+						const maxBodyLines = 28;
+						scroll = Math.max(0, Math.min(scroll, Math.max(0, raw.length - maxBodyLines)));
+						lines.push(theme.fg("accent", `${ref.result.agent} · ${runStatusWord(ref.result)} · ${scroll + 1}-${Math.min(raw.length, scroll + maxBodyLines)}/${raw.length}`));
+						for (const line of raw.slice(scroll, scroll + maxBodyLines)) lines.push(line || " ");
+						return lines.map((line) => truncateToWidth(line, width));
+					},
+					invalidate(): void {},
+					handleInput(data: string): void {
+						const refs = getActiveSubagentRunRefs();
+						if (matchesKey(data, Key.escape) || data === "q") {
+							close();
+							return;
+						}
+						if (matchesKey(data, Key.enter)) {
+							detail = !detail;
+							scroll = 0;
+						} else if (detail) {
+							if (matchesKey(data, Key.up)) scroll = Math.max(0, scroll - 1);
+							else if (matchesKey(data, Key.down)) scroll++;
+							else if (matchesKey(data, Key.pageUp)) scroll = Math.max(0, scroll - 10);
+							else if (matchesKey(data, Key.pageDown)) scroll += 10;
+							else if (matchesKey(data, Key.left)) detail = false;
+						} else {
+							if (matchesKey(data, Key.up)) selected = Math.max(0, selected - 1);
+							else if (matchesKey(data, Key.down)) selected = Math.min(Math.max(0, refs.length - 1), selected + 1);
+						}
+						tui.requestRender();
+					},
+				};
+			},
+			{ overlay: true, overlayOptions: { anchor: "right-center", width: "80%", maxHeight: "85%", margin: 1 } },
+		);
+	} finally {
+		removeListener?.();
+	}
+}
+
 async function mapWithConcurrencyLimit<TIn, TOut>(
 	items: TIn[],
 	concurrency: number,
