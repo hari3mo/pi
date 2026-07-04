@@ -585,8 +585,8 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783158784.2590797,
-    "ast_hash": "46ee7c9b1ea1354dcd224abb4aa25b77",
+    "mtime": 1783159346.0856588,
+    "ast_hash": "ad883a5470fe1e10dcbd8af8913e9baf",
     "semantic_hash": ""
   },
   "docs/delegation-contract.md": {
@@ -1050,8 +1050,8 @@
     "semantic_hash": "2c223c2bb087ce98b47ef2dee43c2d7c"
   },
   ".pi-vcs/hooks/post-commit": {
-    "mtime": 1783159007.1684496,
-    "ast_hash": "21288abc3fb02a3fba6f1b1c1868b0d4",
+    "mtime": 1783159395.7161674,
+    "ast_hash": "23ea23cb5fb5f0a50d33fe3ad0379962",
     "semantic_hash": ""
   },
   "extensions/graphify-bridge.ts": {
