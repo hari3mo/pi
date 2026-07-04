@@ -43,7 +43,7 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 
 type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
 
-// Parse a reviewer verdict from free text per docs/rework-loop.md. Reviewers
+// Parse a peer verdict from free text per docs/rework-loop.md. Peers
 // often state the verdict FIRST on its own line (e.g. "[VERDICT: FAIL:
 // implementation]") while the findings prose below mentions other keywords (a
 // later "PASS"). So scan lines TOP-DOWN and take the first LINE-ANCHORED
@@ -562,7 +562,7 @@ const SubagentParams = Type.Object({
 });
 
 export default function (pi: ExtensionAPI) {
-	// Consecutive reviewer FAIL verdicts this session (AGENTS.md Rework Loop
+	// Consecutive peer FAIL verdicts this session (AGENTS.md Rework Loop
 	// budget). Persisted via the custom-entry pattern and replayed on
 	// session_start, exactly like the write-gate mode in read-only-default.ts.
 	// ponytail: session-level consecutive counter, not per-work-item; if
@@ -594,17 +594,17 @@ export default function (pi: ExtensionAPI) {
 		}
 	});
 
-	// Normalize a reviewer return: prepend a [VERDICT: ...] first line parsed
-	// from the reviewer's text (docs/rework-loop.md), maintain the session FAIL
+	// Normalize a peer return: prepend a [VERDICT: ...] first line parsed
+	// from the peer's text (docs/rework-loop.md), maintain the session FAIL
 	// budget, and flag exhaustion at 3. No-op for every other agent. Fails open.
 	function finalizeQaOutput(agentName: string, text: string): string {
-		if (agentName !== "reviewer") return text;
+		if (agentName !== "peer") return text;
 		try {
 			const verdict = parseQaVerdict(text);
 			let header: string;
 			if (verdict === null) {
 				header =
-					"[VERDICT: MISSING — malformed reviewer return; a structured verdict (PASS / FAIL: implementation / FAIL: design) is required. Re-dispatch the review.]";
+					"[VERDICT: MISSING — malformed peer return; a structured verdict (PASS / FAIL: implementation / FAIL: design) is required. Re-dispatch the review.]";
 			} else if (verdict === "PASS") {
 				reworkFailCount = 0;
 				persistReworkCount();

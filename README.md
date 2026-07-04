@@ -8,7 +8,7 @@ an audit trail; `git log` is the change history.
 
 | Path | Contents | Tracked |
 |------|----------|---------|
-| `agents/` | Subagent role definitions (scout, worker, engineer, verifier, reviewer, peer-engineer, fable-engineer) | yes |
+| `agents/` | Subagent role definitions (scout, worker, engineer, verifier, peer, reviewer, fable-engineer) | yes |
 | `extensions/` | TUI/tool extensions (heuristics, subagent, write-gate, UI) | yes |
 | `prompts/` | Prompt templates (`/design`, `/build`, `/ship`, `/feature`) | yes |
 | `schema/` | JSON Schemas + `manifest.json` (validation registry) | yes |
