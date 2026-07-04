@@ -79,7 +79,8 @@
       "git",
       "npm",
       ".pi",
-      "node_modules"
+      "node_modules",
+      "oracle"
     ]
   }
 }
