@@ -89,7 +89,7 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into eight roles. Do not collapse verification into the builder —
+Real work splits into seven roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
@@ -97,8 +97,7 @@ an agent must not review its own code.
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
 | `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
-| `opus-engineer` | Small-but-hard tasks where design and implementation can't separate: tricky concurrency, subtle algorithms, delicate refactors | Deep reasoning |
-| `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
+| `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
 | `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
 | `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
@@ -127,7 +126,7 @@ When a task arrives, decompose it and route each piece by weight:
     defects that review does not catch (benchmarked: error-token
     aliasing, reference canonicalization)
 - **Verification** → deep reasoning tier, and never the same agent that built it
-- **Small-but-hard execution** (design and implementation inseparable) → `opus-engineer`
+- **Small-but-hard execution** (design and implementation inseparable) → `solo-engineer`
   - tricky concurrency fixes, subtle algorithms, delicate refactors of dense
     logic — one bounded task, executed end-to-end; still reviewed by
     `qa-reviewer` afterwards
@@ -180,7 +179,7 @@ ANY of:
 Exception: if the task is small but its difficulty lies in the execution
 itself (design and implementation cannot cleanly separate — tricky
 concurrency, subtle algorithm, delicate refactor), delegate the whole task
-to `opus-engineer` instead of the scope-planner → architect → builder
+to `solo-engineer` instead of the scope-planner → architect → builder
 pipeline. Its output still goes to `qa-reviewer` like any delegated build.
 
 The lead MUST route through `scope-planner` and/or `architect` first when ANY of:
