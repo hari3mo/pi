@@ -34,10 +34,11 @@
  * retry). read-only-default.ts is the extension that exempts subagents; this one
  * deliberately does not.
  *
- * Active ONLY when both the oracle vault dir and the oracle profile config
- * exist. Everything is wrapped fail-open so it can never wedge a session; no
- * stats file, no config, no flags (see the follow-up note in the task return for
- * the optional self-improving closure graph-first has).
+ * The redirect is active ONLY when both the oracle vault dir and the oracle
+ * profile config exist. The prompt link block is injected whenever any wiki
+ * config is present. Everything is wrapped fail-open so it can never wedge a
+ * session; no stats file, no flags (see the follow-up note in the task return
+ * for the optional self-improving closure graph-first has).
  */
 
 import { existsSync, readFileSync } from "node:fs";
