@@ -1,0 +1,9 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/trust.schema.json",
+  "title": "pi agent trust.json",
+  "description": "Machine-local trust decisions: absolute directory path -> trusted flag. Git-ignored (not portable config).",
+  "type": "object",
+  "propertyNames": { "pattern": "^/" },
+  "additionalProperties": { "type": "boolean" }
+}
