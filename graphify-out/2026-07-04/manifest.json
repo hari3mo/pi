@@ -480,9 +480,9 @@
     "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
   },
   "settings.json": {
-    "mtime": 1783157230.5280793,
-    "ast_hash": "a89050046f53ff4477cd1353a4e8f3d2",
-    "semantic_hash": "a89050046f53ff4477cd1353a4e8f3d2"
+    "mtime": 1783161948.6417582,
+    "ast_hash": "725a97f54b09c54d9fc79a4a19d323c9",
+    "semantic_hash": ""
   },
   "themes/porcelain-light.json": {
     "mtime": 1783136869.0226007,
@@ -495,12 +495,12 @@
     "semantic_hash": "820dae6e075b3d8ab9d8452b57a06971"
   },
   "AGENTS.md": {
-    "mtime": 1783160724.7853193,
-    "ast_hash": "ca8b5a081647dc5f8c27638e4f241bcb",
-    "semantic_hash": "ca8b5a081647dc5f8c27638e4f241bcb"
+    "mtime": 1783161012.9577386,
+    "ast_hash": "2f5851a1e5a984427d442bfab5404871",
+    "semantic_hash": "2f5851a1e5a984427d442bfab5404871"
   },
   "README.md": {
-    "mtime": 1783160724.7865062,
+    "mtime": 1783160985.4486852,
     "ast_hash": "58c8d303d3dd96b49defe05f964d1a28",
     "semantic_hash": "58c8d303d3dd96b49defe05f964d1a28"
   },
@@ -540,9 +540,9 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783160824.3587003,
-    "ast_hash": "cd9b6d8e50eca6161261b0b8c946bea2",
-    "semantic_hash": "cd9b6d8e50eca6161261b0b8c946bea2"
+    "mtime": 1783161012.9580865,
+    "ast_hash": "549687e46fb3afe40eef55cd9860d71b",
+    "semantic_hash": "549687e46fb3afe40eef55cd9860d71b"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783160724.7861996,
@@ -1053,5 +1053,10 @@
     "mtime": 1783160779.584312,
     "ast_hash": "7856c929e08245fd426b5a8520775bbe",
     "semantic_hash": "7856c929e08245fd426b5a8520775bbe"
+  },
+  "extensions/concurrency-guard.ts": {
+    "mtime": 1783160961.7179666,
+    "ast_hash": "80d1339e206006d6f846b2026d05319d",
+    "semantic_hash": "80d1339e206006d6f846b2026d05319d"
   }
 }

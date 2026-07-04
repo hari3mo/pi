@@ -55,9 +55,9 @@
     "semantic_hash": "46a7283e83c1e1939bad1ff68a724634"
   },
   "extensions/lib/format.ts": {
-    "mtime": 1783130293.4367907,
-    "ast_hash": "72d187761cdeb5e31973386620f31526",
-    "semantic_hash": "72d187761cdeb5e31973386620f31526"
+    "mtime": 1783162182.713009,
+    "ast_hash": "23e9f8a264ca5903daded06fc3a95a57",
+    "semantic_hash": ""
   },
   "extensions/minimal-ui.ts": {
     "mtime": 1783143660.105444,

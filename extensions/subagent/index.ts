@@ -29,19 +29,12 @@ import {
 import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { type AgentConfig, type AgentScope, discoverAgents } from "./agents.ts";
-import { fmtDuration as formatDuration } from "../lib/format.ts";
+import { fmtDuration as formatDuration, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "../lib/format.ts";
 
 const MAX_PARALLEL_TASKS = 8;
 const MAX_CONCURRENCY = 4;
 const COLLAPSED_ITEM_COUNT = 10;
 const PER_TASK_OUTPUT_CAP = 50 * 1024;
-
-// pi's "Working..." spinner, reused verbatim so in-progress subagent rows
-// animate identically to the native indicator: same braille frame set and 80ms
-// cadence as pi-tui's Loader (@earendil-works/pi-tui DEFAULT_FRAMES /
-// DEFAULT_INTERVAL_MS), drawn in the accent color like WorkingStatusIndicator.
-const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
-const SPINNER_INTERVAL_MS = 80;
 
 function isSonnetModel(model: { id?: string; name?: string } | undefined): boolean {
 	if (!model) return false;
