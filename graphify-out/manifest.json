@@ -97,7 +97,7 @@
   "extensions/subagent/index.ts": {
     "mtime": 1783160779.645818,
     "ast_hash": "03312beac08f7db71ce74c095c5fa812",
-    "semantic_hash": ""
+    "semantic_hash": "03312beac08f7db71ce74c095c5fa812"
   },
   "extensions/task-tracker.ts": {
     "mtime": 1783143286.8953173,
@@ -462,7 +462,7 @@
   "schema/manifest.json": {
     "mtime": 1783160529.0074282,
     "ast_hash": "dd059f686c0dde9699a1ba92c4a1d3b6",
-    "semantic_hash": ""
+    "semantic_hash": "dd059f686c0dde9699a1ba92c4a1d3b6"
   },
   "schema/settings.schema.json": {
     "mtime": 1783124398.0703373,
@@ -497,17 +497,17 @@
   "AGENTS.md": {
     "mtime": 1783160724.7853193,
     "ast_hash": "ca8b5a081647dc5f8c27638e4f241bcb",
-    "semantic_hash": ""
+    "semantic_hash": "ca8b5a081647dc5f8c27638e4f241bcb"
   },
   "README.md": {
     "mtime": 1783160724.7865062,
     "ast_hash": "58c8d303d3dd96b49defe05f964d1a28",
-    "semantic_hash": ""
+    "semantic_hash": "58c8d303d3dd96b49defe05f964d1a28"
   },
   "agents/engineer.md": {
     "mtime": 1783160724.785895,
     "ast_hash": "95434508e364fb1b55aa07a413b648a6",
-    "semantic_hash": ""
+    "semantic_hash": "95434508e364fb1b55aa07a413b648a6"
   },
   "agents/fable-engineer.md": {
     "mtime": 1783154096.0861049,
@@ -527,7 +527,7 @@
   "agents/scout.md": {
     "mtime": 1783160724.7856078,
     "ast_hash": "447d6da0ce9cb1bef190bd8646ed053c",
-    "semantic_hash": ""
+    "semantic_hash": "447d6da0ce9cb1bef190bd8646ed053c"
   },
   "agents/verifier.md": {
     "mtime": 1783155948.5237596,
@@ -542,12 +542,12 @@
   "docs/config-index.md": {
     "mtime": 1783160824.3587003,
     "ast_hash": "cd9b6d8e50eca6161261b0b8c946bea2",
-    "semantic_hash": ""
+    "semantic_hash": "cd9b6d8e50eca6161261b0b8c946bea2"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783160724.7861996,
     "ast_hash": "1780de1e9c5f15b0f38ecff4b800878e",
-    "semantic_hash": ""
+    "semantic_hash": "1780de1e9c5f15b0f38ecff4b800878e"
   },
   "docs/rework-loop.md": {
     "mtime": 1783155855.7043831,
@@ -557,7 +557,7 @@
   "extensions/heuristics/DESIGN.md": {
     "mtime": 1783160724.7867446,
     "ast_hash": "47c22da1564c7821600902ebbfe0602b",
-    "semantic_hash": ""
+    "semantic_hash": "47c22da1564c7821600902ebbfe0602b"
   },
   "git/github.com/DietrichGebert/ponytail/.agents/rules/ponytail.md": {
     "mtime": 1783127535.6157978,
@@ -1052,6 +1052,6 @@
   "docs/graph-maintenance.md": {
     "mtime": 1783160779.584312,
     "ast_hash": "7856c929e08245fd426b5a8520775bbe",
-    "semantic_hash": ""
+    "semantic_hash": "7856c929e08245fd426b5a8520775bbe"
   }
 }
