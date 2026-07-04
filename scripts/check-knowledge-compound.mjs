@@ -13,27 +13,12 @@
  *   node scripts/check-knowledge-compound.mjs
  */
 import assert from "node:assert/strict";
-import { dirname, join } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { join } from "node:path";
+import { AGENT_DIR, loadJiti, provisionNodeModules } from "./lib/jiti-loader.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const AGENT_DIR = join(here, "..");
-const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
-
-// Provision bare-specifier resolution (the extension imports @earendil-works/*).
-import { mkdirSync, rmSync, symlinkSync, existsSync } from "node:fs";
-const nm = join(AGENT_DIR, "node_modules");
-const linkDep = (target, dest) => {
-	try { rmSync(dest, { recursive: true, force: true }); } catch {}
-	if (existsSync(target)) symlinkSync(target, dest);
-};
-mkdirSync(join(nm, "@earendil-works"), { recursive: true });
-linkDep(join(PKG, "node_modules", "typebox"), join(nm, "typebox"));
-linkDep(join(PKG, "node_modules", "@earendil-works", "pi-ai"), join(nm, "@earendil-works", "pi-ai"));
-linkDep(PKG, join(nm, "@earendil-works", "pi-coding-agent"));
-
-const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
-const jiti = createJiti(join(AGENT_DIR, "extensions", "_check_.js"), { interopDefault: false });
+// The extension imports @earendil-works/* — provision bare-specifier resolution.
+provisionNodeModules();
+const { jiti } = await loadJiti();
 const { isSubstantive, addCandidate, buildSaveResultArgs, buildStagedNote, normalizeQuestion } = await jiti.import(
 	join(AGENT_DIR, "extensions", "knowledge-compound.ts"),
 );
