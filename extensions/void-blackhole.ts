@@ -1140,7 +1140,8 @@ export default function (pi: ExtensionAPI) {
 		ctx.ui.setHeader((_tui, theme) => ({
 			render(width: number): string[] {
 				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
-				if (width < 30) {
+				const markW = Math.max(...WORDMARK.map((l) => l.length));
+				if (width < markW + 1) {
 					return ["", BLACK + "harimo" + RESET, subtitle, ""];
 				}
 				return [
