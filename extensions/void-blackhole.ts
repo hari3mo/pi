@@ -1109,8 +1109,8 @@ class BlackHoleComponent {
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
-			stampCentered("h a r i m o", 1, 2);
-			stampCentered(tagline, 2, 0.14);
+			// Too small for the wordmark — skip it entirely, keep the tagline.
+			stampCentered(tagline, 1, 0.14);
 		}
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
@@ -1164,7 +1164,8 @@ export default function (pi: ExtensionAPI) {
 				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
 				const markW = Math.max(...WORDMARK.map((l) => l.length));
 				if (width < markW + 1) {
-					return ["", BLACK + "harimo" + RESET, subtitle, ""];
+					// Too narrow for the wordmark — no fallback text, just the version.
+					return ["", subtitle, ""];
 				}
 				return [
 					"",
