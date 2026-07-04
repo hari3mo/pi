@@ -70,10 +70,10 @@
 		"syntaxPunctuation": "#6e6e6e",
 
 		"thinkingOff": "faint",
-		"thinkingMinimal": "#4e4e4e",
-		"thinkingLow": "#6e6e6e",
-		"thinkingMedium": "#949494",
-		"thinkingHigh": "#c4c4c4",
+		"thinkingMinimal": "ash",
+		"thinkingLow": "gray",
+		"thinkingMedium": "sand",
+		"thinkingHigh": "mist",
 		"thinkingXhigh": "bright",
 
 		"bashMode": "sand"
