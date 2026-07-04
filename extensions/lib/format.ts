@@ -19,6 +19,12 @@ export function fmtDuration(ms: number): string {
 	return `${s}s`;
 }
 
+// pi's native "Working…" braille spinner: same frame set and 80ms cadence as
+// pi-tui's Loader (DEFAULT_FRAMES / DEFAULT_INTERVAL_MS). Shared so the subagent
+// in-progress rows and the minimal-ui working indicator animate identically.
+export const SPINNER_FRAMES = ["⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏"];
+export const SPINNER_INTERVAL_MS = 80;
+
 /** "1.2k" / "3.40m" token count formatter. */
 export function fmtTokens(n: number): string {
 	if (n < 1000) return `${n}`;
