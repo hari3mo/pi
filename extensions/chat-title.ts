@@ -6,8 +6,9 @@
  * the most recent user prompt. Updates every time the user submits a new
  * message, so the window header stays a live descriptor of "what this
  * pi session is about" — handy for finding the right tab/window when
- * running several sessions at once. Also appends a running session
- * timer (elapsed since session start) that ticks every second.
+ * running several sessions at once. Also prepends a running session
+ * timer (elapsed since session start) that ticks every second, shown
+ * to the left of the summary title.
  */
 
 import { homedir } from "node:os";
