@@ -311,9 +311,8 @@ const smoothstep = (e0: number, e1: number, x: number): number => {
 	return t * t * (3 - 2 * t);
 };
 
-const DIM = "\x1b[2m";
+const DIM = "\x1b[2m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
 const BOLD = "\x1b[1m";
-const BLACK = "\x1b[30m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
 const RESET = "\x1b[0m";
 
 // ------------------------------------------------------------ component ----
@@ -1134,7 +1133,7 @@ class BlackHoleComponent {
 				const ch =
 					overlay[row * artW + col] ??
 					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
-				const want = b >= 2 ? BLACK : b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
+				const want = b >= 2 ? DIM : b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
@@ -1189,7 +1188,7 @@ export default function (pi: ExtensionAPI) {
 							return ["", subtitle, ""];
 						}
 						// Diagonal glint sweeping over the extruded letterforms: a band
-						// of columns (x + y near pos) renders bright against the BLACK
+						// of columns (x + y near pos) renders bright against the DIM
 						// base ink. Extra padding on the range gives the mark a dark
 						// resting beat between sweeps instead of looping back-to-back.
 						const range = markW + WORDMARK.length + 40;
@@ -1197,7 +1196,7 @@ export default function (pi: ExtensionAPI) {
 						const bandWidth = 3;
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier = ""; // "" | BLACK | glint (RESET + BOLD)
+							let tier = ""; // "" | DIM | glint (RESET + BOLD)
 							for (let x = 0; x < line.length; x++) {
 								const ch = line[x];
 								if (ch === " ") {
@@ -1205,7 +1204,7 @@ export default function (pi: ExtensionAPI) {
 									continue;
 								}
 								const want =
-									Math.abs(x + y - pos) < bandWidth ? BOLD : BLACK;
+									Math.abs(x + y - pos) < bandWidth ? BOLD : DIM;
 								if (want !== tier) {
 									out += RESET + want;
 									tier = want;
