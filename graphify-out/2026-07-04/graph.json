@@ -74,14 +74,84 @@
   },
   "nodes": [
     {
+      "label": "config-index.md",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_config_index",
+      "community": 47,
+      "norm_label": "config-index.md"
+    },
+    {
+      "label": "Config Index",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_config_index_config_index",
+      "community": 47,
+      "norm_label": "config index"
+    },
+    {
+      "label": "Feature index",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_config_index_feature_index",
+      "community": 47,
+      "norm_label": "feature index"
+    },
+    {
+      "label": "Changelog",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "docs_config_index_changelog",
+      "community": 47,
+      "norm_label": "changelog"
+    },
+    {
+      "label": "2026-07-04",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "docs_config_index_2026_07_04",
+      "community": 47,
+      "norm_label": "2026-07-04"
+    },
+    {
+      "label": "2026-07-03",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L172",
+      "_origin": "ast",
+      "id": "docs_config_index_2026_07_03",
+      "community": 47,
+      "norm_label": "2026-07-03"
+    },
+    {
+      "label": "2026-07-02",
+      "file_type": "document",
+      "source_file": "docs/config-index.md",
+      "source_location": "L296",
+      "_origin": "ast",
+      "id": "docs_config_index_2026_07_02",
+      "community": 47,
+      "norm_label": "2026-07-02"
+    },
+    {
       "label": "manifest.json",
       "file_type": "code",
       "source_file": "schema/manifest.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "schema_manifest",
       "community": 33,
-      "norm_label": "manifest.json"
+      "norm_label": "manifest.json",
+      "id": "schema_manifest"
     },
     {
       "label": "$comment",
@@ -89,9 +159,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "schema_manifest_comment",
       "community": 33,
-      "norm_label": "$comment"
+      "norm_label": "$comment",
+      "id": "schema_manifest_comment"
     },
     {
       "label": "schemaVersion",
@@ -99,9 +169,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "schema_manifest_schemaversion",
       "community": 33,
-      "norm_label": "schemaversion"
+      "norm_label": "schemaversion",
+      "id": "schema_manifest_schemaversion"
     },
     {
       "label": "targets",
@@ -109,9 +179,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "schema_manifest_targets",
       "community": 33,
-      "norm_label": "targets"
+      "norm_label": "targets",
+      "id": "schema_manifest_targets"
     },
     {
       "label": "layout",
@@ -119,9 +189,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L40",
       "_origin": "ast",
-      "id": "schema_manifest_layout",
       "community": 33,
-      "norm_label": "layout"
+      "norm_label": "layout",
+      "id": "schema_manifest_layout"
     },
     {
       "label": "$comment",
@@ -129,9 +199,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L41",
       "_origin": "ast",
-      "id": "schema_manifest_layout_comment",
       "community": 33,
-      "norm_label": "$comment"
+      "norm_label": "$comment",
+      "id": "schema_manifest_layout_comment"
     },
     {
       "label": "expected",
@@ -139,9 +209,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "schema_manifest_layout_expected",
       "community": 33,
-      "norm_label": "expected"
+      "norm_label": "expected",
+      "id": "schema_manifest_layout_expected"
     },
     {
       "label": "known",
@@ -149,9 +219,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "schema_manifest_layout_known",
       "community": 33,
-      "norm_label": "known"
+      "norm_label": "known",
+      "id": "schema_manifest_layout_known"
     },
     {
       "label": "autocommit.sh",
@@ -163,7 +233,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "community": 58,
+      "community": 20,
       "norm_label": "autocommit.sh",
       "community_name": "Autocommit Script",
       "id": "pi_vcs_autocommit"
@@ -178,7 +248,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "community": 58,
+      "community": 20,
       "norm_label": "autocommit.sh script",
       "community_name": "Autocommit Script",
       "id": "pi_vcs_autocommit_sh__entry"
@@ -354,7 +424,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 48,
       "norm_label": "focus-chime.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_focus_chime"
@@ -365,7 +435,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 3,
+      "community": 48,
       "norm_label": "fmtduration()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_focus_chime_fmtduration"
@@ -376,7 +446,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 3,
+      "community": 48,
       "norm_label": "sanitize()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_focus_chime_sanitize"
@@ -387,7 +457,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 3,
+      "community": 48,
       "norm_label": "firechime()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_focus_chime_firechime"
@@ -1333,7 +1403,7 @@
       "source_file": "extensions/lib/format.ts",
       "source_location": "L12",
       "_origin": "ast",
-      "community": 5,
+      "community": 3,
       "norm_label": "fmtduration()",
       "community_name": "Subagent Dispatch Tool",
       "id": "extensions_lib_format_fmtduration"
@@ -1399,7 +1469,7 @@
       "source_file": "extensions/model-awareness.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 62,
       "norm_label": "model-awareness.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_model_awareness"
@@ -1410,7 +1480,7 @@
       "source_file": "extensions/model-awareness.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 3,
+      "community": 62,
       "norm_label": "describemodel()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_model_awareness_describemodel"
@@ -1421,7 +1491,7 @@
       "source_file": "extensions/model-cycle.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 58,
       "norm_label": "model-cycle.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_model_cycle"
@@ -1432,7 +1502,7 @@
       "source_file": "extensions/model-cycle.ts",
       "source_location": "L13",
       "_origin": "ast",
-      "community": 3,
+      "community": 58,
       "norm_label": "model_cycle",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_model_cycle_model_cycle"
@@ -1443,7 +1513,7 @@
       "source_file": "extensions/model-cycle.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 3,
+      "community": 58,
       "norm_label": "cyclemodel()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_model_cycle_cyclemodel"
@@ -1454,7 +1524,7 @@
       "source_file": "extensions/pi-vcs-breadcrumb.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 63,
       "norm_label": "pi-vcs-breadcrumb.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_pi_vcs_breadcrumb"
@@ -1465,7 +1535,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "read-only-default.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default"
@@ -1476,7 +1546,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "write_tools",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_write_tools"
@@ -1487,7 +1557,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "destructive_patterns",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_destructive_patterns"
@@ -1498,7 +1568,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "isdestructivecommand()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_isdestructivecommand"
@@ -1509,7 +1579,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "mode",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_mode"
@@ -1520,7 +1590,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "gatestate",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_gatestate"
@@ -1531,7 +1601,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "persist()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_persist"
@@ -1542,7 +1612,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "applytools()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_applytools"
@@ -1553,7 +1623,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "updatestatusbar()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_updatestatusbar"
@@ -1564,7 +1634,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L128",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "setmode()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_setmode"
@@ -1575,7 +1645,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 3,
+      "community": 4,
       "norm_label": "execute()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_read_only_default_execute"
@@ -1619,7 +1689,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "agents.ts",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents"
@@ -1630,7 +1700,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "agentscope",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_agentscope"
@@ -1641,7 +1711,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "agentconfig",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_agentconfig"
@@ -1652,7 +1722,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "agentdiscoveryresult",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_agentdiscoveryresult"
@@ -1663,7 +1733,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "loadagentsfromdir()",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_loadagentsfromdir"
@@ -1674,7 +1744,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "isdirectory()",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_isdirectory"
@@ -1685,7 +1755,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "findnearestprojectagentsdir()",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_findnearestprojectagentsdir"
@@ -1696,7 +1766,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "discoveragents()",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_agents_discoveragents"
@@ -1729,7 +1799,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "issonnetmodel()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_issonnetmodel"
@@ -1751,7 +1821,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 65,
+      "community": 5,
       "norm_label": "parseqaverdict()",
       "community_name": "Community 65",
       "id": "extensions_subagent_index_parseqaverdict"
@@ -1839,7 +1909,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L220",
       "_origin": "ast",
-      "community": 60,
+      "community": 5,
       "norm_label": "subagentdetails",
       "community_name": "Publish Workflow",
       "id": "extensions_subagent_index_subagentdetails"
@@ -1850,7 +1920,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "getfinaloutput()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_getfinaloutput"
@@ -1861,7 +1931,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L239",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "isfailedresult()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_isfailedresult"
@@ -1883,7 +1953,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L252",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "getresultoutput()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_getresultoutput"
@@ -1927,7 +1997,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L285",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "mapwithconcurrencylimit()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_mapwithconcurrencylimit"
@@ -1938,7 +2008,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L305",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "writeprompttotempfile()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_writeprompttotempfile"
@@ -1971,7 +2041,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L333",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "runsingleagent()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_runsingleagent"
@@ -2026,7 +2096,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L557",
       "_origin": "ast",
-      "community": 65,
+      "community": 5,
       "norm_label": "persistreworkcount()",
       "community_name": "Community 65",
       "id": "extensions_subagent_index_persistreworkcount"
@@ -2037,7 +2107,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L584",
       "_origin": "ast",
-      "community": 65,
+      "community": 5,
       "norm_label": "finalizeqaoutput()",
       "community_name": "Community 65",
       "id": "extensions_subagent_index_finalizeqaoutput"
@@ -2048,7 +2118,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L622",
       "_origin": "ast",
-      "community": 62,
+      "community": 5,
       "norm_label": "execute()",
       "community_name": "Community 62",
       "id": "extensions_subagent_index_execute"
@@ -9041,7 +9111,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "validate-config.py",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config"
@@ -9052,7 +9122,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "resolve()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_resolve"
@@ -9063,7 +9133,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "path",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_py_path"
@@ -9074,7 +9144,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L51",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "load_json()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_load_json"
@@ -9085,7 +9155,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "get_validator()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_get_validator"
@@ -9096,7 +9166,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L74",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "check_target()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_check_target"
@@ -9107,7 +9177,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L109",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "check_heuristics_hygiene()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_check_heuristics_hygiene"
@@ -9118,7 +9188,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L123",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "check_git_hygiene()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_check_git_hygiene"
@@ -9129,7 +9199,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L143",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "check_symlinks()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_check_symlinks"
@@ -9140,7 +9210,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L152",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "check_layout()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_check_layout"
@@ -9151,7 +9221,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L162",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "main()",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_main"
@@ -9162,7 +9232,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L57",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "return callable(obj) -> list[str] of violation messages.",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_rationale_57"
@@ -9173,7 +9243,7 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L75",
       "_origin": "ast",
-      "community": 4,
+      "community": 20,
       "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene).",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_rationale_75"
@@ -10020,7 +10090,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "porcelain.json",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain"
@@ -10031,7 +10101,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "$schema",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_schema"
@@ -10042,7 +10112,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "name",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_name"
@@ -10812,7 +10882,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "export",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_export"
@@ -10823,7 +10893,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "pagebg",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_export_pagebg"
@@ -10834,7 +10904,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "cardbg",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_export_cardbg"
@@ -10845,7 +10915,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 48,
+      "community": 26,
       "norm_label": "infobg",
       "community_name": "Porcelain Dark Theme",
       "id": "themes_porcelain_export_infobg"
@@ -11100,34 +11170,6 @@
       "id": "docs_rework_loop_verdict_contract"
     },
     {
-      "label": "Config Index (semantic audit map)",
-      "file_type": "document",
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 3,
-      "norm_label": "config index (semantic audit map)",
-      "community_name": "TUI Extensions & Config Index",
-      "id": "docs_config_index_audit_map"
-    },
-    {
-      "label": "Config changelog (backfilled history)",
-      "file_type": "concept",
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "source_url": null,
-      "captured_at": null,
-      "author": null,
-      "contributor": null,
-      "community": 3,
-      "norm_label": "config changelog (backfilled history)",
-      "community_name": "TUI Extensions & Config Index",
-      "id": "docs_config_index_changelog"
-    },
-    {
       "label": "~/.pi/agent config repo overview",
       "file_type": "document",
       "source_file": "README.md",
@@ -11136,7 +11178,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 58,
+      "community": 20,
       "norm_label": "~/.pi/agent config repo overview",
       "community_name": "Autocommit Script",
       "id": "readme_pi_config_repo"
@@ -11150,7 +11192,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 58,
+      "community": 20,
       "norm_label": "malleable schema policy",
       "community_name": "Autocommit Script",
       "id": "readme_schema_policy"
@@ -11164,7 +11206,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 58,
+      "community": 20,
       "norm_label": "autocommit snapshot infra (launchd + pre-commit)",
       "community_name": "Autocommit Script",
       "id": "readme_autocommit_infra"
@@ -11178,7 +11220,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 60,
       "norm_label": "pi-tui scrollback-wipe fix",
       "community_name": "TUI Extensions & Config Index",
       "id": "patches_pi_tui_scrollback_fix_patch"
@@ -11192,7 +11234,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 60,
       "norm_label": "dorender off-screen clamp",
       "community_name": "TUI Extensions & Config Index",
       "id": "patches_pi_tui_scrollback_fix_clamp"
@@ -11206,7 +11248,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 3,
+      "community": 60,
       "norm_label": "viewport reflow on content collapse",
       "community_name": "TUI Extensions & Config Index",
       "id": "patches_pi_tui_scrollback_fix_viewport_reflow"
@@ -11458,7 +11500,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 64,
+      "community": 20,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Community 64",
       "id": "skills_graphify_references_query_ref"
@@ -11500,7 +11542,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 64,
+      "community": 20,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Community 64",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -11514,7 +11556,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 64,
+      "community": 20,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Community 64",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -11612,7 +11654,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 64,
+      "community": 20,
       "norm_label": "graphify references/query.md (nested duplicate copy)",
       "community_name": "Community 64",
       "id": "pi_agent_skills_graphify_references_query_ref"
@@ -11710,7 +11752,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "compact always-on ruleset (agents.md)",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_agents_ruleset"
@@ -11738,7 +11780,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "bug fix = root cause, not symptom (grep every caller)",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_agents_root_cause_rule"
@@ -11752,7 +11794,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 38,
       "norm_label": "ponytail: ceiling-comment convention",
       "community_name": "Community 63",
       "id": "git_github_com_dietrichgebert_ponytail_agents_ceiling_comment"
@@ -11766,7 +11808,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -11780,7 +11822,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -11794,7 +11836,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -11836,7 +11878,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 38,
       "norm_label": "ponytail-debt skill \u2014 ponytail: comment debt ledger",
       "community_name": "Community 63",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_debt_skill_skill"
@@ -11864,7 +11906,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 38,
       "norm_label": "ponytail-help skill \u2014 quick-reference card",
       "community_name": "Community 66",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_help_skill_skill"
@@ -11906,7 +11948,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 38,
       "norm_label": "openclaw copy of ponytail-debt skill (generated)",
       "community_name": "Community 63",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_debt_skill_skill"
@@ -11934,7 +11976,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 38,
       "norm_label": "openclaw copy of ponytail-help skill (generated)",
       "community_name": "Community 66",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_help_skill_skill"
@@ -11948,7 +11990,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -11962,7 +12004,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "opencode /ponytail command",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -12004,7 +12046,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 38,
       "norm_label": "opencode /ponytail-debt command",
       "community_name": "Community 63",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_debt_command"
@@ -12032,7 +12074,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 38,
       "norm_label": "opencode /ponytail-help command",
       "community_name": "Community 66",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_help_command"
@@ -12046,7 +12088,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ruleset mirror for agents",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules"
@@ -12060,7 +12102,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ruleset mirror for clinerules",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules"
@@ -12074,7 +12116,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ruleset mirror for github",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules"
@@ -12088,7 +12130,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ruleset mirror for kiro",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules"
@@ -12102,7 +12144,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ruleset mirror for windsurf",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules"
@@ -12494,7 +12536,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 63,
+      "community": 38,
       "norm_label": "benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep",
       "community_name": "Community 63",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_12_v4_hardening_vs_caveman_result"
@@ -12536,7 +12578,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -12592,7 +12634,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "benchmark result: root-cause directive validated 6/6; reuse rung shipped",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_22_issue_245_217_comprehension_result"
@@ -12606,7 +12648,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "hermes plugin manifest",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -12620,7 +12662,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 7,
+      "community": 38,
       "norm_label": "hermes after-install notes",
       "community_name": "Ponytail Benchmarks & Ladder",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -12634,7 +12676,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ci test workflow (rule copies + versions + npm test)",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_github_workflows_test_ci"
@@ -12676,7 +12718,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 47,
+      "community": 38,
       "norm_label": "ponytail-mcp stdio server (ruleset via mcp prompt/tool)",
       "community_name": "Schema Manifest",
       "id": "git_github_com_dietrichgebert_ponytail_ponytail_mcp_readme_server"
@@ -12866,14 +12908,64 @@
   ],
   "links": [
     {
-      "relation": "references",
+      "relation": "contains",
       "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "docs/config-index.md",
-      "source_location": null,
+      "source_location": "L1",
       "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "schema_manifest"
+      "source": "docs_config_index",
+      "target": "docs_config_index_config_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/config-index.md",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "docs_config_index_config_index",
+      "target": "docs_config_index_changelog",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/config-index.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "source": "docs_config_index_config_index",
+      "target": "docs_config_index_feature_index",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/config-index.md",
+      "source_location": "L296",
+      "weight": 1.0,
+      "source": "docs_config_index_changelog",
+      "target": "docs_config_index_2026_07_02",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/config-index.md",
+      "source_location": "L172",
+      "weight": 1.0,
+      "source": "docs_config_index_changelog",
+      "target": "docs_config_index_2026_07_03",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/config-index.md",
+      "source_location": "L52",
+      "weight": 1.0,
+      "source": "docs_config_index_changelog",
+      "target": "docs_config_index_2026_07_04",
+      "confidence_score": 1.0
     },
     {
       "relation": "references",
@@ -12901,9 +12993,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest",
-      "target": "schema_manifest_comment",
-      "confidence_score": 1.0
+      "target": "schema_manifest_comment"
     },
     {
       "relation": "contains",
@@ -12911,9 +13003,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L40",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest",
-      "target": "schema_manifest_layout",
-      "confidence_score": 1.0
+      "target": "schema_manifest_layout"
     },
     {
       "relation": "contains",
@@ -12921,9 +13013,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest",
-      "target": "schema_manifest_schemaversion",
-      "confidence_score": 1.0
+      "target": "schema_manifest_schemaversion"
     },
     {
       "relation": "contains",
@@ -12931,9 +13023,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest",
-      "target": "schema_manifest_targets",
-      "confidence_score": 1.0
+      "target": "schema_manifest_targets"
     },
     {
       "relation": "references",
@@ -12961,9 +13053,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L41",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_comment",
-      "confidence_score": 1.0
+      "target": "schema_manifest_layout_comment"
     },
     {
       "relation": "contains",
@@ -12971,9 +13063,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_expected",
-      "confidence_score": 1.0
+      "target": "schema_manifest_layout_expected"
     },
     {
       "relation": "contains",
@@ -12981,9 +13073,9 @@
       "source_file": "schema/manifest.json",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_known",
-      "confidence_score": 1.0
+      "target": "schema_manifest_layout_known"
     },
     {
       "relation": "contains",
@@ -13004,16 +13096,6 @@
       "weight": 1.0,
       "source": "readme_autocommit_infra",
       "target": "pi_vcs_autocommit"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_chat_title"
     },
     {
       "relation": "contains",
@@ -13087,16 +13169,6 @@
       "confidence_score": 1.0,
       "source": "extensions_chat_title_applytitle",
       "target": "extensions_chat_title_formatelapsed"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_custom_header"
     },
     {
       "relation": "contains",
@@ -13253,16 +13325,6 @@
       "confidence_score": 1.0,
       "source": "extensions_custom_header_computecontextline",
       "target": "extensions_lib_format_shortencwd"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_focus_chime"
     },
     {
       "relation": "contains",
@@ -14305,16 +14367,6 @@
       "weight": 1.0,
       "source": "extensions_heuristics_index_heuristicsextension",
       "target": "extensions_heuristics_command_registerheuristicscommand"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_heuristics_index"
     },
     {
       "relation": "references",
@@ -15696,16 +15748,6 @@
       "target": "extensions_heuristics_store_mutatestore"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_lib_format"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/lib/format.ts",
@@ -15835,16 +15877,6 @@
       "target": "extensions_lib_format_fmttokens"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_minimal_ui"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/minimal-ui.ts",
@@ -15865,16 +15897,6 @@
       "target": "extensions_minimal_ui_restoredefaults"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_model_awareness"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/model-awareness.ts",
@@ -15883,16 +15905,6 @@
       "confidence_score": 1.0,
       "source": "extensions_model_awareness",
       "target": "extensions_model_awareness_describemodel"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_model_cycle"
     },
     {
       "relation": "contains",
@@ -15913,26 +15925,6 @@
       "confidence_score": 1.0,
       "source": "extensions_model_cycle",
       "target": "extensions_model_cycle_model_cycle"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_pi_vcs_breadcrumb"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_read_only_default"
     },
     {
       "relation": "contains",
@@ -16077,16 +16069,6 @@
       "confidence_score": 1.0,
       "source": "extensions_read_only_default_execute",
       "target": "extensions_read_only_default_setmode"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_session_receipt"
     },
     {
       "relation": "contains",
@@ -16276,16 +16258,6 @@
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_agents_discoveragents"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_subagent_index"
     },
     {
       "relation": "references",
@@ -16869,16 +16841,6 @@
       "target": "extensions_subagent_index_finalizeqaoutput"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_task_tracker"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/task-tracker.ts",
@@ -16987,16 +16949,6 @@
       "confidence_score": 1.0,
       "source": "extensions_task_tracker_tasklistcomponent",
       "target": "extensions_task_tracker_tasklistcomponent_render"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_void_blackhole"
     },
     {
       "relation": "contains",
@@ -25769,16 +25721,6 @@
       "target": "scripts_validate_config_check_layout"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "themes_porcelain_light"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "themes/porcelain-light.json",
@@ -26527,16 +26469,6 @@
       "confidence_score": 1.0,
       "source": "themes_porcelain_light_export",
       "target": "themes_porcelain_light_export_pagebg"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "themes_porcelain"
     },
     {
       "relation": "contains",
@@ -27429,16 +27361,6 @@
       "target": "agents_orchestration_doctrine"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "agents_orchestration_doctrine"
-    },
-    {
       "relation": "conceptually_related_to",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -27557,46 +27479,6 @@
       "weight": 1.0,
       "source": "docs_rework_loop_rework_loop",
       "target": "docs_rework_loop_verdict_contract"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "docs_config_index_changelog"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_heuristics_design_design"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "patches_pi_tui_scrollback_fix_patch",
-      "target": "docs_config_index_audit_map"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "readme_pi_config_repo",
-      "target": "docs_config_index_audit_map"
     },
     {
       "relation": "conceptually_related_to",
@@ -29088,5 +28970,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "01297d61eb14d6f563bdce1a812d60cfdec8eb3a"
+  "built_at_commit": "845a71bafddbe4bc600d9aaf35ccf0b14dea9263"
 }

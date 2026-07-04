@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 197 files · ~159,918 words
+- 197 files · ~160,124 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1123 nodes · 1564 edges · 67 communities (62 shown, 5 thin omitted)
+- 1128 nodes · 1548 edges · 64 communities (58 shown, 6 thin omitted)
 - Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 75 edges (avg confidence: 0.66)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `01297d61`
+- Built from commit: `845a71ba`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -75,23 +75,18 @@
 - [[_COMMUNITY_Statusline Script|Statusline Script]]
 - [[_COMMUNITY_Autocommit Script|Autocommit Script]]
 - [[_COMMUNITY_Publish Workflow|Publish Workflow]]
-- [[_COMMUNITY_execute|execute]]
-- [[_COMMUNITY_ponytail-debt skill — ponytail comment debt ledger|ponytail-debt skill — ponytail: comment debt ledger]]
-- [[_COMMUNITY_graphify ref Querypathexplain traversal|graphify ref: Query/path/explain traversal]]
-- [[_COMMUNITY_finalizeQaOutput|finalizeQaOutput]]
-- [[_COMMUNITY_ponytail-help skill — Quick-reference card|ponytail-help skill — Quick-reference card]]
 
 ## God Nodes (most connected - your core abstractions)
 1. `colors` - 52 edges
 2. `colors` - 52 edges
-3. `Config Index (semantic audit map)` - 22 edges
-4. `Single-shot benchmark (promptfoo, 5 tasks x 3 models)` - 18 edges
+3. `Single-shot benchmark (promptfoo, 5 tasks x 3 models)` - 18 edges
+4. `vars` - 17 edges
 5. `vars` - 17 edges
-6. `vars` - 17 edges
-7. `Orchestration Doctrine (AGENTS.md)` - 15 edges
-8. `mutateStore()` - 14 edges
-9. `The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum)` - 14 edges
-10. `_fail()` - 13 edges
+6. `mutateStore()` - 14 edges
+7. `Orchestration Doctrine (AGENTS.md)` - 14 edges
+8. `The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum)` - 14 edges
+9. `_fail()` - 13 edges
+10. `_ok()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `graphify SKILL.md (nested duplicate copy)` --semantically_similar_to--> `Graphify skill (knowledge-graph pipeline)`  [INFERRED] [semantically similar]
@@ -114,7 +109,7 @@
 - **Benchmark honesty arc (single-shot → critique → agentic → verification)** — git_github_com_dietrichgebert_ponytail_benchmarks_readme_single_shot, git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_17_agentic_safety_result, git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_18_agentic_result, git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_17_cost_verification_result, git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_22_issue_245_217_comprehension_result [INFERRED 0.85]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (67 total, 5 thin omitted)
+## Communities (64 total, 6 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -129,24 +124,24 @@ Cohesion: 0.04
 Nodes (52): colors, accent, bashMode, border, borderAccent, borderMuted, customMessageBg, customMessageLabel (+44 more)
 
 ### Community 3 - "TUI Extensions & Config Index"
-Cohesion: 0.06
-Nodes (31): Config Index (semantic audit map), Config changelog (backfilled history), applyTitle(), formatElapsed(), APHORISMS, BANNER_LINES, BANNER_WIDTH, computeContextLine() (+23 more)
+Cohesion: 0.12
+Nodes (14): applyTitle(), formatElapsed(), APHORISMS, BANNER_LINES, BANNER_WIDTH, computeContextLine(), getAphorism(), getBanner() (+6 more)
 
 ### Community 4 - "Ponytail Ruleset & Mirrors"
-Cohesion: 0.31
-Nodes (12): check_git_hygiene(), check_heuristics_hygiene(), check_layout(), check_symlinks(), check_target(), get_validator(), load_json(), main() (+4 more)
+Cohesion: 0.25
+Nodes (9): applyTools(), DESTRUCTIVE_PATTERNS, execute(), GateState, Mode, persist(), setMode(), updateStatusBar() (+1 more)
 
 ### Community 5 - "Subagent Dispatch Tool"
-Cohesion: 0.12
-Nodes (19): fmtDuration(), AgentScopeSchema, ChainItem, DisplayItem, formatTokens(), formatToolCall(), formatUsageStats(), getDisplayItems() (+11 more)
+Cohesion: 0.08
+Nodes (37): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir(), AgentScopeSchema (+29 more)
 
 ### Community 6 - "Heuristic Entry Schema"
 Cohesion: 0.06
 Nodes (33): enum, type, enum, type, format, type, minimum, type (+25 more)
 
 ### Community 7 - "Ponytail Benchmarks & Ladder"
-Cohesion: 0.09
-Nodes (35): Hermes after-install notes, The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum), Never-lazy floor (validation, data loss, security, a11y), Chart: median LOC per arm (518/116/39 Haiku etc.), Vendored caveman skill (terse-prose control arm), benchmark config: Behavior gates (hardware/explanation/one-check probes), benchmark config: Claude 3-arm config, benchmark config: Gemini config (+27 more)
+Cohesion: 0.13
+Nodes (27): The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum), Chart: median LOC per arm (518/116/39 Haiku etc.), Vendored caveman skill (terse-prose control arm), benchmark config: Behavior gates (hardware/explanation/one-check probes), benchmark config: Claude 3-arm config, benchmark config: Gemini config, benchmark config: GPT-mini issue-65 repro config, benchmark config: Newest-OpenAI config (+19 more)
 
 ### Community 8 - "Email Robustness Scripts"
 Cohesion: 0.08
@@ -203,8 +198,8 @@ Cohesion: 0.10
 Nodes (16): CHECKS, exec(), { execSync }, fs, os, path, python(), assert (+8 more)
 
 ### Community 20 - "Graphify Skill (nested copy)"
-Cohesion: 0.11
-Nodes (18): graphify references/add-watch.md (nested duplicate copy), graphify references/exports.md (nested duplicate copy), graphify references/extraction-spec.md (nested duplicate copy), graphify references/github-and-merge.md (nested duplicate copy), graphify references/hooks.md (nested duplicate copy), graphify references/transcribe.md (nested duplicate copy), graphify references/update.md (nested duplicate copy), graphify SKILL.md (nested duplicate copy) (+10 more)
+Cohesion: 0.07
+Nodes (38): graphify references/add-watch.md (nested duplicate copy), graphify references/exports.md (nested duplicate copy), graphify references/extraction-spec.md (nested duplicate copy), graphify references/github-and-merge.md (nested duplicate copy), graphify references/hooks.md (nested duplicate copy), graphify references/query.md (nested duplicate copy), graphify references/transcribe.md (nested duplicate copy), graphify references/update.md (nested duplicate copy) (+30 more)
 
 ### Community 21 - "Orchestration Doctrine & Roles"
 Cohesion: 0.12
@@ -227,8 +222,8 @@ Cohesion: 0.14
 Nodes (15): fs, getClaudeDir(), getConfigDir(), getConfigPath(), getDefaultMode(), isShellSafe(), os, path (+7 more)
 
 ### Community 26 - "Porcelain Theme Variables"
-Cohesion: 0.12
-Nodes (17): vars, ash, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bright (+9 more)
+Cohesion: 0.08
+Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, ash (+15 more)
 
 ### Community 27 - "OpenClaw Skill Builder"
 Cohesion: 0.21
@@ -275,8 +270,8 @@ Cohesion: 0.20
 Nodes (8): assert, fs, os, path, { pathToFileURL }, statePath, test, tmp
 
 ### Community 38 - "Trust Schema"
-Cohesion: 0.20
-Nodes (11): GitHub sponsors funding config, OpenClaw copy of ponytail-audit skill (generated), OpenClaw copy of ponytail-gain skill (generated), OpenClaw copy of ponytail-review skill (generated), OpenCode /ponytail-audit command, OpenCode /ponytail-gain command, OpenCode /ponytail-review command, Ponytail project (lazy senior dev skill) (+3 more)
+Cohesion: 0.06
+Nodes (37): Hermes after-install notes, ponytail: ceiling-comment convention, Bug fix = root cause, not symptom (grep every caller), Ruleset mirror for agents, Compact always-on ruleset (AGENTS.md), Never-lazy floor (validation, data loss, security, a11y), Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, Benchmark result: parseaddr email slip is provider-specific (OpenAI), Claude 100% (+29 more)
 
 ### Community 39 - "Behavior Gates"
 Cohesion: 0.25
@@ -311,12 +306,12 @@ Cohesion: 0.25
 Nodes (6): assert, fs, path, REQUIRED_COMMAND_FILES, root, test
 
 ### Community 47 - "Schema Manifest"
-Cohesion: 0.20
-Nodes (10): Bug fix = root cause, not symptom (grep every caller), Ruleset mirror for agents, Compact always-on ruleset (AGENTS.md), Benchmark result: Root-cause directive validated 6/6; reuse rung shipped, Ruleset mirror for clinerules, Ruleset mirror for github, CI test workflow (rule copies + versions + npm test), Ruleset mirror for kiro (+2 more)
+Cohesion: 0.29
+Nodes (6): 2026-07-02, 2026-07-03, 2026-07-04, Changelog, Config Index, Feature index
 
 ### Community 48 - "Porcelain Dark Theme"
-Cohesion: 0.29
-Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
+Cohesion: 0.83
+Nodes (3): fireChime(), fmtDuration(), sanitize()
 
 ### Community 50 - "Package Scripts"
 Cohesion: 0.33
@@ -334,56 +329,32 @@ Nodes (3): fs, path, system
 Cohesion: 0.50
 Nodes (3): fs, path, system
 
-### Community 58 - "Autocommit Script"
-Cohesion: 0.40
-Nodes (4): autocommit.sh script, Autocommit snapshot infra (launchd + pre-commit), ~/.pi/agent config repo overview, Malleable schema policy
-
 ### Community 60 - "Publish Workflow"
-Cohesion: 0.31
-Nodes (8): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir(), SubagentDetails
-
-### Community 62 - "execute"
-Cohesion: 0.32
-Nodes (8): execute(), getFinalOutput(), getResultOutput(), isFailedResult(), isSonnetModel(), mapWithConcurrencyLimit(), runSingleAgent(), writePromptToTempFile()
-
-### Community 63 - "ponytail-debt skill — ponytail: comment debt ledger"
-Cohesion: 0.40
-Nodes (5): ponytail: ceiling-comment convention, Benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep, OpenClaw copy of ponytail-debt skill (generated), OpenCode /ponytail-debt command, ponytail-debt skill — ponytail: comment debt ledger
-
-### Community 64 - "graphify ref: Query/path/explain traversal"
-Cohesion: 0.50
-Nodes (4): graphify references/query.md (nested duplicate copy), graphify ref: Query/path/explain traversal, save-result self-improving feedback loop, Constrained query vocab expansion
-
-### Community 65 - "finalizeQaOutput"
 Cohesion: 0.67
-Nodes (3): finalizeQaOutput(), parseQaVerdict(), persistReworkCount()
-
-### Community 66 - "ponytail-help skill — Quick-reference card"
-Cohesion: 0.67
-Nodes (3): OpenClaw copy of ponytail-help skill (generated), OpenCode /ponytail-help command, ponytail-help skill — Quick-reference card
+Nodes (3): doRender off-screen clamp, pi-tui scrollback-wipe fix, Viewport reflow on content collapse
 
 ## Knowledge Gaps
-- **578 isolated node(s):** `$comment`, `schemaVersion`, `targets`, `$comment`, `expected` (+573 more)
+- **582 isolated node(s):** `Feature index`, `2026-07-04`, `2026-07-03`, `2026-07-02`, `$comment` (+577 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **6 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.999594455)
-- `~/.pi/agent config repo overview` (3× useful, score=2.999564303)
+- `Config Index (semantic audit map)` (3× useful, score=2.999586216) _(code changed — re-verify)_
+- `~/.pi/agent config repo overview` (3× useful, score=2.999556064)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `TUI Extensions & Config Index` to `Heuristics Extension`, `Keybindings Schema`, `Subagent Dispatch Tool`, `Void Black-Hole TUI`, `Porcelain Dark Theme`, `Porcelain Light Theme`, `Orchestration Doctrine & Roles`, `Autocommit Script`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.261) - this node is a cross-community bridge._
-- **Why does `~/.pi/agent config repo overview` connect `Autocommit Script` to `TUI Extensions & Config Index`, `Graphify Skill (nested copy)`, `Trust Schema`?**
-  _High betweenness centrality (0.100) - this node is a cross-community bridge._
-- **Why does `Ponytail project (lazy senior dev skill)` connect `Trust Schema` to `ponytail-help skill — Quick-reference card`, `Schema Manifest`, `Brand & Chart Assets`, `Autocommit Script`, `ponytail-debt skill — ponytail: comment debt ledger`?**
-  _High betweenness centrality (0.067) - this node is a cross-community bridge._
-- **What connects `$comment`, `schemaVersion`, `targets` to the rest of the system?**
-  _606 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Why does `Ponytail project (lazy senior dev skill)` connect `Trust Schema` to `Brand & Chart Assets`, `Graphify Skill (nested copy)`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `properties` connect `Heuristic Entry Schema` to `Keybindings Schema`?**
+  _High betweenness centrality (0.006) - this node is a cross-community bridge._
+- **Why does `~/.pi/agent config repo overview` connect `Graphify Skill (nested copy)` to `Trust Schema`?**
+  _High betweenness centrality (0.005) - this node is a cross-community bridge._
+- **What connects `Feature index`, `2026-07-04`, `2026-07-03` to the rest of the system?**
+  _610 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**
