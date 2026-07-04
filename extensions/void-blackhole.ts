@@ -853,8 +853,8 @@ class BlackHoleComponent {
 					const h = (((col * 73856093) ^ (row * 19349663)) >>> 0) % 97;
 					const tw =
 						0.5 + 0.5 * Math.sin(this.elapsed * 2.1 + (h / 97) * Math.PI * 2);
-					const doppler = 0.66 + 0.34 * (dx / Math.sqrt(d2));
-					stamp(col, row, (0.8 + 0.2 * tw) * doppler);
+					const doppler = 0.78 + 0.22 * (dx / Math.sqrt(d2));
+					stamp(col, row, (0.85 + 0.15 * tw) * doppler);
 				}
 			}
 		}
@@ -874,9 +874,17 @@ class BlackHoleComponent {
 
 		// -- near-side disk: matter between the camera and the hole, drawn
 		// after the carve so it physically crosses in front of the shadow's
-		// lower half — the foreground band of the Interstellar shot --
+		// lower half — the foreground band of the Interstellar shot. Where
+		// the band overlaps the shadow it is laid down semi-transparently,
+		// so the black disc keeps reading through the crossing matter --
 		for (let k = 0; k < front.length; k += 3) {
-			deposit(front[k], front[k + 1], front[k + 2]);
+			const fcol = front[k];
+			const frow = front[k + 1];
+			let fb = front[k + 2];
+			const fdx = (fcol - cx) / holeRx;
+			const fdy = (frow - cy) / holeRy;
+			if (fdx * fdx + fdy * fdy < 1.0) fb *= 0.45;
+			deposit(fcol, frow, fb);
 		}
 
 		// -- planets: single-glyph bodies riding the disk at their own
