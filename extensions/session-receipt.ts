@@ -62,6 +62,7 @@ export default function (pi: ExtensionAPI) {
 			let tokensIn = 0;
 			let tokensOut = 0;
 			let cost = 0;
+			let subagentCost = 0;
 			const toolCounts = new Map<string, number>();
 			const filesTouched = new Set<string>();
 
@@ -73,6 +74,12 @@ export default function (pi: ExtensionAPI) {
 
 				if (entry.type !== "message") continue;
 				const message = entry.message;
+				if (message?.role === "toolResult" && (message as { toolName?: string }).toolName === "subagent") {
+					// Delegated subagent spend lives in the persisted tool result details.
+					const details = (message as { details?: { results?: Array<{ usage?: { cost?: number } }> } }).details;
+					for (const r of details?.results ?? []) subagentCost += r.usage?.cost ?? 0;
+					continue;
+				}
 				if (!message || message.role !== "assistant") continue;
 
 				const assistant = message as AssistantMessage;
@@ -124,7 +131,7 @@ export default function (pi: ExtensionAPI) {
 				`${theme.fg("muted", label("duration"))}${duration}`,
 				`${theme.fg("muted", label("turns"))}${turns}`,
 				`${theme.fg("muted", label("tokens"))}${fmtTokens(tokensIn)} in \u00b7 ${fmtTokens(tokensOut)} out`,
-				`${theme.fg("muted", label("cost"))}${fmtCost(cost)}`,
+				`${theme.fg("muted", label("cost"))}${fmtCost(cost + subagentCost)}${subagentCost > 0 ? theme.fg("dim", ` (${fmtCost(subagentCost)} agents)`) : ""}`,
 				`${theme.fg("muted", label("tools"))}${topTools || "none"}`,
 				`${theme.fg("muted", label("files"))}${filesLine}`,
 				theme.fg("dim", "\u2500".repeat(29)),
