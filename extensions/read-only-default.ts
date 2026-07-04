@@ -62,8 +62,14 @@ const DESTRUCTIVE_PATTERNS = [
 	/\b(vim?|nano|emacs|code|subl)\b/i,
 ];
 
+// Redirections that cannot write a file: to /dev/null (any fd, incl. &> and >>)
+// or fd duplications like 2>&1. Stripped before destructive-pattern matching so
+// read-only commands such as `grep foo 2>/dev/null` pass freely in confirm mode.
+const SAFE_REDIRECT_RE = /(\d+|&)?>{1,2}\s*\/dev\/null|\d*>&\d+/g;
+
 function isDestructiveCommand(command: string): boolean {
-	return DESTRUCTIVE_PATTERNS.some((p) => p.test(command));
+	const sanitized = command.replace(SAFE_REDIRECT_RE, " ");
+	return DESTRUCTIVE_PATTERNS.some((p) => p.test(sanitized));
 }
 
 type Mode = "confirm" | "write" | "readonly";
