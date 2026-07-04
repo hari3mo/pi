@@ -81,17 +81,6 @@ export function projectDirFor(cwd: string): string {
 // Read path (DESIGN.md §1, §2)
 // ---------------------------------------------------------------------------
 
-const warnedBadLines = new Set<string>();
-const warnedUnreadable = new Set<string>();
-const warnedOversized = new Set<string>();
-
-export interface ReadStoreResult {
-	list: Heuristic[];
-	skipped: number;
-	unreadable: boolean;
-	capped: boolean;
-}
-
 function parseJsonl(raw: string): { list: Heuristic[]; skipped: number; capped: boolean } {
 	const allLines = raw.split("\n");
 	const capped = allLines.length > MAX_READ_LINES;
@@ -136,36 +125,16 @@ async function readFileCapped(filePath: string, sizeBytes: number): Promise<{ ra
 }
 
 /** Lock-free read. Skips bad lines, dedups by id (last wins), caps at 5000 lines / 2MB. */
-export async function readStore(dir: string, notify?: (msg: string) => void): Promise<ReadStoreResult> {
+export async function readStore(dir: string): Promise<Heuristic[]> {
 	const filePath = path.join(dir, JSONL_NAME);
 	let raw: string;
-	let oversized = false;
 	try {
 		const st = await fsp.stat(filePath);
-		const capped = await readFileCapped(filePath, st.size);
-		raw = capped.raw;
-		oversized = capped.oversized;
-	} catch (err) {
-		if ((err as NodeJS.ErrnoException).code === "ENOENT") {
-			return { list: [], skipped: 0, unreadable: false, capped: false };
-		}
-		if (!warnedUnreadable.has(dir)) {
-			warnedUnreadable.add(dir);
-			notify?.(`Could not read ${filePath}; treating as empty.`);
-		}
-		return { list: [], skipped: 0, unreadable: true, capped: false };
+		raw = (await readFileCapped(filePath, st.size)).raw;
+	} catch {
+		return [];
 	}
-	if (oversized && !warnedOversized.has(dir)) {
-		warnedOversized.add(dir);
-		notify?.(`${filePath} exceeds ${MAX_READ_BYTES} bytes; only the first ${MAX_READ_BYTES} bytes were read.`);
-	}
-	const { list, skipped, capped } = parseJsonl(raw);
-	if ((skipped > 0 || capped) && !warnedBadLines.has(dir)) {
-		warnedBadLines.add(dir);
-		if (skipped > 0) notify?.(`Skipped ${skipped} malformed line(s) in ${filePath}.`);
-		if (capped) notify?.(`${filePath} exceeds ${MAX_READ_LINES} lines; only the first ${MAX_READ_LINES} were read.`);
-	}
-	return { list, skipped, unreadable: false, capped: capped || oversized };
+	return parseJsonl(raw).list;
 }
 
 // mtime-cached read path used only for injection (never writes).
@@ -175,23 +144,22 @@ function sleep(ms: number): Promise<void> {
 	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-/** Lock-free, cached by mtime. Re-stats before each injection; reloads only on change. */
+/**
+ * Lock-free, cached by mtime. Re-stats before each injection; reloads only on
+ * change. On ENOENT, returns [] directly: atomicWrite renames into place, so
+ * there's no window where the file briefly doesn't exist during a write.
+ */
 export async function readStoreForInjection(dir: string): Promise<Heuristic[]> {
 	const filePath = path.join(dir, JSONL_NAME);
 	let stat: fs.Stats;
 	try {
 		stat = await fsp.stat(filePath);
 	} catch {
-		await sleep(READ_RETRY_MS);
-		try {
-			stat = await fsp.stat(filePath);
-		} catch {
-			return [];
-		}
+		return [];
 	}
 	const cached = injectionCache.get(dir);
 	if (cached && cached.mtimeMs === stat.mtimeMs) return cached.list;
-	const { list } = await readStore(dir);
+	const list = await readStore(dir);
 	injectionCache.set(dir, { mtimeMs: stat.mtimeMs, list });
 	return list;
 }
