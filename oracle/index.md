@@ -56,7 +56,7 @@ integration pass from `_fragments/index-*.md`. See [[SCHEMA]] for conventions.*
 - [[concepts/knowledge-graph-integration]] — Graph-first over grep (~30x cheaper), the strict Oracle-vs-graph division of labor, and the cwd-resolution gotcha. ( #pi #graph #concept)
 - [[concepts/orchestration-doctrine]] — Fable's judgment-at-decision-points philosophy: a lead touches each task twice (dispatch + judge) and delegates everything between. ( #pi #orchestration #concept)
 - [[concepts/rework-loop]] — Verification as a bounce-back gate: peer returns PASS / FAIL:implementation / FAIL:design, looped to a session-level 3-FAIL ceiling. ( #pi #orchestration #concept)
-- [[concepts/routing-and-roles]] — Scale-first routing (Micro/Standard/Large) and the role roster with pinned model tiers (scout/worker/engineer/verifier/peer/reviewer/fable-engineer). ( #pi #orchestration #concept)
+- [[concepts/routing-and-roles]] — Scale-first routing (Micro/Standard/Large) and the role roster with pinned model tiers (scout/worker/engineer/doctor/peer/lawyer/fable-engineer). ( #pi #orchestration #concept)
 - [[concepts/self-audit-loop]] — The harness audits itself every session and turns its own problems into prompts: validator + pipeline audit, prose→code, errors integrated downstream. ( #pi #config #concept)
 - [[synthesis/prose-to-code-promotion]] — The unifying pattern: standing prose rules are promoted to extensions/validator-checks/hooks because prompts drift and enforcement does not. ( #pi #extensions #synthesis)
 

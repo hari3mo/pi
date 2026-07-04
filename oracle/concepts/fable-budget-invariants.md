@@ -33,7 +33,7 @@ land on judgment, not on reading and re-verifying.
 - **≤1 targeted read ≤50 lines before dispatch.** After the `graph` tool has
   been tried for structure questions, a locating grep that misses once →
   dispatch a `scout`. The lead does not spelunk.
-- **Never verify by reading.** Verification goes to `verifier`/`peer`. The lead
+- **Never verify by reading.** Verification goes to `doctor`/`peer`. The lead
   judging a return is not the same as the lead re-reading the whole diff to
   self-check — that is what the gate role is for.
 - **Batch dispatches.** All independent dispatches go in ONE parallel call;
@@ -43,7 +43,7 @@ land on judgment, not on reading and re-verifying.
   highest-leverage token spend. A generous, precise spec that one-shots beats a
   terse one that triggers rework chains (see [[concepts/rework-loop]]).
 - **Blind fan-out for expensive-to-unwind calls.** Dispatch `engineer` +
-  `reviewer` in parallel where neither sees the other; the lead spends only on
+  `lawyer` in parallel where neither sees the other; the lead spends only on
   reconciliation.
 - **GRAPH-FIRST.** When `graphify-out/graph.json` exists, answer
   structure/architecture questions with the `graph` tool before dispatching a
