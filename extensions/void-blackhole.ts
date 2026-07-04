@@ -102,8 +102,8 @@ const ART_MAX_ROWS = 64;
 
 // Landing-page chrome: the wordmark (figlet "larry3d" — extruded 3D
 // letterforms), stamped into the art as exact glyphs on a cleared plate so
-// the letterforms stay crisp against the starfield. Rendered dim (terminal
-// default foreground), readable on both light and dark themes.
+// the letterforms stay crisp against the starfield. Rendered in the normal
+// foreground, with only the glint accented, so it stays readable on dark themes.
 const WORDMARK = [
 	" __",
 	"/\\ \\                       __",
@@ -310,7 +310,7 @@ const smoothstep = (e0: number, e1: number, x: number): number => {
 	return t * t * (3 - 2 * t);
 };
 
-const DIM = "\x1b[2m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
+const DIM = "\x1b[2m"; // low-brightness art ink
 const BOLD = "\x1b[1m";
 const RESET = "\x1b[0m";
 
@@ -1081,12 +1081,10 @@ class BlackHoleComponent {
 		}
 
 		// -- landing-page chrome: wordmark and tagline, drawn last so nothing
-		// washes them out. The tagline is stamped onto a cleared plate (the
-		// cells behind it swept dark, one cell of margin either side) so it
-		// reads crisply instead of dissolving into the disk. The wordmark is
-		// drawn with no plate so the spiral shows through behind/between its
-		// letterforms. The slanted block is left-aligned as a unit; only the
-		// block is centered.
+		// washes them out. Both are stamped onto cleared plates (the cells behind
+		// them swept dark, one cell of margin either side) so they read crisply
+		// instead of dissolving into the disk. The slanted wordmark is
+		// left-aligned as a unit; only the block is centered.
 		const stampAt = (
 			col: number,
 			row: number,
@@ -1123,7 +1121,7 @@ class BlackHoleComponent {
 		if (rows >= 16 && artW >= markW + 6) {
 			markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
-				stampAt(markCol, markRow + i, WORDMARK[i], 2, markW, false);
+				stampAt(markCol, markRow + i, WORDMARK[i], 2, markW);
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
@@ -1155,7 +1153,7 @@ class BlackHoleComponent {
 					b >= 2
 						? Math.abs(col - markCol + (row - markRow) - glintPos) < 3
 							? glintTier
-							: DIM
+							: ""
 						: b < 0.4
 							? DIM
 							: b < 0.95
@@ -1226,20 +1224,19 @@ export default function (pi: ExtensionAPI) {
 						const pos = phase % range;
 						const bandWidth = 3;
 						// Glint runs render in the theme's accent color (the same
-						// token the docs call out for "logo" use) plus BOLD, not just
-						// BOLD alone — on dark themes bold-vs-dim ink is nearly the
-						// same brightness, so the sweep needs a hue shift to read as
-						// a highlight instead of disappearing into the base tier.
+						// token the docs call out for "logo" use) plus BOLD. The base
+						// wordmark stays normal foreground; dim ink disappears on dark
+						// themes before the sweep reaches it.
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier: "" | "dim" | "glint" = "";
+							let tier: "" | "base" | "glint" = "";
 							let run = "";
 							const flush = () => {
 								if (!run) return;
 								out +=
 									tier === "glint"
 										? RESET + BOLD + theme.fg("accent", run)
-										: RESET + DIM + run;
+										: RESET + run;
 								run = "";
 							};
 							for (let x = 0; x < line.length; x++) {
@@ -1248,8 +1245,8 @@ export default function (pi: ExtensionAPI) {
 									run += ch;
 									continue;
 								}
-								const want: "dim" | "glint" =
-									Math.abs(x + y - pos) < bandWidth ? "glint" : "dim";
+								const want: "base" | "glint" =
+									Math.abs(x + y - pos) < bandWidth ? "glint" : "base";
 								if (want !== tier) {
 									flush();
 									tier = want;
