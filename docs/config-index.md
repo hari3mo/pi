@@ -61,7 +61,9 @@ automatically as part of the post-edit flow.
 findings); `AGENTS.md` routing/Context Hygiene now name `scout` as the
 concrete dispatch target and close the "targeted reads" loophole. Why: the
 fable lead was doing bulk exploration itself — no mechanical read-only agent
-existed to trigger.
+existed to trigger. Follow-up same day: routing rule now allows parallel
+scout fan-out for independent questions (single coherent trace stays with
+one scout).
 
 ### 2026-07-03
 
