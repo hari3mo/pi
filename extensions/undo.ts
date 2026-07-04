@@ -26,8 +26,9 @@
 import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
 import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
-import { tmpdir } from "node:os";
-import { dirname, join, resolve } from "node:path";
+import { homedir, tmpdir } from "node:os";
+import { dirname, isAbsolute, join, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 
 import { getAgentDir, isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import type {
@@ -62,6 +63,9 @@ interface DiskManifest {
 
 const MAX_BACKUP_BYTES = 25 * 1024 * 1024;
 const BACKUP_TTL_DAYS = 14;
+
+/** Unicode space variants normalized by pi's tool path handling. */
+const UNICODE_SPACES = /[\u00A0\u2000-\u200A\u202F\u205F\u3000]/g;
 
 /** git commit-tree fails without a configured identity; pin a stable synthetic one. */
 const GIT_IDENTITY_ENV: NodeJS.ProcessEnv = {
@@ -103,12 +107,12 @@ function checkpointDir(sessionId: string, checkpointId: string): string {
 	return join(sessionDir(sessionId), sanitizeId(checkpointId));
 }
 
-/** Read+parse manifest.json; on any error (missing, corrupt) return an empty manifest. */
+/** Read+parse manifest.json; on any error (missing, corrupt, wrong shape) return an empty manifest. */
 async function readDiskManifest(dir: string): Promise<DiskManifest> {
 	try {
 		const raw = await readFile(join(dir, "manifest.json"), "utf8");
 		const parsed = JSON.parse(raw) as DiskManifest;
-		return parsed;
+		return Array.isArray(parsed?.entries) ? parsed : { version: 1, entries: [] };
 	} catch {
 		return { version: 1, entries: [] };
 	}
@@ -327,8 +331,33 @@ export default function (pi: ExtensionAPI) {
 		return undefined;
 	}
 
-	function stripLeadingAt(path: string): string {
-		return path.startsWith("@") ? path.slice(1) : path;
+	/**
+	 * Mirror pi's own write/edit path resolution (resolveToCwd): normalize
+	 * unicode spaces, strip a leading "@", expand "~", handle file:// URLs,
+	 * then resolve against cwd. The backed-up path must equal the path the
+	 * tool actually mutates.
+	 */
+	function normalizeToolPath(input: string, stripAt: boolean): string {
+		let normalized = input;
+		if (stripAt) {
+			normalized = normalized.replace(UNICODE_SPACES, " ");
+			if (normalized.startsWith("@")) normalized = normalized.slice(1);
+		}
+		const home = homedir();
+		if (normalized === "~") return home;
+		if (normalized.startsWith("~/") || (process.platform === "win32" && normalized.startsWith("~\\"))) {
+			return join(home, normalized.slice(2));
+		}
+		if (/^file:\/\//.test(normalized)) {
+			return fileURLToPath(normalized);
+		}
+		return normalized;
+	}
+
+	function resolveToolPath(input: string, cwd: string): string {
+		const normalized = normalizeToolPath(input, true);
+		const normalizedBase = normalizeToolPath(cwd, false);
+		return isAbsolute(normalized) ? resolve(normalized) : resolve(normalizedBase, normalized);
 	}
 
 	function extractPromptText(content: string | (TextContent | ImageContent)[]): string {
@@ -377,7 +406,7 @@ export default function (pi: ExtensionAPI) {
 			if (!ckpt || ckpt.data?.sha) return; // git snapshot covers this prompt
 			const sid = ctx.sessionManager.getSessionId();
 			if (!sid) return;
-			const abs = resolve(ctx.cwd, stripLeadingAt(rawPath));
+			const abs = resolveToolPath(rawPath, ctx.cwd);
 			await backupBeforeMutation(sid, ckpt.id, abs);
 		} catch {
 			// best-effort; never block the tool
