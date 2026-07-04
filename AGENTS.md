@@ -115,10 +115,14 @@ Opus complexity test — ANY of: 3+ independent parallelizable workstreams;
 scope that would burn a large fraction of context inline; mechanical work
 at volume. Otherwise opus works directly.
 
-The lead MUST delegate to `builder` when ANY of: modifies 2+ files; writes
-a new code file; changes > ~20 lines in one file; adds/changes tests; is
-mechanical repetition. Exception: small-but-hard tasks (design and
-implementation inseparable) go whole to `solo-engineer` instead.
+The lead MUST delegate (never edit/write directly) when ANY of: modifies
+2+ files; writes a new code file; changes > ~20 lines in one file;
+adds/changes tests; is mechanical repetition. WHO gets the dispatch is
+decided by the Delegation Gate's scale rules, not this list: `builder`
+only for micro or genuinely mechanical work; `solo-engineer` for whole
+bounded tasks beyond micro (a new module of real size is single-session
+scope, not a builder job); small-but-hard tasks (design and implementation
+inseparable) also go whole to `solo-engineer`.
 
 The lead MUST route through `scope-planner`/`architect` first when ANY of:
 
