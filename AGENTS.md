@@ -115,9 +115,9 @@ orchestrator decides.
 - **Investigation at volume** (tracing an unfamiliar flow, digesting long
   logs/stack traces/test output, exploring 3+ files) → a read-only
   dispatch: `scope-planner` when the question is "what is the problem",
-  `qa-reviewer` when it is "is this correct", mechanical tier for pure
-  fact-finding ("list all callers of X"). The lead keeps targeted reads
-  only — see Context Hygiene.
+  `qa-reviewer` when it is "is this correct", `scout` for pure
+  fact-finding ("list all callers of X", "where is Y rendered"). The
+  lead keeps targeted reads only — see Context Hygiene.
 - **High-stakes calls** → architect + `peer-engineer` in parallel, neither
   seeing the other's answer; the orchestrator synthesizes
 
@@ -183,15 +183,17 @@ material:
   ranges to frame a problem, route a task, or spot-check a returned diff.
 - Bulk investigation MUST be delegated: exploring 3+ files, tracing an
   unfamiliar flow end-to-end, or digesting long logs, stack traces, or
-  test output. Dispatch a read-only agent and consume its `file:line`
-  findings.
+  test output. Dispatch `scout` (or scope-planner/qa-reviewer per the
+  routing rules) and consume its `file:line` findings. "Targeted reads"
+  is not a loophole: the third file or first long trace on unfamiliar
+  code IS the trigger — stop and dispatch.
 - Never page a subagent's raw inputs back into the lead to "double
   check": review the returned summary/diff, spot-check narrow ranges,
   or dispatch an independent re-check. If verifying the work requires
   the lead to re-read everything, the delegation contract was wrong —
   fix the contract, not the hygiene rule.
 - Mid-task escalation applies to reading too: if a "quick look" grows
-  into a third file or a long trace, STOP and dispatch.
+  into a third file or a long trace, STOP and dispatch `scout`.
 
 ## Delegation Contracts
 
