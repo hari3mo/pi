@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
 | Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
 | Chat title | `extensions/chat-title.ts` | Sets the terminal tab/window title to project + condensed last prompt, prefixed with a live session timer. |
@@ -50,6 +51,25 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Self-audit loop made structural; graph hubs fixed; stray `.pi/` duplicate removed.**
+Added `extensions/self-audit.ts`: runs `scripts/validate-config.py` at session start and
+injects failures into the system prompt (zero cost when clean); `/audit` re-runs on
+demand. Validator gained `check_installed_integrity()` guarding the three fixes that
+live outside tracked config: the graphify post-commit doc filter (ERROR if regenerated
+without it), absence of a graphify post-checkout hook (ERROR), and the pi-tui scrollback
+patch markers in the installed dist (WARN after `pi update` overwrites). AGENTS.md →
+Config Maintenance gained a "Self-Audit Loop (standing)" subsection codifying
+validator-as-prompt, graph-as-map, and lessons-close-the-loop. `graphify-bridge.ts` hub
+picker now ignores `contains` tree edges and dedupes labels (hubs were theme-JSON noise:
+"colors, colors, store.ts" → "Config Index, Orchestration Doctrine, ..."). Deleted the
+stray `.pi/agent/skills/graphify/` nested duplicate (12 files, byte-identical to
+`skills/graphify/`) and pruned its nodes from the graph. Files: `extensions/self-audit.ts`
+(new), `scripts/validate-config.py`, `extensions/graphify-bridge.ts`, `AGENTS.md`,
+`docs/config-index.md`, `.pi/` (deleted). Why: user directive — self-improvement and
+self-audit are paramount to pi's function; every fragile fix now has a code guard that
+turns silent regressions into visible prompts.
+
 
 **Graphify native integration: self-auditing knowledge graph of the harness.**
 Built a graphify knowledge graph of `~/.pi/agent` (1,123 nodes / 1,564 edges, AST +

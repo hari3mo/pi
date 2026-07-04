@@ -117,6 +117,20 @@ early, before the budget runs out.
 - Heuristics about pi itself (harness, delegation, tooling) go to the GLOBAL scope in
   `learn_heuristic`.
 
+### Self-Audit Loop (standing)
+
+The harness audits itself; problems become prompts:
+
+- `scripts/validate-config.py` runs at session start (`extensions/self-audit.ts`) and
+  injects any ERROR/WARN into the system prompt — fix them when the task allows, or
+  surface them. The same validator gates every snapshot commit; `/audit` re-runs it.
+- The knowledge graph (`graphify-out/`, `extensions/graphify-bridge.ts`) is the live map
+  of this config: answer structure/architecture questions with the `graph` tool before
+  reading files. Code commits rebuild it automatically (post-commit hook); doc changes
+  mark it STALE until `/graphify --update`.
+- Lessons close the loop: graph queries save results back (`--outcome`), `reflect`
+  distills them, and `learn_heuristic` persists durable ones.
+
 ## Enforced in Code (no action needed)
 
 - `extensions/read-only-default.ts` hard-blocks fable `edit`/`write` calls in all gate
