@@ -13,13 +13,11 @@
 		"rose": "#a1494f",
 		"amber": "#9c6b12",
 		"mist": "#3f6e73",
-		"violet": "#6b4fa0",
 		"bgRaise": "#f1f1ef",
 		"bgSelect": "#e6e2da",
 		"bgTool": "#f4f4f2",
 		"bgToolOk": "#eef3ec",
-		"bgToolErr": "#f6ecec",
-		"bgCustom": "#f0eef5"
+		"bgToolErr": "#f6ecec"
 	},
 	"colors": {
 		"accent": "bronze",
@@ -37,9 +35,9 @@
 		"selectedBg": "bgSelect",
 		"userMessageBg": "bgRaise",
 		"userMessageText": "ink",
-		"customMessageBg": "bgCustom",
+		"customMessageBg": "bgRaise",
 		"customMessageText": "ink",
-		"customMessageLabel": "violet",
+		"customMessageLabel": "bronze",
 		"toolPendingBg": "bgTool",
 		"toolSuccessBg": "bgToolOk",
 		"toolErrorBg": "bgToolErr",
