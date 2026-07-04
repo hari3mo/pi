@@ -61,6 +61,8 @@ ORACLE = AGENT_DIR / "oracle"
 REBUILD_SLACK_S = 15 * 60
 FLAG_STALE_S = 24 * 3600
 AUTOCOMMIT_STALE_S = 2 * 3600
+RAW_STALE_S = 14 * 24 * 3600  # oracle/_raw drafts older than this are rotting
+RAW_MAX_FILES = 5             # more than this many un-promoted drafts backs up
 RATCHET_TOLERANCE = 0.8  # warn when giant fraction < 80% of best-ever
 # The ratchet measures CONFIG-REPO cohesion only. Nodes under the vendored git/
 # subtree (git/github.com/DietrichGebert/ponytail — a registered pi extension
@@ -393,6 +395,34 @@ def check_lead_profile_coverage() -> None:
             "profile or extend a match pattern in config/lead-profiles.json")
 
 
+def check_raw_staging_rot() -> None:
+    # Fast path: a directory listing. knowledge-compound.ts stages draft synthesis
+    # notes into oracle/_raw/ for MANUAL promotion (oracle/SCHEMA.md query-
+    # compounding rule); nothing else watches it, so drafts rot silently. WARN
+    # when the backlog grows (> RAW_MAX_FILES) or a draft has sat unpromoted for
+    # > 14 days. Fail open: no vault / no _raw dir -> skip (not an error).
+    raw = ORACLE / "_raw"
+    if not raw.is_dir():
+        return
+    files = [p for p in raw.iterdir() if p.is_file() and not p.name.startswith(".")]
+    if not files:
+        return
+    now = time.time()
+    stale = [p for p in files if now - p.stat().st_mtime > RAW_STALE_S]
+    if len(files) <= RAW_MAX_FILES and not stale:
+        return
+    reasons: list[str] = []
+    if len(files) > RAW_MAX_FILES:
+        reasons.append(f"{len(files)} staged draft(s) (> {RAW_MAX_FILES})")
+    if stale:
+        oldest_days = int((now - min(p.stat().st_mtime for p in stale)) / 86400)
+        reasons.append(f"{len(stale)} older than 14d (oldest ~{oldest_days}d)")
+    warnings.append(
+        f"pipeline: oracle/_raw staging is backing up ({'; '.join(reasons)}) — review "
+        "and promote to synthesis/ (or delete) per oracle/SCHEMA.md's query-compounding "
+        "rule so knowledge-compound drafts don't rot unreviewed")
+
+
 def check_reflection_drift() -> None:
     mem = OUT / "memory"
     lessons = OUT / "reflections" / "LESSONS.md"
@@ -447,6 +477,7 @@ def main() -> int:
     check_connectivity_ratchet()
     check_graph_first_drift()
     check_lead_profile_coverage()
+    check_raw_staging_rot()
     check_reflection_drift()
     check_toolchain_versions()
     check_oracle_staleness()
