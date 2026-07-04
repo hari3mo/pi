@@ -3,7 +3,8 @@
  * ported to pi's TUI.
  *
  * Runs as pi's TUI landing page on startup — it holds the screen with a
- * harimo wordmark and the working directory until a key is pressed — and stays
+ * harimo wordmark and the working directory until a key is pressed, and
+ * replaces pi's built-in header wordmark with the same harimo mark — and stays
  * available as /void: a supermassive black hole with a gravity-driven
  * accretion disk. Every particle free-falls under Newtonian gravity, whirls
  * faster as angular momentum hauls it in, heats up (brighter glyph), vanishes
