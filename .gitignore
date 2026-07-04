@@ -34,6 +34,9 @@ trust.json
 # ---- conversation logs (large; may contain pasted secrets) ----
 sessions/
 
+# ---- undo extension pre-mutation backups (snapshots of arbitrary project files) ----
+undo-backups/
+
 # ---- third-party binaries (reproducible via brew; not config) ----
 bin/
 
