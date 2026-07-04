@@ -147,7 +147,7 @@ const GraphParams = Type.Object({
 		description:
 			"query: BFS traversal answering a question. explain: one node + its connections. path: shortest path between two concepts. status: size/hubs/staleness.",
 	}),
-	q: Type.Optional(Type.String({ description: "Question (query), node name (explain), or path start (path)" })),
+	q: Type.Optional(Type.String({ description: "Question (query; include concrete graph vocabulary), node name (explain; prefer exact identifiers), or path start (path)" })),
 	target: Type.Optional(Type.String({ description: "Path end node (path action only)" })),
 	budget: Type.Optional(Type.Number({ description: "Token budget for query output (default 2000)" })),
 });
@@ -182,7 +182,7 @@ export default function (pi: ExtensionAPI) {
 		name: "graph",
 		label: "Graph",
 		description:
-			"Query the nearest graphify knowledge graph; if cwd has none, query the pi agent config graph. Actions: query (answer a question via traversal), explain (a node and its connections), path (shortest path between two concepts), status (size, hubs, staleness).",
+			"Query the nearest graphify knowledge graph; if cwd has none, query the pi agent config graph. Actions: query (BFS; phrase around distinctive identifiers), explain (one exact node + connections), path (shortest path), status (size/hubs/staleness).",
 		parameters: GraphParams,
 
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {

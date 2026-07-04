@@ -23,7 +23,8 @@
 
 import { existsSync, statSync } from "node:fs";
 import { isAbsolute, join, relative, resolve } from "node:path";
-import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { getAgentDir, type ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { isReloadResource } from "./lib/config-paths.ts";
 import { findGraphRoot, inboundRefs, isGraphStale, loadGraph, markSeen, OUT } from "./lib/graph-lookup.ts";
 
 const MAX_LIST = 10;
@@ -48,6 +49,7 @@ export function pendingDependents(
 export default function (pi: ExtensionAPI) {
 	let root: string | undefined;
 	const reportedFiles = new Set<string>(); // debounce: files already reported (once per session)
+	const reloadReported = new Set<string>(); // reload-resource reminders already sent
 	const flaggedAt = new Map<string, number>(); // dependent → edit-seq when last flagged
 	const editedAt = new Map<string, number>(); // file → edit-seq of its last edit
 	let editSeq = 0; // monotonic edit counter (orders flags vs edits)
@@ -57,6 +59,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		root = findGraphRoot(ctx.cwd);
 		reportedFiles.clear();
+		reloadReported.clear();
 		flaggedAt.clear();
 		editedAt.clear();
 		editSeq = 0;
@@ -68,12 +71,25 @@ export default function (pi: ExtensionAPI) {
 		try {
 			if (event.toolName !== "edit" && event.toolName !== "write") return;
 			if (event.isError) return;
-			if (!root || !existsSync(join(root, OUT, "graph.json"))) return;
 
 			const input = event.input as { path?: string; file_path?: string };
 			const rawPath = input.path ?? input.file_path;
 			if (!rawPath) return;
 			const abs = isAbsolute(rawPath) ? rawPath : resolve(ctx.cwd, rawPath);
+
+			const agentRel = relative(resolve(getAgentDir()), abs);
+			if (agentRel && !agentRel.startsWith("..") && !isAbsolute(agentRel) && isReloadResource(agentRel) && markSeen(reloadReported, agentRel)) {
+				pi.sendMessage(
+					{
+						customType: "reload-resource-reminder",
+						display: true,
+						content: `[reload] ${agentRel} is loaded at session start; run /refresh (or /reload) before expecting this session to use the new version.`,
+					},
+					{ deliverAs: "nextTurn" },
+				);
+			}
+
+			if (!root || !existsSync(join(root, OUT, "graph.json"))) return;
 			const rel = relative(root, abs);
 			if (!rel || rel.startsWith("..")) return; // outside the graph root
 
