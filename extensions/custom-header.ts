@@ -88,16 +88,16 @@ export default function (pi: ExtensionAPI) {
 			ctx.ui.setHeader((_tui, theme) => {
 				return {
 					render(width: number): string[] {
-						const banner = getBanner(theme);
 						const greetingLine = `${theme.fg("muted", `   ${getGreeting()}`)}${theme.fg("dim", ` v${VERSION}`)}`;
 						const contextLineStyled = theme.fg("dim", `   ${contextLine}`);
 						const aphorismLine = theme.fg("dim", `   \x1b[3m${getAphorism()}\x1b[23m`);
-						return [
-							...banner,
+						const lines = [
 							truncateToWidth(greetingLine, width),
 							truncateToWidth(contextLineStyled, width),
 							truncateToWidth(aphorismLine, width),
 						];
+						if (width < BANNER_WIDTH) return lines;
+						return [...getBanner(theme), ...lines];
 					},
 					invalidate() {},
 				};
