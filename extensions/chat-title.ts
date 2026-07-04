@@ -11,24 +11,10 @@
  * to the left of the summary title.
  */
 
-import { homedir } from "node:os";
-import { basename, sep } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { shortenCwd } from "./lib/format.ts";
 
 const MAX_DESCRIPTOR_LEN = 42;
-
-/** Collapse an absolute cwd to a short "~/…/leaf" form, or bare basename outside home. */
-function shortenCwd(cwd: string): string {
-	const home = homedir();
-	if (cwd === home) return "~";
-	if (cwd.startsWith(home + sep)) {
-		const remainder = cwd.slice(home.length + 1);
-		const segments = remainder.split(sep).filter(Boolean);
-		const last = segments[segments.length - 1] ?? "";
-		return segments.length > 1 ? `~/\u2026/${last}` : `~/${last}`;
-	}
-	return basename(cwd) || cwd;
-}
 
 /** Turn a raw user prompt into a short, single-line descriptor for a window title. */
 function summarizePrompt(prompt: string): string {
