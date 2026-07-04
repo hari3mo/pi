@@ -16,7 +16,7 @@ Every session that changes config must update it.
 | Model awareness | `extensions/model-awareness.ts` | Keeps the LLM's system prompt aware of the live active model so the Delegation Gate model checks stay accurate across mid-session switches. |
 | Model cycle | `extensions/model-cycle.ts` | Shift+Tab cycles a fixed pinned-model list (sonnet-5 → opus-4-8 → fable-5 → gemini-3.5-flash → gpt-5.5); frees Shift+Tab by rebinding `app.thinking.cycle` to Option+Tab. |
 | pi-vcs breadcrumb | `extensions/pi-vcs-breadcrumb.ts` | Logs each pi tool-use touching a file to a breadcrumb log, folded into `.pi-vcs` autocommit messages. |
-| Write-gate default | `extensions/read-only-default.ts` | New sessions start in "confirm" mode; `/write`, `/confirm`, `/read-only` (or Ctrl+\`) switch write-access modes. |
+| Write-gate default | `extensions/read-only-default.ts` | New sessions start in "confirm" mode; `/write`, `/confirm`, `/read-only` (or Ctrl+\`) switch write-access modes; hard-blocks `edit`/`write` tool calls whenever the lead model is fable, in all gate modes, exempting spawned children via `PI_SUBAGENT=1`. |
 | Session receipt | `extensions/session-receipt.ts` | Narrow "shop receipt" summary (duration, turns, tokens, cost, tool tally, files touched); `/receipt` toggles it. |
 | Task tracker | `extensions/task-tracker.ts` | Demo `task` tool + `/tasks` command; state lives in tool-result details so branching stays correct. |
 | Void blackhole | `extensions/void-blackhole.ts` | Animated ASCII black-hole TUI landing page / `/void` screensaver with a Newtonian accretion-disk simulation. |
@@ -28,14 +28,15 @@ Every session that changes config must update it.
 | Heuristics sanitize | `extensions/heuristics/sanitize.ts` | Save-pipeline text processing: sanitize, secret redaction, generality rewrite + lint (DESIGN.md §4–§5). |
 | Heuristics schema | `extensions/heuristics/schema.ts` | Shared types/constants and dedup/scoring primitives for the heuristic entry schema (DESIGN.md §1, §6, §7, §11). |
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
-| Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output. |
+| Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes qa-reviewer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/scout.md`, `agents/shipper.md`, `agents/solo-engineer.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer → shipper, plus solo-engineer/fable-engineer/peer-engineer). |
+| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/scout.md`, `agents/solo-engineer.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer, plus solo-engineer/fable-engineer/peer-engineer). `architect` is narrowed to three cases (design fanned to 2+ builders, `FAIL: design` bounce, blind fan-out with peer-engineer); `shipper` is folded into `builder` (file deleted) — the implementing builder ships after review passes. |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
 | pi-tui scrollback fix | `patches/pi-tui-scrollback-fix.md`, `patches/pi-tui-scrollback-fix-harness.mjs`, `patches/pi-tui-scrollback-fix.harness.mjs` | Documents + regression-tests a manual patch to the installed `pi-tui` dist that stops scrollback-wiping full-redraws when content above the viewport changes; must be re-applied after pi package updates. |
-| Rework loop doc | `docs/rework-loop.md` | Defines the `qa-reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the bounded rework/retry mechanics for any QA-gated build (pipeline or solo). |
+| Rework loop doc | `docs/rework-loop.md` | Defines the `qa-reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the bounded rework/retry mechanics for any QA-gated build (pipeline or solo); documents the automatic verdict normalization + 3-FAIL session budget enforced by `extensions/subagent/index.ts`. |
+| Delegation contract template | `docs/delegation-contract.md` | Canonical skeleton (read-first, bounded problem, return contract, verification, constraints) that every dispatched task is authored against; the hygiene/return footer is auto-appended, never restated. |
 | Autocommit snapshot infra | `.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit` | launchd-triggered git auto-snapshot of config changes (tool-driven and manual editor edits alike), gated by a pre-commit hook that runs the validator. |
 | Global settings | `settings.json` | Default provider/model/thinking level, enabled model list (feeds `model-cycle.ts`), quiet-startup flag, installed packages. |
 | Keybindings | `keybindings.json` | User keybinding overrides (currently: `app.thinking.cycle` → Option+Tab to free Shift+Tab for model-cycle; session rename → Option+R). |
@@ -48,6 +49,25 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Enforcement catches up to doctrine; architect narrowed; shipper folded into builder.**
+`extensions/subagent/index.ts` now auto-appends a standing hygiene/return-contract footer
+(`STANDING_CONTRACT_FOOTER`) to every dispatched task, and normalizes qa-reviewer returns
+with a `[VERDICT: ...]` first line plus a session-level consecutive-FAIL loop budget of 3
+(`finalizeQaOutput`; ceiling: per-session and consecutive only, mid-chain qa steps not
+counted). `extensions/read-only-default.ts` hard-blocks `edit`/`write` tool calls whenever
+the lead model is fable, in all gate modes, exempting spawned children via `PI_SUBAGENT=1`.
+`agents/architect.md` narrowed to exactly three dispatch cases (design fanning to 2+
+builders, `FAIL: design` bounce, blind fan-out with peer-engineer); `agents/shipper.md`
+deleted, its duties folded into a new "Shipping" section in `agents/builder.md` (the
+implementing builder ships after review passes). Added `docs/delegation-contract.md`
+(canonical dispatch template). `AGENTS.md` and `docs/rework-loop.md` synced throughout
+(Delegation Gate pipeline list, Role Split table, Routing Rules, Rework Loop, Delegation
+Contracts, Standing Orders). Files: `extensions/subagent/index.ts`,
+`extensions/read-only-default.ts`, `agents/architect.md`, `agents/builder.md`,
+`agents/shipper.md` (deleted), `docs/delegation-contract.md`, `docs/rework-loop.md`,
+`AGENTS.md`, `docs/config-index.md`. Why: code shipped ahead of docs; this closes the gap
+and prunes a redundant role.
 
 **Doctrine suite is manual-only, not routine validation.** `AGENTS.md` →
 Config Maintenance no longer tells the agent to auto-run
