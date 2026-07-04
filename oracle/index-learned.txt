@@ -1,7 +1,0 @@
-- [[synthesis/graphify-query-craft]] — Driving the graph tool: prefer explain over lexically-anchored query, and know graphify-out resolves from cwd not the intended project. ( #pi #graph #synthesis)
-- [[synthesis/harness-environment-quirks]] — Harness traps: launchd autocommit daemon, jsonschema-PATH degradation of the pre-commit gate, validate-config blind spots, packaged-app relaunch. ( #pi #config #synthesis)
-- [[synthesis/orchestration-lessons]] — Delegation lessons: converge peer-FAILs by re-framing, re-verify subagent claims, live-fire QA extensions, pay for model tier over pipeline depth. ( #pi #orchestration #synthesis)
-- [[synthesis/pi-extension-api-gotchas]] — Extension API limits: no programmatic slash-command dispatch, sendUserMessage can't run /cmd, extensions load once per session. ( #pi #extensions #synthesis)
-- [[synthesis/pi-tui-rendering-gotchas]] — TUI layout model (viewport pinned to bottom N rows) plus width-guard and truncateToWidth rules that stop setHeader components crashing the terminal. ( #pi #tui #synthesis)
-- [[synthesis/pi-workflow-conventions]] — Standing habits & user vocabulary: refresh after editing loaded resources, use the task tool, preserve message-queue steering keys, "the void" / "status bar" meanings. ( #pi #config #synthesis)
-- [[synthesis/write-gate-and-read-only-mode]] — read-only-default & write-gate behavior: pass --write for programmatic sessions, avoid > redirects in read-only, dispatch-anyway to trigger the write-mode menu. ( #pi #extensions #synthesis)
