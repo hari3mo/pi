@@ -49,6 +49,15 @@ function runScript(script: string, args: string[], timeoutMs: number): Promise<A
 					return;
 				}
 				const problems = raw.split("\n").filter((l) => l.startsWith("ERROR") || l.startsWith("WARN"));
+				// Fail CLOSED: a non-zero exit with output but no ERROR/WARN line (e.g. a
+				// Python traceback) would otherwise report ok:true and hide the crash.
+				// Synthesize a problem line so the failure gets injected/injectable.
+				if (err && problems.length === 0) {
+					const code = typeof err.code === "number" ? err.code : (err.signal ?? "?");
+					const firstLine = raw.split("\n").find((l) => l.trim());
+					const name = script.split("/").pop() ?? script;
+					problems.push(`ERROR  audit-infra: ${name} exited ${code}${firstLine ? ` — ${firstLine.trim()}` : ""}`);
+				}
 				resolve({ ok: problems.length === 0, problems, raw });
 			},
 		);
