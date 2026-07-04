@@ -715,6 +715,7 @@ async function runSingleAgent(
 	signal: AbortSignal | undefined,
 	onUpdate: OnUpdateCallback | undefined,
 	makeDetails: (results: SingleResult[]) => SubagentDetails,
+	activeMeta?: ActiveSubagentMeta,
 ): Promise<SingleResult> {
 	const agent = agents.find((a) => a.name === agentName);
 
@@ -762,7 +763,15 @@ async function runSingleAgent(
 		step,
 	};
 
+	const activeId = activeMeta ? `active-${nextActiveSubagentId++}` : undefined;
+	const syncActive = () => {
+		if (!activeId || !activeMeta) return;
+		ACTIVE_SUBAGENT_RUNS.set(activeId, { entryId: activeId, ...activeMeta, result: currentResult });
+		notifyActiveSubagentListeners();
+	};
+
 	const emitUpdate = () => {
+		syncActive();
 		if (onUpdate) {
 			onUpdate({
 				content: [{ type: "text", text: getFinalOutput(currentResult.messages) || "(running...)" }],
@@ -887,6 +896,8 @@ async function runSingleAgent(
 	} finally {
 		if (tickTimer) clearInterval(tickTimer);
 		if (!currentResult.endTime) currentResult.endTime = Date.now();
+		syncActive();
+		if (activeId) scheduleActiveSubagentRemoval(activeId, currentResult);
 		if (tmpPromptPath)
 			try {
 				fs.unlinkSync(tmpPromptPath);
