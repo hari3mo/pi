@@ -31,7 +31,7 @@ Every session that changes config must update it.
 | pi-vcs breadcrumb | `extensions/pi-vcs-breadcrumb.ts` | Logs each pi tool-use touching a file to a breadcrumb log, folded into `.pi-vcs` autocommit messages. |
 | Write-gate default | `extensions/read-only-default.ts` | New sessions start in "confirm" mode; `/write`, `/confirm`, `/read-only` (or Ctrl+\`) switch write-access modes; hard-blocks `edit`/`write` tool calls whenever the lead model is fable, in all gate modes, exempting spawned children via `PI_SUBAGENT=1`. |
 | Session receipt | `extensions/session-receipt.ts` | Narrow "shop receipt" summary (duration, turns, tokens, cost, tool tally, files touched); `/receipt` toggles it. |
-| Task tracker | `extensions/task-tracker.ts` | Demo `task` tool + `/tasks` command; state lives in tool-result details so branching stays correct. |
+| Task tracker | `extensions/task-tracker.ts` | `task` tool + `/tasks` command with a persistent TUI widget/status; state lives in cloned tool-result details so reloads/branching stay correct. |
 | Void blackhole | `extensions/void-blackhole.ts` | Animated ASCII black-hole TUI landing page / `/void` screensaver with a Newtonian accretion-disk simulation. |
 | Shared format helpers | `extensions/lib/format.ts` | Duration/token/cwd formatting helpers shared by several extensions; not auto-loaded (lives outside `extensions/*.ts`). |
 | Continuous-learning design doc | `extensions/heuristics/DESIGN.md` | Authoritative v2 spec for the heuristics extension (storage, capture, injection, scoring, `/heuristics` command). |
