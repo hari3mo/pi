@@ -34,11 +34,11 @@ export default function graphifySafety(pi: ExtensionAPI) {
 		const command = (event.input as { command?: string }).command ?? "";
 		if (!command || !agentContext(ctx.cwd, command)) return;
 
-		if (DELETE_GRAPHIFY_OUT_RE.test(command)) {
+		if (DELETE_GRAPHIFY_OUT_RE.test(command) && process.env.PI_ALLOW_GRAPHIFY_OUT_DELETE !== "1") {
 			return {
 				block: true,
 				reason:
-					"Blocked: ~/.pi/agent/graphify-out contains the semantic cache. Restore from git/backup instead of deleting it, or set PI_ALLOW_GRAPHIFY_OUT_DELETE=1 outside pi if you really mean it.",
+					"Blocked: ~/.pi/agent/graphify-out contains the semantic cache. Restore from git/backup instead of deleting it, or set PI_ALLOW_GRAPHIFY_OUT_DELETE=1 if you really mean it.",
 			};
 		}
 
