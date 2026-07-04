@@ -762,9 +762,8 @@ async function showActiveSubagentPanel(ctx: ExtensionContext): Promise<void> {
 		// finally disposes; dispose() is idempotent. External teardown
 		// (resetExtensionUI → tui.hideOverlay()) never resolves this promise nor
 		// calls dispose(), so the finally never runs there — that gap is covered
-		// inside the panel: the spinner tick's orphan self-check disposes once
-		// render() stops being called, which clears the timer and unregisters the
-		// data listener. See ActiveSubagentPanel.syncSpinnerTimer().
+		// deterministically by the session_shutdown handler, which disposes every
+		// panel in OPEN_SUBAGENT_PANELS. See the extension factory below.
 		panel?.dispose();
 	}
 }
@@ -1085,6 +1084,16 @@ export default function (pi: ExtensionAPI) {
 		} catch {
 			/* fail open */
 		}
+	});
+
+	// Deterministic external-teardown cleanup for the active-subagents panel.
+	// session_shutdown fires on quit, /reload, /new, /resume, and /fork — the
+	// external paths that tear down custom UI (tui.hideOverlay()) without
+	// resolving the ctx.ui.custom() promise, so the finally-based dispose() never
+	// runs there. dispose() is idempotent, so double-firing with the finally is
+	// harmless.
+	pi.on("session_shutdown", async () => {
+		for (const panel of Array.from(OPEN_SUBAGENT_PANELS)) panel.dispose();
 	});
 
 	// Normalize a peer return: prepend a [VERDICT: ...] first line parsed
