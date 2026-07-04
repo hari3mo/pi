@@ -66,7 +66,7 @@ import type {
 import { VERSION } from "@earendil-works/pi-coding-agent";
 
 // ------------------------------------------------ constants (config.js) ----
-const EVENT_HORIZON = 0.3; // matter vanishes inside this radius (the shadow) —
+const EVENT_HORIZON = 0.5; // matter vanishes inside this radius (the shadow) —
 //                            smaller than the site's 0.85 so the hole doesn't
 //                            dominate the terminal frame; the visible plunge
 //                            gap between shadow and hot rim reads more real
