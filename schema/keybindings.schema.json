@@ -1,0 +1,12 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/keybindings.schema.json",
+  "title": "pi agent keybindings.json",
+  "description": "Map of action id -> list of key chords. Action ids are free-form (malleable); values must be non-empty string arrays.",
+  "type": "object",
+  "additionalProperties": {
+    "type": "array",
+    "items": { "type": "string", "minLength": 1 },
+    "minItems": 1
+  }
+}
