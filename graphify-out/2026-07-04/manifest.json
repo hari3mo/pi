@@ -1043,5 +1043,10 @@
     "mtime": 1783160135.322861,
     "ast_hash": "d19dc966d2583bfa219d58e98fcb677c",
     "semantic_hash": "d19dc966d2583bfa219d58e98fcb677c"
+  },
+  "scripts/smoke-extensions.mjs": {
+    "mtime": 1783160375.8505263,
+    "ast_hash": "054d2395b7a74bc7570cf474da5a24f1",
+    "semantic_hash": ""
   }
 }

@@ -87,7 +87,7 @@
       "label": "PKG",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L22",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_pkg",
       "community": 53,
@@ -97,7 +97,7 @@
       "label": "nm",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L27",
+      "source_location": "L29",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_nm",
       "community": 53,
@@ -107,7 +107,7 @@
       "label": "link()",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L28",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_link",
       "community": 53,
@@ -117,7 +117,7 @@
       "label": "noopProxy()",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L45",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_noopproxy",
       "community": 53,
@@ -127,7 +127,7 @@
       "label": "extDir",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L53",
+      "source_location": "L55",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_extdir",
       "community": 53,
@@ -137,11 +137,21 @@
       "label": "candidates",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L54",
+      "source_location": "L56",
       "_origin": "ast",
       "id": "scripts_smoke_extensions_candidates",
       "community": 53,
       "norm_label": "candidates"
+    },
+    {
+      "label": "jiti",
+      "file_type": "code",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L68",
+      "_origin": "ast",
+      "id": "scripts_smoke_extensions_jiti",
+      "community": 53,
+      "norm_label": "jiti"
     },
     {
       "label": "self-audit.ts",
@@ -327,7 +337,7 @@
       "source_file": "extensions/chat-title.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 56,
+      "community": 28,
       "norm_label": "chat-title.ts",
       "id": "extensions_chat_title"
     },
@@ -337,7 +347,7 @@
       "source_file": "extensions/chat-title.ts",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 56,
+      "community": 28,
       "norm_label": "summarizeprompt()",
       "id": "extensions_chat_title_summarizeprompt"
     },
@@ -347,7 +357,7 @@
       "source_file": "extensions/chat-title.ts",
       "source_location": "L38",
       "_origin": "ast",
-      "community": 56,
+      "community": 28,
       "norm_label": "formatelapsed()",
       "id": "extensions_chat_title_formatelapsed"
     },
@@ -357,7 +367,7 @@
       "source_file": "extensions/chat-title.ts",
       "source_location": "L54",
       "_origin": "ast",
-      "community": 56,
+      "community": 28,
       "norm_label": "applytitle()",
       "id": "extensions_chat_title_applytitle"
     },
@@ -367,7 +377,7 @@
       "source_file": "extensions/chat-title.ts",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 56,
+      "community": 28,
       "norm_label": "stoptimer()",
       "id": "extensions_chat_title_stoptimer"
     },
@@ -377,7 +387,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "custom-header.ts",
       "id": "extensions_custom_header"
     },
@@ -387,7 +397,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "banner_lines",
       "id": "extensions_custom_header_banner_lines"
     },
@@ -397,7 +407,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "aphorisms",
       "id": "extensions_custom_header_aphorisms"
     },
@@ -407,7 +417,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L42",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "banner_width",
       "id": "extensions_custom_header_banner_width"
     },
@@ -417,7 +427,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "getbanner()",
       "id": "extensions_custom_header_getbanner"
     },
@@ -427,7 +437,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L55",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "getgreeting()",
       "id": "extensions_custom_header_getgreeting"
     },
@@ -437,7 +447,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L63",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "getaphorism()",
       "id": "extensions_custom_header_getaphorism"
     },
@@ -447,7 +457,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "computecontextline()",
       "id": "extensions_custom_header_computecontextline"
     },
@@ -457,7 +467,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L96",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "render()",
       "id": "extensions_custom_header_render"
     },
@@ -467,7 +477,7 @@
       "source_file": "extensions/custom-header.ts",
       "source_location": "L110",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "invalidate()",
       "id": "extensions_custom_header_invalidate"
     },
@@ -477,7 +487,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 59,
+      "community": 28,
       "norm_label": "focus-chime.ts",
       "id": "extensions_focus_chime"
     },
@@ -487,7 +497,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L17",
       "_origin": "ast",
-      "community": 59,
+      "community": 28,
       "norm_label": "fmtduration()",
       "id": "extensions_focus_chime_fmtduration"
     },
@@ -497,7 +507,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 59,
+      "community": 28,
       "norm_label": "sanitize()",
       "id": "extensions_focus_chime_sanitize"
     },
@@ -507,7 +517,7 @@
       "source_file": "extensions/focus-chime.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 59,
+      "community": 28,
       "norm_label": "firechime()",
       "id": "extensions_focus_chime_firechime"
     },
@@ -1447,7 +1457,7 @@
       "source_file": "extensions/lib/format.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "format.ts",
       "id": "extensions_lib_format"
     },
@@ -1467,7 +1477,7 @@
       "source_file": "extensions/lib/format.ts",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "fmttokens()",
       "id": "extensions_lib_format_fmttokens"
     },
@@ -1477,7 +1487,7 @@
       "source_file": "extensions/lib/format.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 34,
+      "community": 28,
       "norm_label": "shortencwd()",
       "id": "extensions_lib_format_shortencwd"
     },
@@ -1487,7 +1497,7 @@
       "source_file": "extensions/minimal-ui.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "minimal-ui.ts",
       "id": "extensions_minimal_ui"
     },
@@ -1497,7 +1507,7 @@
       "source_file": "extensions/minimal-ui.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "applyminimalchrome()",
       "id": "extensions_minimal_ui_applyminimalchrome"
     },
@@ -1507,7 +1517,7 @@
       "source_file": "extensions/minimal-ui.ts",
       "source_location": "L95",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "restoredefaults()",
       "id": "extensions_minimal_ui_restoredefaults"
     },
@@ -1577,7 +1587,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "read-only-default.ts",
       "id": "extensions_read_only_default"
     },
@@ -1587,7 +1597,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "write_tools",
       "id": "extensions_read_only_default_write_tools"
     },
@@ -1597,7 +1607,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "destructive_patterns",
       "id": "extensions_read_only_default_destructive_patterns"
     },
@@ -1607,7 +1617,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "isdestructivecommand()",
       "id": "extensions_read_only_default_isdestructivecommand"
     },
@@ -1617,7 +1627,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "mode",
       "id": "extensions_read_only_default_mode"
     },
@@ -1627,7 +1637,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "gatestate",
       "id": "extensions_read_only_default_gatestate"
     },
@@ -1637,7 +1647,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "persist()",
       "id": "extensions_read_only_default_persist"
     },
@@ -1647,7 +1657,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "applytools()",
       "id": "extensions_read_only_default_applytools"
     },
@@ -1657,7 +1667,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "updatestatusbar()",
       "id": "extensions_read_only_default_updatestatusbar"
     },
@@ -1667,7 +1677,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L128",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "setmode()",
       "id": "extensions_read_only_default_setmode"
     },
@@ -1677,7 +1687,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 35,
+      "community": 28,
       "norm_label": "execute()",
       "id": "extensions_read_only_default_execute"
     },
@@ -1687,7 +1697,7 @@
       "source_file": "extensions/session-receipt.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "session-receipt.ts",
       "id": "extensions_session_receipt"
     },
@@ -1697,7 +1707,7 @@
       "source_file": "extensions/session-receipt.ts",
       "source_location": "L19",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "fmtcost()",
       "id": "extensions_session_receipt_fmtcost"
     },
@@ -1707,7 +1717,7 @@
       "source_file": "extensions/session-receipt.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "community": 45,
+      "community": 28,
       "norm_label": "label()",
       "id": "extensions_session_receipt_label"
     },
@@ -8695,7 +8705,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8705,7 +8715,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8715,7 +8725,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9415,7 +9425,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9425,7 +9435,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9435,7 +9445,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9445,7 +9455,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 15,
+      "community": 34,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -9455,7 +9465,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "porcelain.json",
       "id": "themes_porcelain"
     },
@@ -9465,7 +9475,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "$schema",
       "id": "themes_porcelain_schema"
     },
@@ -9475,7 +9485,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "name",
       "id": "themes_porcelain_name"
     },
@@ -10175,7 +10185,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "export",
       "id": "themes_porcelain_export"
     },
@@ -10185,7 +10195,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "pagebg",
       "id": "themes_porcelain_export_pagebg"
     },
@@ -10195,7 +10205,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "cardbg",
       "id": "themes_porcelain_export_cardbg"
     },
@@ -10205,7 +10215,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 63,
+      "community": 24,
       "norm_label": "infobg",
       "id": "themes_porcelain_export_infobg"
     },
@@ -12256,7 +12266,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L54",
+      "source_location": "L56",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_candidates",
@@ -12266,7 +12276,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_extdir",
@@ -12276,7 +12286,17 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L28",
+      "source_location": "L68",
+      "weight": 1.0,
+      "source": "scripts_smoke_extensions",
+      "target": "scripts_smoke_extensions_jiti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/smoke-extensions.mjs",
+      "source_location": "L30",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_link",
@@ -12286,7 +12306,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L27",
+      "source_location": "L29",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_nm",
@@ -12296,7 +12316,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L45",
+      "source_location": "L47",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_noopproxy",
@@ -12306,7 +12326,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
-      "source_location": "L22",
+      "source_location": "L24",
       "weight": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_pkg",
@@ -29246,5 +29266,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "8ced24dfec8b67d125c1e41e0823d75b072cc808"
+  "built_at_commit": "cf6a5f559f00cbe28a2853eed5f4f926f6ecd230"
 }
