@@ -20,15 +20,10 @@
  */
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { join } from "node:path";
+import { AGENT_DIR, loadJiti } from "./lib/jiti-loader.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const AGENT_DIR = join(here, "..");
-const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
-
-const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
-const jiti = createJiti(join(AGENT_DIR, "extensions", "_check_.js"), { interopDefault: false });
+const { jiti } = await loadJiti();
 const { parseProfiles, matchProfile, buildLeadBlock, isUsableId } = await jiti.import(
 	join(AGENT_DIR, "extensions", "lead-config.ts"),
 );
