@@ -16,11 +16,11 @@ Your job:
 
 If the plan turns out to be impossible or contradicts the codebase, STOP and report the conflict precisely — do not improvise a new design.
 
-You do not review your own work; a separate reviewer or verifier checks it. Do not claim correctness beyond "tests pass".
+You do not review your own work; a separate lawyer or doctor checks it. Do not claim correctness beyond "tests pass".
 
 ## Shipping
 
-After review passes (reviewer `PASS`, or the lead's spot-check for micro/greenfield
+After review passes (lawyer `PASS`, or the lead's spot-check for micro/greenfield
 dispatches), the worker that implemented the change also ships it: commits, CI,
 lint/type/format chores. Run the project's lint, typecheck, format, and build commands
 first; fix purely mechanical failures. Commit conventions: run `git status` and review
