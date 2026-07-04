@@ -587,15 +587,14 @@ class BlackHoleComponent {
 			return this.cachedLines;
 		}
 
-		// Expanded art: fill the terminal, centered. The reserve accounts
-		// for everything sharing the screen with the art: the leading blank
-		// line this component emits plus pi's editor/status chrome below —
-		// undershooting here clips the bottom of the galaxy off-screen.
+		// Expanded art: fill the terminal (leaving room for the editor and
+		// footer below — the splash keeps the header at zero rows, which is
+		// what makes this reserve sufficient), centered.
 		const artW = Math.max(30, Math.min(ART_MAX_W, width - 2));
 		const termRows = process.stdout.rows ?? 24;
 		const rows = Math.max(
 			10,
-			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 11), Math.round(artW * 0.3)),
+			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.24)),
 		);
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
@@ -604,16 +603,11 @@ class BlackHoleComponent {
 
 		// Zoom instead of shrink: fitting the whole DUST_OUTER-radius galaxy
 		// into a tiny terminal squeezes the hole down to an illegible smudge.
-		// Below artW 110 or rows 30 the view radius eases in toward 3.4, zooming
-		// into the inner system instead — a vertically-squashed window zooms in
-		// just the same as a narrow one, since either dimension running short
-		// squeezes the same whole-galaxy view down to a smudge. Outer dust/
-		// comets beyond the frame just clip (deposit/stamp/glyph already
-		// bounds-check), which reads far better than a whole galaxy crammed
-		// into a handful of cells. The floor dropped from 4.0 to 3.4 so the
-		// hole stays legible even on the tiniest frames.
-		const fit = Math.min(smoothstep(50, 110, artW), smoothstep(16, 30, rows));
-		const viewR = 3.4 + (DUST_OUTER - 3.4) * fit;
+		// Below artW 110 the view radius eases in toward 4.0, zooming into the
+		// inner system instead — outer dust/comets beyond the frame just clip
+		// (deposit/stamp/glyph already bounds-check), which reads far better
+		// than a whole galaxy crammed into a handful of cells.
+		const viewR = 4.0 + (DUST_OUTER - 4.0) * smoothstep(50, 110, artW);
 
 		// Terminal cells are ~2:1 tall, so one world unit spans twice as many
 		// columns as rows for an undistorted disk.
