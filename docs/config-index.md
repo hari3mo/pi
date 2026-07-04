@@ -102,6 +102,13 @@ config-repo hangs on a shared `path` import — a FULL code re-extraction (`/gra
 can detach it and drop the fraction to ~0.48, re-tripping the ratchet (the automatic
 incremental post-commit does not). Files: none (graph artifacts are untracked).
 
+**Ratchet scoped to config-repo nodes (peer NIT follow-up to the incident above).**
+`audit-pipelines.py`'s giant-component ratchet now excludes the vendored `git/` subtree
+from the fraction (`GIANT_SCOPE = "config-repo-v1"`), so a full re-extraction that detaches
+ponytail can no longer spuriously tank it (the ~0.48 residual noted above); the recorded
+best-ever was recalibrated from the incomparable pre-scoping 0.79 to the current scoped
+0.66. Files: `scripts/audit-pipelines.py`.
+
 **Model-aware lead profiles: the Delegation Gate is now mechanized per active model.**
 Added `extensions/lead-config.ts`: on `before_agent_start` (every prompt — the model can
 switch mid-session via shift+tab) it reads the active model id (`ctx.model.id`, the field
