@@ -1,15 +1,12 @@
 ---
-description: Full tiered pipeline — scope-planner → architect → builder → qa-reviewer → builder ships
+description: Feature flow — interview → solo-engineer chain (default) or fan-out → reviewer gate → builder ships
 ---
 Act as orchestrator for this task: $@
 
-Run the full role pipeline using the subagent tool. Between stages, you review the output, decide what to accept, and frame the next stage's task — do not blindly forward.
+1. If what "done" means, scope boundaries, or hard constraints are ambiguous, interview me with targeted questions before dispatching; otherwise proceed — do not add friction to a clear request.
+2. Default route (standard single-session scope): ONE chain — "solo-engineer" with the whole bounded task, design inline (include relevant conversation context; subagents cannot see this session) → "reviewer" as the FINAL chain step (verdict normalization applies only to the last step). Use "verifier" instead of "reviewer" only for greenfield work with a runnable acceptance path.
+3. Escalate to a fan-out ONLY if scope exceeds one context window or workstreams can genuinely run concurrently: dispatch a design-only "solo-engineer" task first (only when 2+ implementers consume the design), then independent builders in ONE parallel call (max 8), then a "reviewer" gate.
+4. On FAIL: implementation, dispatch ONE chain: fix (builder or solo-engineer, findings verbatim, fix ONLY the findings) → fresh "reviewer" as the final step. On FAIL: design, re-frame — do not patch. Budget: 3 consecutive FAILs, then surface to me.
+5. On PASS, delegate to "builder" to run lint/typecheck/build/tests and commit.
 
-1. Delegate to "scope-planner": frame the request "$@" as a bounded problem. Include any relevant context from this conversation in the task (subagents cannot see it).
-2. Review the bounded problem. Resolve any open questions yourself or with me. Then delegate to "architect" with the bounded problem to produce design decisions and a mechanical implementation plan.
-3. Rule on any [NEEDS RULING] items. Then delegate to "builder" with the fixed plan.
-4. Delegate to "qa-reviewer" with the design decisions plus the builder's change summary. The reviewer must not be told anything the builder claimed beyond what changed.
-5. If the reviewer finds BLOCKER/MAJOR issues, route the specific findings back to "builder" to fix, then re-verify with "qa-reviewer". Repeat until PASS.
-6. Delegate back to "builder" to run lint/typecheck/build/tests and commit.
-
-Every delegated task must state: what to read before acting, the bounded problem, and what to return. Synthesize a final summary for me: what shipped, key decisions, review verdict, commit hash.
+Synthesize a final summary for me: what shipped, key decisions, review verdict, commit hash.
