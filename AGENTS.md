@@ -130,6 +130,10 @@ The harness audits itself; problems become prompts:
   mark it STALE until `/graphify --update`.
 - Lessons close the loop: graph queries save results back (`--outcome`), `reflect`
   distills them, and `learn_heuristic` persists durable ones.
+- Errors are never just worked around: root-cause the failure, then integrate the fix
+  downstream — a `learn_heuristic` lesson, a `validate-config.py` guard, a hook fix, or
+  a graph re-cache. Repeated tool errors in one run trigger a nudge enforcing this
+  (heuristics S5).
 
 ## Enforced in Code (no action needed)
 

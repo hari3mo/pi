@@ -5,7 +5,8 @@
  *  - `learn_heuristic` tool (capture, DESIGN.md §3)
  *  - `before_agent_start` injection (DESIGN.md §8)
  *  - `agent_end` generic reflection nudge (DESIGN.md §9)
- *  - `tool_result` / `tool_call` orchestration nudge signals S1-S4 (DESIGN.md §9)
+ *  - `tool_result` / `tool_call` orchestration nudge signals S1-S4 + lead
+ *    tool-error signal S5 (DESIGN.md §9)
  *  - `/heuristics` command (DESIGN.md §10)
  */
 
@@ -16,6 +17,7 @@ import { buildInjectionBlock } from "./inject.ts";
 import {
 	BasisSchema,
 	BUILDER_WATCH_CALLS,
+	TOOL_ERROR_THRESHOLD,
 	CategorySchema,
 	CHURN_CAP,
 	CHURN_WINDOW,
@@ -41,6 +43,9 @@ let builderWatch: { remaining: number } | null = null;
 
 /** session key -> recent subagent agent names (most recent last), capped at CHURN_CAP. */
 const churnMap = new Map<string, string[]>();
+
+/** S5: lead (non-subagent) tool errors seen during the current run. */
+let runToolErrors = 0;
 
 /** Rate limit for the generic (non-orchestration) nudge: once per 3 prompts. */
 let promptIndex = 0;
@@ -83,6 +88,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 		pendingNudgeText = null;
 		promptIndex = 0;
 		lastGenericFirePromptIndex = -Infinity;
+		runToolErrors = 0;
 	});
 
 	// -------------------------------------------------------------------
@@ -181,6 +187,16 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 				return;
 			}
 
+			// S5: repeated tool errors — the fix must be integrated downstream,
+			// not just worked around (AGENTS.md → Self-Audit Loop).
+			const errorsThisRun = runToolErrors;
+			runToolErrors = 0;
+			if (errorsThisRun >= TOOL_ERROR_THRESHOLD && promptIndex - lastGenericFirePromptIndex >= GENERIC_RATE_LIMIT_PROMPTS) {
+				pendingNudgeText = `This run hit ${errorsThisRun} tool errors — root-cause them; if the fix is a durable lesson call learn_heuristic, and if it exposes a harness defect, integrate a guard downstream (validate-config.py check, hook fix, or graph re-cache).`;
+				lastGenericFirePromptIndex = promptIndex;
+				return;
+			}
+
 			let correctionSeen = false;
 			let learnCalled = false;
 			for (const msg of event.messages as Array<Record<string, unknown>>) {
@@ -210,7 +226,11 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 	// -------------------------------------------------------------------
 	pi.on("tool_result", async (event, ctx) => {
 		try {
-			if (event.toolName !== "subagent") return;
+			if (event.toolName !== "subagent") {
+				// S5: count lead tool errors this run (subagent failures are S1's job).
+				if (event.isError) runToolErrors++;
+				return;
+			}
 			const details = event.details as { results?: SubagentResultLike[] } | undefined;
 			const results = details?.results;
 			if (!Array.isArray(results)) return;

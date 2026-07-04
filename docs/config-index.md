@@ -52,6 +52,17 @@ Every session that changes config must update it.
 
 ### 2026-07-04
 
+**Error-integration signal S5: repeated tool errors nudge downstream persistence.**
+`extensions/heuristics/{index.ts,schema.ts}`: non-subagent tool errors are counted per
+run; ≥3 in one run fires a nudge (generic rate limiter, priority orchestration > S5 >
+correction) telling the agent to root-cause and integrate the fix downstream — a
+learn_heuristic lesson, a validate-config.py guard, a hook fix, or a graph re-cache.
+`DESIGN.md` §9 and `AGENTS.md` → Self-Audit Loop codify the rule ("errors are never
+just worked around"). Files: `extensions/heuristics/index.ts`,
+`extensions/heuristics/schema.ts`, `extensions/heuristics/DESIGN.md`, `AGENTS.md`,
+`docs/config-index.md`. Why: user directive — any error the agent encounters must be
+solved and integrated downstream; this makes the pressure automatic.
+
 **Self-audit loop made structural; graph hubs fixed; stray `.pi/` duplicate removed.**
 Added `extensions/self-audit.ts`: runs `scripts/validate-config.py` at session start and
 injects failures into the system prompt (zero cost when clean); `/audit` re-runs on

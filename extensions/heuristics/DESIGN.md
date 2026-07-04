@@ -226,6 +226,14 @@ try/catch, never throw:
   tool call; if toolName ∈ {edit,write} while remaining>0 → fire S4, clear watch.
   Must NOT mutate event.input.
 
+- S5 lead tool errors: non-subagent `tool_result` events with `event.isError` increment
+  a per-run counter (reset each `agent_end` and on session_start); at `agent_end`, if the
+  run had ≥ TOOL_ERROR_THRESHOLD (3) errors and no orchestration signal fired, nudge:
+  "This run hit N tool errors — root-cause them; if the fix is a durable lesson call
+  learn_heuristic, and if it exposes a harness defect, integrate a guard downstream
+  (validate-config.py check, hook fix, or graph re-cache)." Shares the generic rate
+  limiter (once per 3 prompts). Priority: orchestration > S5 > generic correction.
+
 First firing signal wins; nudge line:
 "A recent delegation had trouble ({reason}); if there is a durable delegation lesson,
 call learn_heuristic (category: orchestration)."

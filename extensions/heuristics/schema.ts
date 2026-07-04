@@ -55,6 +55,9 @@ export const CHURN_WINDOW = 6;
 export const CHURN_CAP = 20;
 export const BUILDER_WATCH_CALLS = 2;
 
+/** S5: lead tool errors in one run before the error-integration nudge fires (DESIGN.md §9). */
+export const TOOL_ERROR_THRESHOLD = 3;
+
 /** Max lines read from heuristics.jsonl before we stop parsing (DESIGN.md §1). */
 export const MAX_READ_LINES = 5000;
 
