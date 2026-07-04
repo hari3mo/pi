@@ -30,7 +30,7 @@ Every session that changes config must update it.
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
 | Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes qa-reviewer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/scout.md`, `agents/solo-engineer.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer, plus solo-engineer/fable-engineer/peer-engineer). `architect` is narrowed to three cases (design fanned to 2+ builders, `FAIL: design` bounce, blind fan-out with peer-engineer); `shipper` is folded into `builder` (file deleted) — the implementing builder ships after review passes. |
+| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/scout.md`, `agents/solo-engineer.md`, `agents/verifier.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer, plus solo-engineer/fable-engineer/peer-engineer). `architect` is narrowed to three cases (design fanned to 2+ builders, `FAIL: design` bounce, blind fan-out with peer-engineer); `shipper` is folded into `builder` (file deleted) — the implementing builder ships after review passes. `verifier` (sonnet, read/run-only) is the cheap post-build spot-check tier — runs the acceptance path plus targeted reads and returns PASS/FAIL, never edits — distinct from the `qa-reviewer` deep-review gate. `fable-engineer` is demoted to opt-in: dispatched only with explicit user approval (requested or an approved escalation), since it is the only subagent that burns orchestrator-tier tokens. |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
@@ -49,6 +49,26 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Fable token economy: `verifier` role added; `fable-engineer` demoted to opt-in.**
+Added `agents/verifier.md` (sonnet, read/run-only): the cheap post-build spot-check tier
+that runs the acceptance path plus targeted reads and returns a first-line PASS/FAIL with
+`file:line` evidence, never editing — distinct from the `qa-reviewer` deep-review gate
+(its name stays hardcoded in `finalizeQaOutput`, untouched). `agents/fable-engineer.md`
+is now opt-in only (description + charter): dispatched solely with explicit user approval,
+since it is the only subagent spending orchestrator-tier tokens. `AGENTS.md` reworked to
+minimize fable read/turn cost: Delegation Gate micro/single-session/full-pipeline bullets
+(single-session is now a `solo-engineer` → `verifier`/`qa-reviewer` chain; escalation to
+fable now requires user approval, no auto-escalation), new "Fable Token Economy" subsection
+(read ≤50 lines then `scout`, never verify by reading, batch all dispatch into one
+parallel/chain call, rework is one chain), Role Split table (nine roles; verifier row +
+fable opt-in note), Routing Rules (verification split gate-tier/spot-check-tier), Hard
+Delegation Thresholds (scout read-budget 100+ → ≤50 lines), Rework Loop (each iteration is
+one chain), and Defaults (parallel/chain mandates, verification never spends lead tokens,
+fable opt-in). Files: `agents/verifier.md` (new), `agents/fable-engineer.md`, `AGENTS.md`,
+`docs/config-index.md`. Why: the lead is the only orchestrator-tier context in play, so its
+reads, serial dispatches, and self-verification were the session's most expensive tokens.
+No extension/schema/settings changes.
 
 **Enforcement catches up to doctrine; architect narrowed; shipper folded into builder.**
 `extensions/subagent/index.ts` now auto-appends a standing hygiene/return-contract footer
