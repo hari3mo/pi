@@ -599,14 +599,20 @@ class BlackHoleComponent {
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
 		const cy = rows / 2;
+		const smallFrame = artW < 70 || rows < 16;
 
 		// Zoom instead of shrink: fitting the whole DUST_OUTER-radius galaxy
 		// into a tiny terminal squeezes the hole down to an illegible smudge.
-		// Below artW 110 the view radius eases in toward 4.0, zooming into the
-		// inner system instead — outer dust/comets beyond the frame just clip
-		// (deposit/stamp/glyph already bounds-check), which reads far better
-		// than a whole galaxy crammed into a handful of cells.
-		const viewR = 4.0 + (DUST_OUTER - 4.0) * smoothstep(50, 110, artW);
+		// Below artW 110 or rows 30 the view radius eases in toward 3.4, zooming
+		// into the inner system instead — a vertically-squashed window zooms in
+		// just the same as a narrow one, since either dimension running short
+		// squeezes the same whole-galaxy view down to a smudge. Outer dust/
+		// comets beyond the frame just clip (deposit/stamp/glyph already
+		// bounds-check), which reads far better than a whole galaxy crammed
+		// into a handful of cells. The floor dropped from 4.0 to 3.4 so the
+		// hole stays legible even on the tiniest frames.
+		const fit = Math.min(smoothstep(50, 110, artW), smoothstep(16, 30, rows));
+		const viewR = 3.4 + (DUST_OUTER - 3.4) * fit;
 
 		// Terminal cells are ~2:1 tall, so one world unit spans twice as many
 		// columns as rows for an undistorted disk.
@@ -644,7 +650,7 @@ class BlackHoleComponent {
 		// starfield, slowly wheeling over the minutes --
 		// Skip on small frames: at low cell counts the tiny distant spirals
 		// just read as extra noise, with no room to spare for them.
-		if (artW >= 70 && rows >= 16) {
+		if (!smallFrame) {
 			const gs = Math.max(1.2, artW / 46);
 			for (const g of this.deepGalaxies) {
 				const rot = this.elapsed * g.rotSpeed;
@@ -666,7 +672,7 @@ class BlackHoleComponent {
 		// Skip constellations entirely below rows 14; below that a shape
 		// too small to read as a pattern is just clutter, so also drop any
 		// single constellation that would render under 9 cells wide.
-		if (rows >= 14) {
+		if (!smallFrame) {
 			for (const c of CONSTELLATIONS) {
 				const cw = c.w * artW;
 				if (cw < 9) continue;
