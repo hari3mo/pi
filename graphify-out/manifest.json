@@ -1105,8 +1105,8 @@
     "semantic_hash": ""
   },
   "scripts/check-graph-first.mjs": {
-    "mtime": 1783166448.534771,
-    "ast_hash": "35a093df73f2b35c9664dc5136192de3",
+    "mtime": 1783168977.1115193,
+    "ast_hash": "ad47effccf04a477b5cda9a73acbe016",
     "semantic_hash": ""
   },
   "scripts/check-impact-trace.mjs": {

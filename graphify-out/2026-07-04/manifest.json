@@ -535,8 +535,8 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783166544.2420726,
-    "ast_hash": "a377d3e298a9ea394d5f9b1e4682335e",
+    "mtime": 1783168966.4300053,
+    "ast_hash": "4522b9a3bf405ab31c239f8e546250a3",
     "semantic_hash": ""
   },
   "docs/delegation-contract.md": {
@@ -1095,8 +1095,8 @@
     "semantic_hash": ""
   },
   "extensions/impact-trace.ts": {
-    "mtime": 1783166395.259812,
-    "ast_hash": "e85b79c516888d14a34ca70b64ecbb5f",
+    "mtime": 1783168962.5682032,
+    "ast_hash": "9ca9e660ee5472244b1c9ec37dff49c5",
     "semantic_hash": ""
   },
   "schema/graph-first-stats.schema.json": {
