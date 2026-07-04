@@ -9,7 +9,7 @@ import { isAbsolute, relative, resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 
-const GRAPHIFY_UPDATE_RE = /(?:^|[;&|]\s*)(?:(?:\S*python\S*\s+-m\s+)?graphify\b[^;&|]*(?:--update|\bupdate\b))/i;
+const GRAPHIFY_UPDATE_RE = /(?:^|[;&|]\s*)(?:(?:\S*python\S*\s+-m\s+)?graphify\b(?=[^;&|]*(?:\s--update\b|\supdate(?:\s|$))))/i;
 const DELETE_GRAPHIFY_OUT_RE = /\brm\s+(?:-[A-Za-z]+\s+)*(?:['"]?(?:\.\/)?graphify-out\/?['"]?)(?:\s|$|[;&|])/i;
 
 function under(parent: string, child: string): boolean {
