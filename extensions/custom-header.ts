@@ -16,7 +16,7 @@ import { shortenCwd } from "./lib/format.ts";
 // Generated with: figlet -f standard 'harimo'
 const BANNER_LINES = [
 	' _                _                 ',
-	'| |__   __ _ _ __(_)_ __ ___   ___  ',
+	'| |__   __ _ _ __(_)_ __ ___   ___  ®',
 	"| '_ \\ / _` | '__| | '_ ` _ \\ / _ \\ ",
 	'| | | | (_| | |  | | | | | | | (_) |',
 	'|_| |_|\\__,_|_|  |_|_| |_| |_|\\___/ ',
