@@ -47,8 +47,13 @@
  *   - shooting stars streaking across the field every so often
  *   - the occasional supernova: a star swells up the glyph ramp, flashes,
  *     and fades back to nothing
- *   - deep space beyond the stars: tiny, extremely dim two-arm glyph
- *     spirals slowly wheeling in the far background
+ *   - a layered starfield: field stars gathered into a broad Milky Way
+ *     band running diagonally behind the system, a sparse handful of
+ *     bright glyph stars twinkling harder, and a couple of tight open
+ *     clusters — every star at its own twinkle rate and phase
+ *   - deep space beyond the stars: tiny, extremely dim glyph spirals at
+ *     random inclinations (one an edge-on sliver) with soft core bulges,
+ *     slowly wheeling in the far background
  * The art also expands to fill the terminal instead of a fixed 76-col box.
  */
 
@@ -207,6 +212,8 @@ interface DeepGalaxy {
 	nx: number; //  normalized screen position
 	ny: number;
 	rotSpeed: number;
+	yScale: number; // inclination: ~0.75 face-on … 0.14 edge-on sliver
+	core: number; //  soft central bulge brightness
 	pts: Array<{ rr: number; th: number; b: number }>;
 }
 
@@ -217,20 +224,30 @@ function makeDeepGalaxies(): DeepGalaxy[] {
 		[0.82, 0.14],
 		[0.16, 0.8],
 	];
-	return centers.map(([nx, ny]) => {
-		const count = 12 + Math.floor(Math.random() * 12);
+	return centers.map(([nx, ny], gi) => {
+		// One of the four is a thin edge-on sliver; the rest sit at random
+		// inclinations so no two look alike.
+		const yScale = gi === 1 ? 0.14 : 0.35 + Math.random() * 0.4;
+		const count = 16 + Math.floor(Math.random() * 14);
 		const pts: DeepGalaxy["pts"] = [];
 		for (let i = 0; i < count; i++) {
 			const arm = i % 2;
 			const u = i / count;
-			const rr = 0.3 + u * 2.1;
+			const rr = 0.3 + u * 2.3;
 			const th = rr * 1.9 + arm * Math.PI + (Math.random() - 0.5) * 0.5;
-			pts.push({ rr, th, b: 0.04 + Math.random() * 0.06 });
+			// Arms fade toward the rim, like the big dust field does.
+			pts.push({
+				rr,
+				th,
+				b: (0.04 + Math.random() * 0.07) * (1.15 - u * 0.5),
+			});
 		}
 		return {
 			nx: nx + (Math.random() - 0.5) * 0.06,
 			ny: ny + (Math.random() - 0.5) * 0.06,
 			rotSpeed: (Math.random() - 0.5) * 0.06,
+			yScale,
+			core: 0.1 + Math.random() * 0.05,
 			pts,
 		};
 	});
@@ -273,8 +290,16 @@ class BlackHoleComponent {
 	private dustCount = 0;
 	private spin = 0;
 
-	// Starfield, regenerated when the layout changes.
-	private stars: Array<{ col: number; row: number; b: number; p: number }> = [];
+	// Starfield, regenerated when the layout changes. ch: null renders on
+	// the density ramp; bright stars carry their own glyph instead.
+	private stars: Array<{
+		col: number;
+		row: number;
+		b: number;
+		p: number;
+		tw: number;
+		ch: string | null;
+	}> = [];
 	private starsKey = "";
 
 	// Deep-space background galaxies (stable across resizes).
@@ -548,10 +573,11 @@ class BlackHoleComponent {
 			for (const p of g.pts) {
 				stamp(
 					Math.round(gx + Math.cos(p.th + rot) * p.rr * gs),
-					Math.round(gy + Math.sin(p.th + rot) * p.rr * gs * 0.5),
+					Math.round(gy + Math.sin(p.th + rot) * p.rr * gs * g.yScale),
 					p.b,
 				);
 			}
+			stamp(Math.round(gx), Math.round(gy), g.core); // the bulge
 		}
 
 		// -- constellations: bright star patterns joined by faint dotted
@@ -592,19 +618,76 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- starfield (dim, behind everything, blocked by the shadow) --
+		// -- starfield (behind everything, blocked by the shadow): three
+		// populations — field stars rejection-sampled toward a broad Milky
+		// Way band running diagonally behind the system, a sparse handful of
+		// bright stars with their own glyphs and harder twinkle, and a couple
+		// of tight open clusters in the quiet corners --
 		const key = `${artW}x${rows}`;
 		if (this.starsKey !== key) {
 			this.starsKey = key;
 			this.stars = [];
-			const n = Math.floor((artW * rows) / 28);
-			for (let i = 0; i < n; i++) {
+			// Gaussian falloff around the line through (0.5, 0.30) at a
+			// shallow slope — offset upward so it doesn't fight the hole.
+			const bandW = (nx: number, ny: number) => {
+				const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
+				return Math.exp(-d * d);
+			};
+			const nField = Math.floor((artW * rows) / 26);
+			let placed = 0;
+			let guard = 0;
+			while (placed < nField && guard++ < nField * 20) {
+				const nx = Math.random();
+				const ny = Math.random();
+				if (Math.random() > 0.45 + 0.55 * bandW(nx, ny)) continue;
+				this.stars.push({
+					col: Math.floor(nx * artW),
+					row: Math.floor(ny * rows),
+					b: 0.02 + Math.random() * 0.1,
+					p: Math.random() * Math.PI * 2,
+					tw: 0.8 + Math.random() * 1.4,
+					ch: null,
+				});
+				placed++;
+			}
+			const nBright = Math.max(3, Math.floor((artW * rows) / 170));
+			for (let i = 0; i < nBright; i++) {
+				const b = 0.2 + Math.random() * 0.3;
 				this.stars.push({
 					col: Math.floor(Math.random() * artW),
 					row: Math.floor(Math.random() * rows),
-					b: 0.02 + Math.random() * 0.1,
+					b,
 					p: Math.random() * Math.PI * 2,
+					tw: 1.6 + Math.random() * 1.6,
+					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
 				});
+			}
+			for (let c = 0; c < 2; c++) {
+				let ccol = 0;
+				let crow = 0;
+				for (let tries = 0; tries < 16; tries++) {
+					ccol = (0.1 + Math.random() * 0.8) * artW;
+					crow = (0.1 + Math.random() * 0.8) * rows;
+					const ux = ccol / artW - 0.5;
+					const uy = crow / rows - 0.5;
+					if (Math.hypot(ux, uy) > 0.28) break;
+				}
+				const members = 7 + Math.floor(Math.random() * 6);
+				for (let i = 0; i < members; i++) {
+					// Triangular-ish gaussian spread, squashed for cell aspect.
+					const gx =
+						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+					const gy =
+						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+					this.stars.push({
+						col: Math.round(ccol + gx * 4),
+						row: Math.round(crow + gy * 2),
+						b: 0.05 + Math.random() * 0.12,
+						p: Math.random() * Math.PI * 2,
+						tw: 0.8 + Math.random() * 1.4,
+						ch: null,
+					});
+				}
 			}
 		}
 		const holeRx = EVENT_HORIZON * sX;
@@ -613,9 +696,10 @@ class BlackHoleComponent {
 			const dx = (s.col - cx) / holeRx;
 			const dy = (s.row - cy) / holeRy;
 			if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
-			// Slow twinkle, staggered per star.
-			const tw = 0.7 + 0.3 * Math.sin(this.elapsed * 1.7 + s.p);
-			stamp(s.col, s.row, s.b * tw);
+			// Staggered twinkle, each star at its own rate and phase.
+			const tw = 0.7 + 0.3 * Math.sin(this.elapsed * s.tw + s.p);
+			if (s.ch) glyph(s.col, s.row, s.ch, s.b * tw);
+			else stamp(s.col, s.row, s.b * tw);
 		}
 
 		// -- spiral-arm dust, wheeling behind the accretion disk. Stamped
