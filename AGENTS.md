@@ -52,7 +52,7 @@ that gets pruned down.
 | Role | Tier | When |
 |---|---|---|
 | `scout` | Mechanical (`claude-sonnet-5:high`) | Read-only investigation: any read >50 lines or a grep that missed once; returns compressed `file:line` findings; never edits |
-| `builder` | Mechanical | Fully-specified mechanical edits ONLY, zero residual design decisions; ships (commits) after review passes |
+| `worker` | Mechanical | Fully-specified mechanical edits ONLY, zero residual design decisions; ships (commits) after review passes |
 | `engineer` | Deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE: whole bounded tasks at single-session scope end-to-end, design inline; also design-only dispatches when 2+ implementers consume the design |
 | `verifier` | Mechanical | Runs the acceptance path, PASS/FAIL + `file:line` evidence; never edits. Only dispatched when something is RUNNABLE — for a small returned diff with nothing to run, the lead judges the diff directly |
 | `reviewer` | Deep reasoning | Gate-tier verification: changes to existing behavior, 3+ files of existing code, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design |
