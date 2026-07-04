@@ -125,6 +125,10 @@ early, before the budget runs out.
   the validator is manifest-driven.
 - Heuristics about pi itself (harness, delegation, tooling) go to the GLOBAL scope in
   `learn_heuristic`.
+- Concurrent sessions across shells are guarded in code (`extensions/concurrency-guard.ts`):
+  a "Concurrent-session notice" in the prompt means another shell changed config files —
+  RE-READ them before building on remembered content; a `[concurrency-guard]` message on
+  edit means the target has another shell's uncommitted work.
 
 ### Self-Audit Loop (standing)
 

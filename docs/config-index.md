@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Concurrency guard | `extensions/concurrency-guard.ts` | Cross-shell session safety for ~/.pi/agent: injects a notice when HEAD advances with commits touching files this session did not edit (own-edit snapshots filtered = autocommit stays silent); warns once per file when an edit/write targets a file with another shell's uncommitted changes. Fail-open on any git error. |
 | Graph maintenance runbook | `docs/graph-maintenance.md` | Operational canon for graphify-out/: the md-re-extraction wipe invariant, multiprocessing `__main__` guard, content-keyed cache re-binding, regeneration and shrink-guard procedure, health signals. Distilled from heuristics + 2026-07-04 incidents. |
 | Toolchain adaptability | `scripts/smoke-extensions.mjs`, `scripts/audit-pipelines.py` | Extension load smoke using pi's own jiti loader against a Proxy fake-pi (15/15 extensions; self-provisions gitignored `node_modules` symlinks, self-heals on pi relocation); toolchain version tracking (pi/graphifyy/node in `.pipeline_baseline.json`) WARNs once per upgrade with the re-verification list. Runs in `/audit` (`--full`); versions checked every session start. |
 | Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
@@ -54,6 +55,22 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Concurrency guard: concurrent pi sessions across shells are now safe on ~/.pi/agent.**
+Added `extensions/concurrency-guard.ts`: (1) before_agent_start compares HEAD to the
+session's last-known and, when new commits touch files the session did NOT edit,
+injects a re-read notice with the commit range and file list — own-edit autocommit
+snapshots are filtered so the common case stays silent; (2) edit/write tool calls
+targeting an agent-repo file that is git-dirty but untouched by this session get a
+one-time `[concurrency-guard]` warning before clobbering another shell's uncommitted
+work. Smoke-tested all four paths (silent/warn/once/ignore). Archived the now-enforced
+lesson h_mr5v4okp (silent wipe by concurrent session). Existing protections noted:
+heuristics store file locking, graphify rebuild flock, autocommit snapshot cadence.
+Files: `extensions/concurrency-guard.ts` (new), `AGENTS.md`, `docs/config-index.md`,
+`heuristics/heuristics.jsonl`. Why: user directive — handle pi config edits from
+concurrent sessions across different shells; the failure mode was silent, now it
+prompts.
+
 
 **Orchestration pipeline made graph-aware; 27 heuristics distilled into canon.**
 Graph-first is now doctrine at every dispatch point: AGENTS.md budget invariant
