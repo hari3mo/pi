@@ -56,7 +56,7 @@ that gets pruned down.
 | `engineer` | Deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE: whole bounded tasks at single-session scope end-to-end, design inline; also design-only dispatches when 2+ implementers consume the design |
 | `verifier` | Mechanical | Runs the acceptance path, PASS/FAIL + `file:line` evidence; never edits. Only dispatched when something is RUNNABLE — for a small returned diff with nothing to run, the lead judges the diff directly |
 | `peer` | Deep reasoning | Gate-tier verification: changes to existing behavior, 3+ files of existing code, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design |
-| `reviewer` | Peer (`google/gemini-3.5-flash:xhigh`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
+| `reviewer` | Peer (`google/gemini-3.5-flash:high`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
 | `fable-engineer` | Orchestrator-tier, opt-in | Highest-stakes solo builds, dispatched ONLY with explicit user approval; its task must inline repo conventions (loads no context files) |
 
 There is no standing architect role: when 2+ implementers will consume a design,
