@@ -30,7 +30,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { findGraphRoot, graphifyPython, OUT } from "./lib/graph-lookup.ts";
+import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "./lib/graph-lookup.ts";
 
 const MAX_ITEMS = 3; // cap durable candidates per session
 const MIN_ANSWER_CHARS = 200; // durability floor: below this, not worth compounding
@@ -38,6 +38,13 @@ const ANSWER_CAP = 4000; // keep staged notes / save-result args compact
 const SAVE_TIMEOUT_MS = 2000; // per save-result call bound
 const STAGING_SUBDIR = "_raw"; // oracle raw/staging area (mirrors wiki-capture quick mode)
 const CAPTURED_ACTIONS = new Set(["query", "explain"]); // status/path are not durable knowledge
+
+function findSessionGraphRoot(cwd: string): string | undefined {
+	const found = findGraphRootPure(cwd);
+	if (found) return found;
+	const agentDir = getAgentDir();
+	return existsSync(join(agentDir, OUT, "graph.json")) ? agentDir : undefined;
+}
 
 export interface Captured {
 	key: string;
@@ -227,7 +234,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_shutdown", async (_event, ctx) => {
 		try {
 			if (buffer.length === 0) return;
-			const root = findGraphRoot(ctx.cwd);
+			const root = findSessionGraphRoot(ctx.cwd);
 			const vault = join(getAgentDir(), "oracle");
 			const canStage = existsSync(vault);
 			const stagingDir = join(vault, STAGING_SUBDIR);
