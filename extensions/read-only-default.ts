@@ -231,6 +231,27 @@ export default function (pi: ExtensionAPI) {
 
 	// Gate write-capable tool calls according to the current mode.
 	pi.on("tool_call", async (event, ctx) => {
+		// Fable lead never edits directly (AGENTS.md Hard Delegation Thresholds):
+		// an additional check evaluated in EVERY gate mode, before the write-mode
+		// early return. Spawned subagent children (incl. fable-engineer, which runs
+		// claude-fable-5 and MUST write) set PI_SUBAGENT=1 and are exempt. Fails
+		// open: any error here must fall through to the normal gating below.
+		try {
+			if (
+				process.env.PI_SUBAGENT !== "1" &&
+				WRITE_TOOLS.has(event.toolName) &&
+				((ctx.model as { id?: string } | undefined)?.id ?? "").includes("fable")
+			) {
+				return {
+					block: true,
+					reason:
+						"Fable lead never edits directly — delegate to a builder-tier agent (see AGENTS.md Hard Delegation Thresholds).",
+				};
+			}
+		} catch {
+			/* fail open: never let the fable guard crash the gate hook */
+		}
+
 		if (mode === "write") return;
 
 		// Subagent orchestration: children inherit the gate (only write mode
