@@ -42,7 +42,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 			if (!working) return;
 			pulseFrame++;
 			tui.requestRender();
-		}, 160);
+		}, 320);
 
 		return {
 			dispose: () => {
@@ -95,7 +95,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 		};
 	});
 
-	const ramp = ["dim", "muted", "accent", "muted"] as const;
+	const ramp = ["dim", "muted", "muted", "dim"] as const;
 	ctx.ui.setEditorComponent((tui, editorTheme, keybindings) => {
 		const ed = new CustomEditor(tui, editorTheme, keybindings);
 		const idleBorder = ed.borderColor; // capture default
