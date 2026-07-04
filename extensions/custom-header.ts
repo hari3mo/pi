@@ -36,6 +36,11 @@ const APHORISMS = [
 	"a good name bends light",
 ];
 
+// Measured once: the widest visible column the banner art occupies. Below
+// this terminal width the art itself would be clipped mid-glyph, so render()
+// drops it in favor of the compact greeting-only fallback.
+const BANNER_WIDTH = Math.max(...BANNER_LINES.map((line) => line.length));
+
 function getBanner(theme: Theme): string[] {
 	const colored = BANNER_LINES.map((line) => theme.fg("accent", line));
 	return ["", ...colored, ""];
