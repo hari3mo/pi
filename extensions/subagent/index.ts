@@ -1034,11 +1034,8 @@ export default function (pi: ExtensionAPI) {
 							container.addChild(new Markdown(finalOutput.trim(), 0, 0, mdTheme));
 						}
 					}
-					const usageStr = formatUsageStats(r.usage, r.model);
-					if (usageStr) {
-						container.addChild(new Spacer(1));
-						container.addChild(new Text(theme.fg("dim", usageStr), 0, 0));
-					}
+					container.addChild(new Spacer(1));
+					container.addChild(new Text(theme.fg("dim", formatRunStatus(r)), 0, 0));
 					return container;
 				}
 
@@ -1050,8 +1047,7 @@ export default function (pi: ExtensionAPI) {
 					text += `\n${renderDisplayItems(displayItems, COLLAPSED_ITEM_COUNT)}`;
 					if (displayItems.length > COLLAPSED_ITEM_COUNT) text += `\n${theme.fg("muted", "(Ctrl+O to expand)")}`;
 				}
-				const usageStr = formatUsageStats(r.usage, r.model);
-				if (usageStr) text += `\n${theme.fg("dim", usageStr)}`;
+				text += `\n${theme.fg("dim", formatRunStatus(r))}`;
 				return new Text(text, 0, 0);
 			}
 
@@ -1129,8 +1125,7 @@ export default function (pi: ExtensionAPI) {
 							container.addChild(new Markdown(finalOutput.trim(), 0, 0, mdTheme));
 						}
 
-						const stepUsage = formatUsageStats(r.usage, r.model);
-						if (stepUsage) container.addChild(new Text(theme.fg("dim", stepUsage), 0, 0));
+						container.addChild(new Text(theme.fg("dim", formatRunStatus(r)), 0, 0));
 					}
 
 					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, wallClockElapsedMs(details.results));
@@ -1159,8 +1154,7 @@ export default function (pi: ExtensionAPI) {
 					text += `\n\n${theme.fg("muted", `─── Step ${r.step}: `)}${theme.fg("accent", r.agent)} ${rIcon}${rElapsedSuffix}`;
 					if (displayItems.length === 0) text += `\n${theme.fg("muted", "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
-					const stepUsage = formatUsageStats(r.usage, r.model);
-					if (stepUsage) text += `\n${theme.fg("dim", stepUsage)}`;
+					text += `\n${theme.fg("dim", formatRunStatus(r))}`;
 				}
 				const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, wallClockElapsedMs(details.results));
 				if (usageStr) text += `\n\n${theme.fg("dim", `Total: ${usageStr}`)}`;
@@ -1226,8 +1220,7 @@ export default function (pi: ExtensionAPI) {
 							container.addChild(new Markdown(finalOutput.trim(), 0, 0, mdTheme));
 						}
 
-						const taskUsage = formatUsageStats(r.usage, r.model);
-						if (taskUsage) container.addChild(new Text(theme.fg("dim", taskUsage), 0, 0));
+						container.addChild(new Text(theme.fg("dim", formatRunStatus(r)), 0, 0));
 					}
 
 					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, batchElapsed);
@@ -1253,8 +1246,7 @@ export default function (pi: ExtensionAPI) {
 					if (displayItems.length === 0)
 						text += `\n${theme.fg("muted", runInProgress(r) ? "(running...)" : "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
-					const taskUsage = formatUsageStats(r.usage, r.model);
-					if (taskUsage) text += `\n${theme.fg("dim", taskUsage)}`;
+					text += `\n${theme.fg("dim", formatRunStatus(r))}`;
 				}
 				if (!isRunning) {
 					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, batchElapsed);
