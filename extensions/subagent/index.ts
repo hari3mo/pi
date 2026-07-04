@@ -1039,6 +1039,16 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
+	pi.registerCommand("subagents", {
+		description: "Open the active subagents keyboard panel",
+		handler: async (_args, ctx) => showActiveSubagentPanel(ctx),
+	});
+
+	pi.registerShortcut(Key.ctrlAlt("s"), {
+		description: "Open active subagents panel",
+		handler: async (ctx) => showActiveSubagentPanel(ctx),
+	});
+
 	pi.registerTool({
 		name: "subagent",
 		label: "Subagent",

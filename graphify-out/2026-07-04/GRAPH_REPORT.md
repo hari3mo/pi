@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 203 files · ~165,922 words
+- 203 files · ~165,959 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1300 nodes · 1787 edges · 81 communities (72 shown, 9 thin omitted)
+- 1300 nodes · 1788 edges · 81 communities (72 shown, 9 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e92ca730`
+- Built from commit: `963bee53`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -142,7 +142,7 @@ Nodes (52): colors, accent, bashMode, border, borderAccent, borderMuted, customM
 
 ### Community 3 - "TUI Extensions & Config Index"
 Cohesion: 0.07
-Nodes (46): ACTIVE_SUBAGENT_LISTENERS, ACTIVE_SUBAGENT_RUNS, ActiveSubagentMeta, AgentScopeSchema, ChainItem, contentToText(), DisplayItem, execute() (+38 more)
+Nodes (47): ACTIVE_SUBAGENT_LISTENERS, ACTIVE_SUBAGENT_RUNS, ActiveSubagentMeta, AgentScopeSchema, ChainItem, contentToText(), DisplayItem, execute() (+39 more)
 
 ### Community 4 - "Ponytail Ruleset & Mirrors"
 Cohesion: 0.26
@@ -414,8 +414,8 @@ Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.990735248)
-- `~/.pi/agent config repo overview` (3× useful, score=2.990705185)
+- `Config Index (semantic audit map)` (3× useful, score=2.990709137)
+- `~/.pi/agent config repo overview` (3× useful, score=2.990679074)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
