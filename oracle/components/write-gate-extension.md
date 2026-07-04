@@ -30,13 +30,13 @@ sessions start in **confirm** mode by default; two other modes exist.
 | Mode | Behavior | Reach |
 |---|---|---|
 | **confirm** (default) | Reads free; each edit/write or destructive bash command prompts for approval. | `/confirm` |
-| **write** | Full access, no prompts. | `/write`, `pi --write` |
+| **write** | Auto-approves mutations under `~/.pi`; outside that root, UI sessions still prompt and headless sessions block. | `/write`, `pi --write` |
 | **read-only** | edit/write tools disabled; destructive bash blocked. | `/read-only` |
 
 `Ctrl+`` cycles confirm → write → read-only. In **headless** modes (no UI)
 confirm-mode blocks writes since it cannot prompt — use `pi --write` for
-unattended write access. The mode persists across `/resume` within a session but
-every brand-new session starts in confirm.
+unattended write access under `~/.pi` only. The mode persists across `/resume` within a session but
+every brand-new session starts in confirm. Confirm-mode "allow all writes" is also scoped to `~/.pi`.
 
 ## Two harness-specific enforcements
 
@@ -50,8 +50,9 @@ every brand-new session starts in confirm.
 2. **Subagents inherit the gate.** The current mode is published on
    `globalThis.__piWriteGateMode`; the [[components/subagent-extension]] reads it
    and grants children `--write` **only** when the parent is in write mode.
-   Orchestrating from a gated mode offers to switch to write first, so workers
-   don't silently fail their writes.
+   Even with `--write`, the child gate auto-approves mutations only under
+   `~/.pi`; outside that root a headless child blocks. Orchestrating from a
+   gated mode offers to switch to write first, so workers don't silently fail their writes.
 
 ## `request_write_mode` (orchestrator pre-flight)
 
