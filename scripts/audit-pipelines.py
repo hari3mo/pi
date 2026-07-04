@@ -259,6 +259,43 @@ def check_graph_first_drift() -> None:
             "(/graphify --update) or loosen the detector in extensions/graph-first.ts")
 
 
+def check_lead_profile_coverage() -> None:
+    # Fast path: a local file read. extensions/lead-config.ts appends per-session
+    # {models, profiles, fallbacks, fallbackModels} to .lead_config_stats.json.
+    # A model id that repeatedly resolves to the fallback ('direct') profile
+    # across many sessions means the roster drifted: that lead is being run
+    # often with only generic doctrine — add a tailored profile or extend a
+    # match pattern in config/lead-profiles.json. Silent when the stats file is
+    # absent (feature not yet exercised — fail open).
+    stats = OUT / ".lead_config_stats.json"
+    if not stats.exists():
+        return
+    try:
+        recs = json.loads(stats.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return
+    if not isinstance(recs, list):
+        return
+    # Count DISTINCT sessions each model id fell back in.
+    sessions_by_model: dict[str, int] = {}
+    for r in recs:
+        if not isinstance(r, dict):
+            continue
+        fbm = r.get("fallbackModels")
+        if not isinstance(fbm, list):
+            continue
+        for mid in set(m for m in fbm if isinstance(m, str) and m):
+            sessions_by_model[mid] = sessions_by_model.get(mid, 0) + 1
+    # Require sustained use so a one-off model can't trip the warning.
+    THRESHOLD = 5
+    drifted = sorted(m for m, n in sessions_by_model.items() if n >= THRESHOLD)
+    if drifted:
+        warnings.append(
+            f"pipeline: model id(s) {', '.join(drifted)} resolved to the fallback lead "
+            f"profile in >= {THRESHOLD} recorded sessions — roster drifted; add a tailored "
+            "profile or extend a match pattern in config/lead-profiles.json")
+
+
 def check_reflection_drift() -> None:
     mem = OUT / "memory"
     lessons = OUT / "reflections" / "LESSONS.md"
@@ -312,6 +349,7 @@ def main() -> int:
     check_autocommit_liveness()
     check_connectivity_ratchet()
     check_graph_first_drift()
+    check_lead_profile_coverage()
     check_reflection_drift()
     check_toolchain_versions()
     if args.full:
