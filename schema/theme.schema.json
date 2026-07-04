@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/theme.schema.json",
+  "title": "Pi theme JSON",
+  "description": "Malleable local theme shape: known top-level fields typed, extra fields allowed.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["name", "vars", "colors"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "name": { "type": "string", "minLength": 1 },
+    "vars": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "colors": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "export": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    }
+  }
+}

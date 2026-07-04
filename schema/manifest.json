@@ -21,6 +21,18 @@
       "required": false
     },
     {
+      "path": "themes/porcelain.json",
+      "schema": "schema/theme.schema.json",
+      "format": "json",
+      "required": true
+    },
+    {
+      "path": "themes/porcelain-light.json",
+      "schema": "schema/theme.schema.json",
+      "format": "json",
+      "required": true
+    },
+    {
       "path": "heuristics/heuristics.jsonl",
       "schema": "schema/heuristic-entry.schema.json",
       "format": "jsonl",
