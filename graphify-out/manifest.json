@@ -480,9 +480,9 @@
     "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
   },
   "settings.json": {
-    "mtime": 1783161529.7573786,
-    "ast_hash": "291606bf31e44424e2350b47b7bae202",
-    "semantic_hash": ""
+    "mtime": 1783157230.5280793,
+    "ast_hash": "a89050046f53ff4477cd1353a4e8f3d2",
+    "semantic_hash": "a89050046f53ff4477cd1353a4e8f3d2"
   },
   "themes/porcelain-light.json": {
     "mtime": 1783136869.0226007,
