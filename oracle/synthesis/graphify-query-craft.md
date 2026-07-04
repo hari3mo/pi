@@ -9,9 +9,9 @@ tags: [pi, graph, synthesis]
 aliases: ["graph tool tips", "explain vs query", "graphify cwd resolution"]
 summary: How to get useful answers from the graphify graph tool — prefer explain over lexically-anchored query, and know that graphify-out resolves from cwd, not the project you think you're in.
 relationships:
-  - target: "[[components/graph-tool]]"
+  - target: "[[components/graphify-bridge-extension]]"
     type: derived_from
-  - target: "[[concepts/graph-first]]"
+  - target: "[[components/graph-first-extension]]"
     type: related_to
 base_confidence: 0.8
 lifecycle: draft
@@ -23,8 +23,8 @@ updated: 2026-07-04T00:00:00Z
 
 # Graphify Query Craft
 
-Practical lessons for driving the [[components/graph-tool|graphify `graph` tool]] well. The
-[[concepts/graph-first|graph-first]] doctrine says to answer structure/architecture
+Practical lessons for driving the [[components/graphify-bridge-extension|graphify `graph` tool]] well. The
+[[components/graph-first-extension|graph-first]] doctrine says to answer structure/architecture
 questions with the graph before reading files — but the tool has two sharp edges that make
 naive use return garbage.
 
@@ -63,6 +63,6 @@ verify before relying and revisit dead ends if code changed since
 
 ## See also
 
-- [[components/graph-tool]] — the tool these tips drive
-- [[concepts/graph-first]] — the doctrine that mandates graph-before-read
+- [[components/graphify-bridge-extension]] — the tool these tips drive
+- [[components/graph-first-extension]] — the doctrine that mandates graph-before-read
 - [[synthesis/orchestration-lessons]] — subagents inherit the graph tool, so dispatched tasks assume it too
