@@ -8,7 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
-| Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit`, `.pi-vcs/hooks/post-checkout` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
+| Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
 | Chat title | `extensions/chat-title.ts` | Sets the terminal tab/window title to project + condensed last prompt, prefixed with a live session timer. |
 | Custom header | `extensions/custom-header.ts` | Replaces pi's built-in header with a figlet "harimo" banner + greeting/cwd/aphorism subtitle lines. |
@@ -57,13 +57,19 @@ inline semantic extraction, fable-only) into `graphify-out/` (gitignored — der
 Added `extensions/graphify-bridge.ts`: system-prompt graph block (~600 chars: counts,
 top hubs, staleness), a `graph` tool (query/explain/path/status via the pinned graphify
 Python), `/graph` + `/graph update`, and session-start `graphify reflect --if-stale`.
-`graphify hook install` wired post-commit/post-checkout hooks into `.pi-vcs/hooks/`
-(AST re-extract + recluster on every autocommit snapshot, no LLM); appended a
-doc-flag section that touches `graphify-out/needs_update` when .md/image files change
-so the bridge surfaces "STALE — run /graphify --update". `schema/manifest.json`
+`graphify hook install` wired a post-commit hook into `.pi-vcs/hooks/` (AST re-extract
++ recluster on every autocommit snapshot, no LLM), hardened with a harness-local
+doc-extension filter: graphify's .md structural extractor otherwise REPLACES the
+semantic (LLM-authored) doc layer via replace-on-re-extract (observed live — 22 edges
+lost, giant component 615→126; re-apply the filter if `graphify hook install` is re-run).
+The generated post-checkout hook was deleted for the same reason (its full-rebuild path
+re-extracts .md; this repo is linear, no branch switching). A doc-flag section touches
+`graphify-out/needs_update` when .md/image files change so the bridge surfaces
+"STALE — run /graphify --update"; `/graph update` likewise passes an explicit code-only
+changed_paths list so it can never touch doc semantics. `schema/manifest.json`
 layout.known += `graphify-out`, `git`, `npm`; `.gitignore` += `graphify-out/`. Files:
 `extensions/graphify-bridge.ts` (new), `.pi-vcs/hooks/post-commit` (new),
-`.pi-vcs/hooks/post-checkout` (new), `.gitignore`, `schema/manifest.json`,
+`.gitignore`, `schema/manifest.json`,
 `docs/config-index.md`. Why: the harness now retrieves knowledge about itself from a
 ~30x-cheaper graph instead of re-reading files, keeps that graph current
 automatically, and audits its own structure (hubs, staleness, query lessons).
