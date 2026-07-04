@@ -30,6 +30,16 @@ directly, following normal engineering judgment and the decomposition order
 (design → execute → verify). Every rule below that mandates delegation is
 conditional on this gate being open.
 
+### Write-Gate Pre-Flight (MUST, validate on every fable task)
+
+Whenever the lead is `claude-fable-5` and a task will require subagents to
+edit or write files, check the write-gate mode BEFORE dispatching. Spawned
+children inherit `--write` only when the parent gate is in write mode; in
+confirm or read-only mode they run read-only and can only return plans.
+If the gate is not in write mode, STOP and prompt the user to switch
+(`/write`) so builders inherit write access — do not fall back to editing
+directly, and do not spawn read-only children hoping it clears.
+
 ## Model Tiers (pinned)
 
 | Tier | Model | Thinking level | Role |
