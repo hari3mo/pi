@@ -26,7 +26,7 @@ import {
 	getMarkdownTheme,
 	withFileMutationQueue,
 } from "@earendil-works/pi-coding-agent";
-import { Container, Markdown, Spacer, Text } from "@earendil-works/pi-tui";
+import { Container, Key, Markdown, matchesKey, Spacer, Text, truncateToWidth } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { type AgentConfig, type AgentScope, discoverAgents } from "./agents.ts";
 import { fmtDuration as formatDuration, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "../lib/format.ts";
@@ -124,6 +124,7 @@ function formatUsageStats(
 		cost: number;
 		contextTokens?: number;
 		turns?: number;
+		reasoning?: number;
 	},
 	model?: string,
 	durationMs?: number,
@@ -133,6 +134,7 @@ function formatUsageStats(
 	if (usage.turns) parts.push(`${usage.turns} turn${usage.turns > 1 ? "s" : ""}`);
 	if (usage.input) parts.push(`↑${formatTokens(usage.input)}`);
 	if (usage.output) parts.push(`↓${formatTokens(usage.output)}`);
+	if (usage.reasoning) parts.push(`think:${formatTokens(usage.reasoning)}`);
 	if (usage.cacheRead) parts.push(`R${formatTokens(usage.cacheRead)}`);
 	if (usage.cacheWrite) parts.push(`W${formatTokens(usage.cacheWrite)}`);
 	if (usage.cost) parts.push(`$${usage.cost.toFixed(4)}`);
@@ -235,6 +237,7 @@ function formatToolCall(
 interface UsageStats {
 	input: number;
 	output: number;
+	reasoning: number;
 	cacheRead: number;
 	cacheWrite: number;
 	cost: number;
@@ -330,6 +333,202 @@ function getDisplayItems(messages: Message[]): DisplayItem[] {
 	return items;
 }
 
+interface SubagentRunRef {
+	entryId?: string;
+	mode: SubagentDetails["mode"];
+	batchSize: number;
+	resultIndex: number;
+	result: SingleResult;
+}
+
+const SHELL_TEXT_CAP = 24 * 1024;
+
+function truncateShellText(text: string, maxBytes = SHELL_TEXT_CAP): string {
+	const bytes = Buffer.byteLength(text, "utf8");
+	if (bytes <= maxBytes) return text;
+	let truncated = text.slice(0, maxBytes);
+	while (Buffer.byteLength(truncated, "utf8") > maxBytes) truncated = truncated.slice(0, -1);
+	return `${truncated}\n\n[truncated: ${bytes - Buffer.byteLength(truncated, "utf8")} bytes omitted]`;
+}
+
+function oneLine(text: string, maxChars = 90): string {
+	const flat = text.replace(/\s+/g, " ").trim();
+	return flat.length > maxChars ? `${flat.slice(0, maxChars - 3)}...` : flat;
+}
+
+function isSubagentDetails(value: unknown): value is SubagentDetails {
+	return Boolean(value && typeof value === "object" && Array.isArray((value as { results?: unknown }).results));
+}
+
+function contentToText(content: unknown): string {
+	if (typeof content === "string") return content;
+	if (!Array.isArray(content)) return "";
+	return content
+		.map((part) => {
+			const p = part as { type?: string; text?: string; mimeType?: string; data?: string };
+			if (p.type === "text") return p.text ?? "";
+			if (p.type === "image") return `[image: ${p.mimeType ?? "unknown"}, ${p.data?.length ?? 0} base64 chars]`;
+			return "";
+		})
+		.filter(Boolean)
+		.join("\n\n");
+}
+
+function fenced(text: string, language = ""): string {
+	let fence = "```";
+	while (text.includes(fence)) fence += "`";
+	return `${fence}${language}\n${text}\n${fence}`;
+}
+
+function jsonBlock(value: unknown): string {
+	try {
+		return fenced(truncateShellText(JSON.stringify(value, null, 2) ?? "null"), "json");
+	} catch (error) {
+		return fenced(`(unserializable: ${error instanceof Error ? error.message : String(error)})`, "text");
+	}
+}
+
+function runStatusWord(result: SingleResult): string {
+	if (runInProgress(result)) return "running";
+	return isFailedResult(result) ? "failed" : "completed";
+}
+
+function getSubagentRunRefs(sessionManager: { getBranch(): unknown[] }): SubagentRunRef[] {
+	const refs: SubagentRunRef[] = [];
+	for (const entry of sessionManager.getBranch()) {
+		const e = entry as { type?: string; id?: string; message?: { role?: string; toolName?: string; details?: unknown } };
+		if (e.type !== "message" || e.message?.role !== "toolResult" || e.message.toolName !== "subagent") continue;
+		if (!isSubagentDetails(e.message.details)) continue;
+		const details = e.message.details;
+		details.results.forEach((result, resultIndex) => {
+			refs.push({ entryId: e.id, mode: details.mode, batchSize: details.results.length, resultIndex, result });
+		});
+	}
+	return refs.reverse();
+}
+
+function subagentRunLabel(ref: SubagentRunRef, index: number): string {
+	const result = ref.result;
+	const elapsed = getElapsedMs(result);
+	const modeSuffix = ref.batchSize > 1 ? ` · ${ref.mode} ${ref.resultIndex + 1}/${ref.batchSize}` : "";
+	const elapsedSuffix = elapsed === undefined ? "" : ` · ${formatDuration(elapsed)}`;
+	return `${index + 1}. ${result.agent} · ${runStatusWord(result)}${modeSuffix}${elapsedSuffix} · ${oneLine(result.task)}`;
+}
+
+function findSubagentRun(refs: SubagentRunRef[], query: string): SubagentRunRef | undefined {
+	const q = query.trim().toLowerCase();
+	if (!q || q === "latest") return refs[0];
+	if (/^#?\d+$/.test(q)) return refs[Number.parseInt(q.replace(/^#/, ""), 10) - 1];
+	return refs.find((ref, index) => {
+		const agent = ref.result.agent.toLowerCase();
+		return agent === q || subagentRunLabel(ref, index).toLowerCase().includes(q);
+	});
+}
+
+function formatSubagentShell(ref: SubagentRunRef): string {
+	const result = ref.result;
+	let assistantTurns = 0;
+	let thinkingBlocks = 0;
+	let toolCalls = 0;
+	let toolResults = 0;
+	for (const msg of result.messages) {
+		if (msg.role === "assistant") {
+			assistantTurns++;
+			for (const part of msg.content) {
+				if (part.type === "thinking") thinkingBlocks++;
+				else if (part.type === "toolCall") toolCalls++;
+			}
+		} else if (msg.role === "toolResult") {
+			toolResults++;
+		}
+	}
+
+	const lines: string[] = [];
+	lines.push(`# Subagent shell: ${result.agent}`);
+	lines.push("");
+	lines.push(`- Status: ${runStatusWord(result)}`);
+	lines.push(`- Source: ${result.agentSource}`);
+	lines.push(`- Batch: ${ref.mode} ${ref.resultIndex + 1}/${ref.batchSize}`);
+	lines.push(`- Entry: ${ref.entryId ?? "unknown"}`);
+	const elapsedMs = getElapsedMs(result);
+	lines.push(`- Runtime: ${elapsedMs === undefined ? "unknown" : formatDuration(elapsedMs)}`);
+	lines.push(`- Stats: ${formatRunStatus(result)}`);
+	lines.push(`- Transcript: ${result.messages.length} messages · ${assistantTurns} assistant turns · ${thinkingBlocks} thinking blocks · ${toolCalls} tool calls · ${toolResults} tool results`);
+	if (result.stopReason) lines.push(`- Stop reason: ${result.stopReason}`);
+	if (result.errorMessage) lines.push(`- Error: ${result.errorMessage}`);
+	lines.push("");
+	lines.push("## Task");
+	lines.push("");
+	lines.push(result.task || "(no task)");
+	lines.push("");
+	lines.push("## Transcript");
+	if (thinkingBlocks === 0) lines.push("\n> No provider-visible thinking blocks were captured for this run.");
+	if (result.messages.length === 0) lines.push("\n(no transcript captured)");
+
+	let assistantIndex = 0;
+	for (const msg of result.messages) {
+		if (msg.role === "user") {
+			lines.push("\n### User");
+			lines.push(truncateShellText(contentToText(msg.content) || "(empty)"));
+			continue;
+		}
+
+		if (msg.role === "assistant") {
+			assistantIndex++;
+			lines.push(`\n### Assistant turn ${assistantIndex}`);
+			for (const part of msg.content) {
+				if (part.type === "thinking") {
+					const marker = part.redacted ? " (redacted)" : "";
+					lines.push(`\n#### Thinking${marker}`);
+					lines.push(truncateShellText(part.thinking?.trim() || "(no visible thinking text; signature may be preserved)"));
+				} else if (part.type === "text") {
+					lines.push("\n#### Text");
+					lines.push(truncateShellText(part.text.trim() || "(empty)"));
+				} else if (part.type === "toolCall") {
+					lines.push(`\n#### Tool call: ${part.name}`);
+					lines.push(jsonBlock(part.arguments));
+				}
+			}
+			if (msg.diagnostics?.length) {
+				lines.push("\n#### Diagnostics");
+				lines.push(jsonBlock(msg.diagnostics));
+			}
+			const usage = msg.usage
+				? formatUsageStats(
+						{
+							input: msg.usage.input || 0,
+							output: msg.usage.output || 0,
+							reasoning: msg.usage.reasoning || 0,
+							cacheRead: msg.usage.cacheRead || 0,
+							cacheWrite: msg.usage.cacheWrite || 0,
+							cost: msg.usage.cost?.total || 0,
+							contextTokens: msg.usage.totalTokens || 0,
+							turns: 1,
+						},
+						msg.model,
+					)
+				: "";
+			if (usage) lines.push(`\n_Usage: ${usage}_`);
+			continue;
+		}
+
+		if (msg.role === "toolResult") {
+			lines.push(`\n### Tool result: ${msg.toolName}${msg.isError ? " (error)" : ""}`);
+			lines.push(truncateShellText(contentToText(msg.content) || "(empty)"));
+			if (msg.details !== undefined) {
+				lines.push("\n#### Details");
+				lines.push(jsonBlock(msg.details));
+			}
+		}
+	}
+
+	if (result.stderr.trim()) {
+		lines.push("\n## Stderr");
+		lines.push(fenced(truncateShellText(result.stderr.trim()), "text"));
+	}
+	return lines.join("\n");
+}
+
 async function mapWithConcurrencyLimit<TIn, TOut>(
 	items: TIn[],
 	concurrency: number,
@@ -400,7 +599,7 @@ async function runSingleAgent(
 			exitCode: 1,
 			messages: [],
 			stderr: `Unknown agent: "${agentName}". Available agents: ${available}.`,
-			usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
+			usage: { input: 0, output: 0, reasoning: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
 			step,
 		};
 	}
@@ -429,7 +628,7 @@ async function runSingleAgent(
 		exitCode: 0,
 		messages: [],
 		stderr: "",
-		usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
+		usage: { input: 0, output: 0, reasoning: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
 		model: childModel,
 		mode: childGate,
 		step,
@@ -495,6 +694,7 @@ async function runSingleAgent(
 						if (usage) {
 							currentResult.usage.input += usage.input || 0;
 							currentResult.usage.output += usage.output || 0;
+							currentResult.usage.reasoning += usage.reasoning || 0;
 							currentResult.usage.cacheRead += usage.cacheRead || 0;
 							currentResult.usage.cacheWrite += usage.cacheWrite || 0;
 							currentResult.usage.cost += usage.cost?.total || 0;
@@ -666,6 +866,40 @@ export default function (pi: ExtensionAPI) {
 		}
 	}
 
+	pi.registerCommand("subagent-shell", {
+		description: "Inspect a subagent run: transcript, thinking blocks, tool results, and stats",
+		handler: async (args, ctx) => {
+			await ctx.waitForIdle();
+			const refs = getSubagentRunRefs(ctx.sessionManager);
+			if (refs.length === 0) {
+				if (ctx.hasUI) ctx.ui.notify("No subagent runs in this branch.", "warning");
+				else console.error("No subagent runs in this branch.");
+				return;
+			}
+
+			let ref: SubagentRunRef | undefined;
+			if (!args.trim() && refs.length > 1 && ctx.hasUI) {
+				const labels = refs.map(subagentRunLabel);
+				const choice = await ctx.ui.select("Enter subagent shell:", labels);
+				if (!choice) return;
+				ref = refs[labels.indexOf(choice)];
+			} else {
+				ref = findSubagentRun(refs, args);
+			}
+
+			if (!ref) {
+				const hint = refs.map((r, i) => subagentRunLabel(r, i)).join("\n");
+				if (ctx.hasUI) ctx.ui.notify(`No subagent run matches "${args}". Try /subagent-shell latest or a number.`, "warning");
+				else console.error(`No subagent run matches "${args}".\n${hint}`);
+				return;
+			}
+
+			const transcript = formatSubagentShell(ref);
+			if (ctx.hasUI) await ctx.ui.editor(`Subagent shell: ${ref.result.agent}`, transcript);
+			else console.log(transcript);
+		},
+	});
+
 	pi.registerTool({
 		name: "subagent",
 		label: "Subagent",
@@ -807,35 +1041,37 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			if (params.tasks && params.tasks.length > 0) {
-				if (params.tasks.length > MAX_PARALLEL_TASKS)
+				const tasks = params.tasks;
+				if (tasks.length > MAX_PARALLEL_TASKS)
 					return {
 						content: [
 							{
 								type: "text",
-								text: `Too many parallel tasks (${params.tasks.length}). Max is ${MAX_PARALLEL_TASKS}.`,
+								text: `Too many parallel tasks (${tasks.length}). Max is ${MAX_PARALLEL_TASKS}.`,
 							},
 						],
 						details: makeDetails("parallel")([]),
 					};
 
 				// Track all results for streaming updates
-				const allResults: SingleResult[] = new Array(params.tasks.length);
+				const allResults: SingleResult[] = new Array(tasks.length);
 
 				// Initialize placeholder results. Seed each with the resolved model and
 				// inherited gate so a PENDING subagent still renders its status-bar data
 				// (mode · thinking) before its subprocess emits any usage.
 				const pendingGate: "write" | "confirm" =
 					(globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write" ? "write" : "confirm";
-				for (let i = 0; i < params.tasks.length; i++) {
+				for (let i = 0; i < tasks.length; i++) {
+					const task = tasks[i];
 					allResults[i] = {
-						agent: params.tasks[i].agent,
+						agent: task.agent,
 						agentSource: "unknown",
-						task: params.tasks[i].task,
+						task: task.task,
 						exitCode: -1, // -1 = still running
 						messages: [],
 						stderr: "",
-						usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
-						model: withThinking(agents.find((a) => a.name === params.tasks[i].agent)?.model ?? "", inheritedThinking()) || undefined,
+						usage: { input: 0, output: 0, reasoning: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
+						model: withThinking(agents.find((a) => a.name === task.agent)?.model ?? "", inheritedThinking()) || undefined,
 						mode: pendingGate,
 					};
 				}
@@ -853,7 +1089,7 @@ export default function (pi: ExtensionAPI) {
 					}
 				};
 
-				const results = await mapWithConcurrencyLimit(params.tasks, MAX_CONCURRENCY, async (t, index) => {
+				const results = await mapWithConcurrencyLimit(tasks, MAX_CONCURRENCY, async (t, index) => {
 					const result = await runSingleAgent(
 						ctx.cwd,
 						agents,
@@ -1080,14 +1316,15 @@ export default function (pi: ExtensionAPI) {
 			}
 
 			const aggregateUsage = (results: SingleResult[]) => {
-				const total = { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 0 };
+				const total = { input: 0, output: 0, reasoning: 0, cacheRead: 0, cacheWrite: 0, cost: 0, turns: 0 };
 				for (const r of results) {
-					total.input += r.usage.input;
-					total.output += r.usage.output;
-					total.cacheRead += r.usage.cacheRead;
-					total.cacheWrite += r.usage.cacheWrite;
-					total.cost += r.usage.cost;
-					total.turns += r.usage.turns;
+					total.input += r.usage.input || 0;
+					total.output += r.usage.output || 0;
+					total.reasoning += r.usage.reasoning || 0;
+					total.cacheRead += r.usage.cacheRead || 0;
+					total.cacheWrite += r.usage.cacheWrite || 0;
+					total.cost += r.usage.cost || 0;
+					total.turns += r.usage.turns || 0;
 				}
 				return total;
 			};
