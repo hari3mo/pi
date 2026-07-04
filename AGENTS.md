@@ -160,7 +160,11 @@ The harness audits itself; problems become prompts:
   of this config: answer structure/architecture questions with the `graph` tool before
   reading files. Code commits rebuild it automatically (post-commit hook); doc changes
   mark it STALE until `/graphify --update`.
-- Lessons close the loop: substantive `graph` outcomes are auto-flushed at session shutdown by `extensions/knowledge-compound.ts` (`graphify save-result --outcome` plus draft notes staged into `oracle/_raw/`; capped, deduped, fail-open); mid-session manual `save-result` remains available; `reflect --if-stale` distills them automatically at session start, and `learn_heuristic` persists durable ones.
+- Lessons close the loop: substantive `graph` outcomes are auto-flushed at session
+  shutdown by `extensions/knowledge-compound.ts` (`graphify save-result --outcome`
+  plus draft notes staged into `oracle/_raw/`; capped, deduped, fail-open);
+  mid-session manual `save-result` remains available; `reflect --if-stale` distills
+  them automatically at session start, and `learn_heuristic` persists durable ones.
 - When a standing order or prompt rule can be enforced mechanically, promote it to
   code (extension, validator check, or hook) — prompts drift, enforcement does not.
 - Errors are never just worked around: root-cause the failure, then integrate the fix
