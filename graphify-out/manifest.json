@@ -95,8 +95,8 @@
     "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
   },
   "extensions/subagent/index.ts": {
-    "mtime": 1783166164.833784,
-    "ast_hash": "6958895974678aaa6721997a6918fd47",
+    "mtime": 1783167729.9157376,
+    "ast_hash": "73c1add11b19a9181dd59b087d3f3506",
     "semantic_hash": ""
   },
   "extensions/task-tracker.ts": {
