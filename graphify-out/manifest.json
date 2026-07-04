@@ -32,7 +32,7 @@
   "extensions/heuristics/index.ts": {
     "mtime": 1783159885.6423407,
     "ast_hash": "c7a4e2c9afbe29b197574fc8e32691e8",
-    "semantic_hash": ""
+    "semantic_hash": "c7a4e2c9afbe29b197574fc8e32691e8"
   },
   "extensions/heuristics/inject.ts": {
     "mtime": 1783121234.2450075,
@@ -47,7 +47,7 @@
   "extensions/heuristics/schema.ts": {
     "mtime": 1783159885.642016,
     "ast_hash": "cf0aff850982e9ad6ae44711df9a755a",
-    "semantic_hash": ""
+    "semantic_hash": "cf0aff850982e9ad6ae44711df9a755a"
   },
   "extensions/heuristics/store.ts": {
     "mtime": 1783130418.6867042,
@@ -497,7 +497,7 @@
   "AGENTS.md": {
     "mtime": 1783159885.643696,
     "ast_hash": "1d57d20820c76496a453a9b89e52d732",
-    "semantic_hash": ""
+    "semantic_hash": "1d57d20820c76496a453a9b89e52d732"
   },
   "README.md": {
     "mtime": 1783155869.6552408,
@@ -542,7 +542,7 @@
   "docs/config-index.md": {
     "mtime": 1783159885.6441119,
     "ast_hash": "ed3491feabba954aa85832d2a079e5eb",
-    "semantic_hash": ""
+    "semantic_hash": "ed3491feabba954aa85832d2a079e5eb"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783153148.9725547,
@@ -557,7 +557,7 @@
   "extensions/heuristics/DESIGN.md": {
     "mtime": 1783159885.6432118,
     "ast_hash": "7e03da9d1ffa3c44ad8dc40a0c589cff",
-    "semantic_hash": ""
+    "semantic_hash": "7e03da9d1ffa3c44ad8dc40a0c589cff"
   },
   "git/github.com/DietrichGebert/ponytail/.agents/rules/ponytail.md": {
     "mtime": 1783127535.6157978,
