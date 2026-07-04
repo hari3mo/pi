@@ -1194,23 +1194,38 @@ export default function (pi: ExtensionAPI) {
 						const range = markW + WORDMARK.length + 40;
 						const pos = phase % range;
 						const bandWidth = 3;
-						const shimmerLine = (line: string, y: number): string => {
+						// Glint runs render in the theme's accent color (the same
+							// token the docs call out for "logo" use) plus BOLD, not just
+							// BOLD alone — on dark themes bold-vs-dim ink is nearly the
+							// same brightness, so the sweep needs a hue shift to read as
+							// a highlight instead of disappearing into the base tier.
+							const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier = ""; // "" | DIM | glint (RESET + BOLD)
+							let tier: "" | "dim" | "glint" = "";
+							let run = "";
+							const flush = () => {
+								if (!run) return;
+								out +=
+									tier === "glint"
+										? RESET + BOLD + theme.fg("accent", run)
+										: RESET + DIM + run;
+								run = "";
+							};
 							for (let x = 0; x < line.length; x++) {
 								const ch = line[x];
 								if (ch === " ") {
-									out += " ";
+									run += ch;
 									continue;
 								}
-								const want =
-									Math.abs(x + y - pos) < bandWidth ? BOLD : DIM;
+								const want: "dim" | "glint" =
+									Math.abs(x + y - pos) < bandWidth ? "glint" : "dim";
 								if (want !== tier) {
-									out += RESET + want;
+									flush();
 									tier = want;
 								}
-								out += ch;
+								run += ch;
 							}
+							flush();
 							if (tier !== "") out += RESET;
 							return out;
 						};
