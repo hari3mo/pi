@@ -594,7 +594,7 @@ class BlackHoleComponent {
 		const termRows = process.stdout.rows ?? 24;
 		const rows = Math.max(
 			10,
-			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.24)),
+			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.3)),
 		);
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
@@ -722,7 +722,7 @@ class BlackHoleComponent {
 				const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
 				return Math.exp(-d * d);
 			};
-			const nField = Math.floor((artW * rows) / 16);
+			const nField = Math.floor((artW * rows) / 13);
 			let placed = 0;
 			let guard = 0;
 			while (placed < nField && guard++ < nField * 20) {
@@ -786,7 +786,7 @@ class BlackHoleComponent {
 			}
 			// Ultra-dim uniform scatter: fills in even the corners the band
 			// and clusters skip, so nowhere in the frame reads truly empty.
-			const nScatter = Math.floor(nField / 3);
+			const nScatter = Math.floor(nField / 2.5);
 			for (let i = 0; i < nScatter; i++) {
 				this.stars.push({
 					col: Math.floor(Math.random() * artW),
@@ -1126,8 +1126,8 @@ class BlackHoleComponent {
 				}
 				const ch =
 					overlay[row * artW + col] ??
-					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.85) * RAMP_MAX))];
-				const want = b >= 2 ? BLACK : b < 0.3 ? DIM : b < 0.8 ? "" : BOLD;
+					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
+				const want = b >= 2 ? BLACK : b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
