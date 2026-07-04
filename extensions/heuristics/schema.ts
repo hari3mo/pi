@@ -17,15 +17,6 @@ export type Category =
 	| "convention"
 	| "orchestration";
 
-export const CATEGORIES: Category[] = [
-	"correction",
-	"gotcha",
-	"environment",
-	"workflow",
-	"convention",
-	"orchestration",
-];
-
 export type Scope = "global" | "project";
 
 export type Source = "agent" | "user";
@@ -63,7 +54,6 @@ export const JACCARD_MERGE = 0.9;
 export const CHURN_WINDOW = 6;
 export const CHURN_CAP = 20;
 export const BUILDER_WATCH_CALLS = 2;
-export const BUILDER_ROLES = ["builder"];
 
 /** Max lines read from heuristics.jsonl before we stop parsing (DESIGN.md §1). */
 export const MAX_READ_LINES = 5000;
@@ -223,7 +213,5 @@ export function scoreOf(h: Heuristic, now: number = Date.now()): number {
 const BUILDER_SUBSTRING_RE = /build|coder|impl/i;
 
 export function matchesBuilderRole(agentName: string): boolean {
-	const lower = agentName.toLowerCase();
-	if (BUILDER_ROLES.includes(lower)) return true;
 	return BUILDER_SUBSTRING_RE.test(agentName);
 }

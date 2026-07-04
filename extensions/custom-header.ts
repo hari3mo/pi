@@ -8,11 +8,10 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { homedir } from "node:os";
-import { basename, sep } from "node:path";
 import type { ExtensionAPI, Theme } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
+import { shortenCwd } from "./lib/format.ts";
 
 // Generated with: figlet -f standard 'harimo'
 const BANNER_LINES = [
@@ -55,19 +54,6 @@ function getAphorism(): string {
 	const localMs = Date.now() - new Date().getTimezoneOffset() * 60_000;
 	const daysSinceEpoch = Math.floor(localMs / 86_400_000);
 	return APHORISMS[daysSinceEpoch % APHORISMS.length]!;
-}
-
-/** Collapse an absolute cwd to a short "~/…/leaf" form, or bare basename outside home. */
-function shortenCwd(cwd: string): string {
-	const home = homedir();
-	if (cwd === home) return "~";
-	if (cwd.startsWith(home + sep)) {
-		const remainder = cwd.slice(home.length + 1);
-		const segments = remainder.split(sep).filter(Boolean);
-		const last = segments[segments.length - 1] ?? "";
-		return segments.length > 1 ? `~/\u2026/${last}` : `~/${last}`;
-	}
-	return basename(cwd);
 }
 
 /** Computed once at session_start, not per render — git branch lookup shells out. */
