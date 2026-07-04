@@ -25,6 +25,7 @@ const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-w
 const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
 const jiti = createJiti(join(AGENT_DIR, "extensions", "_check_.js"), { interopDefault: false });
 const { inboundRefs, markSeen } = await jiti.import(join(AGENT_DIR, "extensions", "lib", "graph-lookup.ts"));
+const { pendingDependents } = await jiti.import(join(AGENT_DIR, "extensions", "impact-trace.ts"));
 
 let failed = 0;
 const check = (label, cond) => {
@@ -70,6 +71,13 @@ const seen = new Set();
 check("markSeen: first sight → true", markSeen(seen, "a.ts") === true);
 check("markSeen: repeat → false", markSeen(seen, "a.ts") === false);
 check("markSeen: new key → true", markSeen(seen, "b.ts") === true);
+
+// order-aware follow-through: suppress a reminder only if the dep was edited AFTER its flag
+const flaggedAt = new Map([["dep.ts", 3]]);
+check("dep edited BEFORE flag (seq 1 < 3) → still reminded", pendingDependents(flaggedAt, new Map([["dep.ts", 1]])).includes("dep.ts"));
+check("dep edited AFTER flag (seq 5 > 3) → suppressed", !pendingDependents(flaggedAt, new Map([["dep.ts", 5]])).includes("dep.ts"));
+check("dep never edited → still reminded", pendingDependents(flaggedAt, new Map()).includes("dep.ts"));
+check("dep edited AT flag-time (seq 3 == 3) → still reminded (not strictly after)", pendingDependents(flaggedAt, new Map([["dep.ts", 3]])).includes("dep.ts"));
 
 function eqSet(a, b) {
 	if (a.size !== b.size) return false;
