@@ -45,13 +45,18 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 
 // Override a model string's trailing ":<thinking>" suffix with `level`. The
 // provider/id half uses "/", so the last ":" cleanly delimits the thinking
-// level (mirrors formatUsageStats' split). Children inherit the orchestrator's
-// thinking level this way instead of the tier baked into agent frontmatter.
+// level (mirrors formatUsageStats' split). Sonnet 5 and Gemini 3.5 Flash stay
+// pinned to high; every other child inherits the orchestrator's thinking level.
+function lockedThinkingLevel(model: string): string | undefined {
+	return /(?:claude-sonnet-5|gemini-3\.5-flash)/i.test(model) ? "high" : undefined;
+}
+
 function withThinking(model: string, level: string | undefined): string {
-	if (!level) return model;
+	const thinking = lockedThinkingLevel(model) ?? level;
+	if (!thinking) return model;
 	const sep = model.lastIndexOf(":");
 	const base = sep > model.indexOf("/") ? model.slice(0, sep) : model;
-	return `${base}:${level}`;
+	return `${base}:${thinking}`;
 }
 
 // The orchestrator's current thinking level, published by the subagent tool's
