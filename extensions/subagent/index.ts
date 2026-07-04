@@ -356,6 +356,16 @@ interface ActiveSubagentMeta {
 
 const ACTIVE_SUBAGENT_RUNS = new Map<string, SubagentRunRef>();
 const ACTIVE_SUBAGENT_LISTENERS = new Set<() => void>();
+// Every currently-open panel. Populated in the constructor, drained in
+// dispose(). pi's overlay system exposes no teardown callback when a custom UI
+// is dismissed externally (tui.hideOverlay() without resolving the
+// ctx.ui.custom() promise), so the session_shutdown handler in the extension
+// factory disposes every panel here — that fires on quit/reload/new/resume/fork,
+// precisely the external paths that pop the overlay without done(). Residual
+// gap: an overlay dismissed by a hypothetical future external path that is
+// neither done() nor a session replacement would keep one listener+timer alive
+// until session end — accepted, bounded by session lifetime.
+const OPEN_SUBAGENT_PANELS = new Set<ActiveSubagentPanel>();
 let nextActiveSubagentId = 1;
 
 function notifyActiveSubagentListeners(): void {
