@@ -95,8 +95,8 @@
     "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
   },
   "extensions/subagent/index.ts": {
-    "mtime": 1783162216.4902618,
-    "ast_hash": "11dd76d8945847f339ef1d6034e79788",
+    "mtime": 1783164613.0766284,
+    "ast_hash": "19b1c274d94775855874857726f9838b",
     "semantic_hash": ""
   },
   "extensions/task-tracker.ts": {
@@ -520,9 +520,9 @@
     "semantic_hash": "4ebe34240b6c22fc6d18b0c9a9989c46"
   },
   "agents/reviewer.md": {
-    "mtime": 1783155381.2834961,
-    "ast_hash": "b20d0e1d34c0469ba622113a9d750737",
-    "semantic_hash": "b20d0e1d34c0469ba622113a9d750737"
+    "mtime": 1783164603.0728004,
+    "ast_hash": "0caf30638a00855bbd3a7a3d5ad8908a",
+    "semantic_hash": ""
   },
   "agents/scout.md": {
     "mtime": 1783160724.7856078,

@@ -430,9 +430,9 @@
     "semantic_hash": "c0985f1f4624c285324585a4342deac3"
   },
   "keybindings.json": {
-    "mtime": 1783140347.681115,
-    "ast_hash": "47b8b20a86072199112c10f66e2bee8c",
-    "semantic_hash": "47b8b20a86072199112c10f66e2bee8c"
+    "mtime": 1783163811.1844811,
+    "ast_hash": "11e50be7ef2981c3314cc9f845e2bafe",
+    "semantic_hash": ""
   },
   "npm/package.json": {
     "mtime": 1783125983.3172388,
@@ -480,7 +480,7 @@
     "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
   },
   "settings.json": {
-    "mtime": 1783162282.202938,
+    "mtime": 1783164524.1403162,
     "ast_hash": "0bd77e8ddc9ad99d60c6fbaf1f803ff9",
     "semantic_hash": ""
   },
@@ -905,7 +905,7 @@
     "semantic_hash": "e728227f0dc569b554042cb2a9f1a750"
   },
   "skills/graphify/SKILL.md": {
-    "mtime": 1783157563.0774086,
+    "mtime": 1783163355.7237625,
     "ast_hash": "5bc28728a68fa52adb97f26b0ffa1324",
     "semantic_hash": "5bc28728a68fa52adb97f26b0ffa1324"
   },
@@ -1058,5 +1058,10 @@
     "mtime": 1783160961.7179666,
     "ast_hash": "80d1339e206006d6f846b2026d05319d",
     "semantic_hash": "80d1339e206006d6f846b2026d05319d"
+  },
+  "extensions/queue-as-followup.ts": {
+    "mtime": 1783163786.8300614,
+    "ast_hash": "1f2d5bf61f127568ce8cdcfdd4660934",
+    "semantic_hash": ""
   }
 }
