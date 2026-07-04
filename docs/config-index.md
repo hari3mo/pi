@@ -13,6 +13,9 @@ Every session that changes config must update it.
 | Toolchain adaptability | `scripts/smoke-extensions.mjs`, `scripts/audit-pipelines.py` | Extension load smoke using pi's own jiti loader against a Proxy fake-pi (15/15 extensions; self-provisions gitignored `node_modules` symlinks, self-heals on pi relocation); toolchain version tracking (pi/graphifyy/node in `.pipeline_baseline.json`) WARNs once per upgrade with the re-verification list. Runs in `/audit` (`--full`); versions checked every session start. |
 | Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
 | Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
+| Graph-first redirect | `extensions/graph-first.ts`, `extensions/lib/graph-lookup.ts`, `schema/graph-first-stats.schema.json`, `scripts/check-graph-first.mjs` | Steers structure-shaped `grep`/`rg` (symbol def/ref/import hunts) to the `graph` tool via a per-session escalation ladder: 1st offense = allow + nudge, 2nd+ = block, identical retry = bypass; content greps pass untouched (false positives worse than misses). Self-improving: per-session `{nudges,blocks,bypasses}` appended to `graphify-out/.graph_first_stats.json` (~50 records); at agent_end a high bypass ratio nudges a `/graphify --update` re-cache, and `audit-pipelines.py:check_graph_first_drift()` WARNs when the recorded ratio stays >50%. Active only when `graphify-out/graph.json` exists; applies to subagents; fail-open. |
+| Impact tracing | `extensions/impact-trace.ts`, `extensions/lib/graph-lookup.ts`, `scripts/check-impact-trace.mjs` | After every successful edit/write, looks the file up in `graphify-out/graph.json` and injects its INBOUND cross-file dependents (`fileA:line (references)`, capped at 10) so cross-file impact is visible without asking; appends a staleness note when the graph predates the edit or `needs_update` is set. Debounced once per file per session; follow-through reminder at agent_end for flagged dependents never subsequently edited. Silent on no-refs / not-in-graph / any error — never wedges an edit. |
+| Graph lookup lib | `extensions/lib/graph-lookup.ts` | Shared, pi-package-free graph.json access (findGraphRoot, mtime-cached loadGraph, inboundRefs, markSeen debounce, isGraphStale) for graph-first + impact-trace; handles both `links` and `edges` keys. Follows the `lib/config-paths.ts` pattern (not auto-loaded). |
 | Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
 | Chat title | `extensions/chat-title.ts` | Sets the terminal tab/window title to project + condensed last prompt, prefixed with a live session timer. |
@@ -55,6 +58,38 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Knowledge graph wired natively into the agent loop: graph-first + impact-trace.**
+Two new extensions close the loop between the graphify graph and the agent's own
+actions. `extensions/graph-first.ts` hooks `tool_call` (bash): structure-shaped
+`grep`/`rg` (keyword-anchored def/class/function/interface/type/const/import/from/require,
+or a bare symbol searched repo-wide with `-r`/`--include`) is steered to the `graph`
+tool — 1st offense allowed with a nudge, 2nd+ blocked, an identical retry always
+bypasses; content greps (log strings, TODOs, values) pass untouched. Per-session
+`{nudges,blocks,bypasses}` are appended to `graphify-out/.graph_first_stats.json`
+(atomic temp+rename, ~50 records); at agent_end a bypass≥block ratio nudges a re-cache.
+`extensions/impact-trace.ts` hooks `tool_result` (successful edit/write): resolves the
+file repo-relative, collects INBOUND cross-file refs from the graph, and injects
+`<file> is referenced by: <dep>:<line> (<rel>)` (capped 10, staleness-annotated,
+debounced once/file); a follow-through reminder at agent_end lists flagged dependents
+never subsequently edited. Both are inert/silent without `graphify-out/`, apply to
+subagents, and are fully fail-open. Shared parsing factored into
+`extensions/lib/graph-lookup.ts` (pi-package-free, `links`/`edges` tolerant). Added
+`scripts/audit-pipelines.py:check_graph_first_drift()` (fast local read; WARN when the
+recorded bypass ratio >50%; silent when the stats file is absent),
+`schema/graph-first-stats.schema.json` + a `schema/manifest.json` target, and runnable
+checks `scripts/check-graph-first.mjs` (detector + escalation ladder) and
+`scripts/check-impact-trace.mjs` (inbound extraction on both `links`/`edges` fixtures +
+debounce). Verified: 19/19 extension smoke, validate-config clean, audit-pipelines clean,
+both checks green; drift WARN confirmed on a high-bypass fixture. Files:
+`extensions/graph-first.ts` (new), `extensions/impact-trace.ts` (new),
+`extensions/lib/graph-lookup.ts` (new), `schema/graph-first-stats.schema.json` (new),
+`schema/manifest.json`, `scripts/audit-pipelines.py`, `scripts/check-graph-first.mjs` (new),
+`scripts/check-impact-trace.mjs` (new), `AGENTS.md`, `docs/config-index.md`. Why: the
+harness already retrieves knowledge about itself from the graph; now the graph also
+guides searches away from grep and pushes edit-impact into view — the map acts on the
+agent, not just when asked.
+
 
 **Agent role swap: `reviewer` ↔ `peer-engineer`; `peer`'s model set to gpt-5.5.**
 User-directed rename: the gate-tier verification agent (PASS/FAIL:implementation/
