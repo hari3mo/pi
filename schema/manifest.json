@@ -41,7 +41,7 @@
       "maxEntries": 200
     },
     {
-      "path": "~/.pi/heuristics/heuristics.jsonl",
+      "path": ".pi/heuristics/heuristics.jsonl",
       "schema": "schema/heuristic-entry.schema.json",
       "format": "jsonl",
       "required": false,
