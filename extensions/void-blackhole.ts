@@ -61,6 +61,7 @@ import type {
 	ExtensionAPI,
 	ExtensionCommandContext,
 } from "@earendil-works/pi-coding-agent";
+import { VERSION } from "@earendil-works/pi-coding-agent";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -1026,9 +1027,26 @@ class BlackHoleComponent {
 // ------------------------------------------------------------- extension ----
 export default function (pi: ExtensionAPI) {
 	// Landing page: the void greets you on startup and holds the screen
-	// until a key is pressed.
+	// until a key is pressed. The built-in pi header is replaced with the
+	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
-		if (event.reason !== "startup" || ctx.mode !== "tui") return;
+		if (ctx.mode !== "tui") return;
+		ctx.ui.setHeader((_tui, theme) => ({
+			render(width: number): string[] {
+				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
+				if (width < 30) {
+					return ["", theme.fg("accent", "harimo"), subtitle, ""];
+				}
+				return [
+					"",
+					...WORDMARK.map((l) => theme.fg("accent", l)),
+					subtitle,
+					"",
+				];
+			},
+			invalidate() {},
+		}));
+		if (event.reason !== "startup") return;
 		void ctx.ui.custom((tui, _theme, _kb, done) => {
 			return new BlackHoleComponent(tui, () => done(undefined), true);
 		});
