@@ -43,12 +43,17 @@
 import { existsSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-
-// Hardcoded absolute paths (per task): these mirror how AGENTS.md and
-// ~/.obsidian-wiki/config.oracle write them literally. No config artifact.
-const PI_PKG = "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent";
-const ORACLE_VAULT = "/Users/harissaif/.pi/agent/oracle";
-const ORACLE_CONFIG = "/Users/harissaif/.obsidian-wiki/config.oracle";
+import {
+	CROSS_STORE_GUIDANCE,
+	decide,
+	makeRouterState,
+	ORACLE_CONFIG,
+	ORACLE_VAULT,
+	PI_PKG,
+	resetRouterState,
+	type RouterAction,
+	type RouterState,
+} from "./lib/knowledge-router.ts";
 
 /** The three doc roots under PI_PKG the ORACLE-FIRST doctrine names. */
 const DOC_SUBPATHS = ["README.md", "docs/", "examples/"];
@@ -143,24 +148,39 @@ export function isOracleConsult(
 	return false;
 }
 
-export type OracleFirstAction = "allow" | "nudge" | "block" | "bypass";
-export interface OracleFirstState {
-	count: number;
-	blocked: Set<string>;
-}
+export type OracleFirstAction = RouterAction;
+export type OracleFirstState = RouterState;
 
 /**
- * Escalation ladder over session state (identical shape to graph-first's).
+ * Escalation ladder (shared core, keyed by classifyPiDocRead's per-tool key).
  * First flagged read nudges; later ones block; an identical retry of a blocked
- * read always bypasses. Mutates `state`. Pure so the ladder is unit-testable.
+ * read always bypasses. Thin wrapper so the check imports this file's signature.
  */
 export function decideAction(state: OracleFirstState, key: string, flagged: boolean): OracleFirstAction {
-	if (!flagged) return "allow";
-	if (state.blocked.has(key)) return "bypass";
-	state.count++;
-	if (state.count === 1) return "nudge";
-	state.blocked.add(key);
-	return "block";
+	return decide(state, key, flagged);
+}
+
+// ---------------------------------------------------------------------------
+// Redirect messages (cross-store aware — deliverable 2). Pure + exported so the
+// check asserts both stores are named. A pi-doc read is a pi-knowledge question
+// by construction, so the primary line points at the oracle; CROSS_STORE_GUIDANCE
+// names the `graph` tool for THIS repo's live code structure (the reverse door).
+// ---------------------------------------------------------------------------
+
+export function buildNudge(target: string): string {
+	return (
+		`[oracle-first] Pi-knowledge lookup (${target}) — the oracle vault is compiled knowledge, ` +
+		`cheaper than a cold pi-docs read. Try \`wiki-query\` against the oracle profile ` +
+		`(~/.obsidian-wiki/config.oracle) first. Read allowed this once. ${CROSS_STORE_GUIDANCE}`
+	);
+}
+
+export function buildBlock(target: string): string {
+	return (
+		`[oracle-first] Consult the oracle before pi's own docs (${target}). Use \`wiki-query\` against ` +
+		`the oracle profile (~/.obsidian-wiki/config.oracle). If the oracle genuinely lacks this, ` +
+		`re-run the IDENTICAL read to proceed. ${CROSS_STORE_GUIDANCE}`
+	);
 }
 
 // ---------------------------------------------------------------------------
@@ -170,7 +190,7 @@ export function decideAction(state: OracleFirstState, key: string, flagged: bool
 export default function (pi: ExtensionAPI) {
 	let cwd = "/";
 	let oracleConsulted = false;
-	const state: OracleFirstState = { count: 0, blocked: new Set() };
+	const state: OracleFirstState = makeRouterState();
 
 	// Cheap existsSync each check (mirrors graph-first's active()); the vault or
 	// config could appear/vanish mid-session.
@@ -179,8 +199,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		cwd = ctx.cwd || "/";
 		oracleConsulted = false;
-		state.count = 0;
-		state.blocked.clear();
+		resetRouterState(state);
 	});
 
 	pi.on("tool_call", async (event) => {
@@ -203,10 +222,7 @@ export default function (pi: ExtensionAPI) {
 						{
 							customType: "oracle-first-nudge",
 							display: true,
-							content:
-								`[oracle-first] Pi-knowledge lookup (${target}) — the oracle vault is compiled ` +
-								`knowledge, cheaper than a cold pi-docs read. Try \`wiki-query\` against the oracle ` +
-								`profile (~/.obsidian-wiki/config.oracle) + the \`graph\` tool first. Read allowed this once.`,
+							content: buildNudge(target),
 						},
 						{ deliverAs: "nextTurn" },
 					);
@@ -214,10 +230,7 @@ export default function (pi: ExtensionAPI) {
 				case "block":
 					return {
 						block: true,
-						reason:
-							`[oracle-first] Consult the oracle before pi's own docs (${target}). ` +
-							`Use \`wiki-query\` against the oracle profile (~/.obsidian-wiki/config.oracle), or the ` +
-							`\`graph\` tool. If the oracle genuinely lacks this, re-run the IDENTICAL read to proceed.`,
+						reason: buildBlock(target),
 					};
 				case "bypass":
 				default:
