@@ -158,8 +158,8 @@ When a task arrives, decompose it and route each piece by weight:
     review passes)
   - EXCEPT core algorithmic or stateful modules: route those to
     `solo-engineer` (or, with explicit user approval, `fable-engineer` at
-    highest stakes) even when the
-    design is fixed — mechanical-tier builders ship subtle spec-corner
+    highest stakes) even when the design is fixed — mechanical-tier builders
+    ship subtle spec-corner
     defects that review does not catch (benchmarked: error-token
     aliasing, reference canonicalization)
 - **Verification** — split by weight:
@@ -237,8 +237,7 @@ The lead MUST route through `scope-planner` and/or `architect` first when ANY of
   `architect` when the design will fan out to 2+ builders or pairs with a
   blind `peer-engineer` opinion; otherwise route the whole task, design
   inline, to `solo-engineer` (or, with explicit user approval,
-  `fable-engineer` at highest stakes). For
-  greenfield single-session builds, these calls are made inline by
+  `fable-engineer` at highest stakes). For greenfield single-session builds, these calls are made inline by
   `solo-engineer`/`fable-engineer` — that is their charter; do
   not route a self-contained new module through `architect` just because
   it contains design decisions.
