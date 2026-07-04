@@ -35,6 +35,16 @@ if [ -z "$_NON_GRAPH" ]; then
     exit 0
 fi
 
+# harness-local filter: exclude docs/images from the AST rebuild. graphify's
+# .md structural extractor would REPLACE the semantic (LLM-authored) layer for
+# any changed doc via replace-on-re-extract. Doc changes are handled by the
+# needs_update flag section at the bottom of this hook instead.
+# (Re-apply this filter if `graphify hook install` ever regenerates this hook.)
+CHANGED=$(echo "$CHANGED" | grep -vE '\.(md|mdx|qmd|txt|rst|pdf|png|jpe?g|webp|svg|gif)$' || true)
+if [ -z "$CHANGED" ]; then
+    exit 0
+fi
+
 # Detect the correct Python interpreter (handles uv tool, pipx, venv, system installs).
 # _PINNED was recorded at hook-install time; tried first so the hook works even
 # when the graphify launcher is not on PATH (common in GUI clients and CI).

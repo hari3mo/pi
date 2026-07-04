@@ -235,7 +235,12 @@ export default function (pi: ExtensionAPI) {
 				const out = await new Promise<string>((resolve) => {
 					execFile(
 						graphifyPython(root),
-						["-c", "from pathlib import Path; from graphify.watch import _rebuild_code; _rebuild_code(Path('.'))"],
+						[
+							"-c",
+							// Code-only refresh: pass the code corpus as changed_paths so graphify's
+							// .md structural extractor never replaces the semantic (LLM) doc layer.
+							"from pathlib import Path; from graphify.detect import detect; from graphify.watch import _rebuild_code; root = Path('.'); code = [Path(f) for f in detect(root)['files']['code']]; _rebuild_code(root, changed_paths=code)",
+						],
 						{ cwd: root, timeout: UPDATE_TIMEOUT_MS, maxBuffer: 4 * 1024 * 1024 },
 						(err, stdout, stderr) => resolve(err ? `rebuild failed: ${err.message}\n${stderr}` : `${stdout}`.trim()),
 					);
