@@ -50,6 +50,30 @@ Every session that changes config must update it.
 
 ### 2026-07-04
 
+**Role rename: `solo-engineer` → `engineer`, `builder` → `worker`; peer-engineer bumped to gpt-5.5-pro.**
+`agents/solo-engineer.md` renamed to `agents/engineer.md` and `agents/builder.md` renamed
+to `agents/worker.md` (frontmatter `name:` and internal self-references updated to match);
+`agents/peer-engineer.md` model bumped from `openai/gpt-5.5:xhigh` to
+`openai/gpt-5.5-pro:xhigh`. All role-name references (exact names and prose/plural forms:
+`builder`/`builders`/`builder-tier`, `solo-engineer`) swept across `AGENTS.md` (routing
+table, roster table, escalation, rework loop, defaults), `docs/rework-loop.md`,
+`docs/config-index.md` (Feature index only), `README.md`, `prompts/{build,design,feature,ship}.md`,
+`extensions/subagent/index.ts`, `extensions/read-only-default.ts`, and
+`extensions/heuristics/{sanitize.ts,DESIGN.md}` (prose/comments only). Files:
+`agents/engineer.md` (was `solo-engineer.md`), `agents/worker.md` (was `builder.md`),
+`agents/peer-engineer.md`, `AGENTS.md`, `docs/rework-loop.md`, `docs/config-index.md`,
+`README.md`, `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`,
+`prompts/ship.md`, `extensions/subagent/index.ts`, `extensions/read-only-default.ts`,
+`extensions/heuristics/sanitize.ts`, `extensions/heuristics/DESIGN.md`. Not touched:
+TS identifiers/constants tied to the old name (`extensions/heuristics/schema.ts`
+`BUILDER_WATCH_CALLS`/`matchesBuilderRole`, `extensions/heuristics/index.ts`
+`builderWatch`) and the unrelated generic-English "builder" in
+`extensions/heuristics/inject.ts` ("Injection block builder for...") — out of scope,
+since retargeting the S4 role-detection regex to also match `worker` is a design
+decision, not a mechanical rename. Why: shorter, less overloaded role names
+(`engineer`/`worker` vs. `solo-engineer`/`builder`) and the newer, stronger
+`gpt-5.5-pro` catalog model for the peer role.
+
 **Doctrine rewrite: lean scale-first AGENTS.md; roster cut to seven roles; `qa-reviewer` → `reviewer`.**
 `AGENTS.md` rewritten from scratch (~416 → ~140 lines): philosophy (fable touches each task
 exactly twice — dispatch and judge), Delegation Gate, write-gate pre-flight, intent
