@@ -3,8 +3,7 @@
  * ported to pi's TUI.
  *
  * Runs as pi's TUI landing page on startup — it holds the screen with a
- * VOID wordmark, the working directory, and key hints until a key is
- * pressed (holding SPACE feeds the hole instead of dismissing) — and stays
+ * harimo wordmark and the working directory until a key is pressed — and stays
  * available as /void: a supermassive black hole with a gravity-driven
  * accretion disk. Every particle free-falls under Newtonian gravity, whirls
  * faster as angular momentum hauls it in, heats up (brighter glyph), vanishes
@@ -89,17 +88,17 @@ const BEND = 0.4; //   far-side lensing strength: the image of matter behind
 const SECOND_R = 1.18; // demagnified counter-images hug this radius, just
 //                        outside the photon ring band (sqrt(1.35) ~ 1.16)
 const TICK_MS = 50; // 20 fps — plenty for glyphs
-const FEED_GRAVITY = 3.2; // feed multiplier while space is held
 const ART_MAX_W = 280; // wide: fill the terminal, centered, landing-page scale
 const ART_MAX_ROWS = 64;
 
-// Landing-page chrome: the wordmark (figlet "small"), stamped into the art
-// as exact glyphs so it composites with the starfield like everything else.
+// Landing-page chrome: the wordmark (figlet "smslant" — its oblique strokes
+// echo the spiral arms), stamped into the art as exact glyphs on a cleared
+// plate so the letterforms stay crisp against the starfield.
 const WORDMARK = [
-	"__   _____ ___ ___",
-	"\\ \\ / / _ \\_ _|   \\",
-	" \\ V / (_) | || |) |",
-	"  \\_/ \\___/___|___/",
+	"   __            _",
+	"  / /  ___ _____(_)_ _  ___",
+	" / _ \\/ _ `/ __/ /  ' \\/ _ \\",
+	"/_//_/\\_,_/_/ /_/_/_/_/\\___/",
 ];
 
 // Orbiting planets (planets.js PLANET_DEFS, nav words dropped) — irregular
@@ -256,7 +255,6 @@ class BlackHoleComponent {
 	private tui: { requestRender: () => void };
 	private onClose: () => void;
 	private tagline: string;
-	private hint: string;
 	private interval: ReturnType<typeof setInterval> | null = null;
 
 	// Per-particle state (polar position, radial velocity, angular momentum).
@@ -266,10 +264,6 @@ class BlackHoleComponent {
 	private diskL = new Float32Array(DISK_COUNT);
 	private diskYSeed = new Float32Array(DISK_COUNT);
 	private diskNoise = new Float32Array(DISK_COUNT);
-
-	// Press-and-hold SPACE to feed: gravity ramps up, eases back on release.
-	private feedScale = 1;
-	private feedUntil = 0;
 
 	// Spiral-arm dust field, sampled once; the whole field wheels via spin.
 	private dustR = new Float32Array(DUST_COUNT);
@@ -304,7 +298,7 @@ class BlackHoleComponent {
 	constructor(
 		tui: { requestRender: () => void },
 		onClose: () => void,
-		splash: boolean,
+		_splash: boolean,
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
@@ -315,9 +309,6 @@ class BlackHoleComponent {
 				? "~" + process.cwd().slice(home.length)
 				: process.cwd();
 		this.tagline = `pi · ${cwd}`;
-		this.hint = splash
-			? "press any key to begin · hold space to feed the hole · /void returns here"
-			: "press any key to return · hold space to feed the hole";
 
 		// Steady-state fill: seed along the infall paths so the disk is full.
 		for (let i = 0; i < DISK_COUNT; i++) this.spawnDiskParticle(i, false);
@@ -417,14 +408,12 @@ class BlackHoleComponent {
 	private tick(dt: number): void {
 		this.elapsed += dt;
 		this.spin += DUST_SPIN * dt; // the dust field wheels like ringSpin
-		const feedTarget = Date.now() < this.feedUntil ? FEED_GRAVITY : 1;
-		this.feedScale += (feedTarget - this.feedScale) * (1 - Math.exp(-3.5 * dt));
 
 		for (let i = 0; i < DISK_COUNT; i++) {
 			let r = this.diskR[i];
 			// Newtonian free-fall: gravity accelerates matter inward while
 			// angular momentum makes it whirl ever faster.
-			const vr = this.diskVr[i] - ((GM * this.feedScale) / (r * r)) * dt;
+			const vr = this.diskVr[i] - (GM / (r * r)) * dt;
 			r += vr * dt;
 			const theta = this.diskTheta[i] - (this.diskL[i] / (r * r)) * dt;
 
@@ -492,12 +481,7 @@ class BlackHoleComponent {
 	}
 
 	handleInput(data: string): void {
-		// SPACE feeds the hole (gravity ramps up while held, key-repeat keeps
-		// it alive); any other key collapses the view back into the editor.
-		if (data === " ") {
-			this.feedUntil = Date.now() + 350;
-			return;
-		}
+		// Any key collapses the view back into the editor.
 		this.close();
 	}
 
@@ -872,26 +856,41 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- landing-page chrome: wordmark, tagline and key hints, stamped as
-		// exact glyphs over the art (spaces skipped, so stars shine through
-		// the letterforms) — drawn last so nothing washes them out --
-		const stampText = (text: string, row: number, b: number) => {
-			const start = Math.round(cx - text.length / 2);
+		// -- landing-page chrome: wordmark and tagline, drawn last so nothing
+		// washes them out. Each text row is stamped onto a cleared plate (the
+		// cells behind it swept dark, one cell of margin either side) so the
+		// letterforms read crisply instead of dissolving into the disk. The
+		// slanted block is left-aligned as a unit; only the block is centered.
+		const stampAt = (
+			col: number,
+			row: number,
+			text: string,
+			b: number,
+			plateW: number,
+		) => {
+			if (row < 0 || row >= rows) return;
+			for (let c = col - 1; c <= col + plateW; c++) {
+				if (c < 0 || c >= artW) continue;
+				bright[row * artW + c] = -1;
+				overlay[row * artW + c] = null;
+			}
 			for (let i = 0; i < text.length; i++) {
-				if (text[i] !== " ") glyph(start + i, row, text[i], b);
+				if (text[i] !== " ") glyph(col + i, row, text[i], b);
 			}
 		};
+		const stampCentered = (text: string, row: number, b: number) =>
+			stampAt(Math.round(cx - text.length / 2), row, text, b, text.length);
 		const markW = Math.max(...WORDMARK.map((l) => l.length));
 		if (rows >= 16 && artW >= markW + 6) {
+			const markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
-				stampText(WORDMARK[i], 1 + i, 0.9);
+				stampAt(markCol, 1 + i, WORDMARK[i], 0.9, markW);
 			}
-			stampText(this.tagline, WORDMARK.length + 2, 0.14);
+			stampCentered(this.tagline, WORDMARK.length + 2, 0.14);
 		} else {
-			stampText("V O I D", 1, 0.9);
-			stampText(this.tagline, 2, 0.14);
+			stampCentered("h a r i m o", 1, 0.9);
+			stampCentered(this.tagline, 2, 0.14);
 		}
-		stampText(this.hint, rows - 1, 0.14);
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
 		const lines: string[] = [""];
@@ -935,7 +934,7 @@ class BlackHoleComponent {
 // ------------------------------------------------------------- extension ----
 export default function (pi: ExtensionAPI) {
 	// Landing page: the void greets you on startup and holds the screen
-	// until a key is pressed (SPACE feeds the hole instead of dismissing).
+	// until a key is pressed.
 	pi.on("session_start", async (event, ctx) => {
 		if (event.reason !== "startup" || ctx.mode !== "tui") return;
 		void ctx.ui.custom((tui, _theme, _kb, done) => {
