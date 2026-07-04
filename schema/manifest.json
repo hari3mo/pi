@@ -1,0 +1,45 @@
+{
+  "$comment": "pi-agent config validation manifest. Each entry maps a config artifact to its schema and format. To bring a new config file under audit, add an entry here — the validator (scripts/validate-config.py) is manifest-driven and needs no code change. Paths are relative to ~/.pi/agent unless absolute. format: 'json' (single document) or 'jsonl' (schema applies per line). required: whether absence is an error (true) or the file is optional/machine-local (false).",
+  "schemaVersion": 1,
+  "targets": [
+    {
+      "path": "settings.json",
+      "schema": "schema/settings.schema.json",
+      "format": "json",
+      "required": true
+    },
+    {
+      "path": "keybindings.json",
+      "schema": "schema/keybindings.schema.json",
+      "format": "json",
+      "required": false
+    },
+    {
+      "path": "trust.json",
+      "schema": "schema/trust.schema.json",
+      "format": "json",
+      "required": false
+    },
+    {
+      "path": "heuristics/heuristics.jsonl",
+      "schema": "schema/heuristic-entry.schema.json",
+      "format": "jsonl",
+      "required": false,
+      "heuristicsScope": "global",
+      "maxEntries": 200
+    },
+    {
+      "path": "~/.pi/heuristics/heuristics.jsonl",
+      "schema": "schema/heuristic-entry.schema.json",
+      "format": "jsonl",
+      "required": false,
+      "heuristicsScope": "project",
+      "maxEntries": 100
+    }
+  ],
+  "layout": {
+    "$comment": "Directories that constitute the standard ~/.pi/agent layout. 'expected' must exist; 'known' are recognized but optional.",
+    "expected": ["agents", "extensions", "prompts", "schema", "scripts", "skills", "themes"],
+    "known": ["bin", "heuristics", "sessions", ".pi-vcs", ".git"]
+  }
+}
