@@ -121,7 +121,7 @@ export default function (pi: ExtensionAPI) {
 		// it does not dispatch the command), so we tell the user to run it. Upgrade path:
 		// auto-queue /reload once pi exposes reload() off a non-command context.
 		const reloadHint = [...collided, ...foreign].some(isReloadResource)
-			? ` These include loaded resources (extensions/skills/prompts/themes/keybindings/AGENTS.md); their in-memory copies are now stale — tell the user to run /reload to refresh them (the conversation is preserved).`
+			? ` These include loaded resources (extensions/skills/prompts/themes/keybindings/AGENTS.md); their in-memory copies are now stale — tell the user to run /refresh (re-checks repo state, reports the delta, and reloads while preserving the conversation) or /reload.`
 			: "";
 		const clamp = (xs: string[]) => xs.slice(0, 8).join(", ") + (xs.length > 8 ? ", ..." : "");
 		const sections: string[] = [];
@@ -209,6 +209,42 @@ export default function (pi: ExtensionAPI) {
 	// Self-improving loop (house doctrine: features close their own loop): if this
 	// session keeps colliding on files another session commits over, send ONE nudge
 	// to serialize the sessions or split file ownership. Fail-open, one message max.
+	// /refresh — the manual companion to the auto-notice above. The notice can only
+	// TELL the user to reload (an event hook cannot dispatch a command and ctx.reload()
+	// only exists on a command context in pi 0.80.3); this command does it in one step.
+	// It lives here so the git-state logic (git(), lastKnownHead) stays in ONE place.
+	pi.registerCommand("refresh", {
+		description: "Sync with other shells: re-check config repo state and reload resources",
+		handler: async (_args, ctx) => {
+			const baseline = lastKnownHead;
+			const head = git("rev-parse", "HEAD");
+			if (baseline && head && head !== baseline) {
+				const changed = git("diff", "--name-only", `${baseline}..${head}`)
+					.split("\n")
+					.filter(Boolean);
+				const range = `${baseline.slice(0, 7)}..${head.slice(0, 7)}`;
+				const list = changed.slice(0, 8).join(", ") + (changed.length > 8 ? ", ..." : "");
+				ctx.ui.notify(
+					`[refresh] Config repo advanced ${range} — ${changed.length} file(s): ${list}. Reloading resources...`,
+					"info",
+				);
+			} else {
+				ctx.ui.notify(
+					`[refresh] Already in sync${head ? ` (HEAD ${head.slice(0, 7)})` : ""}. Reloading resources...`,
+					"info",
+				);
+			}
+			// Reload re-reads extensions/skills/prompts/AGENTS.md while preserving the
+			// conversation, and re-fires session_start — which resets lastKnownHead to the
+			// current HEAD, so the concurrent-session notice won't re-fire for the change we
+			// just synced (requirement d, with no duplicated baseline logic). If reload fails
+			// the old instance keeps its stale baseline and the notice correctly stays live.
+			// Treat reload as terminal for this handler.
+			await ctx.reload();
+			return;
+		},
+	});
+
 	pi.on("agent_end", async () => {
 		try {
 			if (collisionCount >= 2 && !serializeNudged) {
