@@ -74,14 +74,54 @@
   },
   "nodes": [
     {
+      "label": "concurrency-guard.ts",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard",
+      "community": 40,
+      "norm_label": "concurrency-guard.ts"
+    },
+    {
+      "label": "AGENT_DIR",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_agent_dir",
+      "community": 40,
+      "norm_label": "agent_dir"
+    },
+    {
+      "label": "git()",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_git",
+      "community": 40,
+      "norm_label": "git()"
+    },
+    {
+      "label": "agentRel()",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_agentrel",
+      "community": 40,
+      "norm_label": "agentrel()"
+    },
+    {
       "label": "test-config-paths.mjs",
       "file_type": "code",
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_test_config_paths",
       "community": 60,
-      "norm_label": "test-config-paths.mjs"
+      "norm_label": "test-config-paths.mjs",
+      "id": "scripts_test_config_paths"
     },
     {
       "label": "PKG",
@@ -89,9 +129,9 @@
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "scripts_test_config_paths_pkg",
       "community": 60,
-      "norm_label": "pkg"
+      "norm_label": "pkg",
+      "id": "scripts_test_config_paths_pkg"
     },
     {
       "label": "jiti",
@@ -99,9 +139,9 @@
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "scripts_test_config_paths_jiti",
       "community": 60,
-      "norm_label": "jiti"
+      "norm_label": "jiti",
+      "id": "scripts_test_config_paths_jiti"
     },
     {
       "label": "cases",
@@ -109,49 +149,9 @@
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L18",
       "_origin": "ast",
-      "id": "scripts_test_config_paths_cases",
       "community": 60,
-      "norm_label": "cases"
-    },
-    {
-      "label": "concurrency-guard.ts",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "concurrency-guard.ts",
-      "id": "extensions_concurrency_guard"
-    },
-    {
-      "label": "AGENT_DIR",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L34",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "agent_dir",
-      "id": "extensions_concurrency_guard_agent_dir"
-    },
-    {
-      "label": "git()",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "git()",
-      "id": "extensions_concurrency_guard_git"
-    },
-    {
-      "label": "agentRel()",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L49",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "agentrel()",
-      "id": "extensions_concurrency_guard_agentrel"
+      "norm_label": "cases",
+      "id": "scripts_test_config_paths_cases"
     },
     {
       "label": "self-audit.ts",
@@ -12517,12 +12517,42 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_agent_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_agentrel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L18",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_test_config_paths",
-      "target": "scripts_test_config_paths_cases",
-      "confidence_score": 1.0
+      "target": "scripts_test_config_paths_cases"
     },
     {
       "relation": "contains",
@@ -12530,9 +12560,9 @@
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_test_config_paths",
-      "target": "scripts_test_config_paths_jiti",
-      "confidence_score": 1.0
+      "target": "scripts_test_config_paths_jiti"
     },
     {
       "relation": "contains",
@@ -12540,39 +12570,9 @@
       "source_file": "scripts/test-config-paths.mjs",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_test_config_paths",
-      "target": "scripts_test_config_paths_pkg",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L34",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agent_dir"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L49",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agentrel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_git"
+      "target": "scripts_test_config_paths_pkg"
     },
     {
       "relation": "contains",
@@ -29683,5 +29683,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "f1d86810ac3f9e46246463cc01be3b2b843bb833"
+  "built_at_commit": "4d16846c39724d4e2fcde266b5ccecc58be1c794"
 }

@@ -136,6 +136,16 @@ function formatUsageStats(
 	return parts.join(" ");
 }
 
+// Per-subagent status line, mirroring the chrome's status bar + footer for each
+// delegated run: gate mode · thinking · context · tokens · cost. Always returns
+// a non-empty string for a dispatched run (a pending placeholder still carries
+// its gate + model), so pending/just-spawned subagents surface status too.
+function formatRunStatus(r: SingleResult): string {
+	const usage = formatUsageStats(r.usage, r.model);
+	const gate = r.mode ?? "confirm";
+	return usage ? `${gate} \u00b7 ${usage}` : gate;
+}
+
 function formatToolCall(
 	toolName: string,
 	args: Record<string, unknown>,
@@ -224,7 +234,7 @@ interface SingleResult {
 	usage: UsageStats;
 	model?: string;
 	// Write-gate the child inherited at spawn ("write" only when the parent was
-	in write mode). Captured per-run so a replayed session renders the gate the
+	// in write mode). Captured per-run so a replayed session renders the gate the
 	// child actually ran under, not the parent's current gate.
 	mode?: "write" | "confirm";
 	stopReason?: string;
