@@ -219,6 +219,17 @@ greenfield modules that have a runnable acceptance path. (Benchmarked:
 QA cycles on greenfield code did not lift quality above solo — see
 ~/orch-bench/REPORT.md.)
 
+The lead MUST dispatch `scout` (not read/grep inline) when ANY of:
+
+- A locating search (grep/find for a symbol, name, or file) misses on the
+  first try — an iterating filesystem hunt is already bulk investigation
+- Understanding the code requires a 100+ line read or a hunt through
+  package internals — the lead keeps only compressed `file:line` findings,
+  enough to route the task
+
+A first-try locating grep with a known, specific target is fine inline;
+the moment it becomes a search *strategy*, it belongs to `scout`.
+
 A non-fable lead MAY do the work directly ONLY when ALL of:
 
 - Single file, ≤ ~20 changed lines, zero design decisions
