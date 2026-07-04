@@ -223,6 +223,10 @@ interface SingleResult {
 	stderr: string;
 	usage: UsageStats;
 	model?: string;
+	// Write-gate the child inherited at spawn ("write" only when the parent was
+	in write mode). Captured per-run so a replayed session renders the gate the
+	// child actually ran under, not the parent's current gate.
+	mode?: "write" | "confirm";
 	stopReason?: string;
 	errorMessage?: string;
 	step?: number;
