@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Graph maintenance runbook | `docs/graph-maintenance.md` | Operational canon for graphify-out/: the md-re-extraction wipe invariant, multiprocessing `__main__` guard, content-keyed cache re-binding, regeneration and shrink-guard procedure, health signals. Distilled from heuristics + 2026-07-04 incidents. |
 | Toolchain adaptability | `scripts/smoke-extensions.mjs`, `scripts/audit-pipelines.py` | Extension load smoke using pi's own jiti loader against a Proxy fake-pi (15/15 extensions; self-provisions gitignored `node_modules` symlinks, self-heals on pi relocation); toolchain version tracking (pi/graphifyy/node in `.pipeline_baseline.json`) WARNs once per upgrade with the re-verification list. Runs in `/audit` (`--full`); versions checked every session start. |
 | Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
 | Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
@@ -53,6 +54,30 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Orchestration pipeline made graph-aware; 26 heuristics distilled into canon.**
+Graph-first is now doctrine at every dispatch point: AGENTS.md budget invariant
+(query the `graph` tool before scout/reads), `agents/scout.md` + `agents/engineer.md`
+role cards, `docs/delegation-contract.md` read-first item, and
+`extensions/subagent/index.ts` STANDING_CONTRACT_FOOTER (every dispatched task told
+to orient via the graph). Heuristics sweep per user directive ("any heuristic that
+can be distilled into appropriate canon source, should"): 26 store entries distilled
+into AGENTS.md (probe-suite prohibition, doctrine-prose-is-behavior,
+mechanical-enforcement principle, graph-first), README.md (UTC-vs-local timestamps,
+`.pi/` project-store row), `docs/delegation-contract.md` (evidence-reconstruction
+QA rule), `extensions/heuristics/DESIGN.md` (scope bound to store file), the
+pre-existing canon that already covered them (worker shipping git-status rule,
+write-gate preflight, scout thresholds, model-awareness, scrollback patch doc,
+config-index rows), and NEW `docs/graph-maintenance.md` (graphify operational canon —
+also rescues two lessons destroyed when `git rm .pi/` deleted the project heuristics
+store mid-session). Distilled entries moved to `heuristics/archive.jsonl` (append-only)
+rather than deleted. Files: `AGENTS.md`, `agents/scout.md`, `agents/engineer.md`,
+`docs/delegation-contract.md`, `docs/graph-maintenance.md` (new), `README.md`,
+`extensions/heuristics/DESIGN.md`, `extensions/subagent/index.ts`,
+`heuristics/heuristics.jsonl`, `.pi/heuristics/heuristics.jsonl`,
+`docs/config-index.md`. Why: canon is injected structurally and versioned; memory
+should hold only what has no canonical home — and the injection budget goes further.
+
 
 **Adaptability layer: the harness survives pi itself changing.**
 Added `scripts/smoke-extensions.mjs`: loads all 15 auto-loaded extensions

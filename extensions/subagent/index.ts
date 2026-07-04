@@ -67,7 +67,8 @@ const STANDING_CONTRACT_FOOTER =
 	"--- standing contract (auto-appended by orchestrator harness) ---\n" +
 	"Never delete, move, or overwrite files you did not create unless the task explicitly asks. " +
 	"Logs, notes, and unfamiliar artifacts in the working directory belong to the user or the harness — workspace tidying is out of scope. " +
-	"Return exactly what the task asks for (a conclusion, a diff, or file:line findings), never a raw dump.";
+	"Return exactly what the task asks for (a conclusion, a diff, or file:line findings), never a raw dump. " +
+	"If graphify-out/graph.json exists in the project, orient with the `graph` tool (query/explain/path/status) before bulk-reading files — it is ~30x cheaper than reading.";
 
 function formatTokens(count: number): string {
 	if (count < 1000) return count.toString();
