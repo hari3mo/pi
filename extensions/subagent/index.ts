@@ -43,15 +43,26 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 
 type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
 
-// Parse a reviewer verdict from free text per docs/rework-loop.md. Verdict
-// keywords match anywhere (e.g. after "Verdict:"), with flexible whitespace
-// after the colon; when several appear the LAST wins (reviewers state it last).
+// Parse a reviewer verdict from free text per docs/rework-loop.md. Reviewers
+// often state the verdict FIRST on its own line (e.g. "[VERDICT: FAIL:
+// implementation]") while the findings prose below mentions other keywords (a
+// later "PASS"). So scan lines TOP-DOWN and take the first LINE-ANCHORED
+// verdict: a line that starts (after optional "[" and optional "VERDICT:",
+// with flexible whitespace after the colon) with PASS or FAIL:
+// implementation/design. Only when no line is anchored do we fall back to
+// last-keyword-anywhere (legacy free-form returns where the verdict trails).
 function parseQaVerdict(text: string): QaVerdict | null {
-	const re = /\bFAIL:\s*(implementation|design)\b|\bPASS\b/g;
-	let verdict: QaVerdict | null = null;
-	for (const m of text.matchAll(re)) {
-		verdict = m[1] === "design" ? "FAIL: design" : m[1] === "implementation" ? "FAIL: implementation" : "PASS";
+	const classify = (m: RegExpMatchArray): QaVerdict =>
+		m[1] === "design" ? "FAIL: design" : m[1] === "implementation" ? "FAIL: implementation" : "PASS";
+	const anchored = /^\s*\[?\s*(?:VERDICT:\s*)?(?:FAIL:\s*(implementation|design)\b|PASS\b)/;
+	for (const line of text.split("\n")) {
+		const m = line.match(anchored);
+		if (m) return classify(m);
 	}
+	// Fallback: last keyword anywhere (pre-normalization free-form returns).
+	const anywhere = /\bFAIL:\s*(implementation|design)\b|\bPASS\b/g;
+	let verdict: QaVerdict | null = null;
+	for (const m of text.matchAll(anywhere)) verdict = classify(m);
 	return verdict;
 }
 
