@@ -460,8 +460,8 @@
     "semantic_hash": "c1281d005796ec780ad7c65003d2b86b"
   },
   "schema/manifest.json": {
-    "mtime": 1783160267.821039,
-    "ast_hash": "0b801449213c0478f90cb401c239f4fa",
+    "mtime": 1783160529.0074282,
+    "ast_hash": "dd059f686c0dde9699a1ba92c4a1d3b6",
     "semantic_hash": ""
   },
   "schema/settings.schema.json": {
@@ -495,9 +495,9 @@
     "semantic_hash": "820dae6e075b3d8ab9d8452b57a06971"
   },
   "AGENTS.md": {
-    "mtime": 1783160218.089879,
-    "ast_hash": "bd5d1bf9368322523d7668c4711d1539",
-    "semantic_hash": "bd5d1bf9368322523d7668c4711d1539"
+    "mtime": 1783160502.1514535,
+    "ast_hash": "3f73d33b2c855a8b17462b3edfacb130",
+    "semantic_hash": "3f73d33b2c855a8b17462b3edfacb130"
   },
   "README.md": {
     "mtime": 1783155869.6552408,
@@ -540,9 +540,9 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783160218.0903141,
-    "ast_hash": "01586e37e2f416d89fa180e656a2d5ff",
-    "semantic_hash": "01586e37e2f416d89fa180e656a2d5ff"
+    "mtime": 1783160502.1516223,
+    "ast_hash": "08132fd384204bd6856ad38a21939610",
+    "semantic_hash": "08132fd384204bd6856ad38a21939610"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783153148.9725547,
@@ -1040,13 +1040,13 @@
     "semantic_hash": "b5a64e01de5c4d5f0bf555ffb5b9e107"
   },
   "scripts/audit-pipelines.py": {
-    "mtime": 1783160135.322861,
-    "ast_hash": "d19dc966d2583bfa219d58e98fcb677c",
-    "semantic_hash": "d19dc966d2583bfa219d58e98fcb677c"
+    "mtime": 1783160474.7614512,
+    "ast_hash": "3a1071d3df724b8c20efa96ea4c01740",
+    "semantic_hash": "3a1071d3df724b8c20efa96ea4c01740"
   },
   "scripts/smoke-extensions.mjs": {
     "mtime": 1783160407.4749265,
     "ast_hash": "4e7a31e41337264883aa354501163901",
-    "semantic_hash": ""
+    "semantic_hash": "4e7a31e41337264883aa354501163901"
   }
 }

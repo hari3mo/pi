@@ -74,14 +74,144 @@
   },
   "nodes": [
     {
+      "label": "audit-pipelines.py",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines",
+      "community": 44,
+      "norm_label": "audit-pipelines.py"
+    },
+    {
+      "label": "git()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_git",
+      "community": 44,
+      "norm_label": "git()"
+    },
+    {
+      "label": "check_graph_freshness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_graph_freshness",
+      "community": 44,
+      "norm_label": "check_graph_freshness()"
+    },
+    {
+      "label": "check_flag_staleness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_flag_staleness",
+      "community": 44,
+      "norm_label": "check_flag_staleness()"
+    },
+    {
+      "label": "check_autocommit_liveness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L94",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_autocommit_liveness",
+      "community": 44,
+      "norm_label": "check_autocommit_liveness()"
+    },
+    {
+      "label": "check_connectivity_ratchet()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "community": 44,
+      "norm_label": "check_connectivity_ratchet()"
+    },
+    {
+      "label": "_read_baseline()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_read_baseline",
+      "community": 44,
+      "norm_label": "_read_baseline()"
+    },
+    {
+      "label": "_write_baseline()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L159",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_write_baseline",
+      "community": 44,
+      "norm_label": "_write_baseline()"
+    },
+    {
+      "label": "check_toolchain_versions()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L170",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_toolchain_versions",
+      "community": 44,
+      "norm_label": "check_toolchain_versions()"
+    },
+    {
+      "label": "check_extension_loads()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L211",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_extension_loads",
+      "community": 44,
+      "norm_label": "check_extension_loads()"
+    },
+    {
+      "label": "check_reflection_drift()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L228",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_reflection_drift",
+      "community": 44,
+      "norm_label": "check_reflection_drift()"
+    },
+    {
+      "label": "check_semantic_cache_drift()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L239",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "community": 44,
+      "norm_label": "check_semantic_cache_drift()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L271",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_main",
+      "community": 44,
+      "norm_label": "main()"
+    },
+    {
       "label": "smoke-extensions.mjs",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions",
       "community": 53,
-      "norm_label": "smoke-extensions.mjs"
+      "norm_label": "smoke-extensions.mjs",
+      "id": "scripts_smoke_extensions"
     },
     {
       "label": "PKG",
@@ -89,9 +219,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L24",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_pkg",
       "community": 53,
-      "norm_label": "pkg"
+      "norm_label": "pkg",
+      "id": "scripts_smoke_extensions_pkg"
     },
     {
       "label": "nm",
@@ -99,9 +229,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L29",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_nm",
       "community": 53,
-      "norm_label": "nm"
+      "norm_label": "nm",
+      "id": "scripts_smoke_extensions_nm"
     },
     {
       "label": "link()",
@@ -109,9 +239,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_link",
       "community": 53,
-      "norm_label": "link()"
+      "norm_label": "link()",
+      "id": "scripts_smoke_extensions_link"
     },
     {
       "label": "noopProxy()",
@@ -119,9 +249,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L47",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_noopproxy",
       "community": 53,
-      "norm_label": "noopproxy()"
+      "norm_label": "noopproxy()",
+      "id": "scripts_smoke_extensions_noopproxy"
     },
     {
       "label": "extDir",
@@ -129,9 +259,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_extdir",
       "community": 53,
-      "norm_label": "extdir"
+      "norm_label": "extdir",
+      "id": "scripts_smoke_extensions_extdir"
     },
     {
       "label": "candidates",
@@ -139,9 +269,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L56",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_candidates",
       "community": 53,
-      "norm_label": "candidates"
+      "norm_label": "candidates",
+      "id": "scripts_smoke_extensions_candidates"
     },
     {
       "label": "jiti",
@@ -149,9 +279,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L68",
       "_origin": "ast",
-      "id": "scripts_smoke_extensions_jiti",
       "community": 53,
-      "norm_label": "jiti"
+      "norm_label": "jiti",
+      "id": "scripts_smoke_extensions_jiti"
     },
     {
       "label": "self-audit.ts",
@@ -212,96 +342,6 @@
       "community": 52,
       "norm_label": "runvalidator()",
       "id": "extensions_self_audit_runvalidator"
-    },
-    {
-      "label": "audit-pipelines.py",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "audit-pipelines.py",
-      "id": "scripts_audit_pipelines"
-    },
-    {
-      "label": "git()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L54",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "git()",
-      "id": "scripts_audit_pipelines_git"
-    },
-    {
-      "label": "check_graph_freshness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_graph_freshness()",
-      "id": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "label": "check_flag_staleness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L78",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_flag_staleness()",
-      "id": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "label": "check_autocommit_liveness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L86",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_autocommit_liveness()",
-      "id": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "label": "check_connectivity_ratchet()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L99",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_connectivity_ratchet()",
-      "id": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "label": "check_reflection_drift()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L150",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_reflection_drift()",
-      "id": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "label": "check_semantic_cache_drift()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L161",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_semantic_cache_drift()",
-      "id": "scripts_audit_pipelines_check_semantic_cache_drift"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L193",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "main()",
-      "id": "scripts_audit_pipelines_main"
     },
     {
       "label": "autocommit.sh",
@@ -527,7 +567,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "graphify-bridge.ts",
       "id": "extensions_graphify_bridge"
     },
@@ -537,7 +577,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L36",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "findgraphroot()",
       "id": "extensions_graphify_bridge_findgraphroot"
     },
@@ -547,7 +587,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L47",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "graphifypython()",
       "id": "extensions_graphify_bridge_graphifypython"
     },
@@ -557,7 +597,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L58",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "rungraphify()",
       "id": "extensions_graphify_bridge_rungraphify"
     },
@@ -567,7 +607,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L72",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "graphstats",
       "id": "extensions_graphify_bridge_graphstats"
     },
@@ -577,7 +617,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L131",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "fmtage()",
       "id": "extensions_graphify_bridge_fmtage"
     },
@@ -587,7 +627,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L138",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "statustext()",
       "id": "extensions_graphify_bridge_statustext"
     },
@@ -597,7 +637,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L153",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "graphparams",
       "id": "extensions_graphify_bridge_graphparams"
     },
@@ -607,7 +647,7 @@
       "source_file": "extensions/graphify-bridge.ts",
       "source_location": "L195",
       "_origin": "ast",
-      "community": 40,
+      "community": 28,
       "norm_label": "execute()",
       "id": "extensions_graphify_bridge_execute"
     },
@@ -1587,7 +1627,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "read-only-default.ts",
       "id": "extensions_read_only_default"
     },
@@ -1597,7 +1637,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "write_tools",
       "id": "extensions_read_only_default_write_tools"
     },
@@ -1607,7 +1647,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "destructive_patterns",
       "id": "extensions_read_only_default_destructive_patterns"
     },
@@ -1617,7 +1657,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L71",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "isdestructivecommand()",
       "id": "extensions_read_only_default_isdestructivecommand"
     },
@@ -1627,7 +1667,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "mode",
       "id": "extensions_read_only_default_mode"
     },
@@ -1637,7 +1677,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L78",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "gatestate",
       "id": "extensions_read_only_default_gatestate"
     },
@@ -1647,7 +1687,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "persist()",
       "id": "extensions_read_only_default_persist"
     },
@@ -1657,7 +1697,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L103",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "applytools()",
       "id": "extensions_read_only_default_applytools"
     },
@@ -1667,7 +1707,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L120",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "updatestatusbar()",
       "id": "extensions_read_only_default_updatestatusbar"
     },
@@ -1677,7 +1717,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L128",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "setmode()",
       "id": "extensions_read_only_default_setmode"
     },
@@ -1687,7 +1727,7 @@
       "source_file": "extensions/read-only-default.ts",
       "source_location": "L200",
       "_origin": "ast",
-      "community": 28,
+      "community": 35,
       "norm_label": "execute()",
       "id": "extensions_read_only_default_execute"
     },
@@ -1727,7 +1767,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "agents.ts",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_ts"
     },
@@ -1737,7 +1777,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "agentscope",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_agentscope"
     },
@@ -1747,7 +1787,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "agentconfig",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_agentconfig"
     },
@@ -1757,7 +1797,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "agentdiscoveryresult",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_agentdiscoveryresult"
     },
@@ -1767,7 +1807,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "loadagentsfromdir()",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_loadagentsfromdir"
     },
@@ -1777,7 +1817,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "isdirectory()",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_isdirectory"
     },
@@ -1787,7 +1827,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "findnearestprojectagentsdir()",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_findnearestprojectagentsdir"
     },
@@ -1797,7 +1837,7 @@
       "source_file": "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/subagent/agents.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "discoveragents()",
       "id": "users_harissaif_local_lib_node_modules_earendil_works_pi_coding_agent_examples_extensions_subagent_agents_discoveragents"
     },
@@ -1827,7 +1867,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "issonnetmodel()",
       "id": "extensions_subagent_index_issonnetmodel"
     },
@@ -1927,7 +1967,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L220",
       "_origin": "ast",
-      "community": 3,
+      "community": 40,
       "norm_label": "subagentdetails",
       "id": "extensions_subagent_index_subagentdetails"
     },
@@ -1937,7 +1977,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "getfinaloutput()",
       "id": "extensions_subagent_index_getfinaloutput"
     },
@@ -1947,7 +1987,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L239",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "isfailedresult()",
       "id": "extensions_subagent_index_isfailedresult"
     },
@@ -1967,7 +2007,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L252",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "getresultoutput()",
       "id": "extensions_subagent_index_getresultoutput"
     },
@@ -2007,7 +2047,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L285",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "mapwithconcurrencylimit()",
       "id": "extensions_subagent_index_mapwithconcurrencylimit"
     },
@@ -2017,7 +2057,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L305",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "writeprompttotempfile()",
       "id": "extensions_subagent_index_writeprompttotempfile"
     },
@@ -2047,7 +2087,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L333",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "runsingleagent()",
       "id": "extensions_subagent_index_runsingleagent"
     },
@@ -2117,7 +2157,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L622",
       "_origin": "ast",
-      "community": 3,
+      "community": 45,
       "norm_label": "execute()",
       "id": "extensions_subagent_index_execute"
     },
@@ -2587,7 +2627,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "ponytail.mjs",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail"
     },
@@ -2597,7 +2637,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L18",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "__dirname",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_dirname"
     },
@@ -2607,7 +2647,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L21",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "require",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_require"
     },
@@ -2617,7 +2657,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "{ getponytailinstructions }",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_getponytailinstructions"
     },
@@ -2627,7 +2667,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L23",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "{ getdefaultmode, normalizepersistedmode }",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_getdefaultmode_normalizepersistedmode"
     },
@@ -2637,7 +2677,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L26",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "statepath",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_statepath"
     },
@@ -2647,7 +2687,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L32",
       "_origin": "ast",
-      "community": 23,
+      "community": 21,
       "norm_label": "readmode()",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_readmode"
     },
@@ -2657,7 +2697,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L40",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "writemode()",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_writemode"
     },
@@ -2667,7 +2707,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
       "source_location": "L45",
       "_origin": "ast",
-      "community": 48,
+      "community": 21,
       "norm_label": "parsecommandfile()",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_parsecommandfile"
     },
@@ -4717,7 +4757,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
       "source_location": "L50",
       "_origin": "ast",
-      "community": 23,
+      "community": 8,
       "norm_label": "isshellsafe()",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_isshellsafe"
     },
@@ -4757,7 +4797,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
       "source_location": "L76",
       "_origin": "ast",
-      "community": 23,
+      "community": 8,
       "norm_label": "getdefaultmode()",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_getdefaultmode"
     },
@@ -4767,7 +4807,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 21,
+      "community": 23,
       "norm_label": "writedefaultmode()",
       "id": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_writedefaultmode"
     },
@@ -6385,7 +6425,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "copilot-plugin.test.js",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test"
     },
@@ -6395,7 +6435,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L5",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "test",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_test"
     },
@@ -6405,7 +6445,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L6",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "assert",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_assert"
     },
@@ -6415,7 +6455,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L7",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_fs"
     },
@@ -6425,7 +6465,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L8",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_path"
     },
@@ -6435,7 +6475,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L10",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "root",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_root"
     },
@@ -6445,7 +6485,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "required_command_files",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_required_command_files"
     },
@@ -6455,7 +6495,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
       "source_location": "L20",
       "_origin": "ast",
-      "community": 51,
+      "community": 60,
       "norm_label": "readjson()",
       "id": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_readjson"
     },
@@ -9465,7 +9505,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "porcelain.json",
       "id": "themes_porcelain"
     },
@@ -9475,7 +9515,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "$schema",
       "id": "themes_porcelain_schema"
     },
@@ -9485,7 +9525,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "name",
       "id": "themes_porcelain_name"
     },
@@ -10185,7 +10225,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "export",
       "id": "themes_porcelain_export"
     },
@@ -10195,7 +10235,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "pagebg",
       "id": "themes_porcelain_export_pagebg"
     },
@@ -10205,7 +10245,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "cardbg",
       "id": "themes_porcelain_export_cardbg"
     },
@@ -10215,7 +10255,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 24,
+      "community": 48,
       "norm_label": "infobg",
       "id": "themes_porcelain_export_infobg"
     },
@@ -12265,12 +12305,286 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_autocommit_liveness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_extension_loads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_flag_staleness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_graph_freshness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L228",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_reflection_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L239",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_toolchain_versions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L271",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_autocommit_liveness",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_graph_freshness",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L276",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_graph_freshness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L277",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_flag_staleness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L278",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_autocommit_liveness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L147",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L279",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L197",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_toolchain_versions",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L208",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_toolchain_versions",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L281",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_toolchain_versions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_extension_loads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L280",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_reflection_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L283",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L56",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_candidates",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_candidates"
     },
     {
       "relation": "contains",
@@ -12278,9 +12592,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_extdir",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_extdir"
     },
     {
       "relation": "contains",
@@ -12288,9 +12602,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_jiti",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_jiti"
     },
     {
       "relation": "contains",
@@ -12298,9 +12612,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_link",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_link"
     },
     {
       "relation": "contains",
@@ -12308,9 +12622,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L29",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_nm",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_nm"
     },
     {
       "relation": "contains",
@@ -12318,9 +12632,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_noopproxy",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_noopproxy"
     },
     {
       "relation": "contains",
@@ -12328,9 +12642,9 @@
       "source_file": "scripts/smoke-extensions.mjs",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
-      "target": "scripts_smoke_extensions_pkg",
-      "confidence_score": 1.0
+      "target": "scripts_smoke_extensions_pkg"
     },
     {
       "relation": "contains",
@@ -12392,174 +12706,6 @@
       "confidence_score": 1.0,
       "source": "extensions_self_audit_runvalidator",
       "target": "extensions_self_audit_runscript"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L86",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L99",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L150",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L161",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L54",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L193",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_main"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L89",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_autocommit_liveness",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L64",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_graph_freshness",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L198",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L199",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L200",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L202",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L204",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "relation": "contains",
@@ -29266,5 +29412,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "cf6a5f559f00cbe28a2853eed5f4f926f6ecd230"
+  "built_at_commit": "a34ccda0dd96626598babde0fb1abaaa443baf02"
 }

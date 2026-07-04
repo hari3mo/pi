@@ -95,9 +95,9 @@
     "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
   },
   "extensions/subagent/index.ts": {
-    "mtime": 1783155903.2362254,
-    "ast_hash": "e5d5e886bb103e557d37b60acfcf96f9",
-    "semantic_hash": "e5d5e886bb103e557d37b60acfcf96f9"
+    "mtime": 1783160779.645818,
+    "ast_hash": "03312beac08f7db71ce74c095c5fa812",
+    "semantic_hash": ""
   },
   "extensions/task-tracker.ts": {
     "mtime": 1783143286.8953173,
@@ -495,19 +495,19 @@
     "semantic_hash": "820dae6e075b3d8ab9d8452b57a06971"
   },
   "AGENTS.md": {
-    "mtime": 1783160502.1514535,
-    "ast_hash": "3f73d33b2c855a8b17462b3edfacb130",
-    "semantic_hash": "3f73d33b2c855a8b17462b3edfacb130"
+    "mtime": 1783160724.7853193,
+    "ast_hash": "ca8b5a081647dc5f8c27638e4f241bcb",
+    "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1783155869.6552408,
-    "ast_hash": "05c06174bff3a51c39eecc75c6a1baef",
-    "semantic_hash": "05c06174bff3a51c39eecc75c6a1baef"
+    "mtime": 1783160724.7865062,
+    "ast_hash": "58c8d303d3dd96b49defe05f964d1a28",
+    "semantic_hash": ""
   },
   "agents/engineer.md": {
-    "mtime": 1783155692.3943226,
-    "ast_hash": "f32d3b80ebc82d78ae81c1c2e20f3fe9",
-    "semantic_hash": "f32d3b80ebc82d78ae81c1c2e20f3fe9"
+    "mtime": 1783160724.785895,
+    "ast_hash": "95434508e364fb1b55aa07a413b648a6",
+    "semantic_hash": ""
   },
   "agents/fable-engineer.md": {
     "mtime": 1783154096.0861049,
@@ -525,9 +525,9 @@
     "semantic_hash": "b20d0e1d34c0469ba622113a9d750737"
   },
   "agents/scout.md": {
-    "mtime": 1783155406.8618517,
-    "ast_hash": "f7c501ea24dcdcea8bb8a09769300496",
-    "semantic_hash": "f7c501ea24dcdcea8bb8a09769300496"
+    "mtime": 1783160724.7856078,
+    "ast_hash": "447d6da0ce9cb1bef190bd8646ed053c",
+    "semantic_hash": ""
   },
   "agents/verifier.md": {
     "mtime": 1783155948.5237596,
@@ -540,14 +540,14 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783160502.1516223,
-    "ast_hash": "08132fd384204bd6856ad38a21939610",
-    "semantic_hash": "08132fd384204bd6856ad38a21939610"
+    "mtime": 1783160779.6461358,
+    "ast_hash": "549054b4634e60c33ad9f8588fa57ee0",
+    "semantic_hash": ""
   },
   "docs/delegation-contract.md": {
-    "mtime": 1783153148.9725547,
-    "ast_hash": "34823360df67978944e09924442f16e7",
-    "semantic_hash": "34823360df67978944e09924442f16e7"
+    "mtime": 1783160724.7861996,
+    "ast_hash": "1780de1e9c5f15b0f38ecff4b800878e",
+    "semantic_hash": ""
   },
   "docs/rework-loop.md": {
     "mtime": 1783155855.7043831,
@@ -555,9 +555,9 @@
     "semantic_hash": "e3962a907b6b37702e507aeb3fad707d"
   },
   "extensions/heuristics/DESIGN.md": {
-    "mtime": 1783159885.6432118,
-    "ast_hash": "7e03da9d1ffa3c44ad8dc40a0c589cff",
-    "semantic_hash": "7e03da9d1ffa3c44ad8dc40a0c589cff"
+    "mtime": 1783160724.7867446,
+    "ast_hash": "47c22da1564c7821600902ebbfe0602b",
+    "semantic_hash": ""
   },
   "git/github.com/DietrichGebert/ponytail/.agents/rules/ponytail.md": {
     "mtime": 1783127535.6157978,
@@ -1048,5 +1048,10 @@
     "mtime": 1783160407.4749265,
     "ast_hash": "4e7a31e41337264883aa354501163901",
     "semantic_hash": "4e7a31e41337264883aa354501163901"
+  },
+  "docs/graph-maintenance.md": {
+    "mtime": 1783160779.584312,
+    "ast_hash": "7856c929e08245fd426b5a8520775bbe",
+    "semantic_hash": ""
   }
 }
