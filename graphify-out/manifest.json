@@ -462,7 +462,7 @@
   "schema/manifest.json": {
     "mtime": 1783158766.4610872,
     "ast_hash": "6a2b948c6150f90fe7d5bacf54403835",
-    "semantic_hash": ""
+    "semantic_hash": "6a2b948c6150f90fe7d5bacf54403835"
   },
   "schema/settings.schema.json": {
     "mtime": 1783124398.0703373,
@@ -587,7 +587,7 @@
   "docs/config-index.md": {
     "mtime": 1783159346.0856588,
     "ast_hash": "ad883a5470fe1e10dcbd8af8913e9baf",
-    "semantic_hash": ""
+    "semantic_hash": "ad883a5470fe1e10dcbd8af8913e9baf"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783153148.9725547,
@@ -1052,31 +1052,31 @@
   ".pi-vcs/hooks/post-commit": {
     "mtime": 1783159395.7161674,
     "ast_hash": "23ea23cb5fb5f0a50d33fe3ad0379962",
-    "semantic_hash": ""
+    "semantic_hash": "23ea23cb5fb5f0a50d33fe3ad0379962"
   },
   "extensions/graphify-bridge.ts": {
     "mtime": 1783159007.2242186,
     "ast_hash": "2b09027e997f5b2e86e479e631392275",
-    "semantic_hash": ""
+    "semantic_hash": "2b09027e997f5b2e86e479e631392275"
   },
   "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
     "mtime": 1783158099.5084014,
     "ast_hash": "7fe5b978793317b4cd9cc4684d4a69a4",
-    "semantic_hash": ""
+    "semantic_hash": "7fe5b978793317b4cd9cc4684d4a69a4"
   },
   "graphify-out/memory/query_20260704_094252_how_fragile_is_the_cross_cluster_connection_betwee.md": {
     "mtime": 1783158230.4331646,
     "ast_hash": "5a7ceed86f6b3a995e616ae42cbc33ab",
-    "semantic_hash": ""
+    "semantic_hash": "5a7ceed86f6b3a995e616ae42cbc33ab"
   },
   "graphify-out/memory/query_20260704_094445_are_the_weakly_connected_nodes_real_orphans_or_ext.md": {
     "mtime": 1783158285.1930268,
     "ast_hash": "3b2aefc3af256298f1af5ec6c5b412db",
-    "semantic_hash": ""
+    "semantic_hash": "3b2aefc3af256298f1af5ec6c5b412db"
   },
   "graphify-out/memory/query_20260704_094626_patch_the_config_index_coverage_gap__stitch_themes.md": {
     "mtime": 1783158386.3289292,
     "ast_hash": "de707992d034da2dcc2badceac78bad6",
-    "semantic_hash": ""
+    "semantic_hash": "de707992d034da2dcc2badceac78bad6"
   }
 }
