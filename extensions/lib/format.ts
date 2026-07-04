@@ -5,6 +5,9 @@
  * or extensions/*\/index.ts) so it is not auto-loaded by pi's extension loader.
  */
 
+import { homedir } from "node:os";
+import { basename, sep } from "node:path";
+
 /** "1h 2m" / "3m 4s" / "5s" duration formatter. */
 export function fmtDuration(ms: number): string {
 	const totalSeconds = Math.max(0, Math.floor(ms / 1000));
@@ -24,7 +27,7 @@ export function fmtTokens(n: number): string {
 }
 
 /** Collapse an absolute cwd to a short "~/…/leaf" form, or bare basename outside home. */
-export function shortenCwd(cwd: string, homedir: () => string, sep: string, basename: (p: string) => string): string {
+export function shortenCwd(cwd: string): string {
 	const home = homedir();
 	if (cwd === home) return "~";
 	if (cwd.startsWith(home + sep)) {
