@@ -69,4 +69,4 @@ shortcut (heuristic `h_mr5vqdg7_wr9g26tr`).
 - [[components/extension-system]] — the API these lessons constrain
 - [[components/prompt-templates]] · [[concepts/message-queue]] — why `sendUserMessage` skips dispatch
 - [[synthesis/pi-tui-rendering-gotchas]] — the other big extension-authoring trap surface
-- [[references/extensions-md]] — upstream doc whose `reload_runtime` example is misleading
+- [[components/extension-system]] — upstream doc (docs/extensions.md) whose `reload_runtime` example is misleading

@@ -8,7 +8,7 @@ tags: [pi, tui, synthesis]
 aliases: ["setHeader crashes", "tui width guard", "full-screen landing component"]
 summary: How pi's TUI stacks header/chat/component/footer and pins the viewport — plus the width-guard and truncateToWidth rules that stop setHeader components from crashing the terminal.
 relationships:
-  - target: "[[components/tui]]"
+  - target: "[[components/tui-components]]"
     type: derived_from
   - target: "[[components/extension-system]]"
     type: related_to
@@ -22,7 +22,7 @@ updated: 2026-07-04T00:00:00Z
 
 # Pi TUI Rendering & Header Gotchas
 
-Lessons from building custom [[components/tui|TUI]] components (notably the
+Lessons from building custom [[components/tui-components|TUI]] components (notably the
 `void-blackhole` landing extension). The TUI's layout model and its width handling are the
 two things that repeatedly crash a naive implementation.
 
@@ -69,6 +69,6 @@ the pure-ESM `@earendil-works/pi-coding-agent` package (heuristic `h_mr5t3f3y_86
 
 ## See also
 
-- [[components/tui]] — the layout/render API these rules constrain
+- [[components/tui-components]] — the layout/render API these rules constrain
 - [[synthesis/pi-extension-api-gotchas]] — the other extension-authoring trap surface
 - [[synthesis/harness-environment-quirks]] — the `dist/` regeneration & re-apply pattern
