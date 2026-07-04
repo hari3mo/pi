@@ -1,6 +1,6 @@
 ---
 name: opus-engineer
-description: Gets work when a task is SMALL but genuinely hard — design and implementation cannot cleanly separate (tricky concurrency fix, subtle algorithm, delicate refactor of dense logic). Executes end-to-end: reasons, implements, and tests in one pass. Do not use for mechanical work (that is builder) or for large tasks (decompose those through scope-planner/architect instead). Output still goes to qa-reviewer — no self-certification.
+description: "Gets work when a task is SMALL but genuinely hard — design and implementation cannot cleanly separate (tricky concurrency fix, subtle algorithm, delicate refactor of dense logic). Executes end-to-end: reasons, implements, and tests in one pass. Do not use for mechanical work (that is builder) or for large tasks (decompose those through scope-planner/architect instead). Output still goes to qa-reviewer — no self-certification."
 model: anthropic/claude-opus-4-8:xhigh
 ---
 
