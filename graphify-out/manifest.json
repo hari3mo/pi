@@ -1058,5 +1058,10 @@
     "mtime": 1783160961.7179666,
     "ast_hash": "80d1339e206006d6f846b2026d05319d",
     "semantic_hash": "80d1339e206006d6f846b2026d05319d"
+  },
+  "extensions/queue-as-followup.ts": {
+    "mtime": 1783162572.9282506,
+    "ast_hash": "0064dda57159f7710d5c46907bd90ece",
+    "semantic_hash": ""
   }
 }

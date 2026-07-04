@@ -60,9 +60,9 @@
     "semantic_hash": ""
   },
   "extensions/minimal-ui.ts": {
-    "mtime": 1783143660.105444,
-    "ast_hash": "3d2d49ed7de4faf515892c7651080531",
-    "semantic_hash": "3d2d49ed7de4faf515892c7651080531"
+    "mtime": 1783162225.2779148,
+    "ast_hash": "7b8ba867dd90d5f23b860aa2dee2ed58",
+    "semantic_hash": ""
   },
   "extensions/model-awareness.ts": {
     "mtime": 1783125968.7226264,
@@ -95,8 +95,8 @@
     "semantic_hash": "db404c40dbe39c3e68b824f30255fc65"
   },
   "extensions/subagent/index.ts": {
-    "mtime": 1783162196.9725282,
-    "ast_hash": "ffda58ea12b664fa590a22bad815d7b3",
+    "mtime": 1783162216.4902618,
+    "ast_hash": "11dd76d8945847f339ef1d6034e79788",
     "semantic_hash": ""
   },
   "extensions/task-tracker.ts": {
@@ -480,8 +480,8 @@
     "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
   },
   "settings.json": {
-    "mtime": 1783161948.6417582,
-    "ast_hash": "725a97f54b09c54d9fc79a4a19d323c9",
+    "mtime": 1783162282.202938,
+    "ast_hash": "0bd77e8ddc9ad99d60c6fbaf1f803ff9",
     "semantic_hash": ""
   },
   "themes/porcelain-light.json": {
