@@ -140,12 +140,15 @@ The lead MUST route through `scope-planner`/`architect` first when ANY of:
   builds make these calls inline via `solo-engineer`/`fable-engineer`.
 - Wrong approach expensive to unwind → `architect`
 
-The lead MUST send work to `qa-reviewer` when ANY of: a delegated change
-modifies existing behavior; 3+ files of existing code, auth/security
-paths, data migrations, or public API surface. QA may drop to a lead
-spot-check for micro dispatches and greenfield `solo-engineer` builds with
-a runnable acceptance path (benchmarked: QA on greenfield did not lift
-quality).
+The lead MUST send work to `qa-reviewer` when ANY of: 3+ files of
+existing code; auth/security paths; data migrations; public API surface;
+or a delegated change to existing behavior that has NO runnable
+verification path. When the change has one — existing tests run green, or
+the reported symptom is reproducibly fixed and re-checked — a lead
+spot-check (targeted reads plus running that path) suffices. Spot-check
+also covers micro dispatches and greenfield `solo-engineer` builds with a
+runnable acceptance path (benchmarked: QA cycles did not lift quality
+above a strong solo build).
 
 A non-fable lead MAY work directly ONLY when single file, ≤ ~20 lines,
 zero design decisions. A fable lead has NO direct-edit exception — ever.
