@@ -480,8 +480,8 @@
     "semantic_hash": ""
   },
   "settings.json": {
-    "mtime": 1783167486.3141854,
-    "ast_hash": "725a97f54b09c54d9fc79a4a19d323c9",
+    "mtime": 1783169003.9997816,
+    "ast_hash": "c4dcf7958dc522012d5491cdea607dd8",
     "semantic_hash": ""
   },
   "themes/porcelain-light.json": {
@@ -1110,8 +1110,8 @@
     "semantic_hash": ""
   },
   "scripts/check-impact-trace.mjs": {
-    "mtime": 1783166467.049558,
-    "ast_hash": "eccd83bc4c86b7d8250a474980bc7efc",
+    "mtime": 1783168991.5548022,
+    "ast_hash": "0c14e36d428ae1ec32ef45c205406439",
     "semantic_hash": ""
   }
 }

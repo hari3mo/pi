@@ -74,14 +74,94 @@
   },
   "nodes": [
     {
+      "label": "check-graph-first.mjs",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first",
+      "community": 67,
+      "norm_label": "check-graph-first.mjs"
+    },
+    {
+      "label": "here",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_here",
+      "community": 67,
+      "norm_label": "here"
+    },
+    {
+      "label": "AGENT_DIR",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L21",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_agent_dir",
+      "community": 67,
+      "norm_label": "agent_dir"
+    },
+    {
+      "label": "PKG",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_pkg",
+      "community": 67,
+      "norm_label": "pkg"
+    },
+    {
+      "label": "jiti",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L25",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_jiti",
+      "community": 67,
+      "norm_label": "jiti"
+    },
+    {
+      "label": "check()",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_check",
+      "community": 67,
+      "norm_label": "check()"
+    },
+    {
+      "label": "cases",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L35",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_cases",
+      "community": 67,
+      "norm_label": "cases"
+    },
+    {
+      "label": "state",
+      "file_type": "code",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "scripts_check_graph_first_state",
+      "community": 67,
+      "norm_label": "state"
+    },
+    {
       "label": "impact-trace.ts",
       "file_type": "code",
       "source_file": "extensions/impact-trace.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_impact_trace",
       "community": 77,
-      "norm_label": "impact-trace.ts"
+      "norm_label": "impact-trace.ts",
+      "id": "extensions_impact_trace"
     },
     {
       "label": "pendingDependents()",
@@ -89,9 +169,9 @@
       "source_file": "extensions/impact-trace.ts",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "extensions_impact_trace_pendingdependents",
       "community": 77,
-      "norm_label": "pendingdependents()"
+      "norm_label": "pendingdependents()",
+      "id": "extensions_impact_trace_pendingdependents"
     },
     {
       "label": "graph-first.ts",
@@ -762,86 +842,6 @@
       "community": 78,
       "norm_label": "eqset()",
       "id": "scripts_check_impact_trace_eqset"
-    },
-    {
-      "label": "check-graph-first.mjs",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "check-graph-first.mjs",
-      "id": "scripts_check_graph_first"
-    },
-    {
-      "label": "here",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L20",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "here",
-      "id": "scripts_check_graph_first_here"
-    },
-    {
-      "label": "AGENT_DIR",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L21",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "agent_dir",
-      "id": "scripts_check_graph_first_agent_dir"
-    },
-    {
-      "label": "PKG",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L22",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "pkg",
-      "id": "scripts_check_graph_first_pkg"
-    },
-    {
-      "label": "jiti",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L25",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "jiti",
-      "id": "scripts_check_graph_first_jiti"
-    },
-    {
-      "label": "check()",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L29",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "check()",
-      "id": "scripts_check_graph_first_check"
-    },
-    {
-      "label": "cases",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L35",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "cases",
-      "id": "scripts_check_graph_first_cases"
-    },
-    {
-      "label": "state",
-      "file_type": "code",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L61",
-      "_origin": "ast",
-      "community": 67,
-      "norm_label": "state",
-      "id": "scripts_check_graph_first_state"
     },
     {
       "label": "audit-pipelines.py",
@@ -13457,12 +13457,82 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_agent_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L35",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_cases",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L29",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_check",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_here",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_jiti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_pkg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/check-graph-first.mjs",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "scripts_check_graph_first",
+      "target": "scripts_check_graph_first_state",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "extensions/impact-trace.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_impact_trace",
-      "target": "extensions_impact_trace_pendingdependents",
-      "confidence_score": 1.0
+      "target": "extensions_impact_trace_pendingdependents"
     },
     {
       "relation": "contains",
@@ -14495,76 +14565,6 @@
       "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
       "target": "scripts_check_impact_trace_vialinks"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L21",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_agent_dir"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L35",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_cases"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L29",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_check"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_here"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L25",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_jiti"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L22",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_pkg"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/check-graph-first.mjs",
-      "source_location": "L61",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_check_graph_first",
-      "target": "scripts_check_graph_first_state"
     },
     {
       "relation": "references",
@@ -31592,5 +31592,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "76e861b4ef48a976f0c68ecb6b7f30407543d556"
+  "built_at_commit": "d7aee893392a12825df89d8acd76a0ace2bd2b71"
 }
