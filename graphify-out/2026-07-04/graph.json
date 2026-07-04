@@ -74,14 +74,164 @@
   },
   "nodes": [
     {
+      "label": "validate-config.py",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_validate_config",
+      "community": 4,
+      "norm_label": "validate-config.py"
+    },
+    {
+      "label": "resolve()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "scripts_validate_config_resolve",
+      "community": 4,
+      "norm_label": "resolve()"
+    },
+    {
+      "label": "Path",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "path",
+      "community": 4,
+      "norm_label": "path"
+    },
+    {
+      "label": "load_json()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "scripts_validate_config_load_json",
+      "community": 4,
+      "norm_label": "load_json()"
+    },
+    {
+      "label": "get_validator()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "scripts_validate_config_get_validator",
+      "community": 4,
+      "norm_label": "get_validator()"
+    },
+    {
+      "label": "check_target()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_target",
+      "community": 4,
+      "norm_label": "check_target()"
+    },
+    {
+      "label": "check_heuristics_hygiene()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L127",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_heuristics_hygiene",
+      "community": 4,
+      "norm_label": "check_heuristics_hygiene()"
+    },
+    {
+      "label": "check_git_hygiene()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L141",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_git_hygiene",
+      "community": 4,
+      "norm_label": "check_git_hygiene()"
+    },
+    {
+      "label": "check_symlinks()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L161",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_symlinks",
+      "community": 4,
+      "norm_label": "check_symlinks()"
+    },
+    {
+      "label": "check_installed_integrity()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L170",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_installed_integrity",
+      "community": 4,
+      "norm_label": "check_installed_integrity()"
+    },
+    {
+      "label": "check_layout()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L203",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_layout",
+      "community": 4,
+      "norm_label": "check_layout()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L213",
+      "_origin": "ast",
+      "id": "scripts_validate_config_main",
+      "community": 4,
+      "norm_label": "main()"
+    },
+    {
+      "label": "Return callable(obj) -> list[str] of violation messages.",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_59",
+      "community": 4,
+      "norm_label": "return callable(obj) -> list[str] of violation messages."
+    },
+    {
+      "label": "Validate one manifest target; return parsed jsonl entries (for hygiene).",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_77",
+      "community": 4,
+      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene)."
+    },
+    {
+      "label": "Guards for fixes that live OUTSIDE tracked config and can silently vanish.",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L171",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_171",
+      "community": 4,
+      "norm_label": "guards for fixes that live outside tracked config and can silently vanish."
+    },
+    {
       "label": "self-audit.ts",
       "file_type": "code",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_self_audit",
       "community": 52,
-      "norm_label": "self-audit.ts"
+      "norm_label": "self-audit.ts",
+      "id": "extensions_self_audit"
     },
     {
       "label": "VALIDATOR",
@@ -89,9 +239,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "extensions_self_audit_validator",
       "community": 52,
-      "norm_label": "validator"
+      "norm_label": "validator",
+      "id": "extensions_self_audit_validator"
     },
     {
       "label": "PIPELINE_AUDIT",
@@ -99,9 +249,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "id": "extensions_self_audit_pipeline_audit",
       "community": 52,
-      "norm_label": "pipeline_audit"
+      "norm_label": "pipeline_audit",
+      "id": "extensions_self_audit_pipeline_audit"
     },
     {
       "label": "AuditResult",
@@ -109,9 +259,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "extensions_self_audit_auditresult",
       "community": 52,
-      "norm_label": "auditresult"
+      "norm_label": "auditresult",
+      "id": "extensions_self_audit_auditresult"
     },
     {
       "label": "runScript()",
@@ -119,9 +269,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L38",
       "_origin": "ast",
-      "id": "extensions_self_audit_runscript",
       "community": 52,
-      "norm_label": "runscript()"
+      "norm_label": "runscript()",
+      "id": "extensions_self_audit_runscript"
     },
     {
       "label": "runValidator()",
@@ -129,9 +279,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L68",
       "_origin": "ast",
-      "id": "extensions_self_audit_runvalidator",
       "community": 52,
-      "norm_label": "runvalidator()"
+      "norm_label": "runvalidator()",
+      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "check-parse-verdict.mjs",
@@ -673,7 +823,7 @@
         "kind": "file"
       },
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "autocommit.sh",
       "id": "pi_vcs_autocommit"
     },
@@ -687,7 +837,7 @@
         "kind": "bash_entrypoint"
       },
       "_origin": "ast",
-      "community": 4,
+      "community": 5,
       "norm_label": "autocommit.sh script",
       "id": "pi_vcs_autocommit_sh__entry"
     },
@@ -3697,7 +3847,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "ponytail.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail"
     },
@@ -3707,7 +3857,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_fs"
     },
@@ -3717,7 +3867,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_path"
     },
@@ -3727,7 +3877,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "system",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_system"
     },
@@ -8710,154 +8860,14 @@
       "id": "scripts_smoke_extensions_jiti"
     },
     {
-      "label": "validate-config.py",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "validate-config.py",
-      "id": "scripts_validate_config"
-    },
-    {
-      "label": "resolve()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L48",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "resolve()",
-      "id": "scripts_validate_config_resolve"
-    },
-    {
       "label": "Path",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 66,
       "norm_label": "path",
       "id": "scripts_validate_config_py_path"
-    },
-    {
-      "label": "load_json()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L53",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "load_json()",
-      "id": "scripts_validate_config_load_json"
-    },
-    {
-      "label": "get_validator()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L58",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "get_validator()",
-      "id": "scripts_validate_config_get_validator"
-    },
-    {
-      "label": "check_target()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L76",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_target()",
-      "id": "scripts_validate_config_check_target"
-    },
-    {
-      "label": "check_heuristics_hygiene()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L111",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_heuristics_hygiene()",
-      "id": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "label": "check_git_hygiene()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L125",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_git_hygiene()",
-      "id": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "label": "check_symlinks()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L145",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_symlinks()",
-      "id": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "label": "check_installed_integrity()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L154",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_installed_integrity()",
-      "id": "scripts_validate_config_check_installed_integrity"
-    },
-    {
-      "label": "check_layout()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L187",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_layout()",
-      "id": "scripts_validate_config_check_layout"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L197",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "main()",
-      "id": "scripts_validate_config_main"
-    },
-    {
-      "label": "Return callable(obj) -> list[str] of violation messages.",
-      "file_type": "rationale",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L59",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "return callable(obj) -> list[str] of violation messages.",
-      "id": "scripts_validate_config_rationale_59"
-    },
-    {
-      "label": "Validate one manifest target; return parsed jsonl entries (for hygiene).",
-      "file_type": "rationale",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L77",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene).",
-      "id": "scripts_validate_config_rationale_77"
-    },
-    {
-      "label": "Guards for fixes that live OUTSIDE tracked config and can silently vanish.",
-      "file_type": "rationale",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L155",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "guards for fixes that live outside tracked config and can silently vanish.",
-      "id": "scripts_validate_config_rationale_155"
     },
     {
       "label": "porcelain-light.json",
@@ -8865,7 +8875,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8875,7 +8885,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8885,7 +8895,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9585,7 +9595,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9595,7 +9605,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9605,7 +9615,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9615,7 +9625,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 70,
+      "community": 15,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -10390,17 +10400,6 @@
       "id": "git_github_com_dietrichgebert_ponytail_pi_extension_index_readdefaultmode"
     },
     {
-      "label": "Path",
-      "file_type": "code",
-      "source_file": "",
-      "source_location": "",
-      "_origin": "ast",
-      "community": 60,
-      "norm_label": "path",
-      "community_name": "Publish Workflow",
-      "id": "path"
-    },
-    {
       "label": "agents.ts",
       "file_type": "code",
       "source_file": "extensions/subagent/agents.ts",
@@ -10595,7 +10594,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "~/.pi/agent config repo overview",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "readme_pi_config_repo"
@@ -10609,7 +10608,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "malleable schema policy",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "readme_schema_policy"
@@ -10623,7 +10622,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 5,
       "norm_label": "autocommit snapshot infra (launchd + pre-commit)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "readme_autocommit_infra"
@@ -10847,7 +10846,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ruleset mirror for agents",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules"
@@ -10861,7 +10860,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ruleset mirror for clinerules",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules"
@@ -10889,7 +10888,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ruleset mirror for github",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules"
@@ -10917,7 +10916,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ci test workflow (rule copies + versions + npm test)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_github_workflows_test_ci"
@@ -10931,7 +10930,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ruleset mirror for kiro",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules"
@@ -10959,7 +10958,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 5,
       "norm_label": "openclaw copy of ponytail-debt skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_debt_skill_skill"
@@ -11015,7 +11014,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -11043,7 +11042,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 5,
       "norm_label": "opencode /ponytail-debt command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_debt_command"
@@ -11099,7 +11098,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "opencode /ponytail command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -11113,7 +11112,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ruleset mirror for windsurf",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules"
@@ -11127,7 +11126,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "compact always-on ruleset (agents.md)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_ruleset"
@@ -11155,7 +11154,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "bug fix = root cause, not symptom (grep every caller)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_root_cause_rule"
@@ -11169,7 +11168,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 5,
       "norm_label": "ponytail: ceiling-comment convention",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_ceiling_comment"
@@ -11183,7 +11182,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -11281,7 +11280,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "hermes after-install notes",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -11295,7 +11294,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "single-shot benchmark (promptfoo, 5 tasks x 3 models)",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_readme_single_shot"
@@ -11309,7 +11308,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "honesty note: single-shot 80-94% inflated by chatty baseline",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_readme_honesty_note"
@@ -11365,7 +11364,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "vendored caveman skill (terse-prose control arm)",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman_skill_arm"
@@ -11379,7 +11378,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark config: behavior gates (hardware/explanation/one-check probes)",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_behavior_config"
@@ -11393,7 +11392,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark config: gemini config",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_promptfooconfig_gemini_config"
@@ -11407,7 +11406,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark config: newest-openai config",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_promptfooconfig_gpt_newest_config"
@@ -11421,7 +11420,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark config: gpt-mini issue-65 repro config",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_promptfooconfig_gpt_config"
@@ -11435,7 +11434,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark config: claude 3-arm config",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_promptfooconfig_config"
@@ -11449,7 +11448,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark result: v1-v3 iteration: prose ate the code savings, then output cap fixed it",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_12_caveman_vs_ponytail_result"
@@ -11463,7 +11462,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 5,
       "norm_label": "benchmark result: v4 hardening: test reflex + ceiling comments, no bloat creep",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_12_v4_hardening_vs_caveman_result"
@@ -11477,7 +11476,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark result: small-model transfer failure: ladder needs instruction-following",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_15_llama3_2_local_result"
@@ -11491,7 +11490,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark result: gate bugs fixed: unfenced code + wrong debounce deliverable",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_correctness_gate_fix_result"
@@ -11505,7 +11504,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -11533,7 +11532,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "benchmark result: cost claim verified: 42-75% cheaper, claude-specific",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_17_cost_verification_result"
@@ -11561,7 +11560,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "benchmark result: root-cause directive validated 6/6; reuse rung shipped",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_22_issue_245_217_comprehension_result"
@@ -11785,7 +11784,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "hermes plugin manifest",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -11799,7 +11798,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 66,
+      "community": 5,
       "norm_label": "ponytail-mcp stdio server (ruleset via mcp prompt/tool)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_ponytail_mcp_readme_server"
@@ -11827,7 +11826,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 74,
+      "community": 5,
       "norm_label": "ponytail-debt skill \u2014 ponytail: comment debt ledger",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_debt_skill_skill"
@@ -11883,7 +11882,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -11897,7 +11896,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 67,
+      "community": 5,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -12009,7 +12008,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify skill (knowledge-graph pipeline)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_skill"
@@ -12023,7 +12022,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_pipeline"
@@ -12037,7 +12036,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify honesty rules (extracted/inferred/ambiguous)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_honesty_rules"
@@ -12051,7 +12050,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: url add + folder watch",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_add_watch_ref"
@@ -12065,7 +12064,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: extra exports + benchmark",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_exports_ref"
@@ -12079,7 +12078,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: extraction subagent prompt spec",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_extraction_spec_ref"
@@ -12093,7 +12092,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: github clone + cross-repo merge",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_github_and_merge_ref"
@@ -12107,7 +12106,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: commit hook + claude.md integration",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_hooks_ref"
@@ -12121,7 +12120,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_ref"
@@ -12135,7 +12134,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -12149,7 +12148,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -12163,7 +12162,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: whisper video transcription",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_transcribe_ref"
@@ -12177,7 +12176,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 4,
+      "community": 44,
       "norm_label": "graphify ref: incremental update + cluster-only",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_update_ref"
@@ -12191,7 +12190,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 59,
+      "community": 10,
       "norm_label": "chart: median loc per arm (518/116/39 haiku etc.)",
       "community_name": "Ponytail Activation Hooks",
       "id": "git_github_com_dietrichgebert_ponytail_assets_benchmark_3model_chart"
@@ -12436,14 +12435,572 @@
   ],
   "links": [
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_schema_policy",
+      "target": "scripts_validate_config"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L141",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_git_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L127",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_heuristics_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L170",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_layout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L161",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_symlinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_resolve",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_resolve",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "scripts_validate_config_resolve",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/correctness.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_correctness",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
+      "source_location": "L13",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-instructions.js",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_instructions",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-runtime.js",
+      "source_location": "L2",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_runtime",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/build-openclaw-skills.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_scripts_build_openclaw_skills",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/check-rule-copies.js",
+      "source_location": "L3",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_scripts_check_rule_copies",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/check-versions.js",
+      "source_location": "L14",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_scripts_check_versions",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/publish-openclaw-skills.js",
+      "source_location": "L20",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_scripts_publish_openclaw_skills",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_scripts_uninstall",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/commands.test.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_commands_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
+      "source_location": "L8",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/gemini-extension.test.js",
+      "source_location": "L12",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_gemini_extension_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hermes-plugin.test.js",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_hermes_plugin_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hooks.test.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_hooks_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hooks-windows.test.js",
+      "source_location": "L11",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_hooks_windows_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/opencode-plugin.test.js",
+      "source_location": "L9",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_opencode_plugin_test",
+      "target": "path"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "git/github.com/DietrichGebert/ponytail/tests/uninstall.test.js",
+      "source_location": "L6",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "git_github_com_dietrichgebert_ponytail_tests_uninstall_test",
+      "target": "path"
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "scripts_validate_config_get_validator",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_validate_config_load_json",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L103",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "scripts_validate_config_get_validator",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L219",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L99",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_59",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L228",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_77",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L230",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_heuristics_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L234",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_git_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L235",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_symlinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L236",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L171",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_171",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L237",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_layout",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_auditresult"
     },
     {
       "relation": "contains",
@@ -12451,9 +13008,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_pipeline_audit",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_pipeline_audit"
     },
     {
       "relation": "contains",
@@ -12461,9 +13018,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L38",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -12471,9 +13028,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L68",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runvalidator"
     },
     {
       "relation": "contains",
@@ -12481,9 +13038,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_validator"
     },
     {
       "relation": "calls",
@@ -12492,9 +13049,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit_runvalidator",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -17135,17 +17692,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail_writemode"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/.opencode/plugins/ponytail.mjs",
-      "source_location": "L15",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_opencode_plugins_ponytail",
-      "target": "path"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -19585,17 +20131,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman_system"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
@@ -19624,17 +20159,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail",
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_system"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -19916,17 +20440,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_tasks"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/claude-email.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_claude_email",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/correctness.js",
@@ -20025,17 +20538,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_benchmarks_correctness",
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_correctness_tmpfile"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/correctness.js",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_correctness",
-      "target": "path"
     },
     {
       "relation": "imports_from",
@@ -20378,17 +20880,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_tasks"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/model-email.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_model_email",
-      "target": "path"
-    },
-    {
       "relation": "indirect_call",
       "confidence": "INFERRED",
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
@@ -20510,17 +21001,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit",
       "target": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit_tasks"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/robustness-audit.js",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_benchmarks_robustness_audit",
-      "target": "path"
     },
     {
       "relation": "calls",
@@ -20745,17 +21225,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_runtime_writehookoutput"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-activate.js",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_activate",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
@@ -20914,17 +21383,6 @@
       "confidence_score": 0.5,
       "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config",
       "target": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config_writedefaultmode"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-config.js",
-      "source_location": "L13",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_config",
-      "target": "path"
     },
     {
       "relation": "imports_from",
@@ -21464,17 +21922,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-instructions.js",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_instructions",
-      "target": "path"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-subagent.js",
       "source_location": "L8",
       "weight": 1.0,
@@ -21792,17 +22239,6 @@
       "confidence_score": 0.5,
       "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_runtime",
       "target": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_runtime_writehookoutput"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/hooks/ponytail-runtime.js",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_hooks_ponytail_runtime",
-      "target": "path"
     },
     {
       "relation": "imports_from",
@@ -22760,17 +23196,6 @@
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/build-openclaw-skills.js",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_scripts_build_openclaw_skills",
-      "target": "path"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/openclaw-skills.test.js",
       "source_location": "L9",
       "weight": 1.0,
@@ -22956,17 +23381,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_scripts_check_rule_copies_stripfrontmatter"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/check-rule-copies.js",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_scripts_check_rule_copies",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/check-versions.js",
@@ -23035,17 +23449,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_scripts_check_versions",
       "target": "git_github_com_dietrichgebert_ponytail_scripts_check_versions_versions"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/check-versions.js",
-      "source_location": "L14",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_scripts_check_versions",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -23139,17 +23542,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_scripts_publish_openclaw_skills_spawnsync"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/publish-openclaw-skills.js",
-      "source_location": "L20",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_scripts_publish_openclaw_skills",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
@@ -23198,17 +23590,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_scripts_uninstall",
       "target": "git_github_com_dietrichgebert_ponytail_scripts_uninstall_settingspath"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/scripts/uninstall.js",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_scripts_uninstall",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -23332,17 +23713,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_tests_commands_test_test"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/commands.test.js",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_commands_test",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
@@ -23411,17 +23781,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test",
       "target": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test_test"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/copilot-plugin.test.js",
-      "source_location": "L8",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_copilot_plugin_test",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -23585,17 +23944,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_tests_gemini_extension_test_versioned_manifests"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/gemini-extension.test.js",
-      "source_location": "L12",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_gemini_extension_test",
-      "target": "path"
-    },
-    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
@@ -23707,17 +24055,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_tests_hermes_plugin_test_test"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hermes-plugin.test.js",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_hermes_plugin_test",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/hooks-windows.test.js",
@@ -23796,17 +24133,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_tests_hooks_windows_test",
       "target": "git_github_com_dietrichgebert_ponytail_tests_hooks_windows_test_test"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hooks-windows.test.js",
-      "source_location": "L11",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_hooks_windows_test",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -24049,17 +24375,6 @@
       "target": "git_github_com_dietrichgebert_ponytail_tests_hooks_test_temp"
     },
     {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/hooks.test.js",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_hooks_test",
-      "target": "path"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "git/github.com/DietrichGebert/ponytail/tests/openclaw-skills.test.js",
@@ -24188,17 +24503,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_tests_opencode_plugin_test",
       "target": "git_github_com_dietrichgebert_ponytail_tests_opencode_plugin_test_transform"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/opencode-plugin.test.js",
-      "source_location": "L9",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_opencode_plugin_test",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -24389,17 +24693,6 @@
       "confidence_score": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_tests_uninstall_test",
       "target": "git_github_com_dietrichgebert_ponytail_tests_uninstall_test_temp"
-    },
-    {
-      "relation": "imports_from",
-      "context": "import",
-      "confidence": "EXTRACTED",
-      "source_file": "git/github.com/DietrichGebert/ponytail/tests/uninstall.test.js",
-      "source_location": "L6",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "git_github_com_dietrichgebert_ponytail_tests_uninstall_test",
-      "target": "path"
     },
     {
       "relation": "contains",
@@ -25866,300 +26159,6 @@
       "confidence_score": 1.0,
       "source": "scripts_smoke_extensions",
       "target": "scripts_smoke_extensions_pkg"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "readme_schema_policy",
-      "target": "scripts_validate_config"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L125",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L111",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L154",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_installed_integrity"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L187",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_layout"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L145",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L76",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L197",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_main"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_resolve"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L78",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_resolve"
-    },
-    {
-      "relation": "references",
-      "context": "return_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L48",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_resolve",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_get_validator",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L53",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_load_json",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L87",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L60",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_get_validator",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L83",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L59",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_rationale_59",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L209",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L77",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_rationale_77",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L211",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L212",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L213",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L214",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_installed_integrity"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L155",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_rationale_155",
-      "target": "scripts_validate_config_check_installed_integrity"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L215",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_layout"
     },
     {
       "relation": "references",
@@ -29544,5 +29543,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "dc82c11faacee293aeb1ed38b5b25cd3657b1d2c"
+  "built_at_commit": "b75af709095d85abd637e7e89f39fc278a25c70a"
 }

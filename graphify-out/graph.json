@@ -74,14 +74,144 @@
   },
   "nodes": [
     {
+      "label": "audit-pipelines.py",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines",
+      "community": 44,
+      "norm_label": "audit-pipelines.py"
+    },
+    {
+      "label": "git()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L62",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_git",
+      "community": 44,
+      "norm_label": "git()"
+    },
+    {
+      "label": "check_graph_freshness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L67",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_graph_freshness",
+      "community": 44,
+      "norm_label": "check_graph_freshness()"
+    },
+    {
+      "label": "check_flag_staleness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L86",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_flag_staleness",
+      "community": 44,
+      "norm_label": "check_flag_staleness()"
+    },
+    {
+      "label": "check_autocommit_liveness()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L94",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_autocommit_liveness",
+      "community": 44,
+      "norm_label": "check_autocommit_liveness()"
+    },
+    {
+      "label": "check_connectivity_ratchet()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L107",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "community": 44,
+      "norm_label": "check_connectivity_ratchet()"
+    },
+    {
+      "label": "_read_baseline()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_read_baseline",
+      "community": 44,
+      "norm_label": "_read_baseline()"
+    },
+    {
+      "label": "_write_baseline()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L159",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_write_baseline",
+      "community": 44,
+      "norm_label": "_write_baseline()"
+    },
+    {
+      "label": "check_toolchain_versions()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L175",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_toolchain_versions",
+      "community": 44,
+      "norm_label": "check_toolchain_versions()"
+    },
+    {
+      "label": "check_extension_loads()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L216",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_extension_loads",
+      "community": 44,
+      "norm_label": "check_extension_loads()"
+    },
+    {
+      "label": "check_reflection_drift()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L233",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_reflection_drift",
+      "community": 44,
+      "norm_label": "check_reflection_drift()"
+    },
+    {
+      "label": "check_semantic_cache_drift()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L244",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "community": 44,
+      "norm_label": "check_semantic_cache_drift()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L276",
+      "_origin": "ast",
+      "id": "scripts_audit_pipelines_main",
+      "community": 44,
+      "norm_label": "main()"
+    },
+    {
       "label": "validate-config.py",
       "file_type": "code",
       "source_file": "scripts/validate-config.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_validate_config",
       "community": 4,
-      "norm_label": "validate-config.py"
+      "norm_label": "validate-config.py",
+      "id": "scripts_validate_config"
     },
     {
       "label": "resolve()",
@@ -89,9 +219,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L48",
       "_origin": "ast",
-      "id": "scripts_validate_config_resolve",
       "community": 4,
-      "norm_label": "resolve()"
+      "norm_label": "resolve()",
+      "id": "scripts_validate_config_resolve"
     },
     {
       "label": "Path",
@@ -99,9 +229,9 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "id": "path",
       "community": 4,
-      "norm_label": "path"
+      "norm_label": "path",
+      "id": "path"
     },
     {
       "label": "load_json()",
@@ -109,9 +239,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L53",
       "_origin": "ast",
-      "id": "scripts_validate_config_load_json",
       "community": 4,
-      "norm_label": "load_json()"
+      "norm_label": "load_json()",
+      "id": "scripts_validate_config_load_json"
     },
     {
       "label": "get_validator()",
@@ -119,9 +249,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L58",
       "_origin": "ast",
-      "id": "scripts_validate_config_get_validator",
       "community": 4,
-      "norm_label": "get_validator()"
+      "norm_label": "get_validator()",
+      "id": "scripts_validate_config_get_validator"
     },
     {
       "label": "check_target()",
@@ -129,9 +259,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L76",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_target",
       "community": 4,
-      "norm_label": "check_target()"
+      "norm_label": "check_target()",
+      "id": "scripts_validate_config_check_target"
     },
     {
       "label": "check_heuristics_hygiene()",
@@ -139,9 +269,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L127",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_heuristics_hygiene",
       "community": 4,
-      "norm_label": "check_heuristics_hygiene()"
+      "norm_label": "check_heuristics_hygiene()",
+      "id": "scripts_validate_config_check_heuristics_hygiene"
     },
     {
       "label": "check_git_hygiene()",
@@ -149,9 +279,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L141",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_git_hygiene",
       "community": 4,
-      "norm_label": "check_git_hygiene()"
+      "norm_label": "check_git_hygiene()",
+      "id": "scripts_validate_config_check_git_hygiene"
     },
     {
       "label": "check_symlinks()",
@@ -159,9 +289,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L161",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_symlinks",
       "community": 4,
-      "norm_label": "check_symlinks()"
+      "norm_label": "check_symlinks()",
+      "id": "scripts_validate_config_check_symlinks"
     },
     {
       "label": "check_installed_integrity()",
@@ -169,9 +299,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L170",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_installed_integrity",
       "community": 4,
-      "norm_label": "check_installed_integrity()"
+      "norm_label": "check_installed_integrity()",
+      "id": "scripts_validate_config_check_installed_integrity"
     },
     {
       "label": "check_layout()",
@@ -179,9 +309,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L203",
       "_origin": "ast",
-      "id": "scripts_validate_config_check_layout",
       "community": 4,
-      "norm_label": "check_layout()"
+      "norm_label": "check_layout()",
+      "id": "scripts_validate_config_check_layout"
     },
     {
       "label": "main()",
@@ -189,9 +319,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L213",
       "_origin": "ast",
-      "id": "scripts_validate_config_main",
       "community": 4,
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "scripts_validate_config_main"
     },
     {
       "label": "Return callable(obj) -> list[str] of violation messages.",
@@ -199,9 +329,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L59",
       "_origin": "ast",
-      "id": "scripts_validate_config_rationale_59",
       "community": 4,
-      "norm_label": "return callable(obj) -> list[str] of violation messages."
+      "norm_label": "return callable(obj) -> list[str] of violation messages.",
+      "id": "scripts_validate_config_rationale_59"
     },
     {
       "label": "Validate one manifest target; return parsed jsonl entries (for hygiene).",
@@ -209,9 +339,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "scripts_validate_config_rationale_77",
       "community": 4,
-      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene)."
+      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene).",
+      "id": "scripts_validate_config_rationale_77"
     },
     {
       "label": "Guards for fixes that live OUTSIDE tracked config and can silently vanish.",
@@ -219,9 +349,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L171",
       "_origin": "ast",
-      "id": "scripts_validate_config_rationale_171",
       "community": 4,
-      "norm_label": "guards for fixes that live outside tracked config and can silently vanish."
+      "norm_label": "guards for fixes that live outside tracked config and can silently vanish.",
+      "id": "scripts_validate_config_rationale_171"
     },
     {
       "label": "self-audit.ts",
@@ -8650,136 +8780,6 @@
       "id": "schema_trust_schema_additionalproperties_type"
     },
     {
-      "label": "audit-pipelines.py",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "audit-pipelines.py",
-      "id": "scripts_audit_pipelines"
-    },
-    {
-      "label": "git()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L62",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "git()",
-      "id": "scripts_audit_pipelines_git"
-    },
-    {
-      "label": "check_graph_freshness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L67",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_graph_freshness()",
-      "id": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "label": "check_flag_staleness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L86",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_flag_staleness()",
-      "id": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "label": "check_autocommit_liveness()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L94",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_autocommit_liveness()",
-      "id": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "label": "check_connectivity_ratchet()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L107",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_connectivity_ratchet()",
-      "id": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "label": "_read_baseline()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L150",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "_read_baseline()",
-      "id": "scripts_audit_pipelines_read_baseline"
-    },
-    {
-      "label": "_write_baseline()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L159",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "_write_baseline()",
-      "id": "scripts_audit_pipelines_write_baseline"
-    },
-    {
-      "label": "check_toolchain_versions()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L170",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_toolchain_versions()",
-      "id": "scripts_audit_pipelines_check_toolchain_versions"
-    },
-    {
-      "label": "check_extension_loads()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L211",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_extension_loads()",
-      "id": "scripts_audit_pipelines_check_extension_loads"
-    },
-    {
-      "label": "check_reflection_drift()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L228",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_reflection_drift()",
-      "id": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "label": "check_semantic_cache_drift()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L239",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "check_semantic_cache_drift()",
-      "id": "scripts_audit_pipelines_check_semantic_cache_drift"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L271",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "main()",
-      "id": "scripts_audit_pipelines_main"
-    },
-    {
       "label": "smoke-extensions.mjs",
       "file_type": "code",
       "source_file": "scripts/smoke-extensions.mjs",
@@ -12438,6 +12438,290 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
+      "source_file": "docs/graph-maintenance.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_graph_maintenance_runbook",
+      "target": "scripts_audit_pipelines"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_autocommit_liveness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L107",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L216",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_extension_loads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L86",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_flag_staleness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L67",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_graph_freshness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L233",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_reflection_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L244",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L175",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_check_toolchain_versions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L62",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L276",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L159",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_autocommit_liveness",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L72",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_graph_freshness",
+      "target": "scripts_audit_pipelines_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L281",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_graph_freshness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L282",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_flag_staleness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L283",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_autocommit_liveness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L137",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L147",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L284",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L202",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_toolchain_versions",
+      "target": "scripts_audit_pipelines_read_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_check_toolchain_versions",
+      "target": "scripts_audit_pipelines_write_baseline",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L286",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_toolchain_versions",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L289",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_extension_loads",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L285",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_reflection_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/audit-pipelines.py",
+      "source_location": "L288",
+      "weight": 1.0,
+      "source": "scripts_audit_pipelines_main",
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
       "source_file": "README.md",
       "source_location": null,
       "weight": 1.0,
@@ -12450,9 +12734,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L141",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_git_hygiene",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_git_hygiene"
     },
     {
       "relation": "contains",
@@ -12460,9 +12744,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L127",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_heuristics_hygiene",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_heuristics_hygiene"
     },
     {
       "relation": "contains",
@@ -12470,9 +12754,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L170",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_installed_integrity",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_installed_integrity"
     },
     {
       "relation": "contains",
@@ -12480,9 +12764,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L203",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_layout",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_layout"
     },
     {
       "relation": "contains",
@@ -12490,9 +12774,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L161",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_symlinks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_symlinks"
     },
     {
       "relation": "contains",
@@ -12500,9 +12784,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L76",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_target",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_target"
     },
     {
       "relation": "contains",
@@ -12510,9 +12794,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_get_validator",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_get_validator"
     },
     {
       "relation": "contains",
@@ -12520,9 +12804,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_load_json",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_load_json"
     },
     {
       "relation": "contains",
@@ -12530,9 +12814,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L213",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_main",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_main"
     },
     {
       "relation": "contains",
@@ -12540,9 +12824,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config",
-      "target": "scripts_validate_config_resolve",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_resolve"
     },
     {
       "relation": "calls",
@@ -12551,9 +12835,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_resolve",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_resolve"
     },
     {
       "relation": "references",
@@ -12562,9 +12846,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L48",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_resolve",
-      "target": "path",
-      "confidence_score": 1.0
+      "target": "path"
     },
     {
       "relation": "imports_from",
@@ -12837,9 +13121,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L58",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_get_validator",
-      "target": "path",
-      "confidence_score": 1.0
+      "target": "path"
     },
     {
       "relation": "references",
@@ -12848,9 +13132,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L53",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_load_json",
-      "target": "path",
-      "confidence_score": 1.0
+      "target": "path"
     },
     {
       "relation": "calls",
@@ -12859,9 +13143,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_load_json",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_load_json"
     },
     {
       "relation": "calls",
@@ -12870,9 +13154,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L60",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_get_validator",
-      "target": "scripts_validate_config_load_json",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_load_json"
     },
     {
       "relation": "calls",
@@ -12881,9 +13165,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L219",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_load_json",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_load_json"
     },
     {
       "relation": "calls",
@@ -12892,9 +13176,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_get_validator",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_get_validator"
     },
     {
       "relation": "rationale_for",
@@ -12902,9 +13186,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L59",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_rationale_59",
-      "target": "scripts_validate_config_get_validator",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_get_validator"
     },
     {
       "relation": "calls",
@@ -12913,9 +13197,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L228",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_target",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_target"
     },
     {
       "relation": "rationale_for",
@@ -12923,9 +13207,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_rationale_77",
-      "target": "scripts_validate_config_check_target",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_target"
     },
     {
       "relation": "calls",
@@ -12934,9 +13218,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L230",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_heuristics_hygiene",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_heuristics_hygiene"
     },
     {
       "relation": "calls",
@@ -12945,9 +13229,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L234",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_git_hygiene",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_git_hygiene"
     },
     {
       "relation": "calls",
@@ -12956,9 +13240,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L235",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_symlinks",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_symlinks"
     },
     {
       "relation": "calls",
@@ -12967,9 +13251,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L236",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_installed_integrity",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_installed_integrity"
     },
     {
       "relation": "rationale_for",
@@ -12977,9 +13261,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L171",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_rationale_171",
-      "target": "scripts_validate_config_check_installed_integrity",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_installed_integrity"
     },
     {
       "relation": "calls",
@@ -12988,9 +13272,9 @@
       "source_file": "scripts/validate-config.py",
       "source_location": "L237",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_layout",
-      "confidence_score": 1.0
+      "target": "scripts_validate_config_check_layout"
     },
     {
       "relation": "contains",
@@ -25807,290 +26091,6 @@
       "target": "schema_trust_schema_additionalproperties_type"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/graph-maintenance.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_graph_maintenance_runbook",
-      "target": "scripts_audit_pipelines"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L94",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L107",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L211",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_extension_loads"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L86",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L67",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L228",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L239",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L170",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_toolchain_versions"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L62",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L271",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_main"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L150",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_read_baseline"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L159",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_write_baseline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L97",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_autocommit_liveness",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L72",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_graph_freshness",
-      "target": "scripts_audit_pipelines_git"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L276",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_graph_freshness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L277",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_flag_staleness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L278",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L137",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "target": "scripts_audit_pipelines_read_baseline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L147",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "target": "scripts_audit_pipelines_write_baseline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L279",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L197",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_toolchain_versions",
-      "target": "scripts_audit_pipelines_read_baseline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L208",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_check_toolchain_versions",
-      "target": "scripts_audit_pipelines_write_baseline"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L281",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_toolchain_versions"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L284",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_extension_loads"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L280",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_reflection_drift"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/audit-pipelines.py",
-      "source_location": "L283",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/smoke-extensions.mjs",
@@ -29543,5 +29543,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "b75af709095d85abd637e7e89f39fc278a25c70a"
+  "built_at_commit": "cee406d8d56fba27eaf63ebed56ec7060e492dd6"
 }
