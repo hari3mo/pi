@@ -626,7 +626,7 @@ export default function (pi: ExtensionAPI) {
 					content: [
 						{
 							type: "text",
-							text: "Subagent delegation is disabled while the current model is Sonnet — Sonnet is already the mechanical/builder tier, so further delegation is redundant. Switch to a higher-tier model (e.g. claude-opus-4-8 or claude-fable-5) to use the subagent tool.",
+							text: "Subagent delegation is disabled while the current model is Sonnet — Sonnet is already the mechanical/worker tier, so further delegation is redundant. Switch to a higher-tier model (e.g. claude-opus-4-8 or claude-fable-5) to use the subagent tool.",
 						},
 					],
 					details: { mode: "single", agentScope: params.agentScope ?? "user", projectAgentsDir: null, results: [] },
