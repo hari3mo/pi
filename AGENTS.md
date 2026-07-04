@@ -67,6 +67,7 @@ an agent must not review its own code.
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
 | `builder` | Implementation, wiring, boilerplate, tests | Mechanical |
+| `opus-engineer` | Small-but-hard tasks where design and implementation can't separate: tricky concurrency, subtle algorithms, delicate refactors | Deep reasoning |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
 | `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
 
@@ -89,6 +90,10 @@ When a task arrives, decompose it and route each piece by weight:
   - writing the code once the design is fixed, wiring/plumbing, test scaffolding,
     lint/type/format fixes, renames, commits
 - **Verification** → deep reasoning tier, and never the same agent that built it
+- **Small-but-hard execution** (design and implementation inseparable) → `opus-engineer`
+  - tricky concurrency fixes, subtle algorithms, delicate refactors of dense
+    logic — one bounded task, executed end-to-end; still reviewed by
+    `qa-reviewer` afterwards
 - **High-stakes calls** → fan out to architect + peer engineer in parallel,
   neither seeing the other's answer; the orchestrator synthesizes
 
@@ -134,6 +139,12 @@ ANY of:
 - Changes more than **~20 lines** in one file
 - Adds or changes **tests**
 - Is mechanical repetition (renames, boilerplate, wiring, format/lint fixes)
+
+Exception: if the task is small but its difficulty lies in the execution
+itself (design and implementation cannot cleanly separate — tricky
+concurrency, subtle algorithm, delicate refactor), delegate the whole task
+to `opus-engineer` instead of the scope-planner → architect → builder
+pipeline. Its output still goes to `qa-reviewer` like any delegated build.
 
 The lead MUST route through `scope-planner` and/or `architect` first when ANY of:
 
