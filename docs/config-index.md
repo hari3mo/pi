@@ -50,15 +50,15 @@ Every session that changes config must update it.
 ### 2026-07-03
 
 **~22:55 — Changelog backfilled (this entry).** Reconstructed the full
-pre-index history below from `~/.pi/agent/sessions/` logs, the 373 auto-snapshot
-commits, file birth times, and the heuristics store. Files: `docs/config-index.md`.
+pre-index history below from `~/.pi/agent/sessions/` logs, ~370 auto-snapshot commits
+(point-in-time count), file birth times, and the heuristics store. Files: `docs/config-index.md`.
 Why: git history only begins 2026-07-03 15:41 (repo init), but the config was
 built across ~2 days of sessions — the semantic arc needed to be auditable.
 
-**~22:52 — Autocommit now checks git status first.** `.pi-vcs/autocommit.sh`
-gained a git-status review before snapshotting, so unrelated/unintended working-tree
-changes aren't swept into an auto snapshot. Session: "always check git status
-before auto commit".
+**~22:52 — Workflow heuristic: review git status before autocommit.** Captured via
+`learn_heuristic` to `~/.pi/heuristics/heuristics.jsonl` — "Always run git status and
+review changes before making an automatic commit." No code change; `.pi-vcs/autocommit.sh`
+itself was not modified. Session: "always check git status before auto commit".
 
 **~22:50 — Config index created (baseline).** `docs/config-index.md` — the
 feature→files→purpose map plus this changelog, per AGENTS.md → Config Maintenance.
@@ -89,14 +89,14 @@ re-applied after pi updates. Session: "fix entirely with claude fable (bypass pi
 
 **~18:58 — Shared format helpers extracted.** (backfilled) `extensions/lib/format.ts` —
 duration/token/cwd formatters shared by several extensions (kept outside `extensions/*.ts`
-so it isn't auto-loaded as an extension). Emerged from a UI audit/refine pass.
+so it isn't auto-loaded as an extension). Extracted during the "fable should never manually write code" session.
 
 **~17:43 — Model-awareness extension.** (backfilled) `extensions/model-awareness.ts` —
 injects the live active model into the system prompt so the Delegation Gate's model
 checks stay correct after a mid-session Shift+Tab switch. Session: "pi should always
 recognize current model … subagent orchestration does not trigger when fable is selected".
 
-**~17:13–17:24 — Config governance: schema + validator + README.** (backfilled)
+**~17:13–17:37 — Config governance: schema + validator + README.** (backfilled)
 `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py`, `README.md`,
 `.gitignore`, and a validator-gating `.pi-vcs/hooks/pre-commit`; heuristics store/command/index
 reworked to harness scope; `agents/peer-engineer.md` added. Why: standardize the directory
@@ -121,12 +121,11 @@ descriptor of chat to iterm2 window header", "add session running timer to windo
 read-only bash. Sessions: "how to stop pi auto edit", "default pi mode should be full
 read + confirm write", "allow confirm mode to use read only bash commands".
 
-**~15:13 — Version-control infra: git + launchd autocommit.** (backfilled)
+**~15:41 — Version-control infra: git + launchd autocommit.** (backfilled)
 `.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit`, `extensions/pi-vcs-breadcrumb.ts`.
 Set up git tracking of `~/.pi/agent` (remote `github.com/hari3mo/pi`, commits authored by the
 user), launchd-triggered auto-snapshots, and a breadcrumb log of tool-touched files folded
-into commit messages. Initial snapshot committed 15:41. Session: "I want to implement
-comprehensive version control to easily revert/audit changes".
+into commit messages. Initial snapshot committed 15:41. No logged session captured the request; files born 15:41 (initial snapshot cf16e55).
 
 **~14:51 → evening — Minimal UI + Porcelain themes.** (backfilled)
 `extensions/minimal-ui.ts`, `themes/porcelain.json`, `themes/porcelain-light.json`.
@@ -167,4 +166,4 @@ custom extension. Sessions: "add ascii art of pi symbol to start page", "creativ
 
 **~20:49 — First pi customizations (approx).** (backfilled) `settings.json` (ASCII-art launch,
 provider/model defaults) plus early experiment extensions `claude-statusline.ts` and `effort.ts`
-(both later removed). The starting point of the config. Session: "hi" / "set pi ascii art on launch".
+(both later removed). The starting point of the config. Sessions: "hi" (~20:49) and "set pi ascii art on launch" (~21:57).
