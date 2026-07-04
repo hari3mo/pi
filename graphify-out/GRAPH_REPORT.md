@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 203 files · ~165,983 words
+- 203 files · ~166,012 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `6258733e`
+- Built from commit: `a2223897`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -414,8 +414,8 @@ Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.990701256)
-- `~/.pi/agent config repo overview` (3× useful, score=2.990671194)
+- `Config Index (semantic audit map)` (3× useful, score=2.990693119)
+- `~/.pi/agent config repo overview` (3× useful, score=2.990663057)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
