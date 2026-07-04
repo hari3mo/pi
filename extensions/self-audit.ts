@@ -12,10 +12,12 @@
  *      errors or warnings exist (zero prompt cost when healthy), instructing
  *      the agent to fix or surface them.
  *   3. /audit — re-runs the validator on demand and shows the full report.
- *   4. "config-repo-advanced" (pi.events) — when concurrency-guard detects a
- *      cross-shell change, re-run the validator automatically so the injected
- *      problems track the new HEAD without a session restart (eventually
- *      consistent: the refreshed result shows on the next before_agent_start).
+ *   4. "config-repo-advanced" (pi.events) — the single classified cross-shell
+ *      change result from lib/change-detection.ts (via concurrency-guard),
+ *      carrying { range, foreign, collided, staleResources }. Re-run the
+ *      validator automatically so the injected problems track the new HEAD
+ *      without a session restart (eventually consistent: the refreshed result
+ *      shows on the next before_agent_start).
  *
  * Together with the pre-commit hook (same validator, gates snapshots) and the
  * graphify bridge (structural staleness), this closes the self-audit loop:
@@ -87,11 +89,12 @@ export default function (pi: ExtensionAPI) {
 		lastAudit = await runValidator();
 	});
 
-	// Cross-shell staleness: concurrency-guard emits this on the shared event bus
-	// when the config repo advanced from another shell. Re-run the audit so the
-	// injected problems reflect the new HEAD. Fire-and-forget (the handler must be
-	// synchronous) with an in-flight guard so bursts collapse into one run; the
-	// next before_agent_start injects the refreshed result.
+	// Cross-shell staleness: ONE classified RepoAdvance per repo advance, emitted
+	// by concurrency-guard from the shared lib/change-detection.ts engine (own
+	// autocommit snapshots never emit). Re-run the audit so the injected problems
+	// reflect the new HEAD. Fire-and-forget (the handler must be synchronous)
+	// with an in-flight guard so bursts collapse into one run; the next
+	// before_agent_start injects the refreshed result.
 	pi.events.on("config-repo-advanced", () => {
 		if (refreshing) return;
 		refreshing = true;
