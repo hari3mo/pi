@@ -5,14 +5,9 @@
  * links. Run: node scripts/test-config-paths.mjs
  */
 import { join } from "node:path";
-import { pathToFileURL } from "node:url";
+import { AGENT_DIR, loadJiti } from "./lib/jiti-loader.mjs";
 
-const HOME = process.env.HOME;
-const AGENT_DIR = process.env.PI_AGENT_DIR ?? join(HOME, ".pi", "agent");
-const PKG = join(HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
-
-const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
-const jiti = createJiti(join(AGENT_DIR, "scripts", "_test_.js"));
+const { jiti } = await loadJiti();
 const { isReloadResource } = await jiti.import(join(AGENT_DIR, "extensions", "lib", "config-paths.ts"));
 
 const cases = [
