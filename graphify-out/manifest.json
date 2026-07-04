@@ -430,9 +430,9 @@
     "semantic_hash": "c0985f1f4624c285324585a4342deac3"
   },
   "keybindings.json": {
-    "mtime": 1783140347.681115,
-    "ast_hash": "47b8b20a86072199112c10f66e2bee8c",
-    "semantic_hash": "47b8b20a86072199112c10f66e2bee8c"
+    "mtime": 1783163811.1844811,
+    "ast_hash": "11e50be7ef2981c3314cc9f845e2bafe",
+    "semantic_hash": ""
   },
   "npm/package.json": {
     "mtime": 1783125983.3172388,
