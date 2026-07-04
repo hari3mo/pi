@@ -28,7 +28,8 @@ profiles are its runtime echo.
 When the lead is `claude-fable-5` and the task plausibly needs file changes, the FIRST
 action on task receipt is the `request_write_mode` tool — before reading code, exploring
 the repo, or dispatching any subagent. Children inherit `--write` only when the parent
-gate is in write mode; in confirm/read-only mode they run read-only and can only return
+gate is in write mode, and auto-write is scoped to `~/.pi`; outside that root, UI
+sessions still prompt and headless sessions block. In confirm/read-only mode children run read-only and can only return
 plans. Do not explore first, do not fall back to editing directly, and do not spawn
 read-only children hoping it clears — exploration done before the gate opens is wasted
 if the user re-frames the task when prompted.
@@ -185,12 +186,13 @@ The harness audits itself; problems become prompts:
 ## Enforced in Code (no action needed)
 
 - `extensions/read-only-default.ts` hard-blocks fable `edit`/`write` calls in all gate
-  modes; spawned children are exempt via `PI_SUBAGENT=1`.
+  modes; spawned children are exempt via `PI_SUBAGENT=1`; auto-write approvals (`/write`,
+  `pi --write`, and confirm-mode "allow all") are scoped to `~/.pi`.
 - `extensions/subagent/index.ts` appends `STANDING_CONTRACT_FOOTER` to every dispatched
   task, normalizes `peer` returns with a `[VERDICT: ...]` first line, and annotates
   the session-level 3-consecutive-FAIL loop budget.
 - The write-gate prompts on `subagent` calls in confirm/read-only mode so children can
-  inherit write access.
+  inherit scoped write access.
 - The heuristics store echoes the exact saved text on every `learn_heuristic` save.
 - `extensions/graph-first.ts` redirects structure-shaped `grep`/`rg` (symbol
   def/ref/import hunts) to the `graph` tool: first offense nudges, later ones block
