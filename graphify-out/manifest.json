@@ -1038,5 +1038,10 @@
     "mtime": 1783159683.3057277,
     "ast_hash": "85fa980f1526935e5b237c3420e57dbf",
     "semantic_hash": "85fa980f1526935e5b237c3420e57dbf"
+  },
+  "scripts/audit-pipelines.py": {
+    "mtime": 1783160135.322861,
+    "ast_hash": "d19dc966d2583bfa219d58e98fcb677c",
+    "semantic_hash": ""
   }
 }
