@@ -335,6 +335,7 @@ class BlackHoleComponent {
 	private dustTheta = new Float32Array(DUST_COUNT);
 	private dustY = new Float32Array(DUST_COUNT);
 	private dustB = new Float32Array(DUST_COUNT);
+	private dustRidge = new Float32Array(DUST_COUNT);
 	private dustCount = 0;
 	private spin = 0;
 
@@ -347,6 +348,7 @@ class BlackHoleComponent {
 		p: number;
 		tw: number;
 		ch: string | null;
+		dep: number;
 	}> = [];
 	private starsKey = "";
 
@@ -450,7 +452,7 @@ class BlackHoleComponent {
 			const bulge = Math.exp(-3.5 * u) * 0.25;
 
 			const winding = theta - u * ARM_TIGHTNESS * Math.PI;
-			const turbulence = 0.08 * Math.sin(r * 4.0 + theta);
+			const turbulence = 0.06 * Math.sin(r * 4.0 + theta);
 			const armBase = (Math.cos(NUM_ARMS * winding + turbulence) + 1) / 2;
 			// Sharper than the site's 5.5 — coarse cells need crisper lanes.
 			const armProfile = Math.pow(armBase, 7.0);
@@ -467,6 +469,7 @@ class BlackHoleComponent {
 
 			this.dustR[placed] = r;
 			this.dustTheta[placed] = theta;
+			this.dustRidge[placed] = armProfile;
 
 			// 3D thickness envelope: puffy bulge, thin arms.
 			const bulgeHeight = 0.3 * Math.exp(-4.0 * u);
@@ -480,7 +483,10 @@ class BlackHoleComponent {
 				(Math.random() + Math.random() + Math.random() - 1.5) * 0.15;
 			this.dustB[placed] = Math.max(
 				0,
-				Math.min(1, Math.sqrt(density) + noise),
+				Math.min(
+					1,
+					Math.sqrt(density) * (0.55 + 0.45 * armProfile) + noise,
+				),
 			);
 			placed++;
 		}
