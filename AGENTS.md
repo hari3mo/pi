@@ -193,7 +193,11 @@ The lead MUST route through `scope-planner` and/or `architect` first when ANY of
   2026-07: a lead that self-scoped an ambiguous request found a latent
   root-cause bug unprompted and shipped the right fix.)
 - The change introduces a new API contract, schema, storage decision, or
-  dependency → `architect`
+  dependency into an EXISTING system, or one that will outlive the task →
+  `architect`. For greenfield single-session builds, these calls are made
+  inline by `solo-engineer`/`fable-engineer` — that is their charter; do
+  not route a self-contained new module through `architect` just because
+  it contains design decisions.
 - The wrong approach would be expensive to unwind later → `architect`
 
 The lead MUST send work to `qa-reviewer` when ANY of:
@@ -233,6 +237,14 @@ Subagents cannot see the main conversation. Every delegated task must state:
 2. **The bounded problem** — already framed; no ambiguity left to interpret
 3. **What to return** — a conclusion, a diff, or `file:line` findings; never a
    raw dump the orchestrator has to clean up
+
+Every delegated task also inherits a standing hygiene rule (state it when
+the workspace contains files the agent might touch): never delete, move,
+or overwrite files you did not create unless the task explicitly asks;
+logs, notes, and unfamiliar artifacts in the working directory belong to
+the user or the harness. Workspace tidying is out of scope by default.
+(Observed 2026-07: a delegated build deleted an actively-written harness
+log from its cwd.)
 
 Vague role descriptions cause routing drift. Keep descriptions sharp about *when*
 a role gets work, not just what it does.
