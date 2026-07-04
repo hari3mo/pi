@@ -47,6 +47,8 @@ Every session that changes config must update it.
 > or removed. Format: date, summary, files touched, why. Keep entries to
 > 2–4 lines.
 
+### 2026-07-03
+
 **~22:55 — Changelog backfilled (this entry).** Reconstructed the full
 pre-index history below from `~/.pi/agent/sessions/` logs, the 373 auto-snapshot
 commits, file birth times, and the heuristics store. Files: `docs/config-index.md`.
