@@ -135,6 +135,7 @@ const COMET_DEFS: CometDef[] = [
 	{ e: 0.65, p: 3.5, l: 2.4, w: 0 },
 	{ e: 0.5, p: 4.4, l: 2.0, w: 2.3 },
 	{ e: 0.78, p: 2.9, l: 2.7, w: 4.2 },
+	{ e: 0.7, p: 5.0, l: 2.2, w: 1.2 },
 ];
 const COMET_TAIL = 10;
 const COMET_TAIL_CHARS = "+=~;:-,.";
