@@ -586,6 +586,11 @@ class ActiveSubagentPanel {
 	private readonly onDataChange: () => void;
 	private spinnerTimer?: ReturnType<typeof setInterval>;
 	private disposed = false;
+	// Orphan heartbeat: render() sets this true; the spinner tick clears it and
+	// checks it next fire. If render() stopped being called (overlay torn down
+	// externally via resetExtensionUI→hideOverlay, which never resolves the custom
+	// promise nor calls dispose()), the flag stays false and the tick self-disposes.
+	private renderedSinceTick = true;
 	// Cache of formatSubagentShell(ref) split into lines, keyed by ref identity
 	// plus (messages.length + endTime) — the only inputs that grow a run's
 	// transcript. Rebuilt when the selected ref or that key changes; the built
@@ -601,8 +606,20 @@ class ActiveSubagentPanel {
 	) {
 		// Re-render whenever run data changes; the outer function used to juggle
 		// this via closure mutation — now the panel registers/unregisters itself.
-		this.onDataChange = () => this.tui.requestRender();
+		// Self-defending: if it fires after disposal it removes itself from the Set
+		// and no-ops. A run-set change is also the moment the spinner timer must
+		// start/stop (finding 2: no longer driven from render()).
+		this.onDataChange = () => {
+			if (this.disposed) {
+				ACTIVE_SUBAGENT_LISTENERS.delete(this.onDataChange);
+				return;
+			}
+			this.tui.requestRender();
+			this.syncSpinnerTimer();
+		};
 		ACTIVE_SUBAGENT_LISTENERS.add(this.onDataChange);
+		// Animate immediately if a run is already in progress when the panel opens.
+		this.syncSpinnerTimer();
 	}
 
 	// Detail body height: derive from the terminal viewport (the overlay caps at
@@ -626,11 +643,28 @@ class ActiveSubagentPanel {
 
 	// Animate the list spinner while any run is in progress by ticking
 	// requestRender on an interval (mirrors the renderResult spinnerTimer
-	// pattern). Idempotent: stops the moment nothing is running. dispose() and
-	// showActiveSubagentPanel's finally both clear it, so it cannot leak.
-	private syncSpinnerTimer(anyInProgress: boolean): void {
+	// pattern). Idempotent: stops the moment nothing is running. Driven by state
+	// changes (constructor + onDataChange) — NOT by render(), which must persist
+	// nothing (finding 2). dispose(), the finally, and the tick's own orphan
+	// self-check all clear it, so it cannot leak.
+	private syncSpinnerTimer(): void {
+		if (this.disposed) return;
+		const anyInProgress = getActiveSubagentRunRefs().some((ref) => runInProgress(ref.result));
 		if (anyInProgress && !this.spinnerTimer) {
-			this.spinnerTimer = setInterval(() => this.tui.requestRender(), SPINNER_INTERVAL_MS);
+			// Fresh heartbeat so the first tick can't false-trip before render() runs.
+			this.renderedSinceTick = true;
+			this.spinnerTimer = setInterval(() => {
+				// Orphan self-defense (finding 1): render() is only called while we are
+				// still in the overlay stack. If an external teardown popped us without
+				// done()/dispose(), render() stopped clearing→setting this flag, so it is
+				// still false from the previous tick → dispose (clears timer + listener).
+				if (!this.renderedSinceTick) {
+					this.dispose();
+					return;
+				}
+				this.renderedSinceTick = false;
+				this.tui.requestRender();
+			}, SPINNER_INTERVAL_MS);
 			(this.spinnerTimer as { unref?: () => void }).unref?.();
 		} else if (!anyInProgress && this.spinnerTimer) {
 			clearInterval(this.spinnerTimer);
@@ -641,7 +675,9 @@ class ActiveSubagentPanel {
 	render(width: number): string[] {
 		const theme = this.theme;
 		const refs = getActiveSubagentRunRefs();
-		this.syncSpinnerTimer(refs.some((ref) => runInProgress(ref.result)));
+		// Heartbeat only — proves render() is still being called (see syncSpinnerTimer
+		// orphan self-check). No timer create/clear here: render persists nothing.
+		this.renderedSinceTick = true;
 		// Local clamped copy — render never persists state.
 		const selected = Math.min(this.selected, Math.max(0, refs.length - 1));
 		const lines: string[] = [];
