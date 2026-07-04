@@ -1,7 +1,7 @@
 /**
  * Undo Extension: /undo reverts conversation context AND file changes to
  * the state right before the user's last prompt. Repeated /undo walks back
- * one prompt at a time. /redo reverses the most recent /undo.
+ * one prompt at a time.
  *
  * On every before_agent_start we snapshot the full working tree (tracked +
  * untracked, respecting .gitignore) into a git commit object via a
@@ -10,17 +10,26 @@
  * ("undo-checkpoint") via pi.appendEntry(), which lands immediately before
  * the user's message since before_agent_start fires before that message is
  * appended. /undo finds the last user message, the checkpoint right before
- * it, navigates back to it, restores files from that commit, and records an
- * "undo-redo" entry (with a snapshot of the pre-undo state and the leaf we
- * came from) so /redo can reverse the operation.
+ * it, navigates back to it, and restores files from that commit.
+ *
+ * Outside a git repo there is no commit snapshot to restore from, so a
+ * tool_call handler backs up any file touched by a write/edit tool call
+ * (per prompt) under getAgentDir()/undo-backups before the mutation
+ * happens. When /undo runs without a git snapshot, those backups are
+ * restored instead. Backups older than BACKUP_TTL_DAYS are garbage
+ * collected on session_start.
+ *
+ * Limitation: outside a git repo, files created or modified by bash (or
+ * any tool other than write/edit) are not covered by this fallback.
  */
 
 import { randomUUID } from "node:crypto";
 import { execFile } from "node:child_process";
-import { rm } from "node:fs/promises";
+import { copyFile, mkdir, readdir, readFile, rename, rm, stat, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join, resolve } from "node:path";
 
+import { getAgentDir, isToolCallEventType } from "@earendil-works/pi-coding-agent";
 import type {
 	CustomEntry,
 	ExtensionAPI,
@@ -34,17 +43,25 @@ interface CheckpointData {
 	repoRoot: string | null;
 }
 
-interface RedoData {
-	sha: string | null;
-	repoRoot: string | null;
-	oldLeafId: string | null;
-}
-
 interface ExecLikeResult {
 	stdout: string;
 	stderr: string;
 	code: number;
 }
+
+interface FallbackManifestEntry {
+	path: string;
+	state: "present" | "absent" | "skipped";
+	blob?: string;
+}
+
+interface DiskManifest {
+	version: 1;
+	entries: FallbackManifestEntry[];
+}
+
+const MAX_BACKUP_BYTES = 25 * 1024 * 1024;
+const BACKUP_TTL_DAYS = 14;
 
 /** git commit-tree fails without a configured identity; pin a stable synthetic one. */
 const GIT_IDENTITY_ENV: NodeJS.ProcessEnv = {
@@ -67,6 +84,127 @@ function execFileWithEnv(
 			resolve({ stdout: stdout ?? "", stderr: stderr ?? "", code });
 		});
 	});
+}
+
+/** Replace any character outside [A-Za-z0-9_-] so ids are safe path segments. */
+function sanitizeId(id: string): string {
+	return id.replace(/[^A-Za-z0-9_-]/g, "_");
+}
+
+function backupRoot(): string {
+	return join(getAgentDir(), "undo-backups");
+}
+
+function sessionDir(sessionId: string): string {
+	return join(backupRoot(), sanitizeId(sessionId));
+}
+
+function checkpointDir(sessionId: string, checkpointId: string): string {
+	return join(sessionDir(sessionId), sanitizeId(checkpointId));
+}
+
+/** Read+parse manifest.json; on any error (missing, corrupt) return an empty manifest. */
+async function readDiskManifest(dir: string): Promise<DiskManifest> {
+	try {
+		const raw = await readFile(join(dir, "manifest.json"), "utf8");
+		const parsed = JSON.parse(raw) as DiskManifest;
+		return parsed;
+	} catch {
+		return { version: 1, entries: [] };
+	}
+}
+
+/** Write manifest.json atomically: write to a tmp name in the same dir, then rename. */
+async function writeDiskManifest(dir: string, manifest: DiskManifest): Promise<void> {
+	await mkdir(dir, { recursive: true });
+	const tmpPath = join(dir, `manifest.${randomUUID()}.tmp`);
+	await writeFile(tmpPath, JSON.stringify(manifest), "utf8");
+	await rename(tmpPath, join(dir, "manifest.json"));
+}
+
+/**
+ * Back up `absPath` for this checkpoint, first-backup-wins: if the file
+ * already has an entry for this checkpoint, its state as of the checkpoint
+ * is already preserved and we do nothing.
+ */
+async function backupBeforeMutation(
+	sessionId: string,
+	checkpointId: string,
+	absPath: string,
+): Promise<void> {
+	const dir = checkpointDir(sessionId, checkpointId);
+	const manifest = await readDiskManifest(dir);
+	if (manifest.entries.some((entry) => entry.path === absPath)) return;
+
+	let entry: FallbackManifestEntry;
+	try {
+		const info = await stat(absPath);
+		if (info.size > MAX_BACKUP_BYTES) {
+			entry = { path: absPath, state: "skipped" };
+		} else {
+			const blobName = `${randomUUID()}.bin`;
+			await mkdir(join(dir, "blobs"), { recursive: true });
+			await copyFile(absPath, join(dir, "blobs", blobName));
+			entry = { path: absPath, state: "present", blob: blobName };
+		}
+	} catch {
+		entry = { path: absPath, state: "absent" };
+	}
+
+	manifest.entries.push(entry);
+	await writeDiskManifest(dir, manifest);
+}
+
+/** Best-effort restore of a fallback manifest's entries. Keeps going past per-entry failures. */
+async function applyFallbackRestore(
+	dir: string,
+	entries: FallbackManifestEntry[],
+): Promise<{ restored: number; failures: string[] }> {
+	let restored = 0;
+	const failures: string[] = [];
+
+	for (const entry of entries) {
+		try {
+			if (entry.state === "present") {
+				if (!entry.blob) throw new Error("missing blob reference");
+				await mkdir(dirname(entry.path), { recursive: true });
+				await copyFile(join(dir, "blobs", entry.blob), entry.path);
+				restored++;
+			} else if (entry.state === "absent") {
+				await rm(entry.path, { force: true });
+				restored++;
+			} else {
+				failures.push(entry.path);
+			}
+		} catch (err) {
+			const message = err instanceof Error ? err.message : String(err);
+			failures.push(`${entry.path}: ${message}`);
+		}
+	}
+
+	return { restored, failures };
+}
+
+/** Delete backup directories older than BACKUP_TTL_DAYS. Entirely best-effort and silent. */
+async function gcBackups(): Promise<void> {
+	try {
+		const root = backupRoot();
+		const sessionIds = await readdir(root);
+		const cutoffMs = BACKUP_TTL_DAYS * 24 * 60 * 60 * 1000;
+		for (const sessionId of sessionIds) {
+			const path = join(root, sessionId);
+			try {
+				const info = await stat(path);
+				if (Date.now() - info.mtimeMs > cutoffMs) {
+					await rm(path, { recursive: true, force: true });
+				}
+			} catch {
+				// best-effort; skip entries we can't stat/remove
+			}
+		}
+	} catch {
+		// best-effort; e.g. backupRoot() doesn't exist yet
+	}
 }
 
 export default function (pi: ExtensionAPI) {
@@ -178,18 +316,19 @@ export default function (pi: ExtensionAPI) {
 		return undefined;
 	}
 
-	/** Walk the branch backwards for the most recent "undo-redo" entry, stopping at the first user message. */
-	function findRedoEntry(branch: SessionEntry[]): CustomEntry<RedoData> | undefined {
+	/** Walk the branch backwards for the most recent "undo-checkpoint" entry. */
+	function lastCheckpointOnBranch(branch: SessionEntry[]): CustomEntry<CheckpointData> | undefined {
 		for (let i = branch.length - 1; i >= 0; i--) {
 			const entry = branch[i];
-			if (entry.type === "custom" && entry.customType === "undo-redo") {
-				return entry as CustomEntry<RedoData>;
-			}
-			if (entry.type === "message" && entry.message.role === "user") {
-				return undefined;
+			if (entry.type === "custom" && entry.customType === "undo-checkpoint") {
+				return entry as CustomEntry<CheckpointData>;
 			}
 		}
 		return undefined;
+	}
+
+	function stripLeadingAt(path: string): string {
+		return path.startsWith("@") ? path.slice(1) : path;
 	}
 
 	function extractPromptText(content: string | (TextContent | ImageContent)[]): string {
@@ -215,6 +354,36 @@ export default function (pi: ExtensionAPI) {
 		}
 	});
 
+	// Garbage-collect stale fallback backups. Never allowed to break startup.
+	pi.on("session_start", async () => {
+		try {
+			await gcBackups();
+		} catch {
+			// best-effort
+		}
+	});
+
+	// Outside a git repo the per-prompt commit snapshot doesn't cover files,
+	// so back up write/edit targets ourselves before the mutation happens.
+	pi.on("tool_call", async (event, ctx) => {
+		let rawPath: string | undefined;
+		if (isToolCallEventType("write", event)) rawPath = event.input.path;
+		else if (isToolCallEventType("edit", event)) rawPath = event.input.path;
+		else return;
+
+		try {
+			const branch = ctx.sessionManager.getBranch();
+			const ckpt = lastCheckpointOnBranch(branch);
+			if (!ckpt || ckpt.data?.sha) return; // git snapshot covers this prompt
+			const sid = ctx.sessionManager.getSessionId();
+			if (!sid) return;
+			const abs = resolve(ctx.cwd, stripLeadingAt(rawPath));
+			await backupBeforeMutation(sid, ckpt.id, abs);
+		} catch {
+			// best-effort; never block the tool
+		}
+	});
+
 	pi.registerCommand("undo", {
 		description: "Revert conversation and file changes to just before your last prompt",
 		handler: async (_args, ctx) => {
@@ -231,21 +400,25 @@ export default function (pi: ExtensionAPI) {
 			let promptText = extractPromptText(userMessage.message.content);
 			let preview = truncatePreview(promptText);
 
-			const willRestoreFiles = Boolean(checkpoint?.data?.sha && checkpoint?.data?.repoRoot);
+			const sid = ctx.sessionManager.getSessionId();
+			let gitMode = Boolean(checkpoint?.data?.sha && checkpoint?.data?.repoRoot);
+			let restoreManifest: FallbackManifestEntry[] =
+				!gitMode && checkpoint && sid
+					? (await readDiskManifest(checkpointDir(sid, checkpoint.id))).entries
+					: [];
+			const willRestoreFiles = gitMode || restoreManifest.length > 0;
 
 			if (ctx.hasUI) {
-				const description = willRestoreFiles
+				const description = gitMode
 					? `Revert files and conversation context to before: "${preview}"`
-					: `Revert conversation context to before: "${preview}" (no file snapshot available)`;
+					: willRestoreFiles
+						? `Revert conversation and tracked file writes/edits to before: "${preview}" (bash-created files are not covered)`
+						: `Revert conversation context to before: "${preview}" (no file snapshot available)`;
 				const ok = await ctx.ui.confirm("Undo last prompt?", description);
 				if (!ok) return;
 			}
 
-			// Snapshot the current (pre-undo) tree so /redo can restore it later.
-			const redoSnapshot = await snapshot(ctx.cwd);
-			const oldLeafId = ctx.sessionManager.getLeafId();
-
-			// Re-check in case the branch moved during the confirm dialog / snapshot.
+			// Re-check in case the branch moved during the confirm dialog.
 			const freshBranch = ctx.sessionManager.getBranch();
 			const freshUserMessage = findLastUserMessage(freshBranch);
 			if (!freshUserMessage) {
@@ -255,6 +428,12 @@ export default function (pi: ExtensionAPI) {
 			checkpoint = findCheckpointBefore(freshBranch, freshUserMessage.index);
 			promptText = extractPromptText(freshUserMessage.message.content);
 			preview = truncatePreview(promptText);
+			gitMode = Boolean(checkpoint?.data?.sha && checkpoint?.data?.repoRoot);
+			restoreManifest =
+				!gitMode && checkpoint && sid
+					? (await readDiskManifest(checkpointDir(sid, checkpoint.id))).entries
+					: [];
+
 			const targetId = checkpoint ? checkpoint.id : freshUserMessage.entry.parentId;
 			if (!targetId) {
 				ctx.ui.notify("Can't rewind context further (no earlier point in this session)", "warning");
@@ -269,32 +448,44 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			pi.appendEntry<RedoData>("undo-redo", {
-				sha: redoSnapshot.sha,
-				repoRoot: redoSnapshot.repoRoot,
-				oldLeafId,
-			});
-
 			let filesRestored = false;
+			let fallbackRestoredCount = 0;
 			let fileRestoreError: string | undefined;
-			if (checkpoint?.data?.sha && checkpoint.data.repoRoot) {
+			if (gitMode && checkpoint?.data?.sha && checkpoint.data.repoRoot) {
 				try {
 					await restoreFiles(checkpoint.data.repoRoot, checkpoint.data.sha);
 					filesRestored = true;
 				} catch (err) {
 					fileRestoreError = err instanceof Error ? err.message : String(err);
 				}
+			} else if (restoreManifest.length > 0 && checkpoint && sid) {
+				const { restored, failures } = await applyFallbackRestore(
+					checkpointDir(sid, checkpoint.id),
+					restoreManifest,
+				);
+				fallbackRestoredCount = restored;
+				if (failures.length > 0) fileRestoreError = failures.join(", ");
 			}
 
 			if (ctx.hasUI) {
 				ctx.ui.setEditorText(promptText);
-				if (fileRestoreError) {
+				if (gitMode && fileRestoreError) {
 					ctx.ui.notify(
 						`Context reverted, but file restore failed: ${fileRestoreError}`,
 						"error",
 					);
-				} else if (filesRestored) {
+				} else if (gitMode && filesRestored) {
 					ctx.ui.notify(`Reverted files + context to before: "${preview}"`, "info");
+				} else if (!gitMode && fileRestoreError) {
+					ctx.ui.notify(
+						`Context reverted, but some files could not be restored: ${fileRestoreError}`,
+						"error",
+					);
+				} else if (!gitMode && fallbackRestoredCount > 0) {
+					ctx.ui.notify(
+						`Reverted context + ${fallbackRestoredCount} tracked file(s) to before: "${preview}" (bash-created files not covered)`,
+						"info",
+					);
 				} else if (checkpoint && !checkpoint.data?.sha) {
 					ctx.ui.notify("Context reverted (no file snapshot \u2014 not a git repo)", "info");
 				} else {
@@ -303,80 +494,4 @@ export default function (pi: ExtensionAPI) {
 			}
 		},
 	});
-
-	pi.registerCommand("redo", {
-		description: "Go forward again after /undo (restores context and files)",
-		handler: async (_args, ctx) => {
-			await ctx.waitForIdle();
-
-			const branch = ctx.sessionManager.getBranch();
-			const redoEntry = findRedoEntry(branch);
-			if (!redoEntry?.data) {
-				ctx.ui.notify("Nothing to redo", "warning");
-				return;
-			}
-
-			const { sha, repoRoot, oldLeafId } = redoEntry.data;
-
-			if (ctx.hasUI) {
-				const description =
-					sha && repoRoot
-						? "Go forward again? Files will be restored."
-						: "Go forward again? (no file snapshot available)";
-				const ok = await ctx.ui.confirm("Redo?", description);
-				if (!ok) return;
-			}
-
-			let navigated = false;
-			if (oldLeafId) {
-				// Forked/cloned sessions copy only the root->leaf path, so the
-				// pre-undo leaf may not exist in this session file.
-				const targetExists = Boolean(ctx.sessionManager.getEntry(oldLeafId));
-				if (!targetExists) {
-					ctx.ui.notify("Cannot restore context (that point isn't in this session)", "warning");
-				} else {
-					try {
-						const result = await ctx.navigateTree(oldLeafId, { summarize: false });
-						if (result.cancelled) {
-							ctx.ui.notify("Redo cancelled", "warning");
-							return;
-						}
-						navigated = true;
-					} catch {
-						ctx.ui.notify("Cannot restore context (that point isn't in this session)", "warning");
-					}
-				}
-			}
-
-			let filesRestored = false;
-			if (sha && repoRoot) {
-				try {
-					await restoreFiles(repoRoot, sha);
-					filesRestored = true;
-				} catch (err) {
-					const message = err instanceof Error ? err.message : String(err);
-					ctx.ui.notify(
-						navigated
-							? `Context moved forward, but file restore failed: ${message}`
-							: `File restore failed: ${message}`,
-						"error",
-					);
-					return;
-				}
-			}
-
-			if (ctx.hasUI) {
-				if (navigated && filesRestored) {
-					ctx.ui.notify("Redone: context and files restored", "info");
-				} else if (navigated) {
-					ctx.ui.notify("Redone: context restored (no file snapshot)", "info");
-				} else if (filesRestored) {
-					ctx.ui.notify("Redone: files restored", "info");
-				} else {
-					ctx.ui.notify("Nothing to redo (empty redo entry)", "warning");
-				}
-			}
-		},
-	});
-
 }
