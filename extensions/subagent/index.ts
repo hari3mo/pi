@@ -811,7 +811,8 @@ export default function (pi: ExtensionAPI) {
 
 				const successCount = results.filter((r) => !isFailedResult(r)).length;
 				const summaries = results.map((r) => {
-					const output = truncateParallelOutput(finalizeQaOutput(r.agent, getResultOutput(r)));
+					const rawOutput = getResultOutput(r);
+					const output = truncateParallelOutput(isFailedResult(r) ? rawOutput : finalizeQaOutput(r.agent, rawOutput));
 					const status = isFailedResult(r)
 						? `failed${r.stopReason && r.stopReason !== "end" ? ` (${r.stopReason})` : ""}`
 						: "completed";
