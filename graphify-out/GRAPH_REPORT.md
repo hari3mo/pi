@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 194 files · ~155,985 words
+- 195 files · ~156,370 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1178 nodes · 1649 edges · 72 communities (64 shown, 8 thin omitted)
+- 1182 nodes · 1652 edges · 74 communities (65 shown, 9 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `cee406d8`
+- Built from commit: `57bdba2f`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -81,8 +81,10 @@
 - [[_COMMUNITY_graphify-bridge.ts|graphify-bridge.ts]]
 - [[_COMMUNITY_copilot-plugin.test.js|copilot-plugin.test.js]]
 - [[_COMMUNITY_Compact always-on ruleset (AGENTS.md)|Compact always-on ruleset (AGENTS.md)]]
+- [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
 - [[_COMMUNITY_check-parse-verdict.mjs|check-parse-verdict.mjs]]
 - [[_COMMUNITY_porcelain.json|porcelain.json]]
+- [[_COMMUNITY_config-paths.ts|config-paths.ts]]
 - [[_COMMUNITY_ponytail-statusline.sh script|ponytail-statusline.sh script]]
 
 ## God Nodes (most connected - your core abstractions)
@@ -118,7 +120,7 @@
 - **Cross-agent rule distribution (aligned mirrors)** — git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules, git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules, git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules, git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_agents_ruleset [EXTRACTED 1.00]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (72 total, 8 thin omitted)
+## Communities (74 total, 9 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -187,8 +189,8 @@ Cohesion: 0.11
 Nodes (11): BlackHoleComponent, COMET_DEFS, CometDef, Constellation, CONSTELLATIONS, COS_T, DeepGalaxy, PLANETS (+3 more)
 
 ### Community 15 - "Void Black-Hole TUI"
-Cohesion: 0.08
-Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, amber (+15 more)
+Cohesion: 0.12
+Nodes (17): vars, amber, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bronze (+9 more)
 
 ### Community 16 - "Porcelain Light Theme"
 Cohesion: 0.19
@@ -362,6 +364,10 @@ Nodes (7): assert, commands, fs, path, piSource, root, test
 Cohesion: 0.25
 Nodes (6): assert, fs, path, REQUIRED_COMMAND_FILES, root, test
 
+### Community 67 - "porcelain-light.json"
+Cohesion: 0.29
+Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
+
 ### Community 68 - "check-parse-verdict.mjs"
 Cohesion: 0.29
 Nodes (6): cases, here, parseQaVerdict, src, start, stripped
@@ -371,27 +377,27 @@ Cohesion: 0.29
 Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 
 ## Knowledge Gaps
-- **598 isolated node(s):** `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult`, `here`, `src` (+593 more)
+- **600 isolated node(s):** `RESOURCE_PREFIXES`, `RESOURCE_FILES`, `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult` (+595 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.994778706)
-- `~/.pi/agent config repo overview` (3× useful, score=2.994748602)
+- `Config Index (semantic audit map)` (3× useful, score=2.994389649) _(code changed — re-verify)_
+- `~/.pi/agent config repo overview` (3× useful, score=2.99435955)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Void Black-Hole TUI`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.434) - this node is a cross-community bridge._
+- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain.json`, `porcelain-light.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Task Tracker Extension`?**
+  _High betweenness centrality (0.440) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`, `porcelain.json`?**
-  _High betweenness centrality (0.336) - this node is a cross-community bridge._
+  _High betweenness centrality (0.334) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.264) - this node is a cross-community bridge._
-- **What connects `Return callable(obj) -> list[str] of violation messages.`, `Validate one manifest target; return parsed jsonl entries (for hygiene).`, `Guards for fixes that live OUTSIDE tracked config and can silently vanish.` to the rest of the system?**
-  _631 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.266) - this node is a cross-community bridge._
+- **What connects `RESOURCE_PREFIXES`, `RESOURCE_FILES`, `Return callable(obj) -> list[str] of violation messages.` to the rest of the system?**
+  _633 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**

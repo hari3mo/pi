@@ -535,8 +535,8 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783165252.7070363,
-    "ast_hash": "110124a91647bbb8f649c6f32e5c3ace",
+    "mtime": 1783165373.4919522,
+    "ast_hash": "f33013c058bc6fd284fa1d51c7762295",
     "semantic_hash": ""
   },
   "docs/delegation-contract.md": {
@@ -1067,6 +1067,11 @@
   "agents/peer.md": {
     "mtime": 1783165122.4592087,
     "ast_hash": "d6ce243bdf30c4b647a6dd7efe52d8c1",
+    "semantic_hash": ""
+  },
+  "extensions/lib/config-paths.ts": {
+    "mtime": 1783165530.6792846,
+    "ast_hash": "ea688f6d80318af4c4e8e3cfaf4b1fc3",
     "semantic_hash": ""
   }
 }

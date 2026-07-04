@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 194 files · ~155,943 words
+- 194 files · ~155,985 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b75af709`
+- Built from commit: `cee406d8`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -378,18 +378,18 @@ Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.994806798)
-- `~/.pi/agent config repo overview` (3× useful, score=2.994776694)
+- `Config Index (semantic audit map)` (3× useful, score=2.994778706)
+- `~/.pi/agent config repo overview` (3× useful, score=2.994748602)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Void Black-Hole TUI`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.447) - this node is a cross-community bridge._
+  _High betweenness centrality (0.434) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`, `porcelain.json`?**
-  _High betweenness centrality (0.352) - this node is a cross-community bridge._
+  _High betweenness centrality (0.336) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.285) - this node is a cross-community bridge._
+  _High betweenness centrality (0.264) - this node is a cross-community bridge._
 - **What connects `Return callable(obj) -> list[str] of violation messages.`, `Validate one manifest target; return parsed jsonl entries (for hygiene).`, `Guards for fixes that live OUTSIDE tracked config and can silently vanish.` to the rest of the system?**
   _631 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
