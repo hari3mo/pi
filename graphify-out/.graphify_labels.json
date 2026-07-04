@@ -66,12 +66,9 @@
   "64": "graphify-bridge.ts",
   "65": "copilot-plugin.test.js",
   "66": "Compact always-on ruleset (AGENTS.md)",
-  "67": "ponytail skill (lazy senior dev mode)",
   "68": "check-parse-verdict.mjs",
   "69": "porcelain.json",
-  "70": "porcelain-light.json",
   "71": "ponytail-statusline.sh script",
   "72": "baseline.js",
-  "73": "ponytail-statusline.ps1",
-  "74": "ponytail-debt skill — ponytail: comment debt ledger"
+  "73": "ponytail-statusline.ps1"
 }

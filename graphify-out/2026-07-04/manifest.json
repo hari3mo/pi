@@ -1035,9 +1035,9 @@
     "semantic_hash": "de707992d034da2dcc2badceac78bad6"
   },
   "extensions/self-audit.ts": {
-    "mtime": 1783160177.2328882,
-    "ast_hash": "b5a64e01de5c4d5f0bf555ffb5b9e107",
-    "semantic_hash": "b5a64e01de5c4d5f0bf555ffb5b9e107"
+    "mtime": 1783164724.007553,
+    "ast_hash": "8d2176834f8f4f66352630b5478d2f98",
+    "semantic_hash": ""
   },
   "scripts/audit-pipelines.py": {
     "mtime": 1783160474.7614512,

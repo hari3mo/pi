@@ -157,9 +157,14 @@ def _read_baseline() -> dict:
 
 
 def _write_baseline(baseline: dict) -> None:
+    # ponytail: atomic replace, no lock file. Concurrent session-start audits
+    # race on this file; each writes a full baseline and os.replace() is atomic
+    # within the dir, so the last writer wins without a torn/partial read.
     try:
         BASELINE.parent.mkdir(parents=True, exist_ok=True)
-        BASELINE.write_text(json.dumps(baseline, indent=2), encoding="utf-8")
+        tmp = BASELINE.with_name(f".{BASELINE.name}.{os.getpid()}.tmp")
+        tmp.write_text(json.dumps(baseline, indent=2), encoding="utf-8")
+        os.replace(tmp, BASELINE)
     except OSError:
         pass
 

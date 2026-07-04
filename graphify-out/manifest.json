@@ -475,9 +475,9 @@
     "semantic_hash": "92b72a7ec0bb018853771afa1b41310a"
   },
   "scripts/validate-config.py": {
-    "mtime": 1783159706.9726653,
-    "ast_hash": "7d97fabd88b5bc7dfc41c28652a57271",
-    "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
+    "mtime": 1783164768.863244,
+    "ast_hash": "51c7f9bfb4b2ed63e7feaa71a5593186",
+    "semantic_hash": ""
   },
   "settings.json": {
     "mtime": 1783164524.1403162,
