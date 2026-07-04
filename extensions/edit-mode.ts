@@ -4,13 +4,12 @@
  * Toggles between "edit" (writes apply automatically) and "read" (writes
  * ask for confirmation) modes for the built-in `write`/`edit` tools.
  *
- * - Ctrl+R or /mode to toggle
+ * - /mode to toggle
  * - /mode read | /mode edit to set explicitly
  * - --read flag to start in read mode
  */
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
-import { Key } from "@earendil-works/pi-tui";
 
 type Mode = "read" | "edit";
 
@@ -46,14 +45,6 @@ export default function (pi: ExtensionAPI): void {
 			ctx.ui.notify("Edit mode: writes apply automatically.");
 		}
 	}
-
-	// NOTE: do not use Ctrl+Tab here — terminals send the same byte (0x09) for
-	// Tab and Ctrl+Tab in legacy encoding, so the shortcut never fires unless the
-	// Kitty keyboard protocol is active. Ctrl+R is reliably sendable everywhere.
-	pi.registerShortcut(Key.ctrl("r"), {
-		description: "Toggle read/edit mode",
-		handler: async (ctx) => toggle(ctx),
-	});
 
 	pi.registerCommand("mode", {
 		description: "Toggle or show read/edit mode",
