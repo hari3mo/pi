@@ -28,19 +28,19 @@ Every session that changes config must update it.
 | Heuristics sanitize | `extensions/heuristics/sanitize.ts` | Save-pipeline text processing: sanitize, secret redaction, generality rewrite + lint (DESIGN.md §4–§5). |
 | Heuristics schema | `extensions/heuristics/schema.ts` | Shared types/constants and dedup/scoring primitives for the heuristic entry schema (DESIGN.md §1, §6, §7, §11). |
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
-| Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes qa-reviewer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
+| Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes reviewer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/scout.md`, `agents/solo-engineer.md`, `agents/verifier.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer, plus solo-engineer/fable-engineer/peer-engineer). `architect` is narrowed to three cases (design fanned to 2+ builders, `FAIL: design` bounce, blind fan-out with peer-engineer); `shipper` is folded into `builder` (file deleted) — the implementing builder ships after review passes. `verifier` (sonnet, read/run-only) is the cheap post-build spot-check tier — runs the acceptance path plus targeted reads and returns PASS/FAIL, never edits — distinct from the `qa-reviewer` deep-review gate. `fable-engineer` is demoted to opt-in: dispatched only with explicit user approval (requested or an approved escalation), since it is the only subagent that burns orchestrator-tier tokens. |
+| Agent role set | `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/reviewer.md`, `agents/scout.md`, `agents/solo-engineer.md`, `agents/verifier.md` | Seven-role roster dispatched per the AGENTS.md scale-first routing table. `solo-engineer` is the default workhorse (whole bounded tasks end-to-end; also design-only dispatches when 2+ implementers consume the design — there is no standing architect). `builder` handles fully-specified mechanical edits and ships after review passes. `scout` is read-only investigation; `verifier` (sonnet, read/run-only) runs the acceptance path and returns PASS/FAIL, only when something is runnable. `reviewer` (renamed from `qa-reviewer`) is the deep-reasoning gate for existing-behavior/high-risk changes. `peer-engineer` gives blind second opinions; `fable-engineer` is opt-in only (explicit user approval), the sole orchestrator-tier subagent. Scope ambiguity is resolved by interviewing the user (`scope-planner` deleted). |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
 | pi-tui scrollback fix | `patches/pi-tui-scrollback-fix.md`, `patches/pi-tui-scrollback-fix-harness.mjs`, `patches/pi-tui-scrollback-fix.harness.mjs` | Documents + regression-tests a manual patch to the installed `pi-tui` dist that stops scrollback-wiping full-redraws when content above the viewport changes; must be re-applied after pi package updates. |
-| Rework loop doc | `docs/rework-loop.md` | Defines the `qa-reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the bounded rework/retry mechanics for any QA-gated build (pipeline or solo); documents the automatic verdict normalization + 3-FAIL session budget enforced by `extensions/subagent/index.ts`. |
+| Rework loop doc | `docs/rework-loop.md` | Defines the `reviewer` verdict contract (PASS / FAIL:implementation / FAIL:design) and the bounded rework/retry mechanics for any reviewer-gated build (fan-out or solo); documents the automatic verdict normalization + 3-FAIL session budget enforced by `extensions/subagent/index.ts`. |
 | Delegation contract template | `docs/delegation-contract.md` | Canonical skeleton (read-first, bounded problem, return contract, verification, constraints) that every dispatched task is authored against; the hygiene/return footer is auto-appended, never restated. |
 | Autocommit snapshot infra | `.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit` | launchd-triggered git auto-snapshot of config changes (tool-driven and manual editor edits alike), gated by a pre-commit hook that runs the validator. |
 | Global settings | `settings.json` | Default provider/model/thinking level, enabled model list (feeds `model-cycle.ts`), quiet-startup flag, installed packages. |
 | Keybindings | `keybindings.json` | User keybinding overrides (currently: `app.thinking.cycle` → Option+Tab to free Shift+Tab for model-cycle; session rename → Option+R). |
-| Global agent doctrine | `AGENTS.md` | The Delegation Gate, model-tier table, role split, routing rules, lead context-hygiene rules, and config-maintenance checklist governing how this harness is used across sessions. |
+| Global agent doctrine | `AGENTS.md` | The Delegation Gate, write-gate pre-flight, intent interview, scale-first routing table, seven-role roster, fable budget invariants, rework loop, and config-maintenance checklist governing how this harness is used across sessions. |
 
 ## Changelog
 
@@ -49,6 +49,23 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Doctrine rewrite: lean scale-first AGENTS.md; roster cut to seven roles; `qa-reviewer` → `reviewer`.**
+`AGENTS.md` rewritten from scratch (~416 → ~140 lines): philosophy (fable touches each task
+exactly twice — dispatch and judge), Delegation Gate, write-gate pre-flight, intent
+interview (user interview replaces scope-planner), a scale-first routing table
+(micro → one builder; standard single-session chain as THE DEFAULT; large → interview +
+optional design-only solo-engineer + fan-out + reviewer gate), seven-role table, fable
+budget invariants (≤1 read ≤50 lines, front-loaded spec quality, batched dispatch, blind
+fan-out), escalation, dispatch contract, rework loop, defaults, and enforced-in-code
+one-liners. `agents/scope-planner.md` and `agents/architect.md` deleted (architect →
+design-only `solo-engineer` dispatch; scope → user interview); `agents/qa-reviewer.md`
+renamed to `agents/reviewer.md` (same charter, verdict pinned to PASS / FAIL:
+implementation / FAIL: design); `finalizeQaOutput` in `extensions/subagent/index.ts` now
+keys on agent name `reviewer`. Files: `AGENTS.md`, `agents/*` (7 remain), `extensions/subagent/index.ts`,
+`docs/rework-loop.md`, `docs/config-index.md`, `README.md`, `prompts/{build,design,feature}.md`.
+Why: leaner doctrine — the single chain is the default that gets escalated up, not a
+pipeline pruned down.
 
 **Fable token economy: `verifier` role added; `fable-engineer` demoted to opt-in.**
 Added `agents/verifier.md` (sonnet, read/run-only): the cheap post-build spot-check tier
