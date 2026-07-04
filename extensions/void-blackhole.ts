@@ -1170,27 +1170,42 @@ export default function (pi: ExtensionAPI) {
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
 		if (ctx.mode !== "tui") return;
-		ctx.ui.setHeader((_tui, theme) => ({
-			render(width: number): string[] {
-				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
-				const markW = Math.max(...WORDMARK.map((l) => l.length));
-				if (width < markW + 1) {
-					// Too narrow for the wordmark — no fallback text, just the version.
-					return ["", subtitle, ""];
-				}
-				return [
-					"",
-					...WORDMARK.map((l) => BLACK + l + RESET),
-					subtitle,
-					"",
-				];
-			},
+		const setVoidHeader = () =>
+			ctx.ui.setHeader((_tui, theme) => ({
+				render(width: number): string[] {
+					const subtitle = theme.fg("dim", `   pi v${VERSION}`);
+					const markW = Math.max(...WORDMARK.map((l) => l.length));
+					if (width < markW + 1) {
+						// Too narrow for the wordmark — no fallback text, just the version.
+						return ["", subtitle, ""];
+					}
+					return [
+						"",
+						...WORDMARK.map((l) => BLACK + l + RESET),
+						subtitle,
+						"",
+					];
+				},
+				invalidate() {},
+			}));
+		if (event.reason !== "startup") {
+			setVoidHeader();
+			return;
+		}
+		// While the splash owns the screen, the header must take no rows:
+		// the TUI stacks header + art + footer and pins the viewport to the
+		// bottom, so a tall header (which duplicates the wordmark already
+		// stamped inside the art) pushes the art's top off-screen. The full
+		// wordmark header is installed only once the splash closes.
+		ctx.ui.setHeader(() => ({
+			render: (): string[] => [],
 			invalidate() {},
 		}));
-		if (event.reason !== "startup") return;
-		void ctx.ui.custom((tui, _theme, _kb, done) => {
-			return new BlackHoleComponent(tui, () => done(undefined));
-		});
+		void ctx.ui
+			.custom((tui, _theme, _kb, done) => {
+				return new BlackHoleComponent(tui, () => done(undefined));
+			})
+			.then(setVoidHeader);
 	});
 
 	pi.registerCommand("void", {
