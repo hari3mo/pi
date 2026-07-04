@@ -494,55 +494,10 @@
     "ast_hash": "820dae6e075b3d8ab9d8452b57a06971",
     "semantic_hash": "820dae6e075b3d8ab9d8452b57a06971"
   },
-  ".pi/agent/skills/graphify/SKILL.md": {
-    "mtime": 1783157525.5994043,
-    "ast_hash": "5bc28728a68fa52adb97f26b0ffa1324",
-    "semantic_hash": "5bc28728a68fa52adb97f26b0ffa1324"
-  },
-  ".pi/agent/skills/graphify/references/add-watch.md": {
-    "mtime": 1782962460.2289946,
-    "ast_hash": "d59d027fe449f06aa03905a01184e779",
-    "semantic_hash": "d59d027fe449f06aa03905a01184e779"
-  },
-  ".pi/agent/skills/graphify/references/exports.md": {
-    "mtime": 1782962460.229538,
-    "ast_hash": "9da2a2152e60a22f07f05fed5158f287",
-    "semantic_hash": "9da2a2152e60a22f07f05fed5158f287"
-  },
-  ".pi/agent/skills/graphify/references/extraction-spec.md": {
-    "mtime": 1782962460.2301128,
-    "ast_hash": "bf895ec4d4e40f5f66f7d31c2a9bd4a7",
-    "semantic_hash": "bf895ec4d4e40f5f66f7d31c2a9bd4a7"
-  },
-  ".pi/agent/skills/graphify/references/github-and-merge.md": {
-    "mtime": 1782962460.2306473,
-    "ast_hash": "cde13df085e4c492aeb7ba298a996d0d",
-    "semantic_hash": "cde13df085e4c492aeb7ba298a996d0d"
-  },
-  ".pi/agent/skills/graphify/references/hooks.md": {
-    "mtime": 1782962460.2310398,
-    "ast_hash": "3f545db6ce646650bb9de588f5512a27",
-    "semantic_hash": "3f545db6ce646650bb9de588f5512a27"
-  },
-  ".pi/agent/skills/graphify/references/query.md": {
-    "mtime": 1782962460.2318203,
-    "ast_hash": "9e5aadc2c57ab561bc56600fcfa70735",
-    "semantic_hash": "9e5aadc2c57ab561bc56600fcfa70735"
-  },
-  ".pi/agent/skills/graphify/references/transcribe.md": {
-    "mtime": 1782962460.2321875,
-    "ast_hash": "67b6a5fa6c0974e18f60db9f8932fbd8",
-    "semantic_hash": "67b6a5fa6c0974e18f60db9f8932fbd8"
-  },
-  ".pi/agent/skills/graphify/references/update.md": {
-    "mtime": 1782962460.232764,
-    "ast_hash": "c698309979460d0f02ba616417844399",
-    "semantic_hash": "c698309979460d0f02ba616417844399"
-  },
   "AGENTS.md": {
-    "mtime": 1783155729.6437652,
-    "ast_hash": "e60acafdc57d6efc82a0090aa573c368",
-    "semantic_hash": "e60acafdc57d6efc82a0090aa573c368"
+    "mtime": 1783159742.172775,
+    "ast_hash": "2012185b4617bbf3107aa7a754e46d6c",
+    "semantic_hash": ""
   },
   "README.md": {
     "mtime": 1783155869.6552408,
@@ -585,9 +540,9 @@
     "semantic_hash": "ae3247f3f7bcc9f605ec96a976666ec0"
   },
   "docs/config-index.md": {
-    "mtime": 1783159346.0856588,
-    "ast_hash": "ad883a5470fe1e10dcbd8af8913e9baf",
-    "semantic_hash": "ad883a5470fe1e10dcbd8af8913e9baf"
+    "mtime": 1783159742.1730037,
+    "ast_hash": "d7bdd069f9e6b379031f10ebd4e9e6c7",
+    "semantic_hash": ""
   },
   "docs/delegation-contract.md": {
     "mtime": 1783153148.9725547,
