@@ -23,6 +23,7 @@ Every session that changes config must update it.
 | Focus chime | `extensions/focus-chime.ts` | macOS-only notification (osascript) when an agent turn runs longer than 25s; `/chime` toggles it. |
 | Minimal UI | `extensions/minimal-ui.ts` | Companion to the "porcelain" theme: quiet one-line footer + grayscale breathing working-indicator; `/minimal-ui` toggles. |
 | Model awareness | `extensions/model-awareness.ts` | Keeps the LLM's system prompt aware of the live active model so the Delegation Gate model checks stay accurate across mid-session switches. |
+| Model-aware lead profiles | `extensions/lead-config.ts`, `config/lead-profiles.json`, `schema/lead-profiles.schema.json`, `schema/lead-config-stats.schema.json`, `scripts/check-lead-config.mjs` | Mechanizes the AGENTS.md Delegation Gate per-model: `before_agent_start` reads the active model id (`ctx.model.id`), first-matches `config/lead-profiles.json` (fable = confirm-only, no duplication; opus-lead = editing-capable lead that may implement at Micro/Standard scale and must orchestrate at Large; direct = fallback for any other model), and appends that profile's doctrine to the system prompt under an auto-detected header. Unknown/garbage id or any error injects nothing (fail open; static AGENTS.md stands); profiles cached by mtime; applies to `PI_SUBAGENT` children. Does NOT change enforcement (`read-only-default.ts`'s fable edit-block). Self-improving: per-session `{models, profiles, fallbacks, fallbackModels}` appended to `graphify-out/.lead_config_stats.json` (atomic temp+rename, ~50 records); `audit-pipelines.py:check_lead_profile_coverage()` WARNs when a model id resolves to the fallback profile across ≥5 sessions (roster drift). |
 | Model cycle | `extensions/model-cycle.ts` | Shift+Tab cycles a fixed pinned-model list (sonnet-5 → opus-4-8 → fable-5 → gemini-3.5-flash → gpt-5.5); frees Shift+Tab by rebinding `app.thinking.cycle` to Option+Tab. |
 | pi-vcs breadcrumb | `extensions/pi-vcs-breadcrumb.ts` | Logs each pi tool-use touching a file to a breadcrumb log, folded into `.pi-vcs` autocommit messages. |
 | Write-gate default | `extensions/read-only-default.ts` | New sessions start in "confirm" mode; `/write`, `/confirm`, `/read-only` (or Ctrl+\`) switch write-access modes; hard-blocks `edit`/`write` tool calls whenever the lead model is fable, in all gate modes, exempting spawned children via `PI_SUBAGENT=1`. |
@@ -58,6 +59,41 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Model-aware lead profiles: the Delegation Gate is now mechanized per active model.**
+Added `extensions/lead-config.ts`: on `before_agent_start` (every prompt — the model can
+switch mid-session via shift+tab) it reads the active model id (`ctx.model.id`, the field
+`read-only-default.ts` and `model-awareness.ts` already use), first-matches it against
+`config/lead-profiles.json`, and appends the matched profile's doctrine block to the
+system prompt under `## Lead profile (auto-detected: <model> → <profile>)`. Three profiles
+(data, not code): `fable` (match `fable`) — a one-line confirmation only, since AGENTS.md IS
+the fable doctrine and duplication drifts; `opus-lead` (match `opus`) — the port, a compact
+≤1717-byte block letting an Opus lead implement directly at Micro/Standard scale and
+requiring orchestration at Large (the complexity test verbatim), with the SAME roles/tiers,
+dispatch contract, graph-first mandate, reviewer-final rule, verdict vocabulary, and 3-FAIL
+rework budget as AGENTS.md; `direct` (fallback) — any other model works directly. First-match
+is regex with substring fallback; non-fallback profiles tried first, then the `fallback`
+catch-all. Unusable id (empty / no word char) or any error injects NOTHING (fail open;
+static AGENTS.md stands); profiles cached by mtime; applies to `PI_SUBAGENT` children (a
+child may be an opus/sonnet lead of its own sub-work). Enforcement (`read-only-default.ts`'s
+fable edit-block) is untouched. Self-improving closure: per-session
+`{models, profiles, fallbacks, fallbackModels}` are appended to
+`graphify-out/.lead_config_stats.json` (atomic temp+rename, ~50-record ring — the
+graph-first stats pattern) at `agent_end`; new `audit-pipelines.py:check_lead_profile_coverage()`
+(fast local read) WARNs when a model id resolves to the fallback profile across ≥5 recorded
+sessions (roster drift — add a profile or extend a match pattern), silent when absent.
+Schema-registered both new config files (`config/lead-profiles.json` required,
+`graphify-out/.lead_config_stats.json` optional) + `config/` in `layout.known`. Runnable
+check `scripts/check-lead-config.mjs` jiti-imports the real pure functions and asserts the
+full matching contract incl. mid-session swap and malformed-JSON fail-open. Verified:
+20/20 extension smoke, validate-config clean, audit-pipelines clean, check-lead-config green,
+all four existing check-*.mjs green. Files: `extensions/lead-config.ts` (new),
+`config/lead-profiles.json` (new), `schema/lead-profiles.schema.json` (new),
+`schema/lead-config-stats.schema.json` (new), `scripts/check-lead-config.mjs` (new),
+`schema/manifest.json`, `scripts/audit-pipelines.py`, `AGENTS.md`, `docs/config-index.md`.
+Why: the Delegation Gate branched on the lead model as prose the agent had to remember
+across mid-session switches; now the correct lead doctrine is injected automatically, and
+the Opus-lead pipeline port lives as versioned, schema-checked data.
 
 **Knowledge graph wired natively into the agent loop: graph-first + impact-trace.**
 Two new extensions close the loop between the graphify graph and the agent's own
