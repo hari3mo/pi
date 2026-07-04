@@ -74,14 +74,24 @@
   },
   "nodes": [
     {
+      "label": "impact-trace.ts",
+      "file_type": "code",
+      "source_file": "extensions/impact-trace.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_impact_trace",
+      "community": 77,
+      "norm_label": "impact-trace.ts"
+    },
+    {
       "label": "graph-first.ts",
       "file_type": "code",
       "source_file": "extensions/graph-first.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_graph_first",
       "community": 75,
-      "norm_label": "graph-first.ts"
+      "norm_label": "graph-first.ts",
+      "id": "extensions_graph_first"
     },
     {
       "label": "GrepClassification",
@@ -89,9 +99,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L45",
       "_origin": "ast",
-      "id": "extensions_graph_first_grepclassification",
       "community": 75,
-      "norm_label": "grepclassification"
+      "norm_label": "grepclassification",
+      "id": "extensions_graph_first_grepclassification"
     },
     {
       "label": "classifyStructureGrep()",
@@ -99,9 +109,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "extensions_graph_first_classifystructuregrep",
       "community": 75,
-      "norm_label": "classifystructuregrep()"
+      "norm_label": "classifystructuregrep()",
+      "id": "extensions_graph_first_classifystructuregrep"
     },
     {
       "label": "GraphFirstAction",
@@ -109,9 +119,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L181",
       "_origin": "ast",
-      "id": "extensions_graph_first_graphfirstaction",
       "community": 75,
-      "norm_label": "graphfirstaction"
+      "norm_label": "graphfirstaction",
+      "id": "extensions_graph_first_graphfirstaction"
     },
     {
       "label": "GraphFirstState",
@@ -119,9 +129,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L182",
       "_origin": "ast",
-      "id": "extensions_graph_first_graphfirststate",
       "community": 75,
-      "norm_label": "graphfirststate"
+      "norm_label": "graphfirststate",
+      "id": "extensions_graph_first_graphfirststate"
     },
     {
       "label": "decideAction()",
@@ -129,9 +139,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L192",
       "_origin": "ast",
-      "id": "extensions_graph_first_decideaction",
       "community": 75,
-      "norm_label": "decideaction()"
+      "norm_label": "decideaction()",
+      "id": "extensions_graph_first_decideaction"
     },
     {
       "label": "StatsRecord",
@@ -139,9 +149,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L206",
       "_origin": "ast",
-      "id": "extensions_graph_first_statsrecord",
       "community": 75,
-      "norm_label": "statsrecord"
+      "norm_label": "statsrecord",
+      "id": "extensions_graph_first_statsrecord"
     },
     {
       "label": "persistStats()",
@@ -149,9 +159,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L220",
       "_origin": "ast",
-      "id": "extensions_graph_first_persiststats",
       "community": 75,
-      "norm_label": "persiststats()"
+      "norm_label": "persiststats()",
+      "id": "extensions_graph_first_persiststats"
     },
     {
       "label": "index.ts",
@@ -12930,9 +12940,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_classifystructuregrep",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_classifystructuregrep"
     },
     {
       "relation": "contains",
@@ -12940,9 +12950,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L192",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_decideaction",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_decideaction"
     },
     {
       "relation": "contains",
@@ -12950,9 +12960,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L181",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_graphfirstaction",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_graphfirstaction"
     },
     {
       "relation": "contains",
@@ -12960,9 +12970,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L182",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_graphfirststate",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_graphfirststate"
     },
     {
       "relation": "contains",
@@ -12970,9 +12980,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L45",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_grepclassification",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_grepclassification"
     },
     {
       "relation": "contains",
@@ -12980,9 +12990,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L220",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_persiststats",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_persiststats"
     },
     {
       "relation": "contains",
@@ -12990,9 +13000,9 @@
       "source_file": "extensions/graph-first.ts",
       "source_location": "L206",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_graph_first",
-      "target": "extensions_graph_first_statsrecord",
-      "confidence_score": 1.0
+      "target": "extensions_graph_first_statsrecord"
     },
     {
       "relation": "references",
@@ -30517,5 +30527,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "978b936d69bde68a535e968b2454fda7f5accc44"
+  "built_at_commit": "638b0450f53b8836ca56b312eb471bf3d84a95b8"
 }

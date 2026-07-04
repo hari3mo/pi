@@ -35,6 +35,12 @@
       "required": false,
       "heuristicsScope": "project",
       "maxEntries": 100
+    },
+    {
+      "path": "graphify-out/.graph_first_stats.json",
+      "schema": "schema/graph-first-stats.schema.json",
+      "format": "json",
+      "required": false
     }
   ],
   "layout": {

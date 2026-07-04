@@ -1093,5 +1093,10 @@
     "mtime": 1783166371.9893293,
     "ast_hash": "a9aab481098f768253e09efa3646a728",
     "semantic_hash": ""
+  },
+  "extensions/impact-trace.ts": {
+    "mtime": 1783166395.259812,
+    "ast_hash": "e85b79c516888d14a34ca70b64ecbb5f",
+    "semantic_hash": ""
   }
 }
