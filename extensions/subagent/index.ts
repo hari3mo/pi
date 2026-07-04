@@ -22,11 +22,13 @@ import { StringEnum } from "@earendil-works/pi-ai";
 import {
 	CONFIG_DIR_NAME,
 	type ExtensionAPI,
+	type ExtensionContext,
 	getAgentDir,
 	getMarkdownTheme,
+	type Theme,
 	withFileMutationQueue,
 } from "@earendil-works/pi-coding-agent";
-import { Container, Key, Markdown, matchesKey, Spacer, Text, truncateToWidth } from "@earendil-works/pi-tui";
+import { Container, Key, Markdown, matchesKey, Spacer, Text, truncateToWidth, type TUI } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
 import { type AgentConfig, type AgentScope, discoverAgents } from "./agents.ts";
 import { fmtDuration as formatDuration, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "../lib/format.ts";
