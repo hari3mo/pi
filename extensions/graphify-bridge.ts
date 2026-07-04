@@ -22,48 +22,29 @@
 
 import { execFile } from "node:child_process";
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { join } from "node:path";
 import { StringEnum } from "@earendil-works/pi-ai";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
+import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "./lib/graph-lookup.ts";
 
-const OUT = "graphify-out";
 const TOOL_OUTPUT_CAP = 12_000;
 const QUERY_TIMEOUT_MS = 60_000;
 const UPDATE_TIMEOUT_MS = 300_000;
 
 /**
  * Resolve the directory whose graphify-out/graph.json to query.
- * Primary: walk up from cwd to the nearest graphify-out/graph.json — per-project
- * graphs must still win. Fallback: the pi agent config dir (getAgentDir(), i.e.
- * ~/.pi/agent) so the harness can always reach its OWN graph even from a cwd
- * outside it (e.g. $HOME). getAgentDir() is used over homedir()+".pi/agent"
- * because it is the repo's canonical agent-dir helper and honors PI_AGENT_DIR.
+ * Primary: the shared walk-up (lib/graph-lookup.ts) — per-project graphs win.
+ * Fallback: the pi agent config dir (getAgentDir(), honors PI_AGENT_DIR) so the
+ * harness reaches its OWN graph from a cwd outside it (e.g. $HOME). The fallback
+ * lives here, not in the lib, because that lib is deliberately pi-import-free.
  */
 function findGraphRoot(cwd: string): string | undefined {
-	let dir = cwd;
-	for (;;) {
-		if (existsSync(join(dir, OUT, "graph.json"))) return dir;
-		const parent = dirname(dir);
-		if (parent === dir) break;
-		dir = parent;
-	}
+	const found = findGraphRootPure(cwd);
+	if (found) return found;
 	const agentDir = getAgentDir();
-	if (existsSync(join(agentDir, OUT, "graph.json"))) return agentDir;
-	return undefined;
-}
-
-/** Pinned interpreter written by the graphify skill/CLI; safest entry point (uv/pipx safe). */
-function graphifyPython(root: string): string {
-	try {
-		const p = readFileSync(join(root, OUT, ".graphify_python"), "utf8").trim();
-		// Allowlist path characters (mirrors graphify's own hook probe).
-		if (p && !/[^a-zA-Z0-9/_.@:\\-]/.test(p) && existsSync(p)) return p;
-	} catch {
-		// fall through
-	}
-	return "python3";
+	return existsSync(join(agentDir, OUT, "graph.json")) ? agentDir : undefined;
 }
 
 function runGraphify(root: string, args: string[], timeoutMs: number): Promise<string> {
