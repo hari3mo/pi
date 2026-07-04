@@ -548,7 +548,13 @@ async function runSingleAgent(
 
 		currentResult.exitCode = exitCode;
 		currentResult.endTime = Date.now();
-		if (wasAborted) throw new Error("Subagent was aborted");
+		// On interrupt, return the partial transcript instead of throwing it away —
+		// isFailedResult keys off stopReason, so the lead sees everything the subagent
+		// did (files written/committed, reasoning) before the kill and can resume.
+		if (wasAborted) {
+			currentResult.stopReason = "aborted";
+			if (!currentResult.errorMessage) currentResult.errorMessage = "Interrupted by user (partial work preserved below)";
+		}
 		return currentResult;
 	} finally {
 		if (tickTimer) clearInterval(tickTimer);
