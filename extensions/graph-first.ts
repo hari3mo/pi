@@ -1,0 +1,339 @@
+/**
+ * Graph-First Extension
+ *
+ * Structure-shaped code searches belong in the knowledge graph, not grep.
+ * When graphify-out/graph.json exists, this watches the `bash` tool for
+ * grep/rg commands that are hunting a symbol definition/reference/import and
+ * steers them to the `graph` tool with a per-session escalation ladder:
+ *
+ *   FIRST structure-shaped grep  → allow, inject a one-line nudge naming the
+ *                                  equivalent `graph explain '<id>'` call.
+ *   SECOND and later             → BLOCK, with a reason that tells the model to
+ *                                  re-run the IDENTICAL command to proceed if
+ *                                  the graph genuinely could not answer.
+ *   identical retry of a block   → always allowed (recorded as a bypass).
+ *
+ * Conservative by design: content greps (log strings, TODOs, data values) pass
+ * untouched — a false positive (blocking a real content search) is worse than a
+ * miss. Only `bash` grep/rg is ever touched; nothing else is blocked.
+ *
+ * Self-improving closure: per-session {nudges, blocks, bypasses} are appended to
+ * graphify-out/.graph_first_stats.json (atomic, ~50 records). At agent_end, if
+ * bypasses ≥ blocks (>0) the graph is consistently failing to answer, so one
+ * nudge suggests a `/graphify --update` re-cache. scripts/audit-pipelines.py
+ * WARNs when the recorded bypass ratio stays high across sessions.
+ *
+ * Inert and silent when graphify-out/ is absent; applies to subagents too;
+ * everything is wrapped fail-open so it can never wedge a session.
+ */
+
+import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
+
+const STATS_FILE = ".graph_first_stats.json";
+const MAX_RECORDS = 50;
+
+/** def/class/… — a structure keyword ANCHORED at the start of the pattern. */
+const STRUCTURE_KEYWORD_RE = /^(def|class|function|interface|type|const|import|from|require)\b/;
+
+// ---------------------------------------------------------------------------
+// Pure classifier + escalation decision (unit-tested: scripts/check-graph-first.mjs)
+// ---------------------------------------------------------------------------
+
+export interface GrepClassification {
+	flagged: boolean;
+	identifier: string;
+}
+
+/**
+ * Is `command` a grep/rg search hunting a code symbol (vs. content)? Returns
+ * the best-guess identifier for the nudge. Self-contained so the check can
+ * import it in isolation.
+ */
+export function classifyStructureGrep(command: string): GrepClassification {
+	const none = { flagged: false, identifier: "" };
+	if (!command) return none;
+
+	// Quote-aware tokenizer (handles '...', "...", and backslash escapes).
+	const tokenize = (cmd: string): string[] => {
+		const out: string[] = [];
+		let cur = "";
+		let inS = false;
+		let inD = false;
+		let has = false;
+		for (let i = 0; i < cmd.length; i++) {
+			const c = cmd[i];
+			if (inS) {
+				if (c === "'") inS = false;
+				else cur += c;
+				continue;
+			}
+			if (inD) {
+				if (c === '"') inD = false;
+				else if (c === "\\" && i + 1 < cmd.length) cur += cmd[++i];
+				else cur += c;
+				continue;
+			}
+			if (c === "'") {
+				inS = true;
+				has = true;
+				continue;
+			}
+			if (c === '"') {
+				inD = true;
+				has = true;
+				continue;
+			}
+			if (c === "\\" && i + 1 < cmd.length) {
+				cur += cmd[++i];
+				has = true;
+				continue;
+			}
+			if (/\s/.test(c)) {
+				if (has) {
+					out.push(cur);
+					cur = "";
+					has = false;
+				}
+				continue;
+			}
+			cur += c;
+			has = true;
+		}
+		if (has) out.push(cur);
+		return out;
+	};
+
+	const tokens = tokenize(command);
+	// Find the grep/rg command token (basename), tolerating a leading pipeline.
+	const isGrep = (t: string): boolean => /^(.*\/)?(grep|egrep|fgrep|rg)$/.test(t);
+	const gi = tokens.findIndex(isGrep);
+	if (gi === -1) return none;
+
+	// Flags that consume the NEXT token as a value (so it is not the pattern).
+	const VALUE_FLAGS = new Set([
+		"-e", "--regexp", "-f", "--file", "-m", "--max-count", "-A", "-B", "-C",
+		"--after-context", "--before-context", "--context", "--color", "--colour",
+		"-g", "--glob", "--iglob", "-t", "--type", "-T", "--type-not", "--replace",
+		"--pre", "--sort", "--sortr", "--exclude", "--exclude-dir", "--include-dir",
+		"-d", "--directories", "-D", "--devices", "--binary-files",
+	]);
+
+	let repoWide = false;
+	let pattern: string | undefined;
+	for (let i = gi + 1; i < tokens.length; i++) {
+		const tok = tokens[i];
+		if (tok.startsWith("-") && tok !== "-") {
+			if (tok === "-r" || tok === "-R" || tok === "--recursive") {
+				repoWide = true;
+				continue;
+			}
+			if (tok.startsWith("--include")) {
+				repoWide = true; // covers --include and --include=GLOB
+				continue;
+			}
+			if (tok === "-e" || tok === "--regexp") {
+				if (pattern === undefined && i + 1 < tokens.length) pattern = tokens[i + 1];
+				i++;
+				continue;
+			}
+			if (tok.startsWith("--regexp=")) {
+				if (pattern === undefined) pattern = tok.slice("--regexp=".length);
+				continue;
+			}
+			if (VALUE_FLAGS.has(tok)) {
+				i++; // skip the flag's value token
+				continue;
+			}
+			// A short-flag cluster like -rn / -Rl carries recursion.
+			if (/^-[A-Za-z]+$/.test(tok) && /[rR]/.test(tok)) repoWide = true;
+			continue; // boolean / unknown flag
+		}
+		if (pattern === undefined) {
+			pattern = tok; // first positional is the search pattern; rest are paths
+		}
+	}
+
+	if (pattern === undefined) return none;
+
+	// Structure keyword anchored at the start of the pattern (after regex ^).
+	const normalized = pattern.replace(/^[\s^]+/, "");
+	const kw = STRUCTURE_KEYWORD_RE.exec(normalized);
+	if (kw) {
+		const after = normalized.slice(kw[0].length).replace(/^[\s^\\b]+/, "");
+		const id = (/[A-Za-z_][A-Za-z0-9_]*/.exec(after)?.[0] ?? normalized).slice(0, 48);
+		return { flagged: true, identifier: id };
+	}
+
+	// A bare identifier searched repo-wide. Exclude all-caps content markers
+	// (TODO/FIXME/ERROR/WARN…) — a symbol has a lowercase letter or an underscore.
+	const isSymbol =
+		/^[A-Za-z_][A-Za-z0-9_]*$/.test(pattern) &&
+		pattern.length >= 2 &&
+		(/[a-z]/.test(pattern) || pattern.includes("_"));
+	if (isSymbol && repoWide) return { flagged: true, identifier: pattern.slice(0, 48) };
+
+	return none;
+}
+
+export type GraphFirstAction = "allow" | "nudge" | "block" | "bypass";
+export interface GraphFirstState {
+	count: number;
+	blocked: Set<string>;
+}
+
+/**
+ * Escalation ladder over session state. First flagged grep nudges; later ones
+ * block; an identical retry of a blocked command always bypasses. Mutates
+ * `state`. Pure (no I/O) so the ladder is unit-testable.
+ */
+export function decideAction(state: GraphFirstState, command: string, flagged: boolean): GraphFirstAction {
+	if (!flagged) return "allow";
+	const norm = command.trim();
+	if (state.blocked.has(norm)) return "bypass";
+	state.count++;
+	if (state.count === 1) return "nudge";
+	state.blocked.add(norm);
+	return "block";
+}
+
+// ---------------------------------------------------------------------------
+// Session wiring
+// ---------------------------------------------------------------------------
+
+interface StatsRecord {
+	id: string;
+	ts: number;
+	nudges: number;
+	blocks: number;
+	bypasses: number;
+}
+
+/**
+ * ponytail: atomic replace, last-writer-wins (mirrors audit-pipelines.py
+ * _write_baseline). Parallel subagents may race this file; a lost record is
+ * acceptable for advisory stats — upgrade to a lock only if the drift audit
+ * proves lossy.
+ */
+function persistStats(root: string, record: StatsRecord): void {
+	try {
+		const path = join(root, OUT, STATS_FILE);
+		let arr: StatsRecord[] = [];
+		try {
+			const parsed = JSON.parse(readFileSync(path, "utf8"));
+			if (Array.isArray(parsed)) arr = parsed;
+		} catch {
+			// absent/corrupt → start fresh
+		}
+		const i = arr.findIndex((r) => r && r.id === record.id);
+		if (i >= 0) arr[i] = record;
+		else arr.push(record);
+		if (arr.length > MAX_RECORDS) arr = arr.slice(arr.length - MAX_RECORDS);
+		const tmp = `${path}.${process.pid}.tmp`;
+		writeFileSync(tmp, JSON.stringify(arr, null, 2));
+		renameSync(tmp, path);
+	} catch {
+		// fail open: stats are never worth wedging a session
+	}
+}
+
+export default function (pi: ExtensionAPI) {
+	let root: string | undefined;
+	let sessionId = "";
+	const state: GraphFirstState = { count: 0, blocked: new Set() };
+	const counts = { nudges: 0, blocks: 0, bypasses: 0 };
+	let endNudgeSent = false;
+	let lastPersistedTotal = -1;
+
+	const active = (): string | undefined =>
+		root && existsSync(join(root, OUT, "graph.json")) ? root : undefined;
+
+	pi.on("session_start", async (_event, ctx) => {
+		root = findGraphRoot(ctx.cwd);
+		sessionId = `${new Date().toISOString()}-${process.pid}`;
+		state.count = 0;
+		state.blocked.clear();
+		counts.nudges = 0;
+		counts.blocks = 0;
+		counts.bypasses = 0;
+		endNudgeSent = false;
+		lastPersistedTotal = -1;
+	});
+
+	pi.on("tool_call", async (event) => {
+		try {
+			if (event.toolName !== "bash") return;
+			if (!active()) return;
+			const command = (event.input as { command?: string }).command ?? "";
+			const { flagged, identifier } = classifyStructureGrep(command);
+			const action = decideAction(state, command, flagged);
+			switch (action) {
+				case "nudge":
+					counts.nudges++;
+					pi.sendMessage(
+						{
+							customType: "graph-first-nudge",
+							display: true,
+							content:
+								`[graph-first] Structure search — the knowledge graph is ~30x cheaper than grep. ` +
+								`Try the \`graph\` tool: explain '${identifier}' (or query). grep allowed this once.`,
+						},
+						{ deliverAs: "nextTurn" },
+					);
+					return;
+				case "block":
+					counts.blocks++;
+					return {
+						block: true,
+						reason:
+							`[graph-first] Structure searches should hit the knowledge graph first. ` +
+							`Use the \`graph\` tool: explain '${identifier}' (or query). ` +
+							`If the graph genuinely cannot answer, re-run the IDENTICAL command to proceed.`,
+					};
+				case "bypass":
+					counts.bypasses++;
+					return;
+				default:
+					return;
+			}
+		} catch {
+			// fail open: never let the detector crash a bash call
+		}
+	});
+
+	pi.on("agent_end", async () => {
+		try {
+			const r = root; // stats persist even if graph.json was removed mid-session
+			if (!r) return;
+			const total = counts.nudges + counts.blocks + counts.bypasses;
+			if (total > 0 && total !== lastPersistedTotal) {
+				persistStats(r, {
+					id: sessionId,
+					ts: Date.now(),
+					nudges: counts.nudges,
+					blocks: counts.blocks,
+					bypasses: counts.bypasses,
+				});
+				lastPersistedTotal = total;
+			}
+			if (!endNudgeSent && counts.blocks > 0 && counts.bypasses >= counts.blocks) {
+				endNudgeSent = true;
+				pi.sendMessage(
+					{
+						customType: "graph-first-drift",
+						display: true,
+						content:
+							`[graph-first] The knowledge graph repeatedly could not answer structure searches this ` +
+							`session (${counts.bypasses} bypass(es) ≥ ${counts.blocks} block(s)). Re-cache with ` +
+							`\`/graphify --update\`, or capture what it is missing with learn_heuristic.`,
+					},
+					{ deliverAs: "nextTurn" },
+				);
+			}
+		} catch {
+			// never block a turn
+		}
+	});
+}
