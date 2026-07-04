@@ -571,7 +571,7 @@ async function showActiveSubagentPanel(ctx: { mode: string; hasUI: boolean; ui: 
 
 	let removeListener: (() => void) | undefined;
 	try {
-		await ctx.ui.custom<void>(
+		await ctx.ui.custom(
 			(tui: { requestRender(): void }, theme: any, _keybindings: unknown, done: () => void) => {
 				let selected = 0;
 				let detail = false;
