@@ -10,8 +10,8 @@
  *   - 'anthropic/claude-fable-5'        → fable
  *   - 'claude-opus-4-8'                 → opus-lead
  *   - 'anthropic/claude-opus-4-8:xhigh' → opus-lead
- *   - 'claude-sonnet-5'                 → direct   (fallback)
- *   - 'openai/gpt-5.5'                  → direct   (fallback)
+ *   - 'claude-sonnet-5'                 → direct   (universal catch-all match)
+ *   - 'openai/gpt-5.5'                  → direct   (universal catch-all match)
  *   - empty / whitespace / no-word-char garbage id → no injection (fail open)
  *   - mid-session switch fable→opus swaps the injected block
  *   - malformed profiles JSON → no profiles → no injection (fail open)
@@ -42,7 +42,7 @@ const check = (label, cond) => {
 // --- the shipped profiles ---
 const profiles = parseProfiles(readFileSync(join(AGENT_DIR, "config", "lead-profiles.json"), "utf8"));
 check("shipped config parses to ≥3 profiles", Array.isArray(profiles) && profiles.length >= 3);
-check("shipped config has a fallback profile", profiles.some((p) => p.fallback));
+check("shipped config has a universal catch-all profile", profiles.some((p) => p.match === ".*"));
 
 const nameFor = (id) => matchProfile(profiles, id)?.name ?? null;
 
