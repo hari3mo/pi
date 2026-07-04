@@ -75,21 +75,37 @@ def get_validator(schema_path: Path):
 
 def check_target(target: dict) -> list[dict]:
     """Validate one manifest target; return parsed jsonl entries (for hygiene)."""
-    path = resolve(target["path"])
+    # Guard every required key: a malformed manifest entry must produce a
+    # structured ERROR line, never a KeyError traceback (which the self-audit
+    # read as a clean exit before the fail-closed fix).
+    name = target.get("path") or target.get("name") or "<unnamed>"
+    raw_path = target.get("path")
+    if not raw_path:
+        errors.append(f"manifest: target {name} missing 'path'")
+        return []
+    fmt = target.get("format")
+    if fmt not in ("json", "jsonl"):
+        errors.append(f"manifest: target {raw_path} missing/invalid 'format' (got {fmt!r})")
+        return []
+    schema_rel = target.get("schema")
+    if not schema_rel:
+        errors.append(f"manifest: target {raw_path} missing 'schema'")
+        return []
+    path = resolve(raw_path)
     if not path.exists():
         (errors if target.get("required") else infos).append(
-            f"{target['path']}: {'missing (required)' if target.get('required') else 'absent (optional)'}")
+            f"{raw_path}: {'missing (required)' if target.get('required') else 'absent (optional)'}")
         return []
-    validate = get_validator(resolve(target["schema"]))
+    validate = get_validator(resolve(schema_rel))
     entries: list[dict] = []
-    if target["format"] == "json":
+    if fmt == "json":
         try:
             obj = load_json(path)
         except json.JSONDecodeError as e:
-            errors.append(f"{target['path']}: invalid JSON — {e}")
+            errors.append(f"{raw_path}: invalid JSON — {e}")
             return []
         for msg in validate(obj):
-            errors.append(f"{target['path']}: schema violation — {msg}")
+            errors.append(f"{raw_path}: schema violation — {msg}")
     else:  # jsonl
         for n, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip() or line.strip().startswith("#"):
@@ -97,14 +113,14 @@ def check_target(target: dict) -> list[dict]:
             try:
                 obj = json.loads(line)
             except json.JSONDecodeError as e:
-                errors.append(f"{target['path']}:{n}: invalid JSON line — {e}")
+                errors.append(f"{raw_path}:{n}: invalid JSON line — {e}")
                 continue
             for msg in validate(obj):
-                errors.append(f"{target['path']}:{n}: schema violation — {msg}")
+                errors.append(f"{raw_path}:{n}: schema violation — {msg}")
             entries.append(obj)
         cap = target.get("maxEntries")
         if cap and len(entries) > cap:
-            warnings.append(f"{target['path']}: {len(entries)} entries exceeds cap {cap}")
+            warnings.append(f"{raw_path}: {len(entries)} entries exceeds cap {cap}")
     return entries
 
 
@@ -206,9 +222,15 @@ def main() -> int:
         return 1
 
     for target in manifest.get("targets", []):
-        entries = check_target(target)
-        if target.get("heuristicsScope"):
-            check_heuristics_hygiene(target, entries)
+        # Isolate each target: an unexpected failure becomes one ERROR line
+        # rather than aborting the whole audit with a traceback.
+        try:
+            entries = check_target(target)
+            if isinstance(target, dict) and target.get("heuristicsScope"):
+                check_heuristics_hygiene(target, entries)
+        except Exception as e:  # noqa: BLE001 — audit must never crash on bad input
+            tname = target.get("path", "<unknown>") if isinstance(target, dict) else repr(target)
+            errors.append(f"manifest: target {tname} raised {type(e).__name__}: {e}")
     check_git_hygiene()
     check_symlinks()
     check_installed_integrity()
