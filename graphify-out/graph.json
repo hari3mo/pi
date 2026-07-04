@@ -74,14 +74,54 @@
   },
   "nodes": [
     {
+      "label": "concurrency-guard.ts",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard",
+      "community": 40,
+      "norm_label": "concurrency-guard.ts"
+    },
+    {
+      "label": "AGENT_DIR",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L34",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_agent_dir",
+      "community": 40,
+      "norm_label": "agent_dir"
+    },
+    {
+      "label": "git()",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_git",
+      "community": 40,
+      "norm_label": "git()"
+    },
+    {
+      "label": "agentRel()",
+      "file_type": "code",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "extensions_concurrency_guard_agentrel",
+      "community": 40,
+      "norm_label": "agentrel()"
+    },
+    {
       "label": "self-audit.ts",
       "file_type": "code",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_self_audit",
       "community": 52,
-      "norm_label": "self-audit.ts"
+      "norm_label": "self-audit.ts",
+      "id": "extensions_self_audit"
     },
     {
       "label": "VALIDATOR",
@@ -89,9 +129,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "extensions_self_audit_validator",
       "community": 52,
-      "norm_label": "validator"
+      "norm_label": "validator",
+      "id": "extensions_self_audit_validator"
     },
     {
       "label": "PIPELINE_AUDIT",
@@ -99,9 +139,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L31",
       "_origin": "ast",
-      "id": "extensions_self_audit_pipeline_audit",
       "community": 52,
-      "norm_label": "pipeline_audit"
+      "norm_label": "pipeline_audit",
+      "id": "extensions_self_audit_pipeline_audit"
     },
     {
       "label": "AuditResult",
@@ -109,9 +149,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "extensions_self_audit_auditresult",
       "community": 52,
-      "norm_label": "auditresult"
+      "norm_label": "auditresult",
+      "id": "extensions_self_audit_auditresult"
     },
     {
       "label": "runScript()",
@@ -119,9 +159,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L43",
       "_origin": "ast",
-      "id": "extensions_self_audit_runscript",
       "community": 52,
-      "norm_label": "runscript()"
+      "norm_label": "runscript()",
+      "id": "extensions_self_audit_runscript"
     },
     {
       "label": "runValidator()",
@@ -129,9 +169,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L73",
       "_origin": "ast",
-      "id": "extensions_self_audit_runvalidator",
       "community": 52,
-      "norm_label": "runvalidator()"
+      "norm_label": "runvalidator()",
+      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "config-paths.ts",
@@ -942,46 +982,6 @@
       "community": 19,
       "norm_label": "shortencwd()",
       "id": "extensions_lib_format_shortencwd"
-    },
-    {
-      "label": "concurrency-guard.ts",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "concurrency-guard.ts",
-      "id": "extensions_concurrency_guard"
-    },
-    {
-      "label": "AGENT_DIR",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L26",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "agent_dir",
-      "id": "extensions_concurrency_guard_agent_dir"
-    },
-    {
-      "label": "git()",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L28",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "git()",
-      "id": "extensions_concurrency_guard_git"
-    },
-    {
-      "label": "agentRel()",
-      "file_type": "code",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 40,
-      "norm_label": "agentrel()",
-      "id": "extensions_concurrency_guard_agentrel"
     },
     {
       "label": "autocommit.sh",
@@ -12477,12 +12477,42 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_agent_dir",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_agentrel",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/concurrency-guard.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "extensions_concurrency_guard",
+      "target": "extensions_concurrency_guard_git",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_auditresult"
     },
     {
       "relation": "contains",
@@ -12490,9 +12520,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_pipeline_audit",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_pipeline_audit"
     },
     {
       "relation": "contains",
@@ -12500,9 +12530,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -12510,9 +12540,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L73",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runvalidator"
     },
     {
       "relation": "contains",
@@ -12520,9 +12550,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_validator"
     },
     {
       "relation": "calls",
@@ -12531,9 +12561,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L75",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit_runvalidator",
-      "target": "extensions_self_audit_runscript",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runscript"
     },
     {
       "relation": "contains",
@@ -14215,36 +14245,6 @@
       "confidence_score": 1.0,
       "source": "extensions_custom_header_computecontextline",
       "target": "extensions_lib_format_shortencwd"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L26",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agent_dir"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agentrel"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/concurrency-guard.ts",
-      "source_location": "L28",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_git"
     },
     {
       "relation": "contains",
@@ -29613,5 +29613,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "abe6b429c6ab0a50cf40da14a05fcb92a3b32663"
+  "built_at_commit": "0a9afcdecab74e1fe361ea0f83ff05026909a58f"
 }

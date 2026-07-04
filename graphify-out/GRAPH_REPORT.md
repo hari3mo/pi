@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 195 files · ~156,497 words
+- 195 files · ~156,748 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `abe6b429`
+- Built from commit: `0a9afcde`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -377,26 +377,26 @@ Cohesion: 0.29
 Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 
 ## Knowledge Gaps
-- **600 isolated node(s):** `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult`, `RESOURCE_PREFIXES`, `RESOURCE_FILES` (+595 more)
+- **600 isolated node(s):** `AGENT_DIR`, `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult`, `RESOURCE_PREFIXES` (+595 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.994168238)
-- `~/.pi/agent config repo overview` (3× useful, score=2.994138141)
+- `Config Index (semantic audit map)` (3× useful, score=2.994150862)
+- `~/.pi/agent config repo overview` (3× useful, score=2.994120764)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `TUI Extensions & Config Index`, `read-only-default.ts`, `porcelain.json`, `porcelain-light.json`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Pi Extension (Ponytail)`, `Package Scripts`, `Correctness Gate`, `focus-chime.ts`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.440) - this node is a cross-community bridge._
+  _High betweenness centrality (0.444) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`, `porcelain.json`?**
   _High betweenness centrality (0.334) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
   _High betweenness centrality (0.266) - this node is a cross-community bridge._
-- **What connects `VALIDATOR`, `PIPELINE_AUDIT`, `AuditResult` to the rest of the system?**
+- **What connects `AGENT_DIR`, `VALIDATOR`, `PIPELINE_AUDIT` to the rest of the system?**
   _633 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._

@@ -1030,8 +1030,8 @@
     "semantic_hash": "de707992d034da2dcc2badceac78bad6"
   },
   "extensions/self-audit.ts": {
-    "mtime": 1783164724.007553,
-    "ast_hash": "8d2176834f8f4f66352630b5478d2f98",
+    "mtime": 1783165543.8220062,
+    "ast_hash": "4eaf9242a63b1b85e610d188a781610e",
     "semantic_hash": ""
   },
   "scripts/audit-pipelines.py": {
