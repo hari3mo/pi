@@ -460,9 +460,9 @@
     "semantic_hash": "c1281d005796ec780ad7c65003d2b86b"
   },
   "schema/manifest.json": {
-    "mtime": 1783158766.4610872,
-    "ast_hash": "6a2b948c6150f90fe7d5bacf54403835",
-    "semantic_hash": "6a2b948c6150f90fe7d5bacf54403835"
+    "mtime": 1783160267.821039,
+    "ast_hash": "0b801449213c0478f90cb401c239f4fa",
+    "semantic_hash": ""
   },
   "schema/settings.schema.json": {
     "mtime": 1783124398.0703373,
