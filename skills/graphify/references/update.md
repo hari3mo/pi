@@ -6,6 +6,8 @@ Load this only when the user passed `--update` or `--cluster-only`. A first-time
 
 Use when you've added or modified files since the last run. Only re-extracts changed files - saves tokens and time.
 
+**Special guard for `~/.pi/agent`:** do not run a bare `graphify --update` there. Run `python3 scripts/audit-pipelines.py --full` first; if docs/images are uncached and no `GEMINI_API_KEY`/`GOOGLE_API_KEY` is set, use this skill's LLM extraction path below (or set a Gemini key) so the semantic layer is regenerated instead of replaced with structural-only output.
+
 ```bash
 $(cat graphify-out/.graphify_python) -c "
 import sys, json
