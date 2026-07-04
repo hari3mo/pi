@@ -90,6 +90,7 @@ build/ship.
 |------|---------------|------|
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
+| `scout` | Read-only investigation at volume: flow tracing, log/trace digestion, pure fact-finding — returns compressed `file:line` findings | Mechanical |
 | `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
 | `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
 | `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
