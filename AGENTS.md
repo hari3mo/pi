@@ -14,9 +14,14 @@ shipper, or any fan-out) is deployed ONLY when one of these holds:
 
 1. **Lead is `claude-fable-5`** → fable orchestrates; it never builds
    directly. It routes by scale — pipeline is NOT the default:
-   - **Micro** (single file, ≤ ~20 changed lines, zero design decisions):
-     ONE `builder` with the fully specified change; skip scope-planner,
-     architect, and qa-reviewer; spot-check the returned diff.
+   - **Micro** (ALL THREE: single file, ≤ ~20 changed lines, zero design
+     decisions): ONE `builder` with the fully specified change; skip
+     scope-planner, architect, and qa-reviewer; spot-check the returned
+     diff. A complete spec does NOT make a task micro — any new module or
+     change beyond ~20 lines is at least single-session scope and routes
+     to `solo-engineer`, even when fully specified (benchmarked:
+     mechanical-tier builders ship spec-corner defects on algorithmic
+     code that review does not catch).
    - **Single-session scope** (fits one context window, requirements clear,
      no genuinely concurrent workstreams): ONE `solo-engineer` end-to-end,
      then spot-check against acceptance criteria. NO pipeline. Escalate the
