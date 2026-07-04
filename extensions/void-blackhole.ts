@@ -668,7 +668,7 @@ class BlackHoleComponent {
 					Math.round(px(c.stars[i])),
 					Math.round(py(c.stars[i])),
 					"*",
-					0.4 * tw,
+					0.4 * tw * (c.mags?.[i] ?? 1),
 				);
 			}
 		}
