@@ -460,9 +460,9 @@
     "semantic_hash": "c1281d005796ec780ad7c65003d2b86b"
   },
   "schema/manifest.json": {
-    "mtime": 1783144393.0107322,
-    "ast_hash": "662008afd3c7576551618305f480cc0a",
-    "semantic_hash": "662008afd3c7576551618305f480cc0a"
+    "mtime": 1783158766.4610872,
+    "ast_hash": "6a2b948c6150f90fe7d5bacf54403835",
+    "semantic_hash": ""
   },
   "schema/settings.schema.json": {
     "mtime": 1783124398.0703373,
@@ -1055,8 +1055,8 @@
     "semantic_hash": ""
   },
   ".pi-vcs/hooks/post-commit": {
-    "mtime": 1783158756.1424067,
-    "ast_hash": "303b1358598f8fff8fd8801a4b2cb0f2",
+    "mtime": 1783158766.3717625,
+    "ast_hash": "2c27f77b2891486993f390d848496b3f",
     "semantic_hash": ""
   },
   "extensions/graphify-bridge.ts": {
