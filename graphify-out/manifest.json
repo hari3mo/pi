@@ -1048,5 +1048,40 @@
     "mtime": 1783127535.6245663,
     "ast_hash": "2c223c2bb087ce98b47ef2dee43c2d7c",
     "semantic_hash": "2c223c2bb087ce98b47ef2dee43c2d7c"
+  },
+  ".pi-vcs/hooks/post-checkout": {
+    "mtime": 1783158756.1424925,
+    "ast_hash": "e18292d77f18ece96816c58eba451b26",
+    "semantic_hash": ""
+  },
+  ".pi-vcs/hooks/post-commit": {
+    "mtime": 1783158756.1424067,
+    "ast_hash": "303b1358598f8fff8fd8801a4b2cb0f2",
+    "semantic_hash": ""
+  },
+  "extensions/graphify-bridge.ts": {
+    "mtime": 1783158749.66754,
+    "ast_hash": "87a0ac74232d4bf3b742b9a65dc90dec",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
+    "mtime": 1783158099.5084014,
+    "ast_hash": "7fe5b978793317b4cd9cc4684d4a69a4",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260704_094252_how_fragile_is_the_cross_cluster_connection_betwee.md": {
+    "mtime": 1783158230.4331646,
+    "ast_hash": "5a7ceed86f6b3a995e616ae42cbc33ab",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260704_094445_are_the_weakly_connected_nodes_real_orphans_or_ext.md": {
+    "mtime": 1783158285.1930268,
+    "ast_hash": "3b2aefc3af256298f1af5ec6c5b412db",
+    "semantic_hash": ""
+  },
+  "graphify-out/memory/query_20260704_094626_patch_the_config_index_coverage_gap__stitch_themes.md": {
+    "mtime": 1783158386.3289292,
+    "ast_hash": "de707992d034da2dcc2badceac78bad6",
+    "semantic_hash": ""
   }
 }

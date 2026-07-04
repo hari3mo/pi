@@ -167,3 +167,12 @@ else:
     subprocess.Popen(_cmd, start_new_session=True, **_kw)
 "
 # graphify-hook-end
+
+# graphify-doc-flag-start
+# Doc/image changes need LLM re-extraction (the graphify block above only
+# rebuilds code via AST). Flag them so the pi graphify-bridge extension
+# surfaces "STALE — run /graphify --update" at session start.
+if git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -qE '\.(md|txt|rst|pdf|png|jpe?g|webp|svg)$'; then
+    mkdir -p graphify-out && touch graphify-out/needs_update
+fi
+# graphify-doc-flag-end

@@ -44,3 +44,6 @@ bin/
 node_modules/
 *.log
 .DS_Store
+
+# ---- graphify knowledge graph (derived; rebuilt by post-commit hook / /graphify) ----
+graphify-out/
