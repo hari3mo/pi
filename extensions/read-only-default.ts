@@ -9,6 +9,10 @@
  *   /confirm    - default: prompt before each write/destructive command
  *   /read-only  - strict: edit/write disabled, destructive bash blocked
  *
+ * Ctrl+` cycles the modes: confirm -> write -> read-only -> confirm.
+ * (Note: Ctrl+` may require a terminal with the Kitty keyboard protocol;
+ * in legacy encoding it can collide with NUL/Ctrl+Space.)
+ *
  * In headless modes (no UI) confirm-mode blocks writes, since it cannot prompt;
  * use `pi --write` for unattended write access.
  *
@@ -17,6 +21,7 @@
  */
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
+import { Key } from "@earendil-works/pi-tui";
 
 const WRITE_TOOLS = new Set<string>(["edit", "write"]);
 
@@ -112,6 +117,16 @@ export default function (pi: ExtensionAPI) {
 					: "Confirm mode: reads free, writes prompt for approval.";
 		ctx.ui.notify(msg, "info");
 	}
+
+	const CYCLE: Mode[] = ["confirm", "write", "readonly"];
+	pi.registerShortcut(Key.ctrl("`"), {
+		description: "Cycle write-gate mode (confirm → write → read-only)",
+		handler: async (ctx) => {
+			const next = CYCLE[(CYCLE.indexOf(mode) + 1) % CYCLE.length];
+			trustWritesThisSession = false;
+			setMode(next, ctx, true);
+		},
+	});
 
 	pi.registerCommand("write", {
 		description: "Full access, no confirmation prompts, for this session",

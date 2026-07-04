@@ -6,7 +6,8 @@
  * the most recent user prompt. Updates every time the user submits a new
  * message, so the window header stays a live descriptor of "what this
  * pi session is about" — handy for finding the right tab/window when
- * running several sessions at once.
+ * running several sessions at once. Also appends a running session
+ * timer (elapsed since session start) that ticks every second.
  */
 
 import { homedir } from "node:os";
@@ -46,12 +47,44 @@ function summarizePrompt(prompt: string): string {
 	return `${cleaned.slice(0, MAX_DESCRIPTOR_LEN - 1).trimEnd()}\u2026`;
 }
 
+/** Format elapsed milliseconds as a compact running-timer string. */
+function formatElapsed(ms: number): string {
+	const totalSec = Math.floor(ms / 1000);
+	const h = Math.floor(totalSec / 3600);
+	const m = Math.floor((totalSec % 3600) / 60);
+	const s = totalSec % 60;
+	if (h > 0) return `${h}h ${String(m).padStart(2, "0")}m`;
+	if (m > 0) return `${m}m ${String(s).padStart(2, "0")}s`;
+	return `${s}s`;
+}
+
 export default function (pi: ExtensionAPI) {
 	let projectLabel = "";
+	let baseTitle = "";
+	let startTime = Date.now();
+	let timer: ReturnType<typeof setInterval> | null = null;
+
+	function applyTitle(ctx: { ui: { setTitle(title: string): void } }) {
+		ctx.ui.setTitle(`${baseTitle} \u00b7 ${formatElapsed(Date.now() - startTime)}`);
+	}
+
+	function stopTimer() {
+		if (timer) {
+			clearInterval(timer);
+			timer = null;
+		}
+	}
 
 	pi.on("session_start", async (_event, ctx) => {
 		projectLabel = shortenCwd(ctx.cwd);
-		if (ctx.hasUI) ctx.ui.setTitle(`pi \u00b7 ${projectLabel}`);
+		baseTitle = `pi \u00b7 ${projectLabel}`;
+		startTime = Date.now();
+		if (!ctx.hasUI) return;
+		applyTitle(ctx);
+		stopTimer();
+		timer = setInterval(() => applyTitle(ctx), 1000);
+		// Don't let the timer keep the process alive on exit.
+		timer.unref?.();
 	});
 
 	pi.on("before_agent_start", async (event, ctx) => {
@@ -59,14 +92,21 @@ export default function (pi: ExtensionAPI) {
 		// Heuristic title so the header updates the moment the prompt is
 		// submitted. This is the only title source — no LLM call.
 		const descriptor = summarizePrompt(event.prompt ?? "");
-		const title = descriptor ? `pi \u00b7 ${projectLabel} \u00b7 ${descriptor}` : `pi \u00b7 ${projectLabel}`;
-		ctx.ui.setTitle(title);
+		baseTitle = descriptor
+			? `pi \u00b7 ${projectLabel} \u00b7 ${descriptor}`
+			: `pi \u00b7 ${projectLabel}`;
+		applyTitle(ctx);
+	});
+
+	pi.on("session_shutdown", async () => {
+		stopTimer();
 	});
 
 	pi.registerCommand("chat-title", {
 		description: "Reset the terminal window title to just the project name",
 		handler: async (_args, ctx) => {
-			ctx.ui.setTitle(`pi \u00b7 ${projectLabel}`);
+			baseTitle = `pi \u00b7 ${projectLabel}`;
+			applyTitle(ctx);
 			ctx.ui.notify("Window title reset", "info");
 		},
 	});
