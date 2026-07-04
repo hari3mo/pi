@@ -100,6 +100,10 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	function applyTools(): void {
+		// Publish the gate mode for sibling extensions (same process). The
+		// subagent extension reads this to decide whether spawned children get
+		// --write (see extensions/subagent/index.ts).
+		(globalThis as { __piWriteGateMode?: Mode }).__piWriteGateMode = mode;
 		if (mode === "readonly") {
 			if (toolsBeforeReadOnly === undefined) toolsBeforeReadOnly = pi.getActiveTools();
 			pi.setActiveTools(toolsBeforeReadOnly.filter((name) => !WRITE_TOOLS.has(name)));
@@ -172,6 +176,29 @@ export default function (pi: ExtensionAPI) {
 	// Gate write-capable tool calls according to the current mode.
 	pi.on("tool_call", async (event, ctx) => {
 		if (mode === "write") return;
+
+		// Subagent orchestration: children inherit the gate (only write mode
+		// grants them --write). If the user is about to orchestrate from a
+		// gated mode, offer to switch to write mode first instead of letting
+		// builders silently fail their writes.
+		if (event.toolName === "subagent") {
+			if (!ctx.hasUI) return; // headless: run as-is, children stay read-only
+			const choice = await ctx.ui.select(
+				"Subagents inherit the write gate and cannot prompt for approval. Switch to write mode?",
+				["Switch to write mode & run subagents", "Run subagents read-only", "Cancel"],
+			);
+			if (choice === "Switch to write mode & run subagents") {
+				trustWritesThisSession = false;
+				setMode("write", ctx, true);
+				return;
+			}
+			if (choice === "Run subagents read-only") return;
+			return {
+				block: true,
+				reason:
+					"Subagent run cancelled by user. If subagents need write access, ask the user to run /write first.",
+			};
+		}
 
 		const isWriteTool = WRITE_TOOLS.has(event.toolName);
 		const isBadBash =
