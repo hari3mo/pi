@@ -16,31 +16,18 @@
  * Output format matches validate-config.py (ERROR lines) for merging.
  */
 
-import { existsSync, mkdirSync, readdirSync, symlinkSync, rmSync } from "node:fs";
-import { join, dirname } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { existsSync, readdirSync } from "node:fs";
+import { join } from "node:path";
+import { AGENT_DIR, PKG, loadJiti, provisionNodeModules } from "./lib/jiti-loader.mjs";
 
-const AGENT_DIR = process.env.PI_AGENT_DIR ?? join(process.env.HOME, ".pi", "agent");
-const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
-
-// Self-provision module resolution: extensions import typebox / @earendil-works/*
-// as bare specifiers; link them from the installed pi package (gitignored dir).
-// Re-created every run so a moved/upgraded pi install heals automatically.
-const nm = join(AGENT_DIR, "node_modules");
-function link(target, dest) {
-	try { rmSync(dest, { recursive: true, force: true }); } catch {}
-	if (existsSync(target)) symlinkSync(target, dest);
-}
+// The pi package must exist for jiti + bare-specifier resolution. Bespoke error
+// (not a thrown stack) so the output merges with validate-config.py's ERROR lines.
 if (!existsSync(PKG)) {
 	console.log(`ERROR  smoke-extensions: pi package not found at ${PKG} — install layout changed; update this script`);
 	console.log("\n1 error(s)");
 	process.exit(1);
 }
-mkdirSync(join(nm, "@earendil-works"), { recursive: true });
-link(join(PKG, "node_modules", "typebox"), join(nm, "typebox"));
-link(join(PKG, "node_modules", "@earendil-works", "pi-ai"), join(nm, "@earendil-works", "pi-ai"));
-link(join(PKG, "node_modules", "@earendil-works", "pi-tui"), join(nm, "@earendil-works", "pi-tui"));
-link(PKG, join(nm, "@earendil-works", "pi-coding-agent"));
+provisionNodeModules();
 
 // Maximally tolerant fake pi: every property is a callable no-op that also
 // proxies further property access (handles pi.ui.foo(), chained shapes, etc.).
@@ -64,8 +51,7 @@ for (const entry of readdirSync(extDir, { withFileTypes: true })) {
 }
 
 // pi's own loader: jiti from inside the installed package.
-const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
-const jiti = createJiti(join(AGENT_DIR, "extensions", "_smoke_.js"), { interopDefault: false });
+const { jiti } = await loadJiti();
 
 let failures = 0;
 for (const file of candidates.sort()) {
