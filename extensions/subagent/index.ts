@@ -404,7 +404,7 @@ async function runSingleAgent(
 			args.push("--append-system-prompt", tmpPromptPath);
 		}
 
-		args.push(`Task: ${task}`);
+		args.push(`Task: ${task}\n\n${STANDING_CONTRACT_FOOTER}`);
 		let wasAborted = false;
 
 		currentResult.startTime = Date.now();
@@ -417,6 +417,10 @@ async function runSingleAgent(
 				cwd: cwd ?? defaultCwd,
 				shell: false,
 				stdio: ["ignore", "pipe", "pipe"],
+				// Mark children so sibling extensions can exempt them (e.g. the fable
+				// edit-blocker in read-only-default.ts): fable-engineer children run
+				// claude-fable-5 and MUST write.
+				env: { ...process.env, PI_SUBAGENT: "1" },
 			});
 			let buffer = "";
 
