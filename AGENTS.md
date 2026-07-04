@@ -37,8 +37,9 @@ changes, checking the write-gate mode is the FIRST action on task receipt —
 before reading code, exploring the repo, or dispatching any subagent. Spawned
 children inherit `--write` only when the parent gate is in write mode; in
 confirm or read-only mode they run read-only and can only return plans.
-If the gate is not in write mode, STOP immediately and prompt the user to
-switch (`/write`) so builders inherit write access — do not explore first,
+If the gate is not in write mode, STOP immediately and call the
+`request_write_mode` tool — it shows the user a selection prompt to open the
+gate (do not ask in prose) — so builders inherit write access — do not explore first,
 do not fall back to editing directly, and do not spawn read-only children
 hoping it clears. Exploration done before the gate is open is wasted if the
 user re-frames the task when prompted.
