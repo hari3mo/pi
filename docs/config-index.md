@@ -30,7 +30,7 @@ Every session that changes config must update it.
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
 | Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/shipper.md`, `agents/solo-engineer.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer → shipper, plus solo-engineer as escalation executor and peer-engineer for second opinions). |
+| Agent role set | `agents/architect.md`, `agents/builder.md`, `agents/fable-engineer.md`, `agents/peer-engineer.md`, `agents/qa-reviewer.md`, `agents/scope-planner.md`, `agents/shipper.md`, `agents/solo-engineer.md` | Subagent role definitions dispatched by the Delegation Gate (scope-planner → architect → builder → qa-reviewer → shipper, plus solo-engineer/fable-engineer/peer-engineer). |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
@@ -48,16 +48,6 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-03
-
-**Cheap-first delegation refactor; fable strictly orchestrator.** `AGENTS.md`
-(Delegation Gate, tiers/roles, routing, thresholds, defaults), `agents/fable-engineer.md`
-(deleted), `agents/solo-engineer.md` + `agents/builder.md` (descriptions),
-`docs/rework-loop.md` (two-fail builder→solo-engineer escalation). Why: user directive —
-maximize delegation to cheaper models; `builder` (sonnet) is now the default executor
-behind a mandatory deep-tier QA gate, `solo-engineer` demoted to escalation-only
-(algorithmic cores, inseparable design+impl, post-two-fail rework), fable never executes.
-Note: overrides the 2026-07 benchmark's solo-default routing conclusion; spec-corner
-carve-outs retained.
 
 **QA gate relaxed: any new feature is QA-mandatory.** `AGENTS.md` (Hard Delegation
 Thresholds + micro-dispatch rule + Rework Loop heading), `docs/rework-loop.md` (loop now

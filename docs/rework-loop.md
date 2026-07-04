@@ -2,7 +2,7 @@
 
 QA-gated work is not one-pass — this loop applies to any build that goes
 through `qa-reviewer`, whether from the full pipeline or a solo build
-(`solo-engineer`). `qa-reviewer` is a gate that can bounce
+(`solo-engineer`/`fable-engineer`). `qa-reviewer` is a gate that can bounce
 work backwards, and the orchestrator runs the loop until the gate passes or
 the loop budget is exhausted. "Implementing agent" below means whichever
 agent built the work.
@@ -24,10 +24,6 @@ structured verdict, one of:
 2. Re-review the fix. A fresh `qa-reviewer` invocation checks the findings
    are resolved AND nothing regressed. Never let the implementing agent
    self-certify.
-   On the SECOND `FAIL: implementation` for the same work item built by
-   `builder`, escalate: the fix (and the remainder of the work item) goes
-   to `solo-engineer`, not back to `builder` a third time — cheap-tier
-   retries past two failures burn budget without converging.
 3. On `FAIL: design`, do not patch around it. Route back to `architect`
    with the reviewer's findings; the revised design then flows forward
    through `builder` → `qa-reviewer` again.

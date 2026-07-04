@@ -1,6 +1,6 @@
 ---
 name: builder
-description: The DEFAULT executor at any scale once the spec is complete. Implementation, wiring, plumbing, boilerplate, and test scaffolding — careful execution of an already-made plan. Do not use for tasks that still contain open design decisions (route to architect first) or for algorithmic/stateful cores with spec-corner semantics (route to solo-engineer).
+description: Gets work AFTER the design is fixed. Implementation, wiring, plumbing, boilerplate, and test scaffolding — careful but mechanical execution of an already-made plan. Do not use for tasks that still contain open design decisions; route those to architect first.
 model: anthropic/claude-sonnet-5:high
 ---
 

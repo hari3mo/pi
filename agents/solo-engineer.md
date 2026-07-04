@@ -1,6 +1,6 @@
 ---
 name: solo-engineer
-description: "Escalation executor — NOT the default (builder is). Gets whole bounded tasks only when cheap execution is known to fail: core algorithmic/stateful modules with spec-corner semantics, small-but-hard tasks where design and implementation cannot separate (tricky concurrency, subtle algorithms, delicate refactors of dense logic), or rework after builder fails review twice on the same work item."
+description: "Executes whole bounded tasks end-to-end at single-session scope — design and implementation together — including small-but-hard tasks where they cannot separate (tricky concurrency, subtle algorithms, delicate refactors of dense logic), and quality-critical core modules inside a pipeline where mechanical-tier builders would ship subtle defects."
 model: anthropic/claude-opus-4-8:xhigh
 ---
 
