@@ -99,17 +99,15 @@ const TICK_MS = 50; // 20 fps — plenty for glyphs
 const ART_MAX_W = 280; // wide: fill the terminal, centered, landing-page scale
 const ART_MAX_ROWS = 64;
 
-// Landing-page chrome: the wordmark (figlet "larry3d" — extruded 3D
-// letterforms), stamped into the art as exact glyphs on a cleared plate so
-// the letterforms stay crisp against the starfield. Rendered in ANSI black.
+// Landing-page chrome: the wordmark (figlet "lean" — right-slanting,
+// embossed _/ strokes), stamped into the art as exact glyphs on a cleared
+// plate so the letterforms stay crisp against the starfield. ANSI black ink.
 const WORDMARK = [
-	" __",
-	"/\\ \\                       __",
-	"\\ \\ \\___      __     _ __ /\\_\\    ___ ___     ___",
-	" \\ \\  _ `\\  /'__`\\  /\\`'__\\/\\ \\ /' __` __`\\  / __`\\",
-	"  \\ \\ \\ \\ \\/\\ \\L\\.\\_\\ \\ \\/ \\ \\ \\/\\ \\/\\ \\/\\ \\/\\ \\L\\ \\",
-	"   \\ \\_\\ \\_\\ \\__/.\\_\\\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\____/",
-	"    \\/_/\\/_/\\/__/\\/_/ \\/_/   \\/_/\\/_/\\/_/\\/_/\\/___/",
+	"    _/                            _/",
+	"   _/_/_/      _/_/_/  _/  _/_/      _/_/_/  _/_/      _/_/",
+	"  _/    _/  _/    _/  _/_/      _/  _/    _/    _/  _/    _/",
+	" _/    _/  _/    _/  _/        _/  _/    _/    _/  _/    _/",
+	"_/    _/    _/_/_/  _/        _/  _/    _/    _/    _/_/",
 ];
 
 // Orbiting planets (planets.js PLANET_DEFS, nav words dropped) — irregular
