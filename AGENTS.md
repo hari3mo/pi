@@ -139,6 +139,10 @@ The harness audits itself; problems become prompts:
   firing, staleness flags, autocommit liveness, semantic-cache drift, and a
   graph-connectivity ratchet (best-ever giant fraction; >20% drop = ERROR). Regressions
   in the machinery become prompts just like config errors.
+- The harness adapts to pi itself changing: toolchain versions (pi/graphifyy/node) are
+  baseline-tracked and any change WARNs once with the re-verification list; `/audit`
+  loads every extension with pi's OWN jiti loader (`scripts/smoke-extensions.mjs`) so
+  an ExtensionAPI or layout break after `pi update` is caught before it bites a session.
 
 ## Enforced in Code (no action needed)
 

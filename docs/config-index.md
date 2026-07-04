@@ -8,6 +8,7 @@ Every session that changes config must update it.
 
 | Feature | Files | Purpose |
 |---|---|---|
+| Toolchain adaptability | `scripts/smoke-extensions.mjs`, `scripts/audit-pipelines.py` | Extension load smoke using pi's own jiti loader against a Proxy fake-pi (15/15 extensions; self-provisions gitignored `node_modules` symlinks, self-heals on pi relocation); toolchain version tracking (pi/graphifyy/node in `.pipeline_baseline.json`) WARNs once per upgrade with the re-verification list. Runs in `/audit` (`--full`); versions checked every session start. |
 | Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
 | Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
 | Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (size/hubs/staleness) into the system prompt, registers a `graph` tool (query/explain/path/status against `graphify-out/graph.json`) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
@@ -52,6 +53,23 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-04
+
+**Adaptability layer: the harness survives pi itself changing.**
+Added `scripts/smoke-extensions.mjs`: loads all 15 auto-loaded extensions
+(`extensions/*.ts` + `extensions/*/index.ts`) with the jiti loader shipped INSIDE the
+installed pi package (loader fidelity; native strip-types choked on the symlinked
+subagent import) against a Proxy-based fake pi that no-ops every method — tolerant of
+API growth, so only real load failures report. Self-provisions its module env
+(gitignored `node_modules` symlinks, re-created each run so a moved pi install heals).
+`scripts/audit-pipelines.py` gained toolchain version tracking (pi/graphifyy/node in
+the baseline; changes WARN once with a re-verification list: pi-tui patch, extension
+smoke, hook doc-filter) in fast mode, and the extension smoke in `--full`.
+Negative-tested: canary extension with a broken import reports ERROR; simulated pi
+upgrade warns once then goes silent. Files: `scripts/smoke-extensions.mjs` (new),
+`scripts/audit-pipelines.py`, `AGENTS.md`, `docs/config-index.md`. Why: user directive —
+the harness must adapt as pi changes; upgrades are now audited events with automated
+load verification instead of silent breakage at the next session start.
+
 
 **Pipeline meta-audit: the audit layer now audits the pipelines themselves.**
 Added `scripts/audit-pipelines.py` — dynamics checks the static validator cannot see:
