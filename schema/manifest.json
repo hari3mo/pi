@@ -58,7 +58,8 @@
       "patches",
       "graphify-out",
       "git",
-      "npm"
+      "npm",
+      ".pi"
     ]
   }
 }
