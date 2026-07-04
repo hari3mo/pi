@@ -41,6 +41,18 @@
       "schema": "schema/graph-first-stats.schema.json",
       "format": "json",
       "required": false
+    },
+    {
+      "path": "config/lead-profiles.json",
+      "schema": "schema/lead-profiles.schema.json",
+      "format": "json",
+      "required": true
+    },
+    {
+      "path": "graphify-out/.lead_config_stats.json",
+      "schema": "schema/lead-config-stats.schema.json",
+      "format": "json",
+      "required": false
     }
   ],
   "layout": {
@@ -56,6 +68,7 @@
     ],
     "known": [
       "bin",
+      "config",
       "heuristics",
       "sessions",
       ".pi-vcs",
