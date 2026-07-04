@@ -1063,5 +1063,10 @@
     "mtime": 1783163786.8300614,
     "ast_hash": "1f2d5bf61f127568ce8cdcfdd4660934",
     "semantic_hash": ""
+  },
+  "scripts/check-parse-verdict.mjs": {
+    "mtime": 1783164712.5302024,
+    "ast_hash": "1d8bae96ffb1ba034ffbc0ddc637f158",
+    "semantic_hash": ""
   }
 }
