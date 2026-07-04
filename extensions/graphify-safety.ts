@@ -10,7 +10,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 
 const GRAPHIFY_UPDATE_RE = /(?:^|[;&|]\s*)(?:(?:\S*python\S*\s+-m\s+)?graphify\b(?=[^;&|]*(?:\s--update\b|\supdate(?:\s|$))))/i;
-const DELETE_GRAPHIFY_OUT_RE = /\brm\s+(?:-[A-Za-z]+\s+)*(?:['"]?(?:\.\/)?graphify-out\/?['"]?)(?:\s|$|[;&|])/i;
+const RM_SEGMENT_RE = /\brm\s+([^;&|]+)/gi;
 
 function under(parent: string, child: string): boolean {
 	const rel = relative(parent, child);
@@ -28,13 +28,26 @@ function agentContext(cwd: string, command: string): boolean {
 	return cmd.includes(agent) || /\bcd\s+(?:~\/\.pi\/agent|\$HOME\/\.pi\/agent)/.test(command);
 }
 
+function deletesGraphifyOut(command: string): boolean {
+	for (const m of command.matchAll(RM_SEGMENT_RE)) {
+		const args = (m[1] ?? "")
+			.split(/\s+/)
+			.map((a) => a.replace(/^['"]|['"]$/g, "").replace(/^\.\//, ""))
+			.filter((a) => a && !a.startsWith("-"));
+		if (args.some((a) => a === "graphify-out" || a === "graphify-out/" || a === "graphify-out/*" || a === "graphify-out/cache" || a.startsWith("graphify-out/cache/"))) {
+			return true;
+		}
+	}
+	return false;
+}
+
 export default function graphifySafety(pi: ExtensionAPI) {
 	pi.on("tool_call", async (event, ctx) => {
 		if (event.toolName !== "bash") return;
 		const command = (event.input as { command?: string }).command ?? "";
 		if (!command || !agentContext(ctx.cwd, command)) return;
 
-		if (DELETE_GRAPHIFY_OUT_RE.test(command) && process.env.PI_ALLOW_GRAPHIFY_OUT_DELETE !== "1") {
+		if (deletesGraphifyOut(command) && process.env.PI_ALLOW_GRAPHIFY_OUT_DELETE !== "1") {
 			return {
 				block: true,
 				reason:

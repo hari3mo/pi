@@ -313,16 +313,38 @@ export default function (pi: ExtensionAPI) {
 			/* fail open: never let the fable guard crash the gate hook */
 		}
 
-		if (mode === "write") return;
+		const isWriteTool = WRITE_TOOLS.has(event.toolName);
+		const isBadBash =
+			event.toolName === "bash" &&
+			isDestructiveCommand((event.input as { command?: string }).command ?? "");
+		const isMutation = isWriteTool || isBadBash;
+		const scope = isMutation ? autoWriteScope(event.toolName, event.input, ctx) : undefined;
+
+		if (mode === "write") {
+			if (!isMutation || scope?.trusted) return;
+			if (!ctx.hasUI) {
+				return {
+					block: true,
+					reason: `Write mode auto-approval is scoped to ${AUTO_WRITE_ROOT}; cannot prompt for ${scope?.target ?? event.toolName} outside that root in this headless session.`,
+				};
+			}
+			const choice = await ctx.ui.select(
+				`Allow ${event.toolName} outside auto-write scope (${AUTO_WRITE_ROOT})?  ${scope?.target ?? ""}`,
+				["Allow once", "Deny"],
+			);
+			if (choice === "Allow once") return;
+			return { block: true, reason: "Write denied by user." };
+		}
 
 		// Subagent orchestration: children inherit the gate (only write mode
 		// grants them --write). If the user is about to orchestrate from a
 		// gated mode, offer to switch to write mode first instead of letting
-		// workers silently fail their writes.
+		// workers silently fail their writes. Auto-write inside the child remains
+		// scoped to ~/.pi by this extension.
 		if (event.toolName === "subagent") {
 			if (!ctx.hasUI) return; // headless: run as-is, children stay read-only
 			const choice = await ctx.ui.select(
-				"Subagents inherit the write gate and cannot prompt for approval. Switch to write mode?",
+				`Subagents inherit the write gate and cannot prompt for approval; auto-write is scoped to ${AUTO_WRITE_ROOT}. Switch to write mode?`,
 				["Switch to write mode & run subagents", "Run subagents read-only", "Cancel"],
 			);
 			if (choice === "Switch to write mode & run subagents") {
@@ -338,11 +360,7 @@ export default function (pi: ExtensionAPI) {
 			};
 		}
 
-		const isWriteTool = WRITE_TOOLS.has(event.toolName);
-		const isBadBash =
-			event.toolName === "bash" &&
-			isDestructiveCommand((event.input as { command?: string }).command ?? "");
-		if (!isWriteTool && !isBadBash) return;
+		if (!isMutation) return;
 
 		if (mode === "readonly") {
 			// edit/write are already stripped; this guards destructive bash.
@@ -353,25 +371,23 @@ export default function (pi: ExtensionAPI) {
 		}
 
 		// confirm mode
-		if (trustWritesThisSession) return;
+		if (trustWritesThisSession && scope?.trusted) return;
 		if (!ctx.hasUI) {
 			return {
 				block: true,
 				reason:
 					"Confirm mode: cannot prompt for approval without a UI. " +
-					"Start with `pi --write` for unattended write access.",
+					`Start with \`pi --write\` for unattended write access under ${AUTO_WRITE_ROOT}.`,
 			};
 		}
 
-		const target = isWriteTool
-			? (event.input as { path?: string }).path ?? event.toolName
-			: (event.input as { command?: string }).command ?? "";
-		const choice = await ctx.ui.select(`Allow ${event.toolName}?  ${target}`, [
-			"Allow once",
-			"Allow all writes this session",
-			"Deny",
-		]);
-		if (choice === "Allow all writes this session") {
+		const allowAll = scope?.trusted === true;
+		const allowAllLabel = `Allow all writes under ${AUTO_WRITE_ROOT} this session`;
+		const choice = await ctx.ui.select(
+			`Allow ${event.toolName}?  ${scope?.target ?? event.toolName}${allowAll ? "" : ` (outside auto-write scope ${AUTO_WRITE_ROOT})`}`,
+			allowAll ? ["Allow once", allowAllLabel, "Deny"] : ["Allow once", "Deny"],
+		);
+		if (choice === allowAllLabel) {
 			trustWritesThisSession = true;
 			return;
 		}
