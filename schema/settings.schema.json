@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/settings.schema.json",
+  "title": "pi agent settings.json",
+  "description": "Malleable schema: known keys are type-checked, unknown keys are allowed so pi upgrades never break validation.",
+  "type": "object",
+  "additionalProperties": true,
+  "properties": {
+    "lastChangelogVersion": { "type": "string" },
+    "theme": { "type": "string" },
+    "defaultProvider": { "type": "string" },
+    "defaultModel": { "type": "string" },
+    "defaultThinkingLevel": {
+      "type": "string",
+      "enum": ["off", "minimal", "low", "medium", "high", "xhigh"]
+    },
+    "quietStartup": { "type": "boolean" },
+    "enabledModels": {
+      "type": "array",
+      "items": { "type": "string" },
+      "uniqueItems": true
+    }
+  }
+}
