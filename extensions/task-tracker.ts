@@ -3,6 +3,7 @@
  *
  * This extension:
  * - Registers a `task` tool for the LLM to manage tasks
+ * - Keeps a persistent TUI widget/status in sync with the current branch
  * - Registers a `/tasks` command for users to view the list
  *
  * State is stored in tool result details (not external files), which allows
@@ -34,18 +35,22 @@ const TaskParams = Type.Object({
 	id: Type.Optional(Type.Number({ description: "Task ID (for toggle)" })),
 });
 
+const WIDGET_ID = "task-tracker";
+
+const cloneTasks = (items: readonly Task[]): Task[] => items.map(({ id, text, done }) => ({ id, text, done }));
+
 /**
  * UI component for the /tasks command
  */
 class TaskListComponent {
-	private tasks: Task[];
+	private getTasks: () => Task[];
 	private theme: Theme;
 	private onClose: () => void;
 	private cachedWidth?: number;
 	private cachedLines?: string[];
 
-	constructor(tasks: Task[], theme: Theme, onClose: () => void) {
-		this.tasks = tasks;
+	constructor(getTasks: () => Task[], theme: Theme, onClose: () => void) {
+		this.getTasks = getTasks;
 		this.theme = theme;
 		this.onClose = onClose;
 	}
@@ -61,6 +66,7 @@ class TaskListComponent {
 			return this.cachedLines;
 		}
 
+		const tasks = this.getTasks();
 		const lines: string[] = [];
 		const th = this.theme;
 
@@ -71,15 +77,15 @@ class TaskListComponent {
 		lines.push(truncateToWidth(headerLine, width));
 		lines.push("");
 
-		if (this.tasks.length === 0) {
+		if (tasks.length === 0) {
 			lines.push(truncateToWidth(`  ${th.fg("dim", "No tasks yet. Ask the agent to add some!")}`, width));
 		} else {
-			const done = this.tasks.filter((t) => t.done).length;
-			const total = this.tasks.length;
+			const done = tasks.filter((t) => t.done).length;
+			const total = tasks.length;
 			lines.push(truncateToWidth(`  ${th.fg("muted", `${done}/${total} completed`)}`, width));
 			lines.push("");
 
-			for (const task of this.tasks) {
+			for (const task of tasks) {
 				const check = task.done ? th.fg("success", "✓") : th.fg("dim", "○");
 				const id = th.fg("accent", `#${task.id}`);
 				const text = task.done ? th.fg("dim", task.text) : th.fg("text", task.text);
@@ -106,6 +112,60 @@ export default function (pi: ExtensionAPI) {
 	// In-memory state (reconstructed from session on load)
 	let tasks: Task[] = [];
 	let nextId = 1;
+	const activeViews = new Set<{ component: TaskListComponent; requestRender: () => void }>();
+
+	const detailsFor = (action: TaskDetails["action"], error?: string): TaskDetails => ({
+		action,
+		tasks: cloneTasks(tasks),
+		nextId,
+		...(error ? { error } : {}),
+	});
+
+	const applyDetails = (details: TaskDetails) => {
+		tasks = cloneTasks(details.tasks ?? []);
+		nextId = Number.isFinite(details.nextId) && details.nextId > 0 ? Math.floor(details.nextId) : 1;
+	};
+
+	const renderWidget = (theme: Theme, width: number): string[] => {
+		const done = tasks.filter((t) => t.done).length;
+		const lines = [truncateToWidth(theme.fg("accent", theme.bold(`Tasks ${done}/${tasks.length}`)), width)];
+		const shown = tasks.slice(0, 6);
+
+		for (const task of shown) {
+			const check = task.done ? theme.fg("success", "✓") : theme.fg("dim", "○");
+			const id = theme.fg("accent", `#${task.id}`);
+			const text = task.done ? theme.fg("dim", task.text) : theme.fg("text", task.text);
+			lines.push(truncateToWidth(`  ${check} ${id} ${text}`, width));
+		}
+
+		if (tasks.length > shown.length) {
+			lines.push(truncateToWidth(theme.fg("dim", `  ... ${tasks.length - shown.length} more`), width));
+		}
+
+		return lines;
+	};
+
+	const updateUi = (ctx: ExtensionContext) => {
+		for (const view of activeViews) {
+			view.component.invalidate();
+			view.requestRender();
+		}
+
+		if (!ctx.hasUI) return;
+
+		if (tasks.length === 0) {
+			ctx.ui.setStatus(WIDGET_ID, undefined);
+			ctx.ui.setWidget(WIDGET_ID, undefined);
+			return;
+		}
+
+		const done = tasks.filter((t) => t.done).length;
+		ctx.ui.setStatus(WIDGET_ID, ctx.ui.theme.fg("accent", `tasks ${done}/${tasks.length}`));
+		ctx.ui.setWidget(WIDGET_ID, (_tui, theme) => ({
+			render: (width) => renderWidget(theme, width),
+			invalidate: () => {},
+		}));
+	};
 
 	/**
 	 * Reconstruct state from session entries.
@@ -121,11 +181,10 @@ export default function (pi: ExtensionAPI) {
 			if (msg.role !== "toolResult" || msg.toolName !== "task") continue;
 
 			const details = msg.details as TaskDetails | undefined;
-			if (details) {
-				tasks = details.tasks;
-				nextId = details.nextId;
-			}
+			if (details) applyDetails(details);
 		}
+
+		updateUi(ctx);
 	};
 
 	// Reconstruct state on session events
@@ -136,12 +195,13 @@ export default function (pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "task",
 		label: "Task",
-		description: "Track tasks for the current session. Actions: list, add (text), toggle (id), clear",
+		description: "Track tasks for the current branch. Actions: list, add (text), toggle (id), clear",
 		parameters: TaskParams,
 
-		async execute(_toolCallId, params, _signal, _onUpdate, _ctx) {
+		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
 			switch (params.action) {
 				case "list":
+					updateUi(ctx);
 					return {
 						content: [
 							{
@@ -151,21 +211,22 @@ export default function (pi: ExtensionAPI) {
 									: "No tasks",
 							},
 						],
-						details: { action: "list", tasks: [...tasks], nextId } as TaskDetails,
+						details: detailsFor("list"),
 					};
 
 				case "add": {
 					if (!params.text) {
 						return {
 							content: [{ type: "text", text: "Error: text required for add" }],
-							details: { action: "add", tasks: [...tasks], nextId, error: "text required" } as TaskDetails,
+							details: detailsFor("add", "text required"),
 						};
 					}
 					const newTask: Task = { id: nextId++, text: params.text, done: false };
-					tasks.push(newTask);
+					tasks = [...tasks, newTask];
+					updateUi(ctx);
 					return {
 						content: [{ type: "text", text: `Added task #${newTask.id}: ${newTask.text}` }],
-						details: { action: "add", tasks: [...tasks], nextId } as TaskDetails,
+						details: detailsFor("add"),
 					};
 				}
 
@@ -173,25 +234,22 @@ export default function (pi: ExtensionAPI) {
 					if (params.id === undefined) {
 						return {
 							content: [{ type: "text", text: "Error: id required for toggle" }],
-							details: { action: "toggle", tasks: [...tasks], nextId, error: "id required" } as TaskDetails,
+							details: detailsFor("toggle", "id required"),
 						};
 					}
 					const task = tasks.find((t) => t.id === params.id);
 					if (!task) {
 						return {
 							content: [{ type: "text", text: `Task #${params.id} not found` }],
-							details: {
-								action: "toggle",
-								tasks: [...tasks],
-								nextId,
-								error: `#${params.id} not found`,
-							} as TaskDetails,
+							details: detailsFor("toggle", `#${params.id} not found`),
 						};
 					}
-					task.done = !task.done;
+					const done = !task.done;
+					tasks = tasks.map((t) => (t.id === params.id ? { ...t, done } : t));
+					updateUi(ctx);
 					return {
-						content: [{ type: "text", text: `Task #${task.id} ${task.done ? "completed" : "uncompleted"}` }],
-						details: { action: "toggle", tasks: [...tasks], nextId } as TaskDetails,
+						content: [{ type: "text", text: `Task #${task.id} ${done ? "completed" : "uncompleted"}` }],
+						details: detailsFor("toggle"),
 					};
 				}
 
@@ -199,21 +257,17 @@ export default function (pi: ExtensionAPI) {
 					const count = tasks.length;
 					tasks = [];
 					nextId = 1;
+					updateUi(ctx);
 					return {
 						content: [{ type: "text", text: `Cleared ${count} tasks` }],
-						details: { action: "clear", tasks: [], nextId: 1 } as TaskDetails,
+						details: detailsFor("clear"),
 					};
 				}
 
 				default:
 					return {
 						content: [{ type: "text", text: `Unknown action: ${params.action}` }],
-						details: {
-							action: "list",
-							tasks: [...tasks],
-							nextId,
-							error: `unknown action: ${params.action}`,
-						} as TaskDetails,
+						details: detailsFor("list", `unknown action: ${params.action}`),
 					};
 			}
 		},
@@ -289,9 +343,17 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 
-			await ctx.ui.custom<void>((_tui, theme, _kb, done) => {
-				return new TaskListComponent(tasks, theme, () => done());
-			});
+			let activeView: { component: TaskListComponent; requestRender: () => void } | undefined;
+			try {
+				await ctx.ui.custom<void>((tui, theme, _kb, done) => {
+					const component = new TaskListComponent(() => tasks, theme, () => done());
+					activeView = { component, requestRender: () => tui.requestRender() };
+					activeViews.add(activeView);
+					return component;
+				});
+			} finally {
+				if (activeView) activeViews.delete(activeView);
+			}
 		},
 	});
 }
