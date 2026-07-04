@@ -19,21 +19,17 @@ const SEP = "  ·  ";
 let requestFooterRender: (() => void) | undefined;
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
-	// Breathing dot — luminance ramp, no color noise.
-	const gray = (hex: string, s: string) => {
-		const r = parseInt(hex.slice(1, 3), 16);
-		const g = parseInt(hex.slice(3, 5), 16);
-		const b = parseInt(hex.slice(5, 7), 16);
-		return `\x1b[38;2;${r};${g};${b}m${s}\x1b[39m`;
-	};
+	// Breathing dot — theme-derived luminance ramp (dim -> muted -> accent -> dim)
+	// so it reads with the right contrast on both dark and light theme variants.
+	const theme = ctx.ui.theme;
 	ctx.ui.setWorkingIndicator({
 		frames: [
-			gray("#5c5c5c", "·"),
-			gray("#8a8a8a", "•"),
-			gray("#c4c4c4", "●"),
-			gray("#f2f0eb", "●"),
-			gray("#c4c4c4", "●"),
-			gray("#8a8a8a", "•"),
+			theme.fg("dim", "·"),
+			theme.fg("muted", "•"),
+			theme.fg("muted", "●"),
+			theme.fg("accent", "●"),
+			theme.fg("muted", "●"),
+			theme.fg("muted", "•"),
 		],
 		intervalMs: 160,
 	});
