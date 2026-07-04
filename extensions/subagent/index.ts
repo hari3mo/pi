@@ -50,7 +50,7 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 
 type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
 
-// Parse a qa-reviewer verdict from free text per docs/rework-loop.md. Verdict
+// Parse a reviewer verdict from free text per docs/rework-loop.md. Verdict
 // keywords match anywhere (e.g. after "Verdict:"), with flexible whitespace
 // after the colon; when several appear the LAST wins (reviewers state it last).
 function parseQaVerdict(text: string): QaVerdict | null {
@@ -546,7 +546,7 @@ const SubagentParams = Type.Object({
 });
 
 export default function (pi: ExtensionAPI) {
-	// Consecutive qa-reviewer FAIL verdicts this session (AGENTS.md Rework Loop
+	// Consecutive reviewer FAIL verdicts this session (AGENTS.md Rework Loop
 	// budget). Persisted via the custom-entry pattern and replayed on
 	// session_start, exactly like the write-gate mode in read-only-default.ts.
 	// ponytail: session-level consecutive counter, not per-work-item; if
@@ -578,17 +578,17 @@ export default function (pi: ExtensionAPI) {
 		}
 	});
 
-	// Normalize a qa-reviewer return: prepend a [VERDICT: ...] first line parsed
+	// Normalize a reviewer return: prepend a [VERDICT: ...] first line parsed
 	// from the reviewer's text (docs/rework-loop.md), maintain the session FAIL
 	// budget, and flag exhaustion at 3. No-op for every other agent. Fails open.
 	function finalizeQaOutput(agentName: string, text: string): string {
-		if (agentName !== "qa-reviewer") return text;
+		if (agentName !== "reviewer") return text;
 		try {
 			const verdict = parseQaVerdict(text);
 			let header: string;
 			if (verdict === null) {
 				header =
-					"[VERDICT: MISSING — malformed qa-reviewer return; a structured verdict (PASS / FAIL: implementation / FAIL: design) is required. Re-dispatch the review.]";
+					"[VERDICT: MISSING — malformed reviewer return; a structured verdict (PASS / FAIL: implementation / FAIL: design) is required. Re-dispatch the review.]";
 			} else if (verdict === "PASS") {
 				reworkFailCount = 0;
 				persistReworkCount();
