@@ -117,8 +117,10 @@ orchestrator decides.
   logs/stack traces/test output, exploring 3+ files) → a read-only
   dispatch: `scope-planner` when the question is "what is the problem",
   `qa-reviewer` when it is "is this correct", `scout` for pure
-  fact-finding ("list all callers of X", "where is Y rendered"). The
-  lead keeps targeted reads only — see Context Hygiene.
+  fact-finding ("list all callers of X", "where is Y rendered").
+  Independent questions fan out as parallel scouts; a single coherent
+  trace stays with one scout. The lead keeps targeted reads only — see
+  Context Hygiene.
 - **High-stakes calls** → architect + `peer-engineer` in parallel, neither
   seeing the other's answer; the orchestrator synthesizes
 
