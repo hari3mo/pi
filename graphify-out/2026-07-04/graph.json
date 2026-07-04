@@ -74,116 +74,6 @@
   },
   "nodes": [
     {
-      "label": "graph-lookup.ts",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup",
-      "community": 74,
-      "norm_label": "graph-lookup.ts"
-    },
-    {
-      "label": "findGraphRoot()",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L21",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_findgraphroot",
-      "community": 74,
-      "norm_label": "findgraphroot()"
-    },
-    {
-      "label": "GraphNode",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L31",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_graphnode",
-      "community": 74,
-      "norm_label": "graphnode"
-    },
-    {
-      "label": "GraphLink",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L37",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_graphlink",
-      "community": 74,
-      "norm_label": "graphlink"
-    },
-    {
-      "label": "RawGraph",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L45",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_rawgraph",
-      "community": 74,
-      "norm_label": "rawgraph"
-    },
-    {
-      "label": "LoadedGraph",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L50",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_loadedgraph",
-      "community": 74,
-      "norm_label": "loadedgraph"
-    },
-    {
-      "label": "loadGraph()",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_loadgraph",
-      "community": 74,
-      "norm_label": "loadgraph()"
-    },
-    {
-      "label": "InboundRef",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L76",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_inboundref",
-      "community": 74,
-      "norm_label": "inboundref"
-    },
-    {
-      "label": "inboundRefs()",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L93",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_inboundrefs",
-      "community": 74,
-      "norm_label": "inboundrefs()"
-    },
-    {
-      "label": "markSeen()",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L129",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_markseen",
-      "community": 74,
-      "norm_label": "markseen()"
-    },
-    {
-      "label": "isGraphStale()",
-      "file_type": "code",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L140",
-      "_origin": "ast",
-      "id": "extensions_lib_graph_lookup_isgraphstale",
-      "community": 74,
-      "norm_label": "isgraphstale()"
-    },
-    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
@@ -507,7 +397,7 @@
       "label": "renderCall()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L901",
+      "source_location": "L907",
       "_origin": "ast",
       "id": "extensions_subagent_index_rendercall",
       "community": 3,
@@ -517,11 +407,121 @@
       "label": "renderResult()",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L945",
+      "source_location": "L951",
       "_origin": "ast",
       "id": "extensions_subagent_index_renderresult",
       "community": 3,
       "norm_label": "renderresult()"
+    },
+    {
+      "label": "graph-lookup.ts",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "graph-lookup.ts",
+      "id": "extensions_lib_graph_lookup"
+    },
+    {
+      "label": "findGraphRoot()",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L21",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "findgraphroot()",
+      "id": "extensions_lib_graph_lookup_findgraphroot"
+    },
+    {
+      "label": "GraphNode",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L31",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "graphnode",
+      "id": "extensions_lib_graph_lookup_graphnode"
+    },
+    {
+      "label": "GraphLink",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L37",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "graphlink",
+      "id": "extensions_lib_graph_lookup_graphlink"
+    },
+    {
+      "label": "RawGraph",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "rawgraph",
+      "id": "extensions_lib_graph_lookup_rawgraph"
+    },
+    {
+      "label": "LoadedGraph",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L50",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "loadedgraph",
+      "id": "extensions_lib_graph_lookup_loadedgraph"
+    },
+    {
+      "label": "loadGraph()",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L58",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "loadgraph()",
+      "id": "extensions_lib_graph_lookup_loadgraph"
+    },
+    {
+      "label": "InboundRef",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L76",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "inboundref",
+      "id": "extensions_lib_graph_lookup_inboundref"
+    },
+    {
+      "label": "inboundRefs()",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L93",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "inboundrefs()",
+      "id": "extensions_lib_graph_lookup_inboundrefs"
+    },
+    {
+      "label": "markSeen()",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L129",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "markseen()",
+      "id": "extensions_lib_graph_lookup_markseen"
+    },
+    {
+      "label": "isGraphStale()",
+      "file_type": "code",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L140",
+      "_origin": "ast",
+      "community": 74,
+      "norm_label": "isgraphstale()",
+      "id": "extensions_lib_graph_lookup_isgraphstale"
     },
     {
       "label": "check-concurrency-guard.mjs",
@@ -12845,106 +12845,6 @@
   ],
   "links": [
     {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L21",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_findgraphroot",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L37",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_graphlink",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L31",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_graphnode",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L76",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_inboundref",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L93",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_inboundrefs",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L140",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_isgraphstale",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L50",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_loadedgraph",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_loadgraph",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L129",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_markseen",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/lib/graph-lookup.ts",
-      "source_location": "L45",
-      "weight": 1.0,
-      "source": "extensions_lib_graph_lookup",
-      "target": "extensions_lib_graph_lookup_rawgraph",
-      "confidence_score": 1.0
-    },
-    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -13188,7 +13088,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L901",
+      "source_location": "L907",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_rendercall",
@@ -13198,7 +13098,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L945",
+      "source_location": "L951",
       "weight": 1.0,
       "source": "extensions_subagent_index",
       "target": "extensions_subagent_index_renderresult",
@@ -13342,7 +13242,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L998",
+      "source_location": "L1004",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getelapsedms",
@@ -13353,7 +13253,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1130",
+      "source_location": "L1136",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_wallclockelapsedms",
@@ -13375,7 +13275,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1031",
+      "source_location": "L1037",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_formatusagestats",
@@ -13386,7 +13286,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1020",
+      "source_location": "L1026",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_formattoolcall",
@@ -13419,7 +13319,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L997",
+      "source_location": "L1003",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getfinaloutput",
@@ -13452,7 +13352,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L990",
+      "source_location": "L996",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_isfailedresult",
@@ -13463,7 +13363,7 @@
       "context": "argument",
       "confidence": "INFERRED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L962",
+      "source_location": "L968",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_runinprogress",
@@ -13485,7 +13385,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L996",
+      "source_location": "L1002",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_getdisplayitems",
@@ -13496,7 +13396,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L822",
+      "source_location": "L828",
       "weight": 1.0,
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_mapwithconcurrencylimit",
@@ -13545,6 +13445,106 @@
       "source": "extensions_subagent_index_execute",
       "target": "extensions_subagent_index_finalizeqaoutput",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L21",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_findgraphroot"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L37",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_graphlink"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L31",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_graphnode"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_inboundref"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_inboundrefs"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L140",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_isgraphstale"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L50",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_loadedgraph"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_loadgraph"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L129",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_markseen"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/graph-lookup.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "extensions_lib_graph_lookup",
+      "target": "extensions_lib_graph_lookup_rawgraph"
     },
     {
       "relation": "contains",
@@ -30356,5 +30356,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "e889357e82303f1dc2e2961ee13d4f561cd555e1"
+  "built_at_commit": "abefd21aad1d2d41ec98f97213fd281f78738513"
 }

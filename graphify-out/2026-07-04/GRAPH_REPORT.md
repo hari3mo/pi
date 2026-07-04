@@ -1,7 +1,7 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 198 files · ~159,323 words
+- 198 files · ~159,378 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `e889357e`
+- Built from commit: `abefd21a`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -382,15 +382,15 @@ Cohesion: 0.18
 Nodes (5): GraphLink, GraphNode, InboundRef, LoadedGraph, RawGraph
 
 ## Knowledge Gaps
-- **620 isolated node(s):** `GraphNode`, `GraphLink`, `RawGraph`, `LoadedGraph`, `InboundRef` (+615 more)
+- **620 isolated node(s):** `QaVerdict`, `UsageStats`, `SingleResult`, `SubagentDetails`, `DisplayItem` (+615 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.99368928)
-- `~/.pi/agent config repo overview` (3× useful, score=2.993659187)
+- `Config Index (semantic audit map)` (3× useful, score=2.993680558)
+- `~/.pi/agent config repo overview` (3× useful, score=2.993650465)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -401,7 +401,7 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.367) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
   _High betweenness centrality (0.294) - this node is a cross-community bridge._
-- **What connects `GraphNode`, `GraphLink`, `RawGraph` to the rest of the system?**
+- **What connects `QaVerdict`, `UsageStats`, `SingleResult` to the rest of the system?**
   _653 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
