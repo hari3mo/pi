@@ -74,14 +74,104 @@
   },
   "nodes": [
     {
+      "label": "graphify-bridge.ts",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge",
+      "community": 44,
+      "norm_label": "graphify-bridge.ts"
+    },
+    {
+      "label": "findGraphRoot()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_findgraphroot",
+      "community": 44,
+      "norm_label": "findgraphroot()"
+    },
+    {
+      "label": "graphifyPython()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphifypython",
+      "community": 44,
+      "norm_label": "graphifypython()"
+    },
+    {
+      "label": "runGraphify()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L69",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_rungraphify",
+      "community": 44,
+      "norm_label": "rungraphify()"
+    },
+    {
+      "label": "GraphStats",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L83",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphstats",
+      "community": 44,
+      "norm_label": "graphstats"
+    },
+    {
+      "label": "fmtAge()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L142",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_fmtage",
+      "community": 44,
+      "norm_label": "fmtage()"
+    },
+    {
+      "label": "statusText()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L149",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_statustext",
+      "community": 44,
+      "norm_label": "statustext()"
+    },
+    {
+      "label": "GraphParams",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L164",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphparams",
+      "community": 44,
+      "norm_label": "graphparams"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L206",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_execute",
+      "community": 44,
+      "norm_label": "execute()"
+    },
+    {
       "label": "check-impact-trace.mjs",
       "file_type": "code",
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace",
       "community": 78,
-      "norm_label": "check-impact-trace.mjs"
+      "norm_label": "check-impact-trace.mjs",
+      "id": "scripts_check_impact_trace"
     },
     {
       "label": "here",
@@ -89,9 +179,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L21",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_here",
       "community": 78,
-      "norm_label": "here"
+      "norm_label": "here",
+      "id": "scripts_check_impact_trace_here"
     },
     {
       "label": "AGENT_DIR",
@@ -99,9 +189,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L22",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_agent_dir",
       "community": 78,
-      "norm_label": "agent_dir"
+      "norm_label": "agent_dir",
+      "id": "scripts_check_impact_trace_agent_dir"
     },
     {
       "label": "PKG",
@@ -109,9 +199,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L23",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_pkg",
       "community": 78,
-      "norm_label": "pkg"
+      "norm_label": "pkg",
+      "id": "scripts_check_impact_trace_pkg"
     },
     {
       "label": "jiti",
@@ -119,9 +209,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L26",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_jiti",
       "community": 78,
-      "norm_label": "jiti"
+      "norm_label": "jiti",
+      "id": "scripts_check_impact_trace_jiti"
     },
     {
       "label": "check()",
@@ -129,9 +219,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L30",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_check",
       "community": 78,
-      "norm_label": "check()"
+      "norm_label": "check()",
+      "id": "scripts_check_impact_trace_check"
     },
     {
       "label": "nodes",
@@ -139,9 +229,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L35",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_nodes",
       "community": 78,
-      "norm_label": "nodes"
+      "norm_label": "nodes",
+      "id": "scripts_check_impact_trace_nodes"
     },
     {
       "label": "links",
@@ -149,9 +239,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L42",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_links",
       "community": 78,
-      "norm_label": "links"
+      "norm_label": "links",
+      "id": "scripts_check_impact_trace_links"
     },
     {
       "label": "expectKeys",
@@ -159,9 +249,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L51",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_expectkeys",
       "community": 78,
-      "norm_label": "expectkeys"
+      "norm_label": "expectkeys",
+      "id": "scripts_check_impact_trace_expectkeys"
     },
     {
       "label": "toKeys()",
@@ -169,9 +259,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L52",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_tokeys",
       "community": 78,
-      "norm_label": "tokeys()"
+      "norm_label": "tokeys()",
+      "id": "scripts_check_impact_trace_tokeys"
     },
     {
       "label": "viaLinks",
@@ -179,9 +269,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L55",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_vialinks",
       "community": 78,
-      "norm_label": "vialinks"
+      "norm_label": "vialinks",
+      "id": "scripts_check_impact_trace_vialinks"
     },
     {
       "label": "viaEdges",
@@ -189,9 +279,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L61",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_viaedges",
       "community": 78,
-      "norm_label": "viaedges"
+      "norm_label": "viaedges",
+      "id": "scripts_check_impact_trace_viaedges"
     },
     {
       "label": "seen",
@@ -199,9 +289,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L69",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_seen",
       "community": 78,
-      "norm_label": "seen"
+      "norm_label": "seen",
+      "id": "scripts_check_impact_trace_seen"
     },
     {
       "label": "eqSet()",
@@ -209,9 +299,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L74",
       "_origin": "ast",
-      "id": "scripts_check_impact_trace_eqset",
       "community": 78,
-      "norm_label": "eqset()"
+      "norm_label": "eqset()",
+      "id": "scripts_check_impact_trace_eqset"
     },
     {
       "label": "check-graph-first.mjs",
@@ -2230,96 +2320,6 @@
       "community": 51,
       "norm_label": "firechime()",
       "id": "extensions_focus_chime_firechime"
-    },
-    {
-      "label": "graphify-bridge.ts",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "graphify-bridge.ts",
-      "id": "extensions_graphify_bridge"
-    },
-    {
-      "label": "findGraphRoot()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "findgraphroot()",
-      "id": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "label": "graphifyPython()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L47",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "graphifypython()",
-      "id": "extensions_graphify_bridge_graphifypython"
-    },
-    {
-      "label": "runGraphify()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "rungraphify()",
-      "id": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "label": "GraphStats",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L72",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "graphstats",
-      "id": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "label": "fmtAge()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L131",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "fmtage()",
-      "id": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "label": "statusText()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L138",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "statustext()",
-      "id": "extensions_graphify_bridge_statustext"
-    },
-    {
-      "label": "GraphParams",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L153",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "graphparams",
-      "id": "extensions_graphify_bridge_graphparams"
-    },
-    {
-      "label": "execute()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L195",
-      "_origin": "ast",
-      "community": 44,
-      "norm_label": "execute()",
-      "id": "extensions_graphify_bridge_execute"
     },
     {
       "label": "command.ts",
@@ -13425,14 +13425,169 @@
   ],
   "links": [
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_config_index_audit_map",
+      "target": "extensions_graphify_bridge"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/graph-maintenance.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_graph_maintenance_runbook",
+      "target": "extensions_graphify_bridge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L206",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L44",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_findgraphroot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_fmtage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphifypython",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L164",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L95",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphstats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L69",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_rungraphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L149",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_statustext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L207",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_findgraphroot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_rungraphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L150",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_statustext",
+      "target": "extensions_graphify_bridge_graphstats"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_statustext",
+      "target": "extensions_graphify_bridge_fmtage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L214",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_statustext",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_agent_dir",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_agent_dir"
     },
     {
       "relation": "contains",
@@ -13440,9 +13595,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L30",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_check",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_check"
     },
     {
       "relation": "contains",
@@ -13450,9 +13605,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L74",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_eqset",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_eqset"
     },
     {
       "relation": "contains",
@@ -13460,9 +13615,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L51",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_expectkeys",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_expectkeys"
     },
     {
       "relation": "contains",
@@ -13470,9 +13625,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_here",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_here"
     },
     {
       "relation": "contains",
@@ -13480,9 +13635,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_jiti",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_jiti"
     },
     {
       "relation": "contains",
@@ -13490,9 +13645,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L42",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_links",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_links"
     },
     {
       "relation": "contains",
@@ -13500,9 +13655,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L35",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_nodes",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_nodes"
     },
     {
       "relation": "contains",
@@ -13510,9 +13665,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_pkg",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_pkg"
     },
     {
       "relation": "contains",
@@ -13520,9 +13675,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L69",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_seen",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_seen"
     },
     {
       "relation": "contains",
@@ -13530,9 +13685,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L52",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_tokeys",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_tokeys"
     },
     {
       "relation": "contains",
@@ -13540,9 +13695,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L61",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_viaedges",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_viaedges"
     },
     {
       "relation": "contains",
@@ -13550,9 +13705,9 @@
       "source_file": "scripts/check-impact-trace.mjs",
       "source_location": "L55",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_check_impact_trace",
-      "target": "scripts_check_impact_trace_vialinks",
-      "confidence_score": 1.0
+      "target": "scripts_check_impact_trace_vialinks"
     },
     {
       "relation": "contains",
@@ -16516,161 +16671,6 @@
       "confidence_score": 1.0,
       "source": "extensions_focus_chime_firechime",
       "target": "extensions_focus_chime_sanitize"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_graphify_bridge"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/graph-maintenance.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_graph_maintenance_runbook",
-      "target": "extensions_graphify_bridge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L195",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_execute"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L131",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphifypython"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L153",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphparams"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L138",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_statustext"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L196",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L209",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L139",
-      "weight": 1.0,
-      "source": "extensions_graphify_bridge_statustext",
-      "target": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L142",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_statustext",
-      "target": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L203",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_statustext"
     },
     {
       "relation": "contains",
@@ -31488,5 +31488,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "c2ad87d5735a6ee6fd2c5f9029e7afac16334205"
+  "built_at_commit": "5022f9689e4724a61941d1f81a16be3413ddfb26"
 }
