@@ -27,7 +27,12 @@ shipper, or any fan-out) is deployed ONLY when one of these holds:
    - **Single-session scope** (fits comfortably in one context window,
      requirements clear, no genuinely concurrent workstreams): dispatch ONE
      `solo-engineer` with the whole bounded task end-to-end, then
-     spot-check against acceptance criteria. NO pipeline. (Benchmarked
+     spot-check against acceptance criteria. NO pipeline. Escalate the
+     dispatch to `fable-engineer` (≈1.6x cost, benchmarked best blind-review
+     quality) when the code is expensive to change later — core algorithms,
+     dense state, long-lived public contracts — or after `solo-engineer`
+     fails review twice; its task text must inline any repo conventions
+     since it loads no context files. (Benchmarked
      2026-07: the full pipeline cost 2–14x solo with equal-or-worse
      quality at this scale — see ~/orch-bench/REPORT.md.)
    - **Full pipeline** ONLY when at least one holds: scope exceeds one
@@ -75,7 +80,7 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into seven roles. Do not collapse verification into the builder —
+Real work splits into eight roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
@@ -85,6 +90,7 @@ an agent must not review its own code.
 | `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
 | `opus-engineer` | Small-but-hard tasks where design and implementation can't separate: tricky concurrency, subtle algorithms, delicate refactors | Deep reasoning |
 | `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
+| `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
 | `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
 
@@ -107,9 +113,10 @@ When a task arrives, decompose it and route each piece by weight:
   - writing the code once the design is fixed, wiring/plumbing, test scaffolding,
     lint/type/format fixes, renames, commits
   - EXCEPT core algorithmic or stateful modules: route those to
-    `solo-engineer` even when the design is fixed — mechanical-tier
-    builders ship subtle spec-corner defects that review does not catch
-    (benchmarked: error-token aliasing, reference canonicalization)
+    `solo-engineer` (or `fable-engineer` at highest stakes) even when the
+    design is fixed — mechanical-tier builders ship subtle spec-corner
+    defects that review does not catch (benchmarked: error-token
+    aliasing, reference canonicalization)
 - **Verification** → deep reasoning tier, and never the same agent that built it
 - **Small-but-hard execution** (design and implementation inseparable) → `opus-engineer`
   - tricky concurrency fixes, subtle algorithms, delicate refactors of dense
