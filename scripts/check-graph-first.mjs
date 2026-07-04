@@ -47,6 +47,12 @@ const cases = [
 	['rg "ERROR"', false, "log level passes"],
 	["echo hello", false, "not a grep passes"],
 	["cat file | grep foo", false, "bare id without repo-wide → miss (conservative)"],
+	// --- REVIEWER PROBES: legit content greps that MUST pass (worst failure = blocking these) ---
+	['grep -rn "import failed" logs/', false, "probe: keyword+id but logs/ path → content (guard a)"],
+	['grep -rn "type of" docs/', false, "probe: keyword+word but docs/ path → content (guard a)"],
+	['grep -rn "const" --include=*.md docs/', false, "probe: bare keyword + *.md glob → content (guard a)"],
+	['rg --glob "*.md" "from memory" docs/', false, "probe: keyword+id but *.md glob → content (guard a)"],
+	['grep -rn "class action lawsuit" docs/', false, "probe: keyword + 3-word prose → content (guard b)"],
 ];
 for (const [cmd, want, note] of cases) {
 	const got = classifyStructureGrep(cmd).flagged;
