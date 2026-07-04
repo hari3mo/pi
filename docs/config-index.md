@@ -1,10 +1,8 @@
 # Config Index
 
-This is the semantic audit map of `~/.pi/agent`. Git snapshots (`.pi-vcs/`,
-`git log`) hold the raw diff history; this file holds the meaning — what
-each piece is for and why it changed. Every session that adds, changes, or
-removes a config feature must update this file (feature-index row +
-changelog entry).
+This file is the semantic audit map of `~/.pi/agent`.
+Git snapshots hold the raw diffs; this file holds the meaning.
+Every session that changes config must update it.
 
 ## Feature index
 
@@ -49,6 +47,7 @@ changelog entry).
 > or removed. Format: date, summary, files touched, why. Keep entries to
 > 2–4 lines.
 
-**2026-07-03** — Baseline — feature index created; all entries above this
-line predate the index. Use `git log` in ~/.pi/agent for raw pre-index
-history.
+### 2026-07-03
+
+Baseline — feature index created; all entries above this line predate the
+index. Use `git log` in ~/.pi/agent for raw pre-index history.
