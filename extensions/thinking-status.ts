@@ -8,19 +8,15 @@
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 
-function formatThinkingStatus(ctx: { ui: { theme: { fg: (name: string, text: string) => string } } }, level: string) {
-	return ctx.ui.theme.fg("dim", level);
-}
-
 export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		if (!ctx.hasUI) return;
 		const level = pi.getThinkingLevel();
-		ctx.ui.setStatus("thinking", formatThinkingStatus(ctx, level));
+		ctx.ui.setStatus("thinking", ctx.ui.theme.fg("dim", level));
 	});
 
 	pi.on("thinking_level_select", async (event, ctx) => {
 		if (!ctx.hasUI) return;
-		ctx.ui.setStatus("thinking", formatThinkingStatus(ctx, event.level));
+		ctx.ui.setStatus("thinking", ctx.ui.theme.fg("dim", event.level));
 	});
 }
