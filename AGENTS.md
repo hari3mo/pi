@@ -230,4 +230,9 @@ inside `~/.pi/agent`:
 - (Enforced in config, no action needed: the heuristics extension itself now
   echoes the exact saved text in every `learn_heuristic` / `/heuristics add`
   result — see `extensions/heuristics/store.ts` `SaveResult.text`.)
+- (Enforced in config, no action needed: when a `subagent` call happens in
+  confirm/read-only mode, the write-gate extension prompts the user to switch
+  to write mode, and spawned children inherit `--write` only when the parent
+  gate is in write mode — see `extensions/read-only-default.ts` and
+  `extensions/subagent/index.ts` `__piWriteGateMode`.)
 
