@@ -330,6 +330,12 @@ async function runSingleAgent(
 	}
 
 	const args: string[] = ["--mode", "json", "-p", "--no-session"];
+	// Inherit the parent's write gate (published by extensions/read-only-default.ts).
+	// Only a parent in write mode grants children --write; otherwise children
+	// start headless in confirm mode, where writes are blocked.
+	if ((globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write") {
+		args.push("--write");
+	}
 	if (agent.model) args.push("--model", agent.model);
 	if (agent.tools && agent.tools.length > 0) args.push("--tools", agent.tools.join(","));
 
