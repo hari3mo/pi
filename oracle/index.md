@@ -52,7 +52,7 @@ integration pass from `_fragments/index-*.md`. See [[SCHEMA]] for conventions.*
 - [[components/write-gate-extension]] — Gates writes by mode (confirm/write/read-only), hard-blocks fable edits in every mode, publishes the gate so subagents inherit it, offers request_write_mode. ( #pi #extensions #orchestration)
 - [[concepts/concurrency-model]] — How concurrent sessions stay safe on ~/.pi/agent: autocommit daemon, concurrency guard, pre-commit gate + its launchd PATH caveat. ( #pi #config #concept)
 - [[concepts/delegation-gate]] — The per-model rule (fable/opus/direct) deciding orchestrate-vs-work-directly, plus the write-gate + intent-interview pre-flights. ( #pi #orchestration #concept)
-- [[concepts/fable-budget-invariants]] — The MUST token-spend rules: one read before dispatch, never verify by reading, batch dispatches, front-load spec quality, blind fan-out, graph-first. ( #pi #orchestration #concept)
+- [[concepts/fable-budget-invariants]] — The MUST token-spend rules: one read before dispatch, never verify by reading, batch dispatches, front-load spec quality, blind fan-out, graph-first, oracle-first. ( #pi #orchestration #concept)
 - [[concepts/knowledge-graph-integration]] — Graph-first over grep (~30x cheaper), the strict Oracle-vs-graph division of labor, and the cwd-resolution gotcha. ( #pi #graph #concept)
 - [[concepts/orchestration-doctrine]] — Fable's judgment-at-decision-points philosophy: a lead touches each task twice (dispatch + judge) and delegates everything between. ( #pi #orchestration #concept)
 - [[concepts/rework-loop]] — Verification as a bounce-back gate: peer returns PASS / FAIL:implementation / FAIL:design, looped to a session-level 3-FAIL ceiling. ( #pi #orchestration #concept)
