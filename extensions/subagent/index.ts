@@ -329,6 +329,7 @@ async function runSingleAgent(
 	}
 	if (agent.model) args.push("--model", agent.model);
 	if (agent.tools && agent.tools.length > 0) args.push("--tools", agent.tools.join(","));
+	if (agent.noContextFiles) args.push("--no-context-files");
 
 	let tmpPromptDir: string | null = null;
 	let tmpPromptPath: string | null = null;
