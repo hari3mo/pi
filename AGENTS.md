@@ -210,3 +210,8 @@ even before the budget runs out.
   or the 3-iteration budget forces re-framing/escalation
 - Spend the priciest model only where it pays for itself
 
+## Standing Orders
+
+- After recording a lesson with `learn_heuristic`, always display the exact
+  heuristic text that was saved.
+
