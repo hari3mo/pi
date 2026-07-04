@@ -28,6 +28,21 @@ export function findGraphRoot(cwd: string): string | undefined {
 	}
 }
 
+/**
+ * Pinned graphify interpreter written by the graphify skill/CLI (uv/pipx-safe);
+ * falls back to system python3. Allowlists path chars (mirrors graphify's own
+ * hook probe) before trusting the recorded path.
+ */
+export function graphifyPython(root: string): string {
+	try {
+		const p = readFileSync(join(root, OUT, ".graphify_python"), "utf8").trim();
+		if (p && !/[^a-zA-Z0-9/_.@:\\-]/.test(p) && existsSync(p)) return p;
+	} catch {
+		// fall through to system python
+	}
+	return "python3";
+}
+
 export interface GraphNode {
 	id: string;
 	source_file?: string;
