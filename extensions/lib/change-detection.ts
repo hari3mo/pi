@@ -112,8 +112,9 @@ export function createChangeTracker(agentDir: string) {
 		 * THE detection + classification pass (call once per before_agent_start).
 		 * Advances the baseline, so each range classifies at most once. Returns
 		 * undefined when HEAD did not move or every commit was our own snapshot.
-		 * Empty committed hash (deletion or git error) falls through to silent,
-		 * honoring fail-open.
+		 * A file we edited that another shell DELETED (gone from head's tree) is a
+		 * collision; a genuinely empty hash from a transient git error (file still
+		 * in the tree) falls through to silent, honoring fail-open.
 		 */
 		detectAdvance(): RepoAdvance | undefined {
 			if (!lastKnownHead) return undefined;
@@ -133,7 +134,13 @@ export function createChangeTracker(agentDir: string) {
 				}
 				const committed = git("rev-parse", `${head}:${f}`);
 				const ours = touchedHashes.get(f);
-				if (committed && ours && committed !== ours) collided.push(f);
+				if (committed && ours && committed !== ours) {
+					collided.push(f); // another session committed DIFFERENT content over our edit
+				} else if (!committed && ours && !git("ls-tree", head, "--", f)) {
+					// Gone from head's tree (not a transient rev-parse error) → another
+					// shell DELETED a file we edited: highest-risk, same as a clobber.
+					collided.push(f);
+				}
 			}
 			if (foreign.length === 0 && collided.length === 0) return undefined; // own snapshot(s)
 			collisionCount += collided.length;
