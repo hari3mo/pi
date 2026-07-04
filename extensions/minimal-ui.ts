@@ -29,12 +29,10 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 		frames: [
 			theme.fg("dim", "·"),
 			theme.fg("dim", "•"),
-			theme.fg("muted", "•"),
-			theme.fg("muted", "•"),
 			theme.fg("dim", "•"),
-			theme.fg("dim", "·"),
+			theme.fg("dim", "•"),
 		],
-		intervalMs: 220,
+		intervalMs: 280,
 	});
 
 	ctx.ui.setFooter((tui, theme, footerData) => {
