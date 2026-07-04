@@ -18,6 +18,11 @@ The pipeline/subagents are deployed ONLY when the lead is:
 Any other lead model: work directly, no subagents, decomposition order
 design → execute → verify.
 
+This gate is now mechanized per-model by `extensions/lead-config.ts`: it reads the
+active model id every prompt and injects the matching lead profile from
+`config/lead-profiles.json` (fable / opus-lead / direct) — this prose is the canon; the
+profiles are its runtime echo.
+
 ### Write-Gate Pre-Flight (MUST)
 
 When the lead is `claude-fable-5` and the task plausibly needs file changes, the FIRST
@@ -176,3 +181,10 @@ The harness audits itself; problems become prompts:
 - `extensions/impact-trace.ts` surfaces a file's inbound graph dependents
   (`fileA:line (references)`) after every successful edit/write, so cross-file impact
   is visible without asking; debounced once per file, silent and fail-open otherwise.
+- `extensions/lead-config.ts` mechanizes the Delegation Gate per-model: every prompt it
+  reads the active model id (`ctx.model.id`), first-matches `config/lead-profiles.json`
+  (fable / opus-lead / direct), and appends that profile's doctrine to the system prompt;
+  unknown/garbage id or any error injects nothing (static AGENTS.md stands). Enforcement
+  (the fable edit-block) is untouched. Self-improving: per-session model/profile/fallback
+  stats land in `graphify-out/.lead_config_stats.json` and
+  `audit-pipelines.py:check_lead_profile_coverage()` WARNs on repeated fallback drift.
