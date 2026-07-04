@@ -105,9 +105,9 @@ const ART_MAX_ROWS = 64;
 // the letterforms stay crisp against the starfield. Rendered dim (terminal
 // default foreground), readable on both light and dark themes.
 const WORDMARK = [
-	" __                                                   ___",
-	"/\\ \\                       __                        / R \\",
-	"\\ \\ \\___      __     _ __ /\\_\\    ___ ___     ___   \\___/",
+	" __",
+	"/\\ \\                       __",
+	"\\ \\ \\___      __     _ __ /\\_\\    ___ ___     ___  ®",
 	" \\ \\  _ `\\  /'__`\\  /\\`'__\\/\\ \\ /' __` __`\\  / __`\\",
 	"  \\ \\ \\ \\ \\/\\ \\L\\.\\_\\ \\ \\/ \\ \\ \\/\\ \\/\\ \\/\\ \\/\\ \\L\\ \\",
 	"   \\ \\_\\ \\_\\ \\__/.\\_\\\\ \\_\\  \\ \\_\\ \\_\\ \\_\\ \\_\\ \\____/",
