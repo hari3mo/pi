@@ -245,7 +245,7 @@ export default function (pi: ExtensionAPI) {
 				return {
 					block: true,
 					reason:
-						"Fable lead never edits directly — delegate to a builder-tier agent (see AGENTS.md Hard Delegation Thresholds).",
+						"Fable lead never edits directly — delegate to a worker-tier agent (see AGENTS.md Hard Delegation Thresholds).",
 				};
 			}
 		} catch {
@@ -257,7 +257,7 @@ export default function (pi: ExtensionAPI) {
 		// Subagent orchestration: children inherit the gate (only write mode
 		// grants them --write). If the user is about to orchestrate from a
 		// gated mode, offer to switch to write mode first instead of letting
-		// builders silently fail their writes.
+		// workers silently fail their writes.
 		if (event.toolName === "subagent") {
 			if (!ctx.hasUI) return; // headless: run as-is, children stay read-only
 			const choice = await ctx.ui.select(

@@ -77,7 +77,7 @@ export function rewriteGenerality(text: string): string {
 
 // ---------------------------------------------------------------------------
 // Lint (DESIGN.md §5) — warn-only, never blocks. No banned-vocabulary lists;
-// orchestration terms (subagent, delegate, builder, etc.) are fine in any
+// orchestration terms (subagent, delegate, worker, etc.) are fine in any
 // category. Flags only session-specific markers.
 // ---------------------------------------------------------------------------
 
