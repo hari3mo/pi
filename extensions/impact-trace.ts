@@ -28,19 +28,38 @@ import { findGraphRoot, inboundRefs, isGraphStale, loadGraph, markSeen, OUT } fr
 
 const MAX_LIST = 10;
 
+/**
+ * Order-aware follow-through: a flagged dependent is still pending unless it was
+ * edited AFTER it was flagged. `flaggedAt`/`editedAt` map each file to a
+ * monotonic edit sequence (flag-time / last-edit-time). Pure, so the check can
+ * import it. A dependent edited BEFORE its flag stays pending — that earlier
+ * edit cannot reflect the later change that flagged it.
+ */
+export function pendingDependents(
+	flaggedAt: Map<string, number>,
+	editedAt: Map<string, number>,
+): string[] {
+	return [...flaggedAt.keys()].filter((dep) => {
+		const e = editedAt.get(dep);
+		return e === undefined || e <= (flaggedAt.get(dep) as number);
+	});
+}
+
 export default function (pi: ExtensionAPI) {
 	let root: string | undefined;
 	const reportedFiles = new Set<string>(); // debounce: files already reported (once per session)
-	const flaggedDeps = new Set<string>(); // dependents we surfaced
-	const editedFiles = new Set<string>(); // files edited this session
+	const flaggedAt = new Map<string, number>(); // dependent → edit-seq when last flagged
+	const editedAt = new Map<string, number>(); // file → edit-seq of its last edit
+	let editSeq = 0; // monotonic edit counter (orders flags vs edits)
 	let turn = 0;
 	let followupSent = false;
 
 	pi.on("session_start", async (_event, ctx) => {
 		root = findGraphRoot(ctx.cwd);
 		reportedFiles.clear();
-		flaggedDeps.clear();
-		editedFiles.clear();
+		flaggedAt.clear();
+		editedAt.clear();
+		editSeq = 0;
 		turn = 0;
 		followupSent = false;
 	});
@@ -58,7 +77,7 @@ export default function (pi: ExtensionAPI) {
 			const rel = relative(root, abs);
 			if (!rel || rel.startsWith("..")) return; // outside the graph root
 
-			editedFiles.add(rel); // track every edit (so a later edit clears a flagged dep)
+			editedAt.set(rel, ++editSeq); // record every edit's order (even debounced ones)
 			if (!markSeen(reportedFiles, rel)) return; // debounce: once per file per session
 
 			const graph = loadGraph(root);
@@ -73,7 +92,9 @@ export default function (pi: ExtensionAPI) {
 				// stat failure → treat as not-stale; the refs still stand
 			}
 
-			for (const r of refs) if (r.file !== rel) flaggedDeps.add(r.file);
+			// Flag-time = the seq of the edit that surfaced this dependent. Latest
+			// flag wins so a dep re-flagged by a newer edit needs a newer edit to clear.
+			for (const r of refs) if (r.file !== rel) flaggedAt.set(r.file, editSeq);
 
 			const shown = refs
 				.slice(0, MAX_LIST)
@@ -100,7 +121,7 @@ export default function (pi: ExtensionAPI) {
 			// Grace: only remind once at least one extra loop has passed, so a
 			// dependent flagged this turn isn't nagged before the agent can act.
 			if (followupSent || turn < 2) return;
-			const pending = [...flaggedDeps].filter((dep) => !editedFiles.has(dep));
+			const pending = pendingDependents(flaggedAt, editedAt);
 			if (pending.length === 0) return;
 			followupSent = true;
 			const shown = pending.slice(0, MAX_LIST).join(", ");
