@@ -169,3 +169,10 @@ The harness audits itself; problems become prompts:
 - The write-gate prompts on `subagent` calls in confirm/read-only mode so children can
   inherit write access.
 - The heuristics store echoes the exact saved text on every `learn_heuristic` save.
+- `extensions/graph-first.ts` redirects structure-shaped `grep`/`rg` (symbol
+  def/ref/import hunts) to the `graph` tool: first offense nudges, later ones block
+  with an identical-retry bypass; content greps pass untouched. Active only when
+  `graphify-out/graph.json` exists.
+- `extensions/impact-trace.ts` surfaces a file's inbound graph dependents
+  (`fileA:line (references)`) after every successful edit/write, so cross-file impact
+  is visible without asking; debounced once per file, silent and fail-open otherwise.
