@@ -30,9 +30,9 @@ in a session. These lessons are the surprises that follow.
 ## Programmatic sessions start read-only — pass `--write`
 
 When spawning pi programmatically (RPC / print / json mode), e.g. for tests, **pass
-`--write`** — the `read-only-default` extension disables the `edit`/`write` tools in every
+`--write`** when the intended writes are under `~/.pi` — the `read-only-default` extension disables the `edit`/`write` tools in every
 new session, so without the flag a spawned session cannot modify files
-(heuristic `h_mr5l245j_gcds9p3m`).
+(heuristic `h_mr5l245j_gcds9p3m`). Auto-write is deliberately scoped to `~/.pi`; outside that root, UI sessions still prompt and headless sessions block.
 
 ## In read-only / confirm mode, avoid any `>` in bash commands
 
@@ -48,7 +48,7 @@ extension file on disk, the running pi process is on a **stale pre-edit copy** (
 load once at session start — see [[synthesis/pi-extension-api-gotchas]]). Dispatch the
 subagent call anyway: the write-gate's `subagent` `tool_call` hook still pops the UI menu to
 switch to write mode, and children inherit `--write` only when the parent gate is in write
-mode. Never fall back to asking for write access in prose (heuristic `h_mr5p7pws_jw73u37k`).
+mode. That inherited auto-write is still scoped to `~/.pi`, so outside-root headless child writes block. Never fall back to asking for write access in prose (heuristic `h_mr5p7pws_jw73u37k`).
 The orchestration framing of this rule lives in [[synthesis/orchestration-lessons]].
 
 ## See also
