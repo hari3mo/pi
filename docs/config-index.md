@@ -40,7 +40,7 @@ Every session that changes config must update it.
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
 | Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes peer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/worker.md`, `agents/fable-engineer.md`, `agents/reviewer.md`, `agents/peer.md`, `agents/scout.md`, `agents/engineer.md`, `agents/verifier.md` | Seven-role roster dispatched per the AGENTS.md scale-first routing table. `engineer` (renamed from `solo-engineer`) is the default workhorse (whole bounded tasks end-to-end; also design-only dispatches when 2+ implementers consume the design — there is no standing architect). `worker` (renamed from `builder`) handles fully-specified mechanical edits and ships after review passes. `scout` is read-only investigation; `verifier` (sonnet, read/run-only) runs the acceptance path and returns PASS/FAIL, only when something is runnable. `peer` (renamed from `reviewer`, itself renamed from `qa-reviewer`; gpt-5.5) is the deep-reasoning gate for existing-behavior/high-risk changes. `reviewer` (renamed from `peer-engineer`, gpt-5.5-pro) gives blind second opinions; `fable-engineer` is opt-in only (explicit user approval), the sole orchestrator-tier subagent. Scope ambiguity is resolved by interviewing the user (`scope-planner` deleted). |
+| Agent role set | `agents/worker.md`, `agents/fable-engineer.md`, `agents/reviewer.md`, `agents/peer.md`, `agents/scout.md`, `agents/engineer.md`, `agents/verifier.md` | Seven-role roster dispatched per the AGENTS.md scale-first routing table. `engineer` (renamed from `solo-engineer`) is the default workhorse (whole bounded tasks end-to-end; also design-only dispatches when 2+ implementers consume the design — there is no standing architect). `worker` (renamed from `builder`) handles fully-specified mechanical edits and ships after review passes. `scout` is read-only investigation; `verifier` (sonnet, read/run-only) runs the acceptance path and returns PASS/FAIL, only when something is runnable. `peer` (renamed from `reviewer`, itself renamed from `qa-reviewer`; gemini-3.5-flash:high) is the deep-reasoning gate for existing-behavior/high-risk changes. `reviewer` (renamed from `peer-engineer`, gpt-5.5:xhigh) gives blind second opinions; `fable-engineer` is opt-in only (explicit user approval), the sole orchestrator-tier subagent. Scope ambiguity is resolved by interviewing the user (`scope-planner` deleted). |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
@@ -53,6 +53,17 @@ Every session that changes config must update it.
 | Global agent doctrine | `AGENTS.md` | The Delegation Gate, write-gate pre-flight, intent interview, scale-first routing table, seven-role roster, fable budget invariants, rework loop, and config-maintenance checklist governing how this harness is used across sessions. |
 
 ## Changelog
+
+**Peer/reviewer model swap: `reviewer` → `openai/gpt-5.5:xhigh`, `peer` → `google/gemini-3.5-flash:high`.**
+User-directed: the two model pins on the second-opinion roles were exchanged. `reviewer`
+(blind independent second opinion) moves from `gemini-3.5-flash:high` to `openai/gpt-5.5:xhigh`;
+`peer` (gate-tier verification) moves from `openai/gpt-5.5:xhigh` to `google/gemini-3.5-flash:high`
+(`:high` per the gemini-3.5-flash thinking heuristic). Updated the `model:` frontmatter in
+`agents/reviewer.md` and `agents/peer.md`, plus every doctrine reference: AGENTS.md roles
+table (reviewer tier model) and defaults line (peer tier model), `config/lead-profiles.json`
+(opus-lead doctrine tier list), and this file's roster description. No behavior/charter
+change — only the backing model per role. Files: `agents/reviewer.md`, `agents/peer.md`,
+`AGENTS.md`, `config/lead-profiles.json`, `docs/config-index.md`.
 
 > Append a new entry at the top whenever a config feature is added, changed,
 > or removed. Format: date, summary, files touched, why. Keep entries to
