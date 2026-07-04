@@ -169,10 +169,11 @@ export default function (pi: ExtensionAPI) {
 		if (!s) return;
 		const block = [
 			`\n\n## Knowledge graph (graphify)`,
-			`${OUT}/graph.json — ${s.nodes} nodes · ${s.edges} edges · ${s.communities} communities (updated ${fmtAge(s.updated)}${s.stale ? "; STALE for docs — suggest /graphify --update" : ""}).`,
+			`${join(root, OUT, "graph.json")} — ${s.nodes} nodes · ${s.edges} edges · ${s.communities} communities (updated ${fmtAge(s.updated)}${s.stale ? "; STALE for docs — suggest /graphify --update" : ""}).`,
+			`Graph root: ${root} (walks up from cwd; falls back to the pi agent config graph when no project graph exists).`,
 			`Hubs: ${s.hubs.join(", ")}.`,
 			`Answer questions about this codebase's structure/architecture with the \`graph\` tool (query/explain/path) BEFORE reading files or dispatching scouts — it is ~30x cheaper than reading.` +
-				(s.hasLessons ? ` Past-query lessons: ${OUT}/reflections/LESSONS.md.` : ""),
+				(s.hasLessons ? ` Past-query lessons: ${join(root, OUT, "reflections", "LESSONS.md")}.` : ""),
 		].join("\n");
 		return { systemPrompt: event.systemPrompt + block };
 	});
@@ -181,7 +182,7 @@ export default function (pi: ExtensionAPI) {
 		name: "graph",
 		label: "Graph",
 		description:
-			"Query the graphify knowledge graph of this codebase (graphify-out/graph.json). Actions: query (answer a question via traversal), explain (a node and its connections), path (shortest path between two concepts), status (size, hubs, staleness).",
+			"Query the nearest graphify knowledge graph; if cwd has none, query the pi agent config graph. Actions: query (answer a question via traversal), explain (a node and its connections), path (shortest path between two concepts), status (size, hubs, staleness).",
 		parameters: GraphParams,
 
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
