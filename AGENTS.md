@@ -240,6 +240,9 @@ read `~/.pi/agent/docs/rework-loop.md` before running the pipeline.
   registered in `schema/manifest.json`.
 - Heuristics about pi itself go to the global store (`learn_heuristic`
   scope `global`).
-- After changing AGENTS.md, agents/, or delegation extensions, run the
-  doctrine suite: `python3 ~/orch-bench/probes/run_probes.py --tier smoke`
-  (~$1); `--tier full` (~$8) before major restructuring.
+- The doctrine suite (`python3 ~/orch-bench/probes/run_probes.py`) spends
+  real tokens on live model calls, so it is NEVER part of routine
+  validation — run it ONLY when the user explicitly asks. After changing
+  AGENTS.md, agents/, or delegation extensions, note that a doctrine-suite
+  run is recommended (`--tier smoke` ~$1; `--tier full` ~$8 before major
+  restructuring) and let the user invoke it.
