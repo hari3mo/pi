@@ -24,9 +24,10 @@ const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-w
 
 const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
 const jiti = createJiti(join(AGENT_DIR, "extensions", "_check_.js"), { interopDefault: false });
-const { classifyPiDocRead, isOracleConsult, decideAction } = await jiti.import(
+const { classifyPiDocRead, isOracleConsult, decideAction, buildNudge, buildBlock } = await jiti.import(
 	join(AGENT_DIR, "extensions", "oracle-first.ts"),
 );
+const { CROSS_STORE_GUIDANCE } = await jiti.import(join(AGENT_DIR, "extensions", "lib", "knowledge-router.ts"));
 
 const PI = "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent";
 const CWD = "/Users/harissaif/.pi/agent";
@@ -78,5 +79,13 @@ check("identical retry again → bypass", decideAction(state, B, true) === "bypa
 check("non-flagged → allow", decideAction(state, "x", false) === "allow");
 check("third distinct flagged → block", decideAction(state, "read:other", true) === "block");
 
+// --- redirect messages name BOTH stores (deliverable 2) ---
+const nudge = buildNudge(`${PI}/README.md`);
+const block = buildBlock(`${PI}/docs/tui.md`);
+check("msg: nudge leads with wiki-query + names the target", nudge.includes("wiki-query") && nudge.includes(`${PI}/README.md`));
+check("msg: every message carries cross-store guidance", nudge.includes(CROSS_STORE_GUIDANCE) && block.includes(CROSS_STORE_GUIDANCE));
+check("msg: every message names both stores (oracle + graph)", nudge.includes("oracle") && nudge.includes("graph") && block.includes("graph"));
+check("msg: block keeps IDENTICAL-retry escape", /IDENTICAL read to proceed/.test(block));
+
 assert.equal(failed, 0, `${failed} oracle-first check(s) failed`);
-console.log(`\noracle-first: ${cases.length + 10} assertions passed`);
+console.log(`\noracle-first: ${cases.length + 10 + 4} assertions passed`);
