@@ -310,7 +310,7 @@ const smoothstep = (e0: number, e1: number, x: number): number => {
 	return t * t * (3 - 2 * t);
 };
 
-const DIM = "\x1b[2m"; // void-matter ink (low-brightness ramp tier)
+const DIM = "\x1b[2m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
 const BOLD = "\x1b[1m";
 const RESET = "\x1b[0m";
 
@@ -1155,7 +1155,7 @@ class BlackHoleComponent {
 					b >= 2
 						? Math.abs(col - markCol + (row - markRow) - glintPos) < 3
 							? glintTier
-							: BOLD // wordmark rests bold, well above the dim/normal void
+							: DIM
 						: b < 0.4
 							? DIM
 							: b < 0.95
@@ -1239,7 +1239,7 @@ export default function (pi: ExtensionAPI) {
 								out +=
 									tier === "glint"
 										? RESET + BOLD + theme.fg("accent", run)
-										: RESET + BOLD + run; // bold resting ink, contrast vs. dim/normal void
+										: RESET + DIM + run;
 								run = "";
 							};
 							for (let x = 0; x < line.length; x++) {
