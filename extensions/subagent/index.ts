@@ -546,6 +546,68 @@ const SubagentParams = Type.Object({
 });
 
 export default function (pi: ExtensionAPI) {
+	// Consecutive qa-reviewer FAIL verdicts this session (AGENTS.md Rework Loop
+	// budget). Persisted via the custom-entry pattern and replayed on
+	// session_start, exactly like the write-gate mode in read-only-default.ts.
+	// ponytail: session-level consecutive counter, not per-work-item; if
+	// concurrent work items ever need independent budgets, key this by work-item
+	// id (Map<string, number>) instead of a single scalar.
+	let reworkFailCount = 0;
+
+	function persistReworkCount(): void {
+		try {
+			pi.appendEntry<{ count: number }>("rework-loop-count", { count: reworkFailCount });
+		} catch {
+			/* fail open: never let persistence crash the return path */
+		}
+	}
+
+	pi.on("session_start", async (_event, ctx) => {
+		try {
+			reworkFailCount = 0;
+			const last = ctx.sessionManager
+				.getEntries()
+				.filter(
+					(e): e is typeof e & { customType: string; data?: { count?: number } } =>
+						e.type === "custom" && (e as { customType?: string }).customType === "rework-loop-count",
+				)
+				.pop();
+			if (typeof last?.data?.count === "number") reworkFailCount = last.data.count;
+		} catch {
+			/* fail open */
+		}
+	});
+
+	// Normalize a qa-reviewer return: prepend a [VERDICT: ...] first line parsed
+	// from the reviewer's text (docs/rework-loop.md), maintain the session FAIL
+	// budget, and flag exhaustion at 3. No-op for every other agent. Fails open.
+	function finalizeQaOutput(agentName: string, text: string): string {
+		if (agentName !== "qa-reviewer") return text;
+		try {
+			const verdict = parseQaVerdict(text);
+			let header: string;
+			if (verdict === null) {
+				header =
+					"[VERDICT: MISSING — malformed qa-reviewer return; a structured verdict (PASS / FAIL: implementation / FAIL: design) is required. Re-dispatch the review.]";
+			} else if (verdict === "PASS") {
+				reworkFailCount = 0;
+				persistReworkCount();
+				header = "[VERDICT: PASS]";
+			} else {
+				reworkFailCount++;
+				persistReworkCount();
+				header = `[VERDICT: ${verdict}]`;
+				if (reworkFailCount >= 3) {
+					header +=
+						"\n[LOOP BUDGET EXHAUSTED: 3 consecutive FAIL verdicts this session — stop looping; re-frame the problem or escalate to the user per AGENTS.md Rework Loop.]";
+				}
+			}
+			return `${header}\n\n${text}`;
+		} catch {
+			return text; // fail open: never let verdict handling crash the return
+		}
+	}
+
 	pi.registerTool({
 		name: "subagent",
 		label: "Subagent",
