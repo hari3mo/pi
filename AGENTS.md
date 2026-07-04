@@ -82,6 +82,14 @@ dispatch `engineer` with a design-only task returning the design artifact
   questions with the `graph` tool (query/explain/path) BEFORE dispatching scout or
   reading files — ~30x cheaper; subagents inherit the tool, so dispatched tasks may
   assume it too.
+- ORACLE-FIRST: knowledge questions about pi itself (its APIs, features, docs,
+  conventions, past lessons) are answered from the oracle vault (`wiki-query` against
+  the oracle profile at `~/.obsidian-wiki/config.oracle`) plus the `graph` tool BEFORE
+  reading pi docs or dispatching a scout — compiled knowledge beats re-derivation.
+  Durable lessons and valuable query answers are filed BACK into oracle per its
+  `SCHEMA.md` (query-compounding: the next identical question is a read, not a
+  re-derivation). Oracle `upstream` pages are pi-version-stamped; the session-start
+  self-audit flags them stale after a `pi update`.
 
 ## Escalation
 
@@ -134,6 +142,10 @@ early, before the budget runs out.
   a "Concurrent-session notice" in the prompt means another shell changed config files —
   RE-READ them before building on remembered content; a `[concurrency-guard]` message on
   edit means the target has another shell's uncommitted work.
+- The oracle vault (`oracle/`, an llm-wiki knowledge base of pi governed by
+  `oracle/SCHEMA.md`) lives in-repo and is autocommitted like the rest of the config; its
+  content edits mark the knowledge graph STALE until `/graphify --update` — that is
+  expected, not a regression.
 
 ### Self-Audit Loop (standing)
 
