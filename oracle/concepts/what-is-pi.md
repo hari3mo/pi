@@ -1,75 +1,82 @@
 ---
-title: Message Queue Semantics
+title: What Is Pi
 category: concepts
 source_layer: upstream
 pi_version: 0.80.3
 sources:
   - /Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/README.md
-  - /Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/docs/settings.md
-tags: [pi, tui, concept]
-aliases: [steering, follow-up, steering vs follow-up]
-summary: While the agent works you can queue a steering message (Enter, delivered after the current tool batch) or a follow-up (Alt+Enter, delivered only when all work is done).
+  - /Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/docs/index.md
+tags: [pi, concept]
+aliases: [pi coding agent, pi harness]
+summary: Pi is a minimal terminal coding harness with a small core (four tools) that you extend via TypeScript instead of forking, and that runs in interactive, print/JSON, RPC, and SDK modes.
 relationships:
-  - target: "[[components/keybindings]]"
+  - target: "[[concepts/extensibility-philosophy]]"
     type: related_to
-  - target: "[[components/settings]]"
+  - target: "[[components/extension-system]]"
+    type: uses
+  - target: "[[references/cli-reference]]"
     type: related_to
 base_confidence: 0.85
 lifecycle: reviewed
 lifecycle_changed: 2026-07-04
-tier: supporting
+tier: core
 created: 2026-07-04T00:00:00Z
 updated: 2026-07-04T00:00:00Z
 ---
 
-# Message Queue Semantics
+# What Is Pi
 
-Pi lets you submit messages *while the agent is still working*. The distinction between
-the two queue modes is about **when** the message is delivered, and it is one of pi's
-most important interaction primitives.
+Pi (`@earendil-works/pi-coding-agent`) is a **minimal terminal coding harness**. Its
+guiding line is *"adapt pi to your workflows, not the other way around, without having
+to fork and modify pi internals."* The core stays small; everything else is added
+through TypeScript [[components/extension-system|extensions]],
+[[components/skills-system|skills]], [[components/prompt-templates|prompt templates]],
+and [[components/themes|themes]], which can be bundled and shared as
+[[components/pi-packages|pi packages]].
 
-## The two modes
+## The default toolset
 
-| Action | Key | Delivered |
+Out of the box pi gives the model four tools — `read`, `write`, `edit`, and `bash`
+(plus `grep`, `find`, `ls` available as built-ins). See [[components/tools]] for the
+full built-in set, allowlisting, and how extensions add or override tools.
+
+## Four run modes
+
+Pi is the same agent exposed through four surfaces:
+
+| Mode | Entry | Use |
 |---|---|---|
-| **Steering** | `Enter` | After the current assistant turn finishes executing its tool calls, before the next LLM call — it *redirects* work in flight |
-| **Follow-up** | `Alt+Enter` | Only after the agent finishes *all* work — it *queues* the next task |
+| **Interactive** | `pi` | The TUI — editor, messages, footer, extension UI |
+| **Print / JSON** | `pi -p` / `pi --mode json` | One-shot response, or structured event stream |
+| **RPC** | `pi --mode rpc` | Line-delimited JSONL over stdin/stdout for process integration ([[references/rpc-mode]]) |
+| **SDK** | `import ... createAgentSession()` | Embed the agent in a Node.js app ([[workflows/embed-pi-with-sdk]]) |
 
-Supporting controls:
+## Deliberately minimal
 
-- **Escape** — abort the current turn and restore queued messages to the editor.
-- **Alt+Up** (`app.message.dequeue`) — pull queued messages back into the editor.
+Pi *ships powerful defaults but skips* features other tools bake in — sub-agents, plan
+mode, MCP, permission popups, built-in to-dos, background bash. This is a design stance,
+not an omission: you build those with extensions or install a package. The rationale is
+captured in [[concepts/extensibility-philosophy]].
 
-> On Windows Terminal, `Alt+Enter` is fullscreen by default; remap it (terminal setup)
-> so pi can receive the follow-up shortcut.
+## Where things live
 
-## Delivery batching (settings)
+- Config directory: `~/.pi/agent` (override with `PI_CODING_AGENT_DIR`).
+- [[concepts/session-model|Sessions]] auto-save to `~/.pi/agent/sessions/` as JSONL trees.
+- `AGENTS.md`/`CLAUDE.md` context files load from `~/.pi/agent`, ancestors, and cwd.
+- [[components/settings|Settings]] layer global (`~/.pi/agent/settings.json`) under project (`.pi/settings.json`).
+- Loading project-local resources first requires [[concepts/project-trust|project trust]].
 
-Two [[components/settings|settings]] control whether queued messages of each kind are
-delivered one at a time or all at once:
+## Interactive interface at a glance
 
-- `steeringMode`: `"one-at-a-time"` (default) or `"all"`
-- `followUpMode`: `"one-at-a-time"` (default) or `"all"`
-
-`"one-at-a-time"` waits for a response between messages; `"all"` delivers the whole
-queue at once.
-
-## Extension parallel
-
-Extensions inject messages with the same three-way timing via `pi.sendMessage(...,
-{ deliverAs })` and `pi.sendUserMessage(..., { deliverAs })`:
-
-- `"steer"` ≈ Enter (mid-turn, before next LLM call)
-- `"followUp"` ≈ Alt+Enter (after all work)
-- `"nextTurn"` — queue for the next *user* prompt; does not interrupt or trigger anything
-
-See [[components/extension-system]] for the injection API. Note that `sendMessage`
-always enters LLM context (except `nextTurn`); for display-only output use `ctx.ui`
-widgets instead.
+Top to bottom: startup header (shortcuts, loaded AGENTS.md, templates, skills,
+extensions) → messages (yours, assistant, tool calls/results, extension UI) → editor
+(border color shows thinking level) → footer (cwd, session name, token/cache usage,
+cost, context usage, model). Commands are typed with `/`; the full command and flag
+surface is catalogued in [[references/cli-reference]].
 
 ## See also
 
-- Keybinding ids `app.message.followUp` / `app.message.dequeue`: [[components/keybindings]]
-- Transport preference (`transport` setting) also lives with delivery config: [[components/settings]]
+- Extend, don't fork: [[concepts/extensibility-philosophy]]
+- Session persistence and branching: [[concepts/session-model]]
+- Provider/model configuration: [[components/providers-and-models]]
 </content>
-</invoke>
