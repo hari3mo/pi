@@ -16,8 +16,9 @@ shipper, or any fan-out) is deployed ONLY when one of these holds:
    directly. It routes by scale — pipeline is NOT the default:
    - **Micro** (ALL THREE: single file, ≤ ~20 changed lines, zero design
      decisions): ONE `builder` with the fully specified change; skip
-     scope-planner, architect, and qa-reviewer; spot-check the returned
-     diff. A complete spec does NOT make a task micro — any new module or
+     scope-planner and architect; if it implements a new feature, still
+     route the result through `qa-reviewer`, otherwise spot-check the
+     returned diff. A complete spec does NOT make a task micro — any new module or
      change beyond ~20 lines is at least single-session scope and routes
      to `solo-engineer`, even when fully specified (benchmarked:
      mechanical-tier builders ship spec-corner defects on algorithmic
@@ -140,15 +141,17 @@ The lead MUST route through `scope-planner`/`architect` first when ANY of:
   builds make these calls inline via `solo-engineer`/`fable-engineer`.
 - Wrong approach expensive to unwind → `architect`
 
-The lead MUST send work to `qa-reviewer` when ANY of: 3+ files of
-existing code; auth/security paths; data migrations; public API surface;
-or a delegated change to existing behavior that has NO runnable
-verification path. When the change has one — existing tests run green, or
-the reported symptom is reproducibly fixed and re-checked — a lead
-spot-check (targeted reads plus running that path) suffices. Spot-check
-also covers micro dispatches and greenfield `solo-engineer` builds with a
-runnable acceptance path (benchmarked: QA cycles did not lift quality
-above a strong solo build).
+The lead MUST send work to `qa-reviewer` when ANY of: a newly
+implemented feature (new user-visible behavior or capability, at any
+scale — including micro dispatches and greenfield `solo-engineer`/
+`fable-engineer` builds); 3+ files of existing code; auth/security
+paths; data migrations; public API surface; or a delegated change to
+existing behavior that has NO runnable verification path. On a QA
+`FAIL`, run the rework loop (docs/rework-loop.md) with whichever agent
+built the work as the implementing agent. Only non-feature changes with
+a runnable verification path — bug fixes with a re-checked repro,
+chores, refactors under green tests — may take a lead spot-check
+(targeted reads plus running that path) instead.
 
 A non-fable lead MAY work directly ONLY when single file, ≤ ~20 lines,
 zero design decisions. A fable lead has NO direct-edit exception — ever.
@@ -170,10 +173,11 @@ might touch): never delete, move, or overwrite files you did not create
 unless the task explicitly asks; unfamiliar artifacts belong to the user
 or the harness.
 
-## Rework Loop (pipeline builds only)
+## Rework Loop (any QA-gated build)
 
 `qa-reviewer` is a gate, not a formality. Every review asks for a verdict:
-`PASS`, `FAIL: implementation` (→ builder fixes ONLY the findings, then a
+`PASS`, `FAIL: implementation` (→ the implementing agent — builder or
+solo-engineer — fixes ONLY the findings, then a
 fresh re-review), or `FAIL: design` (→ back to architect; never patch
 around it). Budget: 3 iterations, then stop — re-frame or surface the
 impasse with findings; never silently ship failing work. Full mechanics:
