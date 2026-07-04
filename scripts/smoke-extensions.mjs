@@ -5,12 +5,14 @@
  * ExtensionAPI / package layout and extensions start crashing at session
  * start. Run via /audit (audit-pipelines.py --full) or directly:
  *
- *   node --experimental-strip-types scripts/smoke-extensions.mjs
+ *   node scripts/smoke-extensions.mjs
  *
  * Loads each auto-loaded extension (extensions/*.ts and extensions/[star]/index.ts)
- * and calls its default export with a Proxy-based fake pi that no-ops every
+ * with pi's OWN TypeScript loader (the jiti shipped inside the installed pi
+ * package — loader fidelity, and no strip-types node_modules restriction),
+ * then calls its default export with a Proxy-based fake pi that no-ops every
  * method — maximally tolerant of API growth, so the only failures reported
- * are real ones: broken imports, syntax/type-strip errors, load-time throws.
+ * are real ones: broken imports, syntax errors, load-time throws.
  * Output format matches validate-config.py (ERROR lines) for merging.
  */
 
@@ -61,11 +63,15 @@ for (const entry of readdirSync(extDir, { withFileTypes: true })) {
 	}
 }
 
+// pi's own loader: jiti from inside the installed package.
+const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
+const jiti = createJiti(join(AGENT_DIR, "extensions", "_smoke_.js"), { interopDefault: false });
+
 let failures = 0;
 for (const file of candidates.sort()) {
 	const rel = file.slice(AGENT_DIR.length + 1);
 	try {
-		const mod = await import(pathToFileURL(file).href);
+		const mod = await jiti.import(file);
 		if (typeof mod.default !== "function") throw new Error("no default export function");
 		mod.default(noopProxy());
 		console.log(`ok     ${rel}`);
