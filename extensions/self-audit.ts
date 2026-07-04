@@ -12,6 +12,10 @@
  *      errors or warnings exist (zero prompt cost when healthy), instructing
  *      the agent to fix or surface them.
  *   3. /audit — re-runs the validator on demand and shows the full report.
+ *   4. "config-repo-advanced" (pi.events) — when concurrency-guard detects a
+ *      cross-shell change, re-run the validator automatically so the injected
+ *      problems track the new HEAD without a session restart (eventually
+ *      consistent: the refreshed result shows on the next before_agent_start).
  *
  * Together with the pre-commit hook (same validator, gates snapshots) and the
  * graphify bridge (structural staleness), this closes the self-audit loop:
@@ -34,6 +38,7 @@ interface AuditResult {
 }
 
 let lastAudit: AuditResult | undefined;
+let refreshing = false;
 
 function runScript(script: string, args: string[], timeoutMs: number): Promise<AuditResult> {
 	return new Promise((resolve) => {
@@ -80,6 +85,23 @@ async function runValidator(full = false): Promise<AuditResult> {
 export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async () => {
 		lastAudit = await runValidator();
+	});
+
+	// Cross-shell staleness: concurrency-guard emits this on the shared event bus
+	// when the config repo advanced from another shell. Re-run the audit so the
+	// injected problems reflect the new HEAD. Fire-and-forget (the handler must be
+	// synchronous) with an in-flight guard so bursts collapse into one run; the
+	// next before_agent_start injects the refreshed result.
+	pi.events.on("config-repo-advanced", () => {
+		if (refreshing) return;
+		refreshing = true;
+		runValidator()
+			.then((r) => {
+				lastAudit = r;
+			})
+			.finally(() => {
+				refreshing = false;
+			});
 	});
 
 	pi.on("before_agent_start", async (event) => {
