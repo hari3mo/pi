@@ -1,5 +1,4 @@
 {
   "app.thinking.cycle": ["alt+tab"],
-  "app.model.cycleBackward": ["shift+tab"],
   "app.session.rename": ["alt+r"]
 }
