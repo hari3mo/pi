@@ -199,10 +199,8 @@ const CONSTELLATIONS: Constellation[] = [
 
 // Transient events (events.js): shorter intervals than the site — a TUI
 // session should actually get to see one.
-const SHOOT_MIN = 10; //  seconds between shooting stars
-const SHOOT_MAX = 25;
-const SHOOT_DUR = 1.4; // seconds
-const SHOOT_LEN = 0.55; // streak length, fraction of the frame
+const SHOOT_MIN = 2; //   seconds between shooting stars
+const SHOOT_MAX = 6;
 const SHOOT_CHARS = "*+=;:."; // bright head, dimming trail
 const NOVA_MIN = 30; //   seconds between supernovae
 const NOVA_MAX = 90;
@@ -309,7 +307,17 @@ class BlackHoleComponent {
 
 	// Comets + transient events (events.js state).
 	private cometThetas = COMET_DEFS.map(() => Math.random() * Math.PI * 2);
-	private shoot = { active: false, t: 0, x: 0, y: 0, dx: 0, dy: 0 };
+	// Up to 3 shooting-star streaks active at once, each with its own
+	// randomized duration and length.
+	private shoots: Array<{
+		t: number;
+		x: number;
+		y: number;
+		dx: number;
+		dy: number;
+		dur: number;
+		len: number;
+	}> = [];
 	private shootTimer = 2 + Math.random() * 4; // first one early, for the splash
 	private nova = { active: false, t: 0, x: 0, y: 0 };
 	private novaTimer = NOVA_MIN * (0.5 + Math.random() * 0.5);
@@ -460,27 +468,32 @@ class BlackHoleComponent {
 			this.cometThetas[i] += (d.l / (rc * rc)) * dt;
 		}
 
-		// Shooting star: a straight streak across the frame, started on a
-		// random timer (events.js, intervals shortened for the terminal).
+		// Shooting stars: straight streaks across the frame, started on a
+		// random timer (events.js, intervals shortened for the terminal) —
+		// several can be in flight together, up to a cap of 3.
 		this.shootTimer -= dt;
-		if (this.shootTimer <= 0 && !this.shoot.active) {
+		if (this.shootTimer <= 0 && this.shoots.length < 3) {
 			const ang = Math.random() * Math.PI * 2;
 			const dx = Math.cos(ang);
 			const dy = Math.sin(ang);
-			this.shoot = {
-				active: true,
+			const dur = 1.0 + Math.random() * 0.8;
+			const len = 0.35 + Math.random() * 0.35;
+			this.shoots.push({
 				t: 0,
 				// Center the streak on a random on-screen point.
-				x: 0.2 + Math.random() * 0.6 - (dx * SHOOT_LEN) / 2,
-				y: 0.2 + Math.random() * 0.6 - (dy * SHOOT_LEN) / 2,
+				x: 0.2 + Math.random() * 0.6 - (dx * len) / 2,
+				y: 0.2 + Math.random() * 0.6 - (dy * len) / 2,
 				dx,
 				dy,
-			};
+				dur,
+				len,
+			});
 			this.shootTimer = SHOOT_MIN + Math.random() * (SHOOT_MAX - SHOOT_MIN);
 		}
-		if (this.shoot.active) {
-			this.shoot.t += dt;
-			if (this.shoot.t >= SHOOT_DUR) this.shoot.active = false;
+		for (let i = this.shoots.length - 1; i >= 0; i--) {
+			const s = this.shoots[i];
+			s.t += dt;
+			if (s.t >= s.dur) this.shoots.splice(i, 1);
 		}
 
 		// Supernova: pick a field star away from the hole and let it go.
@@ -800,17 +813,19 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- shooting star: bright head, six dimming glyphs trailing --
-		if (this.shoot.active) {
-			const u = this.shoot.t / SHOOT_DUR;
+		// -- shooting stars: bright head, six dimming glyphs trailing, each
+		// streak's own duration/length scaling its envelope and trail --
+		for (const s of this.shoots) {
+			const u = s.t / s.dur;
 			const env = Math.min(1, u / 0.15) * (1 - smoothstep(0.6, 1, u));
-			const hx = this.shoot.x + this.shoot.dx * u * SHOOT_LEN;
-			const hy = this.shoot.y + this.shoot.dy * u * SHOOT_LEN;
+			const hx = s.x + s.dx * u * s.len;
+			const hy = s.y + s.dy * u * s.len;
+			const trailStep = 0.035 * (s.len / 0.55);
 			for (let i = 0; i < SHOOT_CHARS.length; i++) {
-				const d = i * 0.035;
+				const d = i * trailStep;
 				glyph(
-					Math.round((hx - this.shoot.dx * d) * artW),
-					Math.round((hy - this.shoot.dy * d) * rows),
+					Math.round((hx - s.dx * d) * artW),
+					Math.round((hy - s.dy * d) * rows),
 					SHOOT_CHARS[i],
 					env * (1 - i / SHOOT_CHARS.length),
 				);
