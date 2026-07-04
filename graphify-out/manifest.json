@@ -1103,5 +1103,10 @@
     "mtime": 1783166404.6117241,
     "ast_hash": "5fdccaa19d943754524b9ce3b827ef40",
     "semantic_hash": ""
+  },
+  "scripts/check-graph-first.mjs": {
+    "mtime": 1783166448.534771,
+    "ast_hash": "35a093df73f2b35c9664dc5136192de3",
+    "semantic_hash": ""
   }
 }
