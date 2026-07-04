@@ -263,11 +263,14 @@ function makeDeepGalaxies(): DeepGalaxy[] {
 		[0.86, 0.78],
 		[0.82, 0.14],
 		[0.16, 0.8],
+		[0.38, 0.94],
+		[0.62, 0.05],
 	];
 	return centers.map(([nx, ny], gi) => {
-		// One of the four is a thin edge-on sliver; the rest sit at random
+		// Two of the six are thin edge-on slivers; the rest sit at random
 		// inclinations so no two look alike.
-		const yScale = gi === 1 ? 0.14 : 0.35 + Math.random() * 0.4;
+		const yScale =
+			gi === 1 || gi === 4 ? 0.14 : 0.35 + Math.random() * 0.4;
 		const count = 16 + Math.floor(Math.random() * 14);
 		const pts: DeepGalaxy["pts"] = [];
 		for (let i = 0; i < count; i++) {
@@ -285,7 +288,7 @@ function makeDeepGalaxies(): DeepGalaxy[] {
 		return {
 			nx: nx + (Math.random() - 0.5) * 0.06,
 			ny: ny + (Math.random() - 0.5) * 0.06,
-			rotSpeed: (Math.random() - 0.5) * 0.06,
+			rotSpeed: (Math.random() - 0.5) * 0.09,
 			yScale,
 			core: 0.1 + Math.random() * 0.05,
 			pts,
