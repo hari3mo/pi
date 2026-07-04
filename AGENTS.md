@@ -65,6 +65,15 @@ do not fall back to editing directly, and do not spawn read-only children
 hoping it clears. Exploration done before the gate is open is wasted if the
 user re-frames the task when prompted.
 
+### Intent Interview (MUST, before any pipeline dispatch)
+
+Before deploying the full pipeline, the orchestrator MUST first interview the
+user to clarify intent: ask targeted questions covering what "done" means,
+scope boundaries (what is in and out), and hard constraints. Dispatch the
+pipeline only after the user answers or explicitly says to proceed with
+stated assumptions. `scope-planner` handles only residual ambiguity remaining
+after this interview — it is never a substitute for asking the user directly.
+
 ## Model Tiers (pinned)
 
 | Tier | Model | Thinking level | Role |
