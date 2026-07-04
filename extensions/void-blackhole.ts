@@ -101,7 +101,8 @@ const ART_MAX_ROWS = 64;
 
 // Landing-page chrome: the wordmark (figlet "larry3d" — extruded 3D
 // letterforms), stamped into the art as exact glyphs on a cleared plate so
-// the letterforms stay crisp against the starfield. Rendered in ANSI black.
+// the letterforms stay crisp against the starfield. Rendered dim (terminal
+// default foreground), readable on both light and dark themes.
 const WORDMARK = [
 	" __",
 	"/\\ \\                       __",
