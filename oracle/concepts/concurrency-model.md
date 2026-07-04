@@ -21,7 +21,7 @@ lifecycle: draft
 lifecycle_changed: 2026-07-04
 tier: supporting
 created: 2026-07-04T00:00:00Z
-updated: 2026-07-04T00:00:00Z
+updated: 2026-07-04T12:00:00Z
 ---
 
 # Concurrency Model
