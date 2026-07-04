@@ -2,8 +2,10 @@
  * void-blackhole — the animated ASCII black hole from ~/Developer/void,
  * ported to pi's TUI.
  *
- * Runs automatically as a splash on pi startup (any key dismisses), and
- * stays available as /void: a supermassive black hole with a gravity-driven
+ * Runs as pi's TUI landing page on startup — it holds the screen with a
+ * VOID wordmark, the working directory, and key hints until a key is
+ * pressed (holding SPACE feeds the hole instead of dismissing) — and stays
+ * available as /void: a supermassive black hole with a gravity-driven
  * accretion disk. Every particle free-falls under Newtonian gravity, whirls
  * faster as angular momentum hauls it in, heats up (brighter glyph), vanishes
  * at the event horizon, and is re-fed from the rim — the whole galaxy forever
@@ -90,7 +92,15 @@ const TICK_MS = 50; // 20 fps — plenty for glyphs
 const FEED_GRAVITY = 3.2; // feed multiplier while space is held
 const ART_MAX_W = 280; // wide: fill the terminal, centered, landing-page scale
 const ART_MAX_ROWS = 64;
-const SPLASH_TIMEOUT_MS = 9000;
+
+// Landing-page chrome: the wordmark (figlet "small"), stamped into the art
+// as exact glyphs so it composites with the starfield like everything else.
+const WORDMARK = [
+	"__   _____ ___ ___",
+	"\\ \\ / / _ \\_ _|   \\",
+	" \\ V / (_) | || |) |",
+	"  \\_/ \\___/___|___/",
+];
 
 // Orbiting planets (planets.js PLANET_DEFS, nav words dropped) — irregular
 // radii, phases and heights so the orbital layer reads as a natural system.
@@ -246,8 +256,9 @@ class BlackHoleComponent {
 	private tui: { requestRender: () => void };
 	private onClose: () => void;
 	private splash: boolean;
+	private tagline: string;
+	private hint: string;
 	private interval: ReturnType<typeof setInterval> | null = null;
-	private timeout: ReturnType<typeof setTimeout> | null = null;
 
 	// Per-particle state (polar position, radial velocity, angular momentum).
 	private diskR = new Float32Array(DISK_COUNT);
@@ -300,6 +311,16 @@ class BlackHoleComponent {
 		this.onClose = onClose;
 		this.splash = splash;
 
+		const home = process.env.HOME ?? "";
+		const cwd =
+			home && process.cwd().startsWith(home)
+				? "~" + process.cwd().slice(home.length)
+				: process.cwd();
+		this.tagline = `pi · ${cwd}`;
+		this.hint = splash
+			? "press any key to begin · hold space to feed the hole · /void returns here"
+			: "press any key to return · hold space to feed the hole";
+
 		// Steady-state fill: seed along the infall paths so the disk is full.
 		for (let i = 0; i < DISK_COUNT; i++) this.spawnDiskParticle(i, false);
 		this.buildDustField();
@@ -312,10 +333,6 @@ class BlackHoleComponent {
 			this.version++;
 			this.tui.requestRender();
 		}, TICK_MS);
-
-		if (splash) {
-			this.timeout = setTimeout(() => this.close(), SPLASH_TIMEOUT_MS);
-		}
 	}
 
 	// Direct port of spawnDiskParticle() from blackhole.js — with a stronger
@@ -477,7 +494,12 @@ class BlackHoleComponent {
 	}
 
 	handleInput(data: string): void {
-		// Any key — splash or /galaxy — collapses the view back into the editor.
+		// SPACE feeds the hole (gravity ramps up while held, key-repeat keeps
+		// it alive); any other key collapses the view back into the editor.
+		if (data === " ") {
+			this.feedUntil = Date.now() + 350;
+			return;
+		}
 		this.close();
 	}
 
@@ -852,6 +874,27 @@ class BlackHoleComponent {
 			}
 		}
 
+		// -- landing-page chrome: wordmark, tagline and key hints, stamped as
+		// exact glyphs over the art (spaces skipped, so stars shine through
+		// the letterforms) — drawn last so nothing washes them out --
+		const stampText = (text: string, row: number, b: number) => {
+			const start = Math.round(cx - text.length / 2);
+			for (let i = 0; i < text.length; i++) {
+				if (text[i] !== " ") glyph(start + i, row, text[i], b);
+			}
+		};
+		const markW = Math.max(...WORDMARK.map((l) => l.length));
+		if (rows >= 16 && artW >= markW + 6) {
+			for (let i = 0; i < WORDMARK.length; i++) {
+				stampText(WORDMARK[i], 1 + i, 0.9);
+			}
+			stampText(this.tagline, WORDMARK.length + 2, 0.14);
+		} else {
+			stampText("V O I D", 1, 0.9);
+			stampText(this.tagline, 2, 0.14);
+		}
+		stampText(this.hint, rows - 1, 0.14);
+
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
 		const lines: string[] = [""];
 		for (let row = 0; row < rows; row++) {
@@ -888,17 +931,13 @@ class BlackHoleComponent {
 			clearInterval(this.interval);
 			this.interval = null;
 		}
-		if (this.timeout) {
-			clearTimeout(this.timeout);
-			this.timeout = null;
-		}
 	}
 }
 
 // ------------------------------------------------------------- extension ----
 export default function (pi: ExtensionAPI) {
-	// Intro splash: the void greets you on startup. Any key dismisses,
-	// or it collapses on its own after a few seconds.
+	// Landing page: the void greets you on startup and holds the screen
+	// until a key is pressed (SPACE feeds the hole instead of dismissing).
 	pi.on("session_start", async (event, ctx) => {
 		if (event.reason !== "startup" || ctx.mode !== "tui") return;
 		void ctx.ui.custom((tui, _theme, _kb, done) => {
@@ -906,12 +945,12 @@ export default function (pi: ExtensionAPI) {
 		});
 	});
 
-	pi.registerCommand("galaxy", {
+	pi.registerCommand("void", {
 		description:
-			"The ASCII galaxy — black hole, planets, comets, constellations",
+			"The void — black hole, planets, comets, constellations",
 		handler: async (_args, ctx) => {
 			if (ctx.mode !== "tui") {
-				ctx.ui.notify("The galaxy requires interactive mode", "error");
+				ctx.ui.notify("The void requires interactive mode", "error");
 				return;
 			}
 			await ctx.ui.custom((tui, _theme, _kb, done) => {
