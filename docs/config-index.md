@@ -39,7 +39,7 @@ Every session that changes config must update it.
 | Autocommit snapshot infra | `.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit` | launchd-triggered git auto-snapshot of config changes (tool-driven and manual editor edits alike), gated by a pre-commit hook that runs the validator. |
 | Global settings | `settings.json` | Default provider/model/thinking level, enabled model list (feeds `model-cycle.ts`), quiet-startup flag, installed packages. |
 | Keybindings | `keybindings.json` | User keybinding overrides (currently: `app.thinking.cycle` → Option+Tab to free Shift+Tab for model-cycle; session rename → Option+R). |
-| Global agent doctrine | `AGENTS.md` | The Delegation Gate, model-tier table, role split, routing rules, and config-maintenance checklist governing how this harness is used across sessions. |
+| Global agent doctrine | `AGENTS.md` | The Delegation Gate, model-tier table, role split, routing rules, lead context-hygiene rules, and config-maintenance checklist governing how this harness is used across sessions. |
 
 ## Changelog
 
@@ -48,6 +48,13 @@ Every session that changes config must update it.
 > 2–4 lines.
 
 ### 2026-07-03
+
+**Orchestrator realignment: lead context hygiene.** `AGENTS.md` (Philosophy,
+Orchestrator tier row, Routing Rules, scoping rule, new "Context Hygiene" MUST
+block, Defaults). Why: user flagged fable-lead drift — doing bulk
+reading/investigation itself; per the "Use Fable 5 where it pays for itself"
+paradigm the lead now delegates heavy reading too and consumes only compressed
+findings, keeping benchmarked solo-first routing intact.
 
 **QA gate relaxed: any new feature is QA-mandatory.** `AGENTS.md` (Hard Delegation
 Thresholds + micro-dispatch rule + Rework Loop heading), `docs/rework-loop.md` (loop now
