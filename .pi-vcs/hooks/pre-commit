@@ -13,13 +13,39 @@ if [ -n "$forbidden" ]; then
 fi
 
 # Gate 2: schema/hygiene audit (scripts/validate-config.py).
-# Fail-open if the validator infra is missing (never wedge the audit trail);
-# fail-closed if it runs and reports errors.
+# The launchd autocommit daemon has a tiny PATH, so choose an absolute Python
+# that can import jsonschema instead of silently degrading to parse-only checks.
 VALIDATOR="$(git rev-parse --show-toplevel)/scripts/validate-config.py"
-if command -v python3 >/dev/null 2>&1 && [ -f "$VALIDATOR" ]; then
-  if ! python3 "$VALIDATOR" >&2; then
+find_validator_python() {
+  for py in \
+    "${PI_VALIDATOR_PYTHON:-}" \
+    /Library/Frameworks/Python.framework/Versions/3.14/bin/python3 \
+    /usr/local/bin/python3 \
+    /opt/homebrew/bin/python3 \
+    "$(command -v python3 2>/dev/null || true)" \
+    /usr/bin/python3
+  do
+    [ -n "$py" ] && [ -x "$py" ] || continue
+    if "$py" - <<'PY' >/dev/null 2>&1
+import jsonschema
+PY
+    then
+      printf '%s\n' "$py"
+      return 0
+    fi
+  done
+  return 1
+}
+
+if [ -f "$VALIDATOR" ]; then
+  if ! PYTHON="$(find_validator_python)"; then
+    echo "pre-commit BLOCKED — no python with jsonschema found for config validation." >&2
+    echo "Install jsonschema or set PI_VALIDATOR_PYTHON to a suitable interpreter." >&2
+    exit 1
+  fi
+  if ! "$PYTHON" "$VALIDATOR" >&2; then
     echo "pre-commit BLOCKED — config validation failed (see errors above)." >&2
-    echo "Fix the config or run: python3 $VALIDATOR" >&2
+    echo "Fix the config or run: $PYTHON $VALIDATOR" >&2
     exit 1
   fi
 else
