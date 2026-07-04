@@ -1125,6 +1125,8 @@ export default function (pi: ExtensionAPI) {
 					text += `\n\n${theme.fg("muted", `─── Step ${r.step}: `)}${theme.fg("accent", r.agent)} ${rIcon}${rElapsedSuffix}`;
 					if (displayItems.length === 0) text += `\n${theme.fg("muted", "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
+					const stepUsage = formatUsageStats(r.usage, r.model);
+					if (stepUsage) text += `\n${theme.fg("dim", stepUsage)}`;
 				}
 				const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, wallClockElapsedMs(details.results));
 				if (usageStr) text += `\n\n${theme.fg("dim", `Total: ${usageStr}`)}`;
@@ -1217,6 +1219,8 @@ export default function (pi: ExtensionAPI) {
 					if (displayItems.length === 0)
 						text += `\n${theme.fg("muted", runInProgress(r) ? "(running...)" : "(no output)")}`;
 					else text += `\n${renderDisplayItems(displayItems, 5)}`;
+					const taskUsage = formatUsageStats(r.usage, r.model);
+					if (taskUsage) text += `\n${theme.fg("dim", taskUsage)}`;
 				}
 				if (!isRunning) {
 					const usageStr = formatUsageStats(aggregateUsage(details.results), undefined, batchElapsed);

@@ -3,7 +3,7 @@
  *
  * Comprehensive quiet redesign of pi's chrome:
  *   - Footer: one whisper-dim line — model · branch · context% · tokens · cost
- *   - Working indicator: a slow breathing dot in grayscale
+ *   - Working indicator: the same braille spinner the subagent rows use
  *
  * /minimal-ui   toggle between minimal chrome and pi defaults
  */
@@ -12,7 +12,7 @@ import type { AssistantMessage } from "@earendil-works/pi-ai";
 import { CustomEditor } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { fmtTokens } from "./lib/format.ts";
+import { fmtTokens, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "./lib/format.ts";
 
 const SEP = "  ·  ";
 
@@ -20,17 +20,12 @@ const SEP = "  ·  ";
 let requestFooterRender: (() => void) | undefined;
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
-	// Breathing dot — theme-derived luminance ramp (dim -> muted -> accent -> dim)
-	// so it reads with the right contrast on both dark and light theme variants.
+	// Same braille spinner the subagent in-progress rows animate, drawn in the
+	// accent color like pi's native WorkingStatusIndicator.
 	const theme = ctx.ui.theme;
 	ctx.ui.setWorkingIndicator({
-		frames: [
-			theme.fg("dim", "·"),
-			theme.fg("dim", "•"),
-			theme.fg("dim", "•"),
-			theme.fg("dim", "•"),
-		],
-		intervalMs: 280,
+		frames: SPINNER_FRAMES.map((f) => theme.fg("accent", f)),
+		intervalMs: SPINNER_INTERVAL_MS,
 	});
 
 	ctx.ui.setFooter((tui, theme, footerData) => {
