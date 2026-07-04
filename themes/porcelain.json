@@ -16,8 +16,8 @@
 		"bgRaise": "#1c1c1c",
 		"bgSelect": "#262626",
 		"bgTool": "#161616",
-		"bgToolOk": "#151815",
-		"bgToolErr": "#1a1414"
+		"bgToolOk": "#142214",
+		"bgToolErr": "#241212"
 	},
 	"colors": {
 		"accent": "ivory",
