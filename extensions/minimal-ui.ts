@@ -19,7 +19,6 @@ const SEP = "  ·  ";
 // Lets the top-level thinking_level_select handler nudge the minimal footer.
 let requestFooterRender: (() => void) | undefined;
 let working = false;
-let pulseFrame = 0;
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — theme-derived luminance ramp (dim -> muted -> accent -> dim)
@@ -38,15 +37,9 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	ctx.ui.setFooter((tui, theme, footerData) => {
 		const unsub = footerData.onBranchChange(() => tui.requestRender());
 		requestFooterRender = () => tui.requestRender();
-		const pulseTimer = setInterval(() => {
-			if (!working) return;
-			pulseFrame++;
-			tui.requestRender();
-		}, 320);
 
 		return {
 			dispose: () => {
-				clearInterval(pulseTimer);
 				requestFooterRender = undefined;
 				unsub();
 			},
@@ -95,16 +88,8 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 		};
 	});
 
-	const ramp = ["dim", "muted", "muted", "dim"] as const;
 	ctx.ui.setEditorComponent((tui, editorTheme, keybindings) => {
-		const ed = new CustomEditor(tui, editorTheme, keybindings);
-		const idleBorder = ed.borderColor; // capture default
-		const origRender = ed.render.bind(ed);
-		ed.render = (width: number) => {
-			ed.borderColor = working ? (s: string) => theme.fg(ramp[pulseFrame % ramp.length], s) : idleBorder;
-			return origRender(width);
-		};
-		return ed;
+		return new CustomEditor(tui, editorTheme, keybindings);
 	});
 }
 
