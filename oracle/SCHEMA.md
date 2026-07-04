@@ -4,7 +4,7 @@ title: Oracle Schema
 
 # Oracle — Schema & Conventions
 
-> This is the **schema layer** for the `oracle` vault (an [[llm-wiki]]-pattern
+> This is the **schema layer** for the `oracle` vault (an `llm-wiki`-pattern
 > knowledge base). It governs how every page in this vault is structured. Read it
 > before writing or updating any page. Downstream ingest tasks consume it verbatim.
 
@@ -68,7 +68,7 @@ frontmatter contract: `index.md`, `log.md`, `hot.md`, `SCHEMA.md`, and everythin
 `_meta/`. They are catalogs/scaffolding, not knowledge pages — whatever minimal
 frontmatter they carry (e.g. a bare `title:`) is fine.
 
-Inline provenance markers apply as in [[llm-wiki]]: default = extracted, `^[inferred]`
+Inline provenance markers apply as in `llm-wiki`: default = extracted, `^[inferred]`
 for synthesized claims, `^[ambiguous]` for contested/uncertain ones.
 
 ## Staleness Protocol (upstream pages only)
@@ -110,8 +110,8 @@ prefer the more concrete category.
 
 ## Wikilink & Tag Conventions
 
-- **Links:** `wikilink` format (`OBSIDIAN_LINK_FORMAT=wikilink`) — `[[category/page]]` or
-  `[[category/page|display]]`. Every page links to its neighbours; `references/` pages
+- **Links:** `wikilink` format (`OBSIDIAN_LINK_FORMAT=wikilink`) — links are wrapped in
+  double square brackets, e.g. `category/page` or `category/page|display`. Every page links to its neighbours; `references/` pages
   link up to the `concepts/`/`components/` they inform, and vice-versa. Typed edges go in
   the `relationships:` block (types listed in the template above).
 - **Tags:** canonical vocabulary lives in `_meta/taxonomy.md` — **read it before tagging**.
@@ -121,7 +121,7 @@ prefer the more concrete category.
 
 ## Query-Compounding Rule
 
-Per the [[llm-wiki]] paradigm, the wiki compounds: a good answer is captured, not
+Per the `llm-wiki` paradigm, the wiki compounds: a good answer is captured, not
 discarded. When a `graph`/`wiki-query` answer synthesizes something not already on a
 page, **file it back as a `synthesis/` page** (or fold it into the relevant existing
 page), with `sources:` pointing at the pages/files it drew from and the appropriate
@@ -150,7 +150,8 @@ Instead each pass:
 2. Appends its index entries to `_fragments/index-<layer>.md`
    (`<layer>` ∈ `upstream` | `local` | `learned` — one file per layer, so concurrent
    writers never touch the same file). Each line uses the index bullet format:
-   `- [[category/page]] — summary ( #tag #tag)` (note the space after `(`).
+   `- ` followed by a double-square-bracketed `category/page` link, then
+   ` — summary ( #tag #tag)` (note the space after `(`).
 3. Appends its log entries to `_fragments/log-<layer>.md`, each a
    `## [YYYY-MM-DD] OP | Title` block (see *Log Format*).
 
