@@ -12,28 +12,13 @@
 import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { basename } from "node:path";
+import { fmtDuration, fmtTokens } from "./lib/format.ts";
 
 const MAX_FILES_SHOWN = 8;
-
-function fmtTokens(n: number): string {
-	if (n < 1000) return `${n}`;
-	if (n < 1_000_000) return `${(n / 1000).toFixed(1)}k`;
-	return `${(n / 1_000_000).toFixed(2)}m`;
-}
 
 function fmtCost(n: number): string {
 	if (n <= 0) return "$0.00";
 	return n >= 0.1 ? `$${n.toFixed(2)}` : `$${n.toFixed(4)}`;
-}
-
-function fmtDuration(ms: number): string {
-	const totalSeconds = Math.max(0, Math.floor(ms / 1000));
-	const hours = Math.floor(totalSeconds / 3600);
-	const minutes = Math.floor((totalSeconds % 3600) / 60);
-	const seconds = totalSeconds % 60;
-	if (hours > 0) return `${hours}h ${minutes}m`;
-	if (minutes > 0) return `${minutes}m ${seconds}s`;
-	return `${seconds}s`;
 }
 
 /** Pad a receipt label to a fixed column width, e.g. "session   ". */

@@ -11,17 +11,12 @@
 import type { AssistantMessage } from "@earendil-works/pi-ai";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
+import { fmtTokens } from "./lib/format.ts";
 
 const SEP = "  ·  ";
 
 // Lets the top-level thinking_level_select handler nudge the minimal footer.
 let requestFooterRender: (() => void) | undefined;
-
-function fmtTokens(n: number): string {
-	if (n < 1000) return `${n}`;
-	if (n < 1_000_000) return `${(n / 1000).toFixed(1)}k`;
-	return `${(n / 1_000_000).toFixed(2)}m`;
-}
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — luminance ramp, no color noise.
