@@ -64,9 +64,23 @@ export const MAX_READ_BYTES = 2 * 1024 * 1024;
 /** Read-path ENOENT retry delay for injection (DESIGN.md §2). */
 export const READ_RETRY_MS = 20;
 
-/** Lock acquisition backoff/retry (DESIGN.md §2): retry <=20x at 100ms (~2s). */
+/**
+ * Lock acquisition backoff/retry (DESIGN.md §2).
+ * INVARIANT: LOCK_MAX_ATTEMPTS * LOCK_RETRY_MS MUST exceed STALE_MS, so a lock
+ * orphaned by a crashed writer is always stolen within one acquireLock call
+ * instead of the retrying writer giving up first and dropping the lesson.
+ * 130 * 100ms = 13s > 10s STALE_MS. Normal contention resolves in <1 retry
+ * (writers hold the lock for ms), so the large budget only matters on a crash.
+ */
 export const LOCK_RETRY_MS = 100;
-export const LOCK_MAX_ATTEMPTS = 20;
+export const LOCK_MAX_ATTEMPTS = 130;
+
+// Runnable guard: fails at module load if the invariant above is ever broken.
+if (LOCK_MAX_ATTEMPTS * LOCK_RETRY_MS <= STALE_MS) {
+	throw new Error(
+		`heuristics lock invariant violated: retry budget ${LOCK_MAX_ATTEMPTS * LOCK_RETRY_MS}ms must exceed STALE_MS ${STALE_MS}ms`,
+	);
+}
 
 // ---------------------------------------------------------------------------
 // TypeBox schemas for the learn_heuristic tool (DESIGN.md §3)
