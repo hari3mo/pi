@@ -22,6 +22,7 @@
 
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Key } from "@earendil-works/pi-tui";
+import { Type } from "typebox";
 
 const WRITE_TOOLS = new Set<string>(["edit", "write"]);
 
@@ -173,6 +174,43 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
+	// Orchestrator pre-flight: lets the model raise a selection prompt so the
+	// user can open the gate without typing /write.
+	pi.registerTool({
+		name: "request_write_mode",
+		label: "Request Write Mode",
+		description:
+			"Show the user a selection prompt asking to switch the write gate to write mode so " +
+			"spawned subagents inherit write access. Call this (instead of asking in prose) before " +
+			"any exploration or subagent dispatch when the gate is not in write mode.",
+		parameters: Type.Object({
+			reason: Type.Optional(Type.String({ description: "One line: why write mode is needed." })),
+		}),
+		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
+			const reply = (text: string) => ({ content: [{ type: "text" as const, text }] });
+			if (mode === "write") return reply("Already in write mode; proceed.");
+			if (!ctx.hasUI) {
+				return reply(
+					"Headless session: cannot prompt. Subagents stay read-only; restart with `pi --write` for write access.",
+				);
+			}
+			const reason = (params as { reason?: string }).reason?.trim();
+			const choice = await ctx.ui.select(
+				`Orchestrator requests write mode${reason ? ` — ${reason}` : ""}. Subagents inherit the gate.`,
+				["Switch to write mode", "Stay in current mode (subagents read-only)", "Cancel the task"],
+			);
+			if (choice === "Switch to write mode") {
+				trustWritesThisSession = false;
+				setMode("write", ctx, true);
+				return reply("User switched to write mode. Proceed; spawned subagents will inherit --write.");
+			}
+			if (choice === "Stay in current mode (subagents read-only)") {
+				return reply("User kept the current gate mode. Subagents run read-only and can only return plans.");
+			}
+			return reply("User cancelled. Stop and await further instructions from the user.");
+		},
+	});
+
 	// Gate write-capable tool calls according to the current mode.
 	pi.on("tool_call", async (event, ctx) => {
 		if (mode === "write") return;
@@ -250,8 +288,9 @@ export default function (pi: ExtensionAPI) {
 		const orchestratorNote = isOrchestrator
 			? "\n\n[ORCHESTRATOR PRE-FLIGHT] You are the orchestrator and the write gate is NOT in write mode.\n" +
 				"Spawned subagents inherit this gate and cannot write. If the task will plausibly require\n" +
-				"file changes, your FIRST action must be to ask the user to run /write — before reading\n" +
-				"code, exploring the repo, or dispatching any subagent."
+				"file changes, your FIRST action must be to call the request_write_mode tool — it shows the\n" +
+				"user a selection prompt to open the gate. Do this before reading code, exploring the repo,\n" +
+				"or dispatching any subagent; do not ask in prose."
 			: "";
 		const content =
 			mode === "readonly"
