@@ -383,7 +383,6 @@ class BlackHoleComponent {
 	constructor(
 		tui: { requestRender: () => void },
 		onClose: () => void,
-		_splash: boolean,
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
@@ -1188,7 +1187,7 @@ export default function (pi: ExtensionAPI) {
 		}));
 		if (event.reason !== "startup") return;
 		void ctx.ui.custom((tui, _theme, _kb, done) => {
-			return new BlackHoleComponent(tui, () => done(undefined), true);
+			return new BlackHoleComponent(tui, () => done(undefined));
 		});
 	});
 
@@ -1201,7 +1200,7 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 			await ctx.ui.custom((tui, _theme, _kb, done) => {
-				return new BlackHoleComponent(tui, () => done(undefined), false);
+				return new BlackHoleComponent(tui, () => done(undefined));
 			});
 		},
 	});
