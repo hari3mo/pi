@@ -59,7 +59,8 @@
       "graphify-out",
       "git",
       "npm",
-      ".pi"
+      ".pi",
+      "node_modules"
     ]
   }
 }
