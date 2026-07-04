@@ -65,7 +65,7 @@ export default function (pi: ExtensionAPI) {
 	let timer: ReturnType<typeof setInterval> | null = null;
 
 	function applyTitle(ctx: { ui: { setTitle(title: string): void } }) {
-		ctx.ui.setTitle(`${baseTitle} \u00b7 ${formatElapsed(Date.now() - startTime)}`);
+		ctx.ui.setTitle(`${formatElapsed(Date.now() - startTime)} \u00b7 ${baseTitle}`);
 	}
 
 	function stopTimer() {
