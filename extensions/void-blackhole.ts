@@ -590,11 +590,19 @@ class BlackHoleComponent {
 		const cx = artW / 2;
 		const cy = rows / 2;
 
+		// Zoom instead of shrink: fitting the whole DUST_OUTER-radius galaxy
+		// into a tiny terminal squeezes the hole down to an illegible smudge.
+		// Below artW 110 the view radius eases in toward 4.0, zooming into the
+		// inner system instead — outer dust/comets beyond the frame just clip
+		// (deposit/stamp/glyph already bounds-check), which reads far better
+		// than a whole galaxy crammed into a handful of cells.
+		const viewR = 4.0 + (DUST_OUTER - 4.0) * smoothstep(50, 110, artW);
+
 		// Terminal cells are ~2:1 tall, so one world unit spans twice as many
 		// columns as rows for an undistorted disk.
 		const sY = Math.min(
-			(rows - 1) / (2 * DUST_OUTER * SIN_T + 0.5),
-			(artW - 2) / (4 * DUST_OUTER),
+			(rows - 1) / (2 * viewR * SIN_T + 0.5),
+			(artW - 2) / (4 * viewR),
 		);
 		const sX = 2 * sY;
 
@@ -624,56 +632,66 @@ class BlackHoleComponent {
 
 		// -- deep space: distant two-arm glyph spirals, dimmer than the
 		// starfield, slowly wheeling over the minutes --
-		const gs = Math.max(1.2, artW / 46);
-		for (const g of this.deepGalaxies) {
-			const rot = this.elapsed * g.rotSpeed;
-			const gx = g.nx * artW;
-			const gy = g.ny * rows;
-			for (const p of g.pts) {
-				stamp(
-					Math.round(gx + Math.cos(p.th + rot) * p.rr * gs),
-					Math.round(gy + Math.sin(p.th + rot) * p.rr * gs * g.yScale),
-					p.b,
-				);
+		// Skip on small frames: at low cell counts the tiny distant spirals
+		// just read as extra noise, with no room to spare for them.
+		if (artW >= 70 && rows >= 16) {
+			const gs = Math.max(1.2, artW / 46);
+			for (const g of this.deepGalaxies) {
+				const rot = this.elapsed * g.rotSpeed;
+				const gx = g.nx * artW;
+				const gy = g.ny * rows;
+				for (const p of g.pts) {
+					stamp(
+						Math.round(gx + Math.cos(p.th + rot) * p.rr * gs),
+						Math.round(gy + Math.sin(p.th + rot) * p.rr * gs * g.yScale),
+						p.b,
+					);
+				}
+				stamp(Math.round(gx), Math.round(gy), g.core); // the bulge
 			}
-			stamp(Math.round(gx), Math.round(gy), g.core); // the bulge
 		}
 
 		// -- constellations: bright star patterns joined by faint dotted
 		// lines, pinned to the background alongside the deep galaxies --
-		for (const c of CONSTELLATIONS) {
-			const cw = c.w * artW;
-			const px = (s: [number, number]) => c.nx * artW + (s[0] - 0.5) * cw;
-			const py = (s: [number, number]) =>
-				c.ny * rows + (s[1] - 0.5) * cw * 0.5;
-			for (const [a, b] of c.edges) {
-				const x0 = px(c.stars[a]);
-				const y0 = py(c.stars[a]);
-				const x1 = px(c.stars[b]);
-				const y1 = py(c.stars[b]);
-				const steps = Math.max(
-					2,
-					Math.round(Math.hypot(x1 - x0, (y1 - y0) * 2)),
-				);
-				// Dotted: every other cell, ends left clear for the stars.
-				for (let s = 1; s < steps; s += 2) {
-					const u = s / steps;
-					stamp(
-						Math.round(x0 + (x1 - x0) * u),
-						Math.round(y0 + (y1 - y0) * u),
-						0.05,
+		// Skip constellations entirely below rows 14; below that a shape
+		// too small to read as a pattern is just clutter, so also drop any
+		// single constellation that would render under 9 cells wide.
+		if (rows >= 14) {
+			for (const c of CONSTELLATIONS) {
+				const cw = c.w * artW;
+				if (cw < 9) continue;
+				const px = (s: [number, number]) => c.nx * artW + (s[0] - 0.5) * cw;
+				const py = (s: [number, number]) =>
+					c.ny * rows + (s[1] - 0.5) * cw * 0.5;
+				for (const [a, b] of c.edges) {
+					const x0 = px(c.stars[a]);
+					const y0 = py(c.stars[a]);
+					const x1 = px(c.stars[b]);
+					const y1 = py(c.stars[b]);
+					const steps = Math.max(
+						2,
+						Math.round(Math.hypot(x1 - x0, (y1 - y0) * 2)),
+					);
+					// Dotted: every other cell, ends left clear for the stars.
+					for (let s = 1; s < steps; s += 2) {
+						const u = s / steps;
+						stamp(
+							Math.round(x0 + (x1 - x0) * u),
+							Math.round(y0 + (y1 - y0) * u),
+							0.05,
+						);
+					}
+				}
+				for (let i = 0; i < c.stars.length; i++) {
+					const tw =
+						0.75 + 0.25 * Math.sin(this.elapsed * 1.3 + i * 2.1 + c.nx * 9);
+					glyph(
+						Math.round(px(c.stars[i])),
+						Math.round(py(c.stars[i])),
+						"*",
+						0.4 * tw * (c.mags?.[i] ?? 1),
 					);
 				}
-			}
-			for (let i = 0; i < c.stars.length; i++) {
-				const tw =
-					0.75 + 0.25 * Math.sin(this.elapsed * 1.3 + i * 2.1 + c.nx * 9);
-				glyph(
-					Math.round(px(c.stars[i])),
-					Math.round(py(c.stars[i])),
-					"*",
-					0.4 * tw * (c.mags?.[i] ?? 1),
-				);
 			}
 		}
 
@@ -723,7 +741,10 @@ class BlackHoleComponent {
 					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
 				});
 			}
-			for (let c = 0; c < 3; c++) {
+			// Fewer open clusters on small frames — three tight clusters plus
+			// the band and scatter is too much texture for a small canvas.
+			const nClusters = artW < 70 ? 2 : 3;
+			for (let c = 0; c < nClusters; c++) {
 				let ccol = 0;
 				let crow = 0;
 				for (let tries = 0; tries < 16; tries++) {
@@ -1049,15 +1070,21 @@ class BlackHoleComponent {
 		const stampCentered = (text: string, row: number, b: number) =>
 			stampAt(Math.round(cx - text.length / 2), row, text, b, text.length);
 		const markW = Math.max(...WORDMARK.map((l) => l.length));
+		// Truncate for narrow frames rather than letting it overflow off the
+		// edge — a local copy, so the full path survives for wider renders.
+		const tagline =
+			this.tagline.length > artW - 4
+				? this.tagline.slice(0, Math.max(0, artW - 5)) + "…"
+				: this.tagline;
 		if (rows >= 16 && artW >= markW + 6) {
 			const markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
 				stampAt(markCol, 1 + i, WORDMARK[i], 0.9, markW);
 			}
-			stampCentered(this.tagline, WORDMARK.length + 2, 0.14);
+			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
 			stampCentered("h a r i m o", 1, 0.9);
-			stampCentered(this.tagline, 2, 0.14);
+			stampCentered(tagline, 2, 0.14);
 		}
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
