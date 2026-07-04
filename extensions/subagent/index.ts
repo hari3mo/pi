@@ -793,7 +793,11 @@ export default function (pi: ExtensionAPI) {
 				// Track all results for streaming updates
 				const allResults: SingleResult[] = new Array(params.tasks.length);
 
-				// Initialize placeholder results
+				// Initialize placeholder results. Seed each with the resolved model and
+				// inherited gate so a PENDING subagent still renders its status-bar data
+				// (mode · thinking) before its subprocess emits any usage.
+				const pendingGate: "write" | "confirm" =
+					(globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write" ? "write" : "confirm";
 				for (let i = 0; i < params.tasks.length; i++) {
 					allResults[i] = {
 						agent: params.tasks[i].agent,
@@ -803,6 +807,8 @@ export default function (pi: ExtensionAPI) {
 						messages: [],
 						stderr: "",
 						usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
+						model: agents.find((a) => a.name === params.tasks[i].agent)?.model,
+						mode: pendingGate,
 					};
 				}
 
