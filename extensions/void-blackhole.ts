@@ -54,7 +54,7 @@
  *     bright glyph stars twinkling harder, and a couple of tight open
  *     clusters — every star at its own twinkle rate and phase
  *   - deep space beyond the stars: tiny, extremely dim glyph spirals at
- *     random inclinations (one an edge-on sliver) with soft core bulges,
+ *     random inclinations (two edge-on slivers) with soft core bulges,
  *     slowly wheeling in the far background
  * The art also expands to fill the terminal instead of a fixed 76-col box.
  */
