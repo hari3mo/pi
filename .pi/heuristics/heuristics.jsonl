@@ -1,1 +1,1 @@
-
+{"id":"h_mr6a1h0g_h2e5vgie","text":"When fanning out read-only reviewers in parallel with a mutating tester over shared state files, warn EVERY reader about transient mutations (or sequence them) — otherwise reviewers report probe-injected state as live findings.","scope":"project","project":"/Users/harissaif/.pi/agent","category":"orchestration","created":"2026-07-04T11:26:35.104Z","lastReinforced":"2026-07-04T11:26:35.104Z","hits":0,"source":"agent","pinned":false,"basis":"directly-observed"}

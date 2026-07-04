@@ -1,1 +1,1 @@
-{"id":"h_mr67eb0n_8w663i8p","text":"After editing any doc that has LLM-authored semantic graph extraction, re-save its fragment to the semantic cache (pull its nodes/edges from graph.json, save_semantic_cache) — cache entries are content-keyed, so the edit orphans the old entry and the next rebuild silently drops that doc's semantics.","scope":"project","project":"/Users/harissaif/.pi/agent","category":"gotcha","created":"2026-07-04T10:12:35.015Z","lastReinforced":"2026-07-04T10:12:35.015Z","hits":0,"source":"agent","pinned":false,"basis":"directly-observed"}
+
