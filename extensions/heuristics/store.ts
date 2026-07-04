@@ -315,6 +315,8 @@ export async function mutateStore<T>(
 export interface SaveResult {
 	status: "added" | "reinforced" | "merged";
 	id: string;
+	/** Canonical stored text (post sanitize/redact/merge) — may differ from the input. */
+	text: string;
 	warnings: string[];
 }
 
@@ -357,7 +359,7 @@ export async function saveHeuristic(
 			const updated: Heuristic = { ...list[idx], hits: list[idx].hits + 1, lastReinforced: now, basis: applyBasis(list[idx].basis, basis) };
 			const newList = [...list];
 			newList[idx] = updated;
-			return { list: newList, result: { status: "reinforced" as const, id: updated.id, warnings } };
+			return { list: newList, result: { status: "reinforced" as const, id: updated.id, text: updated.text, warnings } };
 		}
 
 		const newTokens = tokens(text);
@@ -381,7 +383,7 @@ export async function saveHeuristic(
 			};
 			const newList = [...list];
 			newList[idx] = updated;
-			return { list: newList, result: { status, id: updated.id, warnings } };
+			return { list: newList, result: { status, id: updated.id, text: updated.text, warnings } };
 		}
 
 		const entry: Heuristic = {
@@ -397,7 +399,7 @@ export async function saveHeuristic(
 			pinned: false,
 			basis,
 		};
-		return { list: [...list, entry], result: { status: "added" as const, id: entry.id, warnings } };
+		return { list: [...list, entry], result: { status: "added" as const, id: entry.id, text: entry.text, warnings } };
 	});
 }
 
