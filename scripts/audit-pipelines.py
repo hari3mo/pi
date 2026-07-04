@@ -212,6 +212,7 @@ def check_oracle_staleness() -> None:
         return None
 
     stale: list[str] = []
+    unstamped: list[str] = []
     for page in sorted(ORACLE.rglob("*.md")):
         try:
             lines = page.read_text(encoding="utf-8", errors="replace").splitlines()
@@ -228,15 +229,26 @@ def check_oracle_staleness() -> None:
         if field(fm, "source_layer") != "upstream":
             continue
         ver = field(fm, "pi_version")
-        if ver and ver != cur:
-            stale.append(str(page.relative_to(ORACLE)))
-    if stale:
-        sample = ", ".join(stale[:5])
+        rel = str(page.relative_to(ORACLE))
+        # SCHEMA.md requires every upstream page to carry pi_version; a missing or
+        # empty stamp is unstamped (can't be checked for staleness), so it warns too.
+        if not ver:
+            unstamped.append(rel)
+        elif ver != cur:
+            stale.append(rel)
+    flagged = stale + unstamped
+    if flagged:
+        kinds = []
+        if stale:
+            kinds.append(f"{len(stale)} stamped for a pi version other than the live {cur}")
+        if unstamped:
+            kinds.append(f"{len(unstamped)} with a missing/empty pi_version (unstamped)")
+        sample = ", ".join(flagged[:5])
         warnings.append(
-            f"pipeline: {len(stale)} oracle upstream page(s) stamped for a pi version "
-            f"other than the live {cur} — re-verify their claims against the updated pi "
+            f"pipeline: {len(flagged)} oracle upstream page(s) need re-verification "
+            f"({'; '.join(kinds)}) — re-verify their claims against the current pi "
             f"docs/examples and re-stamp (oracle/SCHEMA.md staleness protocol): "
-            f"{sample}{'...' if len(stale) > 5 else ''}")
+            f"{sample}{'...' if len(flagged) > 5 else ''}")
 
 
 def check_toolchain_versions() -> None:
