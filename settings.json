@@ -2,7 +2,7 @@
   "lastChangelogVersion": "0.80.3",
   "theme": "porcelain-light/porcelain",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-5",
+  "defaultModel": "claude-fable-5",
   "defaultThinkingLevel": "high",
   "quietStartup": false,
   "enabledModels": [
@@ -12,6 +12,7 @@
     "gpt-5.5"
   ],
   "packages": [
-    "npm:pi-rewind"
+    "npm:pi-rewind",
+    "git:github.com/DietrichGebert/ponytail"
   ]
 }
