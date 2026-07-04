@@ -6,7 +6,7 @@ sources:
   - /Users/harissaif/.pi/agent/AGENTS.md
 tags: [pi, orchestration, concept]
 aliases: ["Budget Invariants", "Token-Spend Rules"]
-summary: The MUST rules that keep the orchestrator's scarce context spent only on judgment — one read before dispatch, never verify by reading, batch dispatches, front-load spec quality, blind fan-out, graph-first, oracle-first.
+summary: The MUST rules keeping the orchestrator's context on judgment: one read before dispatch, never verify by reading, batch dispatches, front-load specs, blind fan-out, graph-first, oracle-first.
 relationships:
   - target: "[[concepts/orchestration-doctrine]]"
     type: derived_from
