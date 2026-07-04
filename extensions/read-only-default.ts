@@ -210,7 +210,7 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.registerCommand("write", {
-		description: "Full access, no confirmation prompts, for this session",
+		description: "Auto-approve writes under ~/.pi; prompt/block outside it for this session",
 		handler: async (_args, ctx) => {
 			if (mode === "write") {
 				ctx.ui.notify("Already in write mode.", "info");
@@ -318,7 +318,7 @@ export default function (pi: ExtensionAPI) {
 			event.toolName === "bash" &&
 			isDestructiveCommand((event.input as { command?: string }).command ?? "");
 		const isMutation = isWriteTool || isBadBash;
-		const scope = isMutation ? autoWriteScope(event.toolName, event.input, ctx) : undefined;
+		const scope = isMutation ? autoWriteScope(event.toolName, event.input as Record<string, unknown>, ctx) : undefined;
 
 		if (mode === "write") {
 			if (!isMutation || scope?.trusted) return;
@@ -399,7 +399,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("before_agent_start", async (_event, ctx) => {
 		// Orchestrator lead (fable) with a closed gate: subagents would inherit
 		// read-only, so the pre-flight prompt must come before ANY exploration.
-		const isOrchestrator = ((ctx.model as { id?: string } | undefined)?.id ?? "").includes("fable");
+		const isOrchestrator = mode !== "write" && ((ctx.model as { id?: string } | undefined)?.id ?? "").includes("fable");
 		const orchestratorNote = isOrchestrator
 			? "\n\n[ORCHESTRATOR PRE-FLIGHT] You are the orchestrator and the write gate is NOT in write mode.\n" +
 				"Spawned subagents inherit this gate and cannot write. If the task will plausibly require\n" +
