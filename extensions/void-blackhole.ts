@@ -1295,17 +1295,22 @@ export default function (pi: ExtensionAPI) {
 			.then(setVoidHeader);
 	});
 
+	const openVoid = async (ctx: ExtensionCommandContext) => {
+		if (ctx.mode !== "tui") {
+			ctx.ui.notify("The void requires interactive mode", "error");
+			return;
+		}
+		await ctx.ui.custom((tui, theme, _kb, done) => {
+			return new BlackHoleComponent(tui, theme, () => done(undefined));
+		});
+	};
+
 	pi.registerCommand("void", {
-		description:
-			"The void — black hole, planets, comets, constellations",
-		handler: async (_args, ctx) => {
-			if (ctx.mode !== "tui") {
-				ctx.ui.notify("The void requires interactive mode", "error");
-				return;
-			}
-			await ctx.ui.custom((tui, theme, _kb, done) => {
-				return new BlackHoleComponent(tui, theme, () => done(undefined));
-			});
-		},
+		description: "The void — black hole, planets, comets, constellations",
+		handler: async (_args, ctx) => openVoid(ctx),
+	});
+	pi.registerCommand("galaxy", {
+		description: "Alias for /void — the ASCII black-hole galaxy",
+		handler: async (_args, ctx) => openVoid(ctx),
 	});
 }
