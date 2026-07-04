@@ -20,27 +20,14 @@
  * Run: node scripts/check-concurrency-guard.mjs
  */
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, writeFileSync, mkdirSync, existsSync, symlinkSync, rmSync } from "node:fs";
+import { mkdtempSync, writeFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join, dirname } from "node:path";
-import { fileURLToPath, pathToFileURL } from "node:url";
+import { join } from "node:path";
 import assert from "node:assert/strict";
+import { AGENT_DIR, loadJiti, provisionNodeModules } from "./lib/jiti-loader.mjs";
 
-const here = dirname(fileURLToPath(import.meta.url));
-const AGENT_DIR = join(here, "..");
-const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
-
-// Self-provision module resolution for the extension's `getAgentDir` import
-// (same links smoke-extensions.mjs makes; idempotent, gitignored).
-const nm = join(AGENT_DIR, "node_modules");
-function link(target, dest) {
-	try { rmSync(dest, { recursive: true, force: true }); } catch {}
-	if (existsSync(target)) symlinkSync(target, dest);
-}
-assert.ok(existsSync(PKG), `pi package not found at ${PKG}`);
-mkdirSync(join(nm, "@earendil-works"), { recursive: true });
-link(join(PKG, "node_modules", "typebox"), join(nm, "typebox"));
-link(PKG, join(nm, "@earendil-works", "pi-coding-agent"));
+// Self-provision module resolution for the extension's `getAgentDir` import.
+provisionNodeModules();
 
 // Scratch git repo standing in for ~/.pi/agent.
 const REPO = mkdtempSync(join(tmpdir(), "cg-check-"));
@@ -56,8 +43,7 @@ g("commit", "-qm", "init");
 // Redirect the extension's AGENT_DIR to the scratch repo, then load it with
 // pi's own jiti (bare @earendil-works import resolves via the links above).
 process.env.PI_CODING_AGENT_DIR = REPO;
-const { createJiti } = await import(pathToFileURL(join(PKG, "node_modules", "jiti", "lib", "jiti.mjs")).href);
-const jiti = createJiti(join(AGENT_DIR, "extensions", "_check_.js"), { interopDefault: false });
+const { jiti } = await loadJiti();
 
 // Fake pi: capture handlers + outbound messages/events; no-op everything else.
 const handlers = {};
