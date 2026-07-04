@@ -1165,7 +1165,11 @@ class BlackHoleComponent {
 				line += ch;
 			}
 			if (tier !== "") line += RESET;
-			lines.push(line);
+			// Belt-and-suspenders, same as the post-splash header path: artW is
+			// Math.max(30, …) so it can exceed width when width < 30, and a raced
+			// width can slip past the offset math — clamp so no line ever
+			// overflows the terminal and crashes the TUI.
+			lines.push(truncateToWidth(line, width));
 		}
 
 		this.cachedLines = lines;
