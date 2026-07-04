@@ -115,10 +115,21 @@ export default function (pi: ExtensionAPI) {
 		}
 	}
 
+	// Persistent footer label so the gate mode is always visible (see docs/tui.md
+	// Pattern 4: Persistent Status Indicator). Guarded for headless sessions.
+	function updateStatusBar(ctx: ExtensionContext): void {
+		if (!ctx.hasUI) return;
+		const label =
+			mode === "write" ? "gate: write" : mode === "readonly" ? "gate: read-only" : "gate: confirm";
+		const color = mode === "write" ? "success" : mode === "readonly" ? "warning" : "muted";
+		ctx.ui.setStatus("write-gate", ctx.ui.theme.fg(color, label));
+	}
+
 	function setMode(next: Mode, ctx: ExtensionContext, notify: boolean): void {
 		mode = next;
 		applyTools();
 		persist();
+		updateStatusBar(ctx);
 		if (!notify) return;
 		const msg =
 			next === "write"
@@ -333,5 +344,6 @@ export default function (pi: ExtensionAPI) {
 		}
 
 		applyTools();
+		updateStatusBar(ctx);
 	});
 }
