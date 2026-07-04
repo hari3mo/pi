@@ -45,7 +45,8 @@
  *     streaming away from the core, longest and brightest at perihelion
  *   - constellations pinned to the far background: recognizable star
  *     patterns joined by faint dotted lines, twinkling slowly
- *   - shooting stars streaking across the field every so often
+ *   - shooting stars streaking across the field often, several in
+ *     flight together
  *   - the occasional supernova: a star swells up the glyph ramp, flashes,
  *     and fades back to nothing
  *   - a layered starfield: field stars gathered into a broad Milky Way
