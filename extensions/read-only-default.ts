@@ -5,7 +5,7 @@
  * edit/write tool call or destructive bash command prompts the user before
  * running. Two other modes are reachable:
  *
- *   /write      - full access, no prompts (also: pi --write)
+ *   /write      - auto-approve writes under ~/.pi; prompt/block outside it (also: pi --write)
  *   /confirm    - default: prompt before each write/destructive command
  *   /read-only  - strict: edit/write disabled, destructive bash blocked
  *
@@ -14,12 +14,14 @@
  * in legacy encoding it can collide with NUL/Ctrl+Space.)
  *
  * In headless modes (no UI) confirm-mode blocks writes, since it cannot prompt;
- * use `pi --write` for unattended write access.
+ * use `pi --write` for unattended write access under ~/.pi only.
  *
  * The mode persists across /resume within the same session file, but every
  * brand-new session starts in confirm mode again.
  */
 
+import * as os from "node:os";
+import * as path from "node:path";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { Key } from "@earendil-works/pi-tui";
 import { Type } from "typebox";
@@ -68,9 +70,66 @@ const DESTRUCTIVE_PATTERNS = [
 // read-only commands such as `grep foo 2>/dev/null` pass freely in confirm mode.
 const SAFE_REDIRECT_RE = /(\d+|&)?>{1,2}\s*\/dev\/null|\d*>&\d+/g;
 
+// Auto-write is intentionally narrow: /write, pi --write, and "allow all writes"
+// only skip prompts for mutations under ~/.pi. Outside that root, interactive
+// sessions still ask and headless sessions block.
+const AUTO_WRITE_ROOT = path.resolve(os.homedir(), ".pi");
+
+function isUnderAutoWriteRoot(candidate: string): boolean {
+	const relative = path.relative(AUTO_WRITE_ROOT, path.resolve(candidate));
+	return relative === "" || (!!relative && !relative.startsWith("..") && !path.isAbsolute(relative));
+}
+
+function resolveUserPath(candidate: string, cwd: string): string {
+	const expanded =
+		candidate === "~"
+			? os.homedir()
+			: candidate.startsWith("~/")
+				? path.join(os.homedir(), candidate.slice(2))
+				: candidate;
+	return path.resolve(cwd, expanded);
+}
+
+function stripShellToken(raw: string): string {
+	return raw.trim().replace(/^[\d&]*>{1,2}/, "").replace(/^[`'\"]+|[`'\",;:)]+$/g, "");
+}
+
+function shellTokenPaths(command: string, cwd: string): string[] {
+	const paths: string[] = [];
+	for (const raw of command.split(/[\s|&;()<>]+/)) {
+		const token = stripShellToken(raw);
+		if (!token || token.startsWith("-") || token === "/dev/null") continue;
+		const values = token.includes("=") ? [token, token.slice(token.indexOf("=") + 1)] : [token];
+		for (const value of values) {
+			if (!value || value === "/dev/null") continue;
+			if (value === "~" || value.startsWith("~/") || path.isAbsolute(value)) {
+				paths.push(resolveUserPath(value, cwd));
+			} else if (value.startsWith("./") || value.startsWith("../") || value.includes("/")) {
+				paths.push(path.resolve(cwd, value));
+			}
+		}
+	}
+	return paths;
+}
+
 function isDestructiveCommand(command: string): boolean {
 	const sanitized = command.replace(SAFE_REDIRECT_RE, " ");
 	return DESTRUCTIVE_PATTERNS.some((p) => p.test(sanitized));
+}
+
+function autoWriteScope(
+	toolName: string,
+	input: Record<string, unknown>,
+	ctx: ExtensionContext,
+): { trusted: boolean; target: string } {
+	if (toolName === "edit" || toolName === "write") {
+		const target = typeof input.path === "string" ? input.path : toolName;
+		return { target, trusted: isUnderAutoWriteRoot(resolveUserPath(target, ctx.cwd)) };
+	}
+	const command = typeof input.command === "string" ? input.command : "";
+	const trusted =
+		isUnderAutoWriteRoot(ctx.cwd) && shellTokenPaths(command, ctx.cwd).every(isUnderAutoWriteRoot);
+	return { target: command, trusted };
 }
 
 type Mode = "confirm" | "write" | "readonly";
@@ -86,7 +145,7 @@ export default function (pi: ExtensionAPI) {
 	let trustWritesThisSession = false;
 
 	pi.registerFlag("write", {
-		description: "Start the session in full write mode (no confirmation prompts)",
+		description: "Start with auto-write for ~/.pi only; prompt/block outside it",
 		type: "boolean",
 		default: false,
 	});
@@ -120,7 +179,7 @@ export default function (pi: ExtensionAPI) {
 	function updateStatusBar(ctx: ExtensionContext): void {
 		if (!ctx.hasUI) return;
 		const label =
-			mode === "write" ? "gate: write" : mode === "readonly" ? "gate: read-only" : "gate: confirm";
+			mode === "write" ? "gate: write ~/.pi" : mode === "readonly" ? "gate: read-only" : "gate: confirm";
 		const color = mode === "write" ? "success" : mode === "readonly" ? "warning" : "muted";
 		ctx.ui.setStatus("write-gate", ctx.ui.theme.fg(color, label));
 	}
@@ -133,7 +192,7 @@ export default function (pi: ExtensionAPI) {
 		if (!notify) return;
 		const msg =
 			next === "write"
-				? "Write mode: full tool access, no prompts."
+				? `Write mode: auto-approve writes under ${AUTO_WRITE_ROOT}; prompt elsewhere.`
 				: next === "readonly"
 					? "Read-only mode: edit/write disabled, destructive bash blocked."
 					: "Confirm mode: reads free, writes prompt for approval.";
@@ -201,7 +260,7 @@ export default function (pi: ExtensionAPI) {
 			const reply = (text: string) => ({ content: [{ type: "text" as const, text }] });
 			if (mode === "write")
 				return reply(
-					"Write gate already open (write mode). Proceed; spawned subagents inherit --write.",
+					`Write gate already open. Auto-write is scoped to ${AUTO_WRITE_ROOT}; spawned subagents inherit --write but prompts/blocks still apply outside that root.`,
 				);
 			// Headless (no UI): nobody can answer a select() prompt, so throwing
 			// (isError:true) forces the agent to stop and report the blocker
@@ -220,7 +279,9 @@ export default function (pi: ExtensionAPI) {
 			if (choice === "Switch to write mode") {
 				trustWritesThisSession = false;
 				setMode("write", ctx, true);
-				return reply("User switched to write mode. Proceed; spawned subagents will inherit --write.");
+				return reply(
+					`User switched to write mode. Auto-write is scoped to ${AUTO_WRITE_ROOT}; spawned subagents inherit --write but prompts/blocks still apply outside that root.`,
+				);
 			}
 			if (choice === "Stay in current mode (subagents read-only)") {
 				return reply("User kept the current gate mode. Subagents run read-only and can only return plans.");
