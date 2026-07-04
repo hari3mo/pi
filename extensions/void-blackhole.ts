@@ -66,7 +66,10 @@ import type {
 import { VERSION } from "@earendil-works/pi-coding-agent";
 
 // ------------------------------------------------ constants (config.js) ----
-const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
+const EVENT_HORIZON = 0.65; // matter vanishes inside this radius (the shadow) —
+//                             smaller than the site's 0.85 so the hole doesn't
+//                             dominate the terminal frame; the visible plunge
+//                             gap between shadow and hot rim reads more real
 const DISK_INNER = 1.0; //    hot, bright inner rim of the disk
 const SPAWN_OUTER = 6.0; //   matter is vacuumed in from across the whole galaxy
 const DISK_COUNT = 1700; // dense enough to fill the full-terminal canvas
