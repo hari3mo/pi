@@ -31,6 +31,15 @@ import { existsSync, readFileSync, renameSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
+import {
+	CROSS_STORE_GUIDANCE,
+	decide,
+	grepIsOracleQuestion,
+	makeRouterState,
+	resetRouterState,
+	type RouterAction,
+	type RouterState,
+} from "./lib/knowledge-router.ts";
 
 const STATS_FILE = ".graph_first_stats.json";
 const MAX_RECORDS = 50;
@@ -213,25 +222,44 @@ export function classifyStructureGrep(command: string): GrepClassification {
 	return none;
 }
 
-export type GraphFirstAction = "allow" | "nudge" | "block" | "bypass";
-export interface GraphFirstState {
-	count: number;
-	blocked: Set<string>;
-}
+export type GraphFirstAction = RouterAction;
+export type GraphFirstState = RouterState;
 
 /**
- * Escalation ladder over session state. First flagged grep nudges; later ones
- * block; an identical retry of a blocked command always bypasses. Mutates
- * `state`. Pure (no I/O) so the ladder is unit-testable.
+ * Escalation ladder (shared core, keyed by the trimmed command). First flagged
+ * grep nudges; later ones block; an identical retry of a blocked command always
+ * bypasses. Thin wrapper so the check imports this file's stable signature.
  */
 export function decideAction(state: GraphFirstState, command: string, flagged: boolean): GraphFirstAction {
-	if (!flagged) return "allow";
-	const norm = command.trim();
-	if (state.blocked.has(norm)) return "bypass";
-	state.count++;
-	if (state.count === 1) return "nudge";
-	state.blocked.add(norm);
-	return "block";
+	return decide(state, command.trim(), flagged);
+}
+
+// ---------------------------------------------------------------------------
+// Redirect messages (cross-store aware — deliverable 2). Pure + exported so the
+// check asserts both stores are named and the oracle-targeted grep leads with
+// the oracle. A structure grep into pi's OWN source / the oracle vault is a
+// pi-knowledge question the local graph cannot answer → point at the oracle.
+// ---------------------------------------------------------------------------
+
+export function buildNudge(identifier: string, command: string): string {
+	const primary = grepIsOracleQuestion(command)
+		? `[graph-first] This greps pi's own source / the oracle vault — the local graph does not ` +
+			`index it. Try \`wiki-query\` against the oracle profile (~/.obsidian-wiki/config.oracle) instead. ` +
+			`grep allowed this once.`
+		: `[graph-first] Structure search — the \`graph\` tool is ~30x cheaper than grep. ` +
+			`Try: explain '${identifier}' (or query). grep allowed this once.`;
+	return `${primary} ${CROSS_STORE_GUIDANCE}`;
+}
+
+export function buildBlock(identifier: string, command: string): string {
+	const primary = grepIsOracleQuestion(command)
+		? `[graph-first] This targets pi's own source / the oracle vault — consult the oracle, not the ` +
+			`local graph: \`wiki-query\` (~/.obsidian-wiki/config.oracle). If it genuinely lacks this, ` +
+			`re-run the IDENTICAL command to proceed.`
+		: `[graph-first] Structure searches should hit the knowledge graph first. Use the \`graph\` tool: ` +
+			`explain '${identifier}' (or query). If the graph genuinely cannot answer, re-run the ` +
+			`IDENTICAL command to proceed.`;
+	return `${primary} ${CROSS_STORE_GUIDANCE}`;
 }
 
 // ---------------------------------------------------------------------------
@@ -277,7 +305,7 @@ function persistStats(root: string, record: StatsRecord): void {
 export default function (pi: ExtensionAPI) {
 	let root: string | undefined;
 	let sessionId = "";
-	const state: GraphFirstState = { count: 0, blocked: new Set() };
+	const state: GraphFirstState = makeRouterState();
 	const counts = { nudges: 0, blocks: 0, bypasses: 0 };
 	let endNudgeSent = false;
 	let lastPersistedTotal = -1;
@@ -288,8 +316,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		root = findGraphRoot(ctx.cwd);
 		sessionId = `${new Date().toISOString()}-${process.pid}`;
-		state.count = 0;
-		state.blocked.clear();
+		resetRouterState(state);
 		counts.nudges = 0;
 		counts.blocks = 0;
 		counts.bypasses = 0;
@@ -311,9 +338,7 @@ export default function (pi: ExtensionAPI) {
 						{
 							customType: "graph-first-nudge",
 							display: true,
-							content:
-								`[graph-first] Structure search — the knowledge graph is ~30x cheaper than grep. ` +
-								`Try the \`graph\` tool: explain '${identifier}' (or query). grep allowed this once.`,
+							content: buildNudge(identifier, command),
 						},
 						{ deliverAs: "nextTurn" },
 					);
@@ -322,10 +347,7 @@ export default function (pi: ExtensionAPI) {
 					counts.blocks++;
 					return {
 						block: true,
-						reason:
-							`[graph-first] Structure searches should hit the knowledge graph first. ` +
-							`Use the \`graph\` tool: explain '${identifier}' (or query). ` +
-							`If the graph genuinely cannot answer, re-run the IDENTICAL command to proceed.`,
+						reason: buildBlock(identifier, command),
 					};
 				case "bypass":
 					counts.bypasses++;
