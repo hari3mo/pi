@@ -52,10 +52,10 @@ function formatEntry(h: Heuristic): string {
 }
 
 async function loadCombined(ctx: ExtensionCommandContext): Promise<{ global: Heuristic[]; project: Heuristic[] }> {
-	const g = await readStore(globalDir());
+	const global = await readStore(globalDir());
 	const trusted = ctx.isProjectTrusted();
-	const project = trusted ? (await readStore(projectDirFor(ctx.cwd))).list : [];
-	return { global: g.list, project };
+	const project = trusted ? await readStore(projectDirFor(ctx.cwd)) : [];
+	return { global, project };
 }
 
 async function findEntry(
@@ -64,12 +64,12 @@ async function findEntry(
 ): Promise<{ scope: Scope; dir: string; entry: Heuristic } | undefined> {
 	const gDir = globalDir();
 	const g = await readStore(gDir);
-	const foundGlobal = g.list.find((h) => h.id === id);
+	const foundGlobal = g.find((h) => h.id === id);
 	if (foundGlobal) return { scope: "global", dir: gDir, entry: foundGlobal };
 	if (ctx.isProjectTrusted()) {
 		const pDir = projectDirFor(ctx.cwd);
 		const p = await readStore(pDir);
-		const foundProject = p.list.find((h) => h.id === id);
+		const foundProject = p.find((h) => h.id === id);
 		if (foundProject) return { scope: "project", dir: pDir, entry: foundProject };
 	}
 	return undefined;
@@ -319,7 +319,7 @@ export function registerHeuristicsCommand(pi: ExtensionAPI): void {
 			if (!ID_SUBCOMMANDS.has(sub.toLowerCase())) return null;
 			// No ctx here (getArgumentCompletions has no cwd/trust access), so only the
 			// global store — never trust-gated — is safe to read for completions.
-			const { list } = await readStore(globalDir());
+			const list = await readStore(globalDir());
 			const items = list
 				.filter((h) => h.id.startsWith(idPrefix))
 				.map((h) => ({ value: h.id, label: `${h.id} — ${truncate(h.text, 50)}` }));
