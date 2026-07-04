@@ -2,7 +2,7 @@
  * Model Cycle Extension
  *
  * Shift+Tab cycles through a fixed set of pinned models:
- * claude-opus-4-8 -> claude-sonnet-5 -> claude-fable-5 -> (repeat)
+ * claude-sonnet-5 -> claude-opus-4-8 -> claude-fable-5 -> gemini-3.5-flash -> gpt-5.5 -> (repeat)
  *
  * Note: Shift+Tab is freed up for this by rebinding the built-in
  * `app.thinking.cycle` action to Option+Tab in keybindings.json.
@@ -11,9 +11,11 @@
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 
 const MODEL_CYCLE: Array<{ provider: string; id: string }> = [
-	{ provider: "anthropic", id: "claude-opus-4-8" },
 	{ provider: "anthropic", id: "claude-sonnet-5" },
+	{ provider: "anthropic", id: "claude-opus-4-8" },
 	{ provider: "anthropic", id: "claude-fable-5" },
+	{ provider: "google", id: "gemini-3.5-flash" },
+	{ provider: "openai", id: "gpt-5.5" },
 ];
 
 export default function (pi: ExtensionAPI) {
@@ -39,7 +41,7 @@ export default function (pi: ExtensionAPI) {
 	}
 
 	pi.registerShortcut("shift+tab", {
-		description: "Cycle model (opus-4-8 / sonnet-5 / fable-5)",
+		description: "Cycle model (sonnet-5 / opus-4-8 / fable-5 / gemini-3.5-flash / gpt-5.5)",
 		handler: cycleModel,
 	});
 }
