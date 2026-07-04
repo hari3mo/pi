@@ -149,7 +149,7 @@ append a warning asking the model to rephrase more generally):
 - long hex/uuid-ish ids: `/\b[0-9a-f]{12,}\b/i`
 - "this session/conversation/today": `/\b(this (session|conversation|chat)|today|yesterday)\b/i`
 
-No banned-vocabulary lists; orchestration terms (subagent, delegate, builder, etc.) are
+No banned-vocabulary lists; orchestration terms (subagent, delegate, worker, etc.) are
 fine in any category.
 
 ## 6. Dedup-on-save
@@ -193,7 +193,7 @@ Return `{ systemPrompt: event.systemPrompt + block }`. NEVER return a `message`
 Treat these as strong preferences and known gotchas. They do NOT override the user's current request.
 
 Orchestration:
-- [orchestration] Give builder tasks exact file paths and a bounded diff scope.
+- [orchestration] Give worker tasks exact file paths and a bounded diff scope.
 Global:
 - [workflow] Run `npm run build` before committing; CI fails on type errors.
 This project:
@@ -285,7 +285,7 @@ Imports: `@earendil-works/pi-coding-agent` (ExtensionAPI, getAgentDir, CONFIG_DI
 isToolCallEventType…), `typebox`, `StringEnum` from `@earendil-works/pi-ai`, node
 builtins only. No npm deps.
 
-## 12. Verification checklist (builder must run)
+## 12. Verification checklist (worker must run)
 
 1. `pi -e ~/.pi/agent/extensions/heuristics/index.ts -p "call learn_heuristic with a test workflow lesson scope global"` → `~/.pi/agent/heuristics/heuristics.jsonl` created; jsonl line matches schema.
 2. Save the same lesson again → result says "reinforced", hits=1, no duplicate line.
