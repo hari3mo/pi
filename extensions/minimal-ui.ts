@@ -17,6 +17,8 @@ const SEP = "  ·  ";
 
 // Lets the top-level thinking_level_select handler nudge the minimal footer.
 let requestFooterRender: (() => void) | undefined;
+let working = false;
+let pulseFrame = 0;
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — theme-derived luminance ramp (dim -> muted -> accent -> dim)
@@ -37,9 +39,15 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	ctx.ui.setFooter((tui, theme, footerData) => {
 		const unsub = footerData.onBranchChange(() => tui.requestRender());
 		requestFooterRender = () => tui.requestRender();
+		const pulseTimer = setInterval(() => {
+			if (!working) return;
+			pulseFrame++;
+			tui.requestRender();
+		}, 160);
 
 		return {
 			dispose: () => {
+				clearInterval(pulseTimer);
 				requestFooterRender = undefined;
 				unsub();
 			},
@@ -78,7 +86,9 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 				if (input + output > 0) rightParts.push(`${fmtTokens(input)}↑ ${fmtTokens(output)}↓`);
 				if (cost > 0) rightParts.push(`$${cost.toFixed(2)}`);
 
-				const left = theme.fg("dim", leftParts.join(SEP));
+				const pulseRamp = ["dim", "muted", "accent", "muted"] as const;
+				const leftTone = working ? pulseRamp[pulseFrame % pulseRamp.length] : "dim";
+				const left = theme.fg(leftTone, leftParts.join(SEP));
 				const right = theme.fg("dim", rightParts.join(SEP));
 
 				const gap = width - visibleWidth(left) - visibleWidth(right);
@@ -102,6 +112,16 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.on("thinking_level_select", async () => {
+		requestFooterRender?.();
+	});
+
+	pi.on("agent_start", async () => {
+		working = true;
+		requestFooterRender?.();
+	});
+
+	pi.on("agent_end", async () => {
+		working = false;
 		requestFooterRender?.();
 	});
 
