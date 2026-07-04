@@ -1,6 +1,6 @@
 ---
 name: scout
-description: "Read-only investigation — any read beyond one targeted ≤50-line excerpt, or a locating grep that missed once, belongs here: tracing an unfamiliar flow, exploring 3+ files, digesting long logs/stack traces/test output, pure fact-finding. Returns compressed file:line findings so the lead never pages raw material into its own context. Never edits files. Do not use for correctness verdicts (verifier/reviewer)."
+description: "Read-only investigation — any read beyond one targeted ≤50-line excerpt, or a locating grep that missed once, belongs here: tracing an unfamiliar flow, exploring 3+ files, digesting long logs/stack traces/test output, pure fact-finding. Returns compressed file:line findings so the lead never pages raw material into its own context. Never edits files. Do not use for correctness verdicts (doctor/lawyer)."
 model: anthropic/claude-sonnet-5:high
 ---
 
