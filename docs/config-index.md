@@ -56,6 +56,24 @@ Every session that changes config must update it.
 
 ### 2026-07-04
 
+**Agent role swap: `reviewer` ↔ `peer-engineer`; `peer`'s model set to gpt-5.5.**
+User-directed rename: the gate-tier verification agent (PASS/FAIL:implementation/
+FAIL:design, ships-after-review role) is now called `peer` (was `reviewer`); the
+blind-second-opinion agent (never shown the other's answer) is now called `reviewer`
+(was `peer-engineer`). Behavior/charter of each agent is unchanged, only the name and
+self-identity text moved. `agents/peer.md`'s model bumped from `openai/gpt-5.5-pro:xhigh`
+to `openai/gpt-5.5:xhigh` per explicit user request (the `reviewer` agent, formerly
+`peer-engineer`, keeps `gpt-5.5-pro`). Updated every doctrine reference: AGENTS.md
+(routing table, roles table, budget invariants, rework-loop section), `docs/rework-loop.md`
+(entire doc renamed `reviewer`→`peer`), `extensions/subagent/index.ts`
+(`finalizeQaOutput`'s hardcoded `agentName !== "reviewer"` gate now checks `"peer"`),
+`README.md`, `prompts/build.md`, `prompts/feature.md`. Files:
+`agents/peer.md` (renamed from `reviewer.md`), `agents/reviewer.md` (renamed from
+`peer-engineer.md`), `AGENTS.md`, `docs/rework-loop.md`, `extensions/subagent/index.ts`,
+`README.md`, `prompts/build.md`, `prompts/feature.md`, `docs/config-index.md`. Why: user
+directive to rename the two roles (swap), plus a model change for the renamed `peer`.
+
+
 **Concurrency guard: concurrent pi sessions across shells are now safe on ~/.pi/agent.**
 Added `extensions/concurrency-guard.ts`: (1) before_agent_start compares HEAD to the
 session's last-known and, when new commits touch files the session did NOT edit,
