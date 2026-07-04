@@ -2,7 +2,7 @@
 
 Reviewer-gated work is not one-pass — this loop applies to any build that goes
 through `reviewer`, whether from a fan-out or a solo build
-(`solo-engineer`/`fable-engineer`). `reviewer` is a gate that can bounce
+(`engineer`/`fable-engineer`). `reviewer` is a gate that can bounce
 work backwards, and the orchestrator runs the loop until the gate passes or
 the loop budget is exhausted. "Implementing agent" below means whichever
 agent built the work.
@@ -16,12 +16,12 @@ structured verdict, one of:
 - `FAIL: design` — the flaw is in the approach, not the code; do not patch
   around it — the orchestrator re-frames the problem (interviewing the user
   if "done" itself was misdefined, or dispatching a design-only
-  `solo-engineer` task for the revised approach)
+  `engineer` task for the revised approach)
 
 **Loop mechanics:**
 
 1. On `FAIL: implementation`, dispatch the iteration as ONE chain call: the
-   implementing agent (builder or solo-engineer) given (a) the original
+   implementing agent (worker or engineer) given (a) the original
    bounded task, (b) the reviewer's findings verbatim, and (c) an explicit
    instruction to fix ONLY the findings — no opportunistic refactoring —
    followed by a fresh `reviewer` as the FINAL chain step.
@@ -29,7 +29,7 @@ structured verdict, one of:
    nothing regressed; verdict normalization applies because it is the last
    step. Never let the implementing agent self-certify.
 3. On `FAIL: design`, re-frame: the revised design (from the user interview
-   or a design-only `solo-engineer` dispatch) then flows forward through
+   or a design-only `engineer` dispatch) then flows forward through
    implementation → `reviewer` again.
 
 **Loop budget: 3 iterations.** If the same work item fails review a third
