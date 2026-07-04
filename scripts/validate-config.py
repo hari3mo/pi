@@ -15,6 +15,8 @@ Checks (driven by schema/manifest.json — add targets there, not here):
   4. No dangling symlinks under skills/.
   5. Standard layout: expected directories exist; unknown entries are
      reported as info only (the layout is malleable by design).
+  6. Installed-artifact integrity: graphify hook keeps its doc filter, no
+     post-checkout rebuild hook, pi-tui scrollback patch still applied.
 
 Exit codes: 0 = clean (or warnings without --strict), 1 = errors.
 """
@@ -149,6 +151,39 @@ def check_symlinks() -> None:
             errors.append(f"skills/{entry.name}: dangling symlink -> {os.readlink(entry)}")
 
 
+def check_installed_integrity() -> None:
+    """Guards for fixes that live OUTSIDE tracked config and can silently vanish.
+
+    1. graphify post-commit hook must keep the harness-local doc filter:
+       without it, graphify's .md structural extractor REPLACES the LLM-authored
+       semantic graph layer on the next doc commit (observed 2026-07-04:
+       22 edges lost, giant component 615->126). `graphify hook install`
+       regenerates the hook WITHOUT the filter.
+    2. A graphify post-checkout hook must not exist: its full-rebuild path
+       re-extracts .md files and wipes the same semantic layer.
+    3. The pi-tui scrollback patch (patches/pi-tui-scrollback-fix.md) lives in
+       the installed dist and is silently overwritten by `pi update`.
+    """
+    hook = AGENT_DIR / ".pi-vcs" / "hooks" / "post-commit"
+    if hook.exists():
+        text = hook.read_text(encoding="utf-8", errors="replace")
+        if "graphify-hook-start" in text and "harness-local filter" not in text:
+            errors.append(
+                ".pi-vcs/hooks/post-commit: graphify hook present WITHOUT the harness-local "
+                "doc filter — next doc commit will wipe the semantic graph layer "
+                "(re-apply the filter block; see docs/config-index.md 2026-07-04)")
+    checkout = AGENT_DIR / ".pi-vcs" / "hooks" / "post-checkout"
+    if checkout.exists() and "graphify" in checkout.read_text(encoding="utf-8", errors="replace"):
+        errors.append(
+            ".pi-vcs/hooks/post-checkout: graphify full-rebuild hook present — its .md "
+            "re-extraction wipes the semantic graph layer; delete it (deliberately removed 2026-07-04)")
+    tui = Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js"
+    if tui.exists() and "viewport reflow repaint" not in tui.read_text(encoding="utf-8", errors="replace"):
+        warnings.append(
+            "pi-tui dist: scrollback-fix patch markers missing (pi update overwrote it?) — "
+            "re-apply per patches/pi-tui-scrollback-fix.md, then run its harness")
+
+
 def check_layout(layout: dict) -> None:
     for d in layout.get("expected", []):
         if not (AGENT_DIR / d).is_dir():
@@ -176,6 +211,7 @@ def main() -> int:
             check_heuristics_hygiene(target, entries)
     check_git_hygiene()
     check_symlinks()
+    check_installed_integrity()
     check_layout(manifest.get("layout", {}))
 
     for msg in errors:

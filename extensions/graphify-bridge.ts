@@ -92,18 +92,26 @@ function graphStats(root: string): GraphStats | undefined {
 		}
 		const data = JSON.parse(readFileSync(graphPath, "utf8")) as {
 			nodes: { id: string; label?: string; community?: number }[];
-			links: { source: string; target: string }[];
+			links: { source: string; target: string; relation?: string }[];
 		};
 		const degree = new Map<string, number>();
 		for (const l of data.links) {
+			// `contains` edges are file→entity tree structure (JSON key trees,
+			// file containers) — counting them makes data files look like hubs.
+			if (l.relation === "contains") continue;
 			degree.set(l.source, (degree.get(l.source) ?? 0) + 1);
 			degree.set(l.target, (degree.get(l.target) ?? 0) + 1);
 		}
 		const labelOf = new Map(data.nodes.map((n) => [n.id, n.label ?? n.id]));
-		const hubs = [...degree.entries()]
-			.sort((a, b) => b[1] - a[1])
-			.slice(0, 5)
-			.map(([id]) => (labelOf.get(id) ?? id).slice(0, 48));
+		const hubs: string[] = [];
+		const seen = new Set<string>();
+		for (const [id] of [...degree.entries()].sort((a, b) => b[1] - a[1])) {
+			const label = (labelOf.get(id) ?? id).slice(0, 48);
+			if (seen.has(label)) continue;
+			seen.add(label);
+			hubs.push(label);
+			if (hubs.length === 5) break;
+		}
 		const stats: GraphStats = {
 			nodes: data.nodes.length,
 			edges: data.links.length,
