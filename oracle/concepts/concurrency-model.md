@@ -4,10 +4,11 @@ category: concepts
 source_layer: local
 sources:
   - /Users/harissaif/.pi/agent/extensions/concurrency-guard.ts
+  - /Users/harissaif/.pi/agent/extensions/lib/change-detection.ts
   - /Users/harissaif/.pi/agent/AGENTS.md
 tags: [pi, config, concept]
 aliases: ["Concurrent Sessions", "Autocommit Model"]
-summary: How concurrent pi sessions across shells stay safe on ~/.pi/agent — an autocommit daemon snapshots edits, a concurrency guard detects foreign commits, and a pre-commit gate blocks bad config (with a launchd PATH caveat).
+summary: How concurrent pi sessions across shells stay safe on ~/.pi/agent — an autocommit daemon snapshots edits, a single change-detection engine classifies foreign commits and tracks stale loaded resources (edit gate + recurring warnings until /refresh), and a pre-commit gate blocks bad config (with a launchd PATH caveat).
 relationships:
   - target: "[[components/concurrency-guard-extension]]"
     type: implements
@@ -36,22 +37,35 @@ sessions detect it via `git`. Practical consequence: **edits in `~/.pi/agent`
 are snapshotted continuously**, so commit "noise" is ambient and expected, and a
 concurrent session can silently commit over your in-memory copy of a file.
 
-## 2. The concurrency guard
+## 2. The concurrency guard (one engine, thin consumers)
 
-The [[components/concurrency-guard-extension]] makes cross-shell edits safe:
+All cross-shell change handling flows through ONE detection + classification
+pass in `extensions/lib/change-detection.ts`; the
+[[components/concurrency-guard-extension]] is a thin consumer that renders it:
 
-- On `before_agent_start`, if HEAD advanced since this session last looked, it
-  classifies each committed file. Files this session never edited → a plain
-  foreign-change notice. Files this session DID edit are **content-checked**: the
-  committed blob is compared to the hash recorded on the last write — a match is
-  this session's own autocommit snapshot (stay silent, no false positives), a
-  mismatch is the highest-risk case (another session committed *different*
-  content over a file we edited) and gets a "re-read before further edits" notice.
-- A `config-repo-advanced` signal on the shared event bus lets
-  [[concepts/self-audit-loop]] auto-re-run the validator so injected problems
-  track the new HEAD with no user action.
-- `/refresh` is the manual companion: re-check repo state and reload resources
-  in one step.
+- On `before_agent_start`, `detectAdvance()` classifies each committed file
+  once. Never-edited-by-us → a plain foreign-change notice. Edited-by-us →
+  **content-checked**: the committed blob is compared to the hash recorded on
+  the last write — a match is this session's own autocommit snapshot (stay
+  silent, no false positives), a mismatch is the highest-risk case (another
+  session committed *different* content over a file we edited) and gets a
+  "re-read before further edits" notice.
+- The classified result (`{ range, foreign, collided, staleResources }`) is
+  broadcast as `config-repo-advanced` on the shared event bus — the single
+  consumer interface. [[concepts/self-audit-loop]] auto-re-runs the validator
+  off it so injected problems track the new HEAD with no user action.
+- **Stale loaded resources** (extensions/skills/prompts/themes/keybindings/
+  AGENTS.md changed by another shell) enter a persistent registry: a "Stale
+  loaded resources" block (with the concrete git delta) is re-injected EVERY
+  turn, a widget shows above the editor, and the FIRST edit to a stale file
+  the session has not re-read is **blocked** (`tool_call` → `{ block: true }`,
+  the verified pi 0.80.3 capability; a second attempt passes with one warning
+  — the gate never wedges). A `read` of the file cures the edit gate; only
+  reload clears the registry.
+- `/refresh` is the manual companion: report the pending delta, `ctx.reload()`
+  — which resets the tracker, clearing baseline, stale registry, and widget.
+  Programmatic reload from an event hook remains impossible in pi 0.80.3
+  (`sendUserMessage` hard-sets `expandPromptTemplates:false`).
 
 ## 3. The pre-commit gate (and its launchd PATH caveat)
 
@@ -70,4 +84,6 @@ wiped by a concurrent session — grep the live file rather than trusting sessio
 memory.* When a "Concurrent-session notice" appears, RE-READ the named files
 before building on remembered content. Loaded resources
 (extensions/skills/prompts/themes/keybindings/AGENTS.md) can only be refreshed by
-`/reload` (or `/refresh`) — an event hook cannot dispatch a command in pi 0.80.3.
+`/reload` (or `/refresh`) — an event hook cannot dispatch a command in pi 0.80.3,
+so until the user reloads, the guard keeps the staleness visible (recurring
+prompt block + widget) and gates edits to not-yet-re-read stale resources.
