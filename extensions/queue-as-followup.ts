@@ -1,7 +1,8 @@
 /**
- * Preserve pi's native streaming shortcuts:
- * - Enter sends/steers immediately.
- * - Option+Enter queues a follow-up.
+ * Streaming shortcuts are inverted from pi's native defaults via keybindings.json:
+ * - Enter (app.message.followUp) holds the message until the current run finishes;
+ *   when idle it just sends normally.
+ * - Option+Enter (tui.input.submit) steers into the running stream now.
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";

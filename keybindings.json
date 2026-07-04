@@ -1,6 +1,6 @@
 {
   "app.thinking.cycle": ["alt+tab"],
   "app.session.rename": ["alt+r"],
-  "tui.input.submit": ["enter"],
-  "app.message.followUp": ["alt+enter"]
+  "tui.input.submit": ["alt+enter"],
+  "app.message.followUp": ["enter"]
 }
