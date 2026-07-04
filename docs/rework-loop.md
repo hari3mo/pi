@@ -32,9 +32,10 @@ structured verdict, one of:
    or a design-only `engineer` dispatch) then flows forward through
    implementation → `reviewer` again.
 
-**Loop budget: 3 iterations.** If the same work item fails review a third
-time, STOP looping. Persistent failure means the problem was mis-framed,
-not mis-typed. The orchestrator then either:
+**Loop budget: a session-level ceiling of 3 consecutive reviewer FAILs (not
+per-work-item).** Any reviewer FAIL increments the counter and any reviewer
+PASS resets it; when it reaches 3, STOP looping. Persistent failure means the
+problem was mis-framed, not mis-typed. The orchestrator then either:
 
 - re-frames the bounded problem itself (interviewing the user where "done"
   is in question) and restarts, or

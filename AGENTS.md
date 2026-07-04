@@ -41,7 +41,7 @@ the user interview and the lead's own dispatch-spec authoring, nothing else.
 | Scale | Route | Fable turns |
 |---|---|---|
 | **Micro** — 1 file, ≤20 lines, zero design decisions | ONE `worker` dispatch; the lead judges the RETURNED diff; chain a `verifier` only if there is a runnable acceptance path | 2 |
-| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `engineer` → `verifier` (greenfield with a runnable acceptance path) or `engineer` → `reviewer` (touches existing behavior). The verifier/reviewer MUST be the FINAL chain step — verdict normalization applies only to the last step | 2 |
+| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `engineer` → `verifier` (greenfield with a runnable acceptance path) or `engineer` → `reviewer` (touches existing behavior). The verifier/reviewer MUST be the FINAL chain step — verdict normalization applies only to the last step, and only when that step is a reviewer | 2 |
 | **Large** — scope exceeds one context window, genuine concurrency, or ambiguity surviving the user interview | interview → optional design-only `engineer` dispatch (only when 2+ implementers consume the design) → ONE parallel fan-out (max 8, independent tasks) and/or chains → `reviewer` gate | 4–6 |
 
 The single chain is the default that gets escalated up — the pipeline is NOT a default
@@ -65,7 +65,7 @@ dispatch `engineer` with a design-only task returning the design artifact
 
 ## Fable Budget Invariants (MUST)
 
-- ≤1 targeted read ≤50 lines before dispatch; a locating grep that misses once → `scout`.
+- ≤1 targeted read ≤50 lines before dispatch; after the graph tool has been tried for structure questions, a locating grep that misses once → `scout`.
 - Never verify by reading — verification goes to `verifier`/`reviewer`.
 - Batch all independent dispatches in ONE parallel call, dependent steps in ONE chain;
   sequential singles only when one result determines the next.
@@ -101,7 +101,7 @@ restate it. Template: `docs/delegation-contract.md`.
   chain step.
 - `FAIL: design` — re-frame the problem; do not patch around it.
 
-Budget: 3 consecutive FAILs, then re-frame or surface the impasse to the user.
+Budget: a session-level ceiling of 3 consecutive reviewer FAILs (not per-work-item), then re-frame or surface the impasse to the user.
 Convergence discipline: unrelated new findings each iteration = design smell — escalate
 early, before the budget runs out.
 
@@ -141,8 +141,7 @@ The harness audits itself; problems become prompts:
   of this config: answer structure/architecture questions with the `graph` tool before
   reading files. Code commits rebuild it automatically (post-commit hook); doc changes
   mark it STALE until `/graphify --update`.
-- Lessons close the loop: graph queries save results back (`--outcome`), `reflect`
-  distills them, and `learn_heuristic` persists durable ones.
+- Lessons close the loop: query outcomes can be saved back via `graphify save-result --outcome` — a MANUAL step (the pi `graph` tool never calls it); `reflect --if-stale` distills them automatically at session start, and `learn_heuristic` persists durable ones.
 - When a standing order or prompt rule can be enforced mechanically, promote it to
   code (extension, validator check, or hook) — prompts drift, enforcement does not.
 - Errors are never just worked around: root-cause the failure, then integrate the fix
@@ -150,10 +149,11 @@ The harness audits itself; problems become prompts:
   a graph re-cache. Repeated tool errors in one run trigger a nudge enforcing this
   (heuristics S5).
 - The pipelines audit themselves: `scripts/audit-pipelines.py` (run with the validator
-  at session start; `--full` via `/audit`) checks pipeline DYNAMICS — rebuild-hook
-  firing, staleness flags, autocommit liveness, semantic-cache drift, and a
-  graph-connectivity ratchet (best-ever giant fraction; >20% drop = ERROR). Regressions
-  in the machinery become prompts just like config errors.
+  at session start; `--full` via `/audit`) checks pipeline DYNAMICS — at session start:
+  rebuild-hook firing, staleness flags, autocommit liveness, and a graph-connectivity
+  ratchet (best-ever giant fraction; >20% drop = ERROR); only under `--full` (/audit):
+  semantic-cache drift and the extension load smoke. Regressions in the machinery become
+  prompts just like config errors.
 - The harness adapts to pi itself changing: toolchain versions (pi/graphifyy/node) are
   baseline-tracked and any change WARNs once with the re-verification list; `/audit`
   loads every extension with pi's OWN jiti loader (`scripts/smoke-extensions.mjs`) so
