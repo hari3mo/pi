@@ -52,8 +52,9 @@ Before *any* reading, exploration, or dispatch, a fable lead runs two gates:
 
 1. **Write-Gate Pre-Flight** — if the task plausibly needs file changes, the
    FIRST action is the `request_write_mode` tool (not prose). Children inherit
-   `--write` only when the parent gate is in write mode; exploring first wastes
-   work if the user re-frames when prompted. See [[components/write-gate-extension]].
+   `--write` only when the parent gate is in write mode, and auto-write is scoped
+   to `~/.pi`; exploring first wastes work if the user re-frames when prompted.
+   See [[components/write-gate-extension]].
 2. **Intent Interview** — ambiguity is resolved by interviewing the *user*
    before dispatching. Headless (no user) → proceed on stated assumptions and
    list them in the final report. There is no scope-planner fallback: scope is
