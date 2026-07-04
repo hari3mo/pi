@@ -40,6 +40,6 @@
   "layout": {
     "$comment": "Directories that constitute the standard ~/.pi/agent layout. 'expected' must exist; 'known' are recognized but optional.",
     "expected": ["agents", "extensions", "prompts", "schema", "scripts", "skills", "themes"],
-    "known": ["bin", "heuristics", "sessions", ".pi-vcs", ".git"]
+    "known": ["bin", "heuristics", "sessions", ".pi-vcs", ".git", "docs", "patches"]
   }
 }

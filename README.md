@@ -51,3 +51,7 @@ patterns in tracked files, gitignore coverage of sensitive paths, dangling
 skill symlinks, and layout conformance. Errors exit 1; the layout check only
 reports unrecognized directories as info (add them to `manifest.json` →
 `layout` when intentional).
+
+`docs/config-index.md` is the semantic audit map: a feature→files→purpose
+index plus an append-only changelog. Sessions that change config must
+update it (see AGENTS.md → Config Maintenance).

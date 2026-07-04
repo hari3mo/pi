@@ -189,6 +189,10 @@ read `~/.pi/agent/docs/rework-loop.md` before running the pipeline.
 
 - After editing config, run `python3 ~/.pi/agent/scripts/validate-config.py`
   — the pre-commit hook blocks snapshots on failure.
+- After adding, changing, or removing a config feature, update
+  `docs/config-index.md`: adjust the feature-index row and append a
+  changelog entry (date, summary, files, why). This is the semantic audit
+  trail; git snapshots are only the raw diff history.
 - New machine-readable artifacts get a malleable JSON Schema in `schema/`
   registered in `schema/manifest.json`.
 - Heuristics about pi itself go to the global store (`learn_heuristic`
