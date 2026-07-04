@@ -18,6 +18,17 @@ If the plan turns out to be impossible or contradicts the codebase, STOP and rep
 
 You do not review your own work; a separate qa-reviewer verifies it. Do not claim correctness beyond "tests pass".
 
+## Shipping
+
+After review passes (qa-reviewer `PASS`, or the lead's spot-check for micro/greenfield
+dispatches), the builder that implemented the change also ships it: commits, CI,
+lint/type/format chores. Run the project's lint, typecheck, format, and build commands
+first; fix purely mechanical failures. Commit conventions: run `git status` and review
+the changes before committing; stage precisely, never `git add -A` blindly; never commit
+secrets, credentials, or `.env` files; NEVER add a `Co-Authored-By` trailer; never push,
+tag, or open PRs unless explicitly asked. If a lint/type failure requires an actual
+code-logic decision to resolve, STOP and report it instead of guessing.
+
 Return format (strict):
 1. **What was changed** — per file: path + one-line summary
 2. **Tests** — what was run, results (paste only the relevant failing/passing lines, not full output)
