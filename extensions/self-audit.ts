@@ -4,9 +4,10 @@
  * Makes the harness audit itself every session — the config equivalent of a
  * health check the agent can SEE and act on:
  *
- *   1. session_start — runs scripts/validate-config.py (schema conformance,
- *      heuristics hygiene, credential leakage, layout, hook/patch integrity)
- *      and caches the result.
+ *   1. session_start — runs scripts/validate-config.py (static config: schema
+ *      conformance, hygiene, hook/patch integrity) AND scripts/audit-pipelines.py
+ *      (pipeline dynamics: did the rebuild hook fire, staleness, autocommit
+ *      liveness, graph connectivity ratchet) and caches the merged result.
  *   2. before_agent_start — injects a "Harness self-audit" block ONLY when
  *      errors or warnings exist (zero prompt cost when healthy), instructing
  *      the agent to fix or surface them.
@@ -23,6 +24,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 
 const VALIDATOR = join(getAgentDir(), "scripts", "validate-config.py");
+const PIPELINE_AUDIT = join(getAgentDir(), "scripts", "audit-pipelines.py");
 const INJECT_CAP = 1600;
 
 interface AuditResult {
@@ -33,17 +35,17 @@ interface AuditResult {
 
 let lastAudit: AuditResult | undefined;
 
-function runValidator(): Promise<AuditResult> {
+function runScript(script: string, args: string[], timeoutMs: number): Promise<AuditResult> {
 	return new Promise((resolve) => {
 		execFile(
 			"python3",
-			[VALIDATOR],
-			{ cwd: getAgentDir(), timeout: 30_000, maxBuffer: 1024 * 1024 },
+			[script, ...args],
+			{ cwd: getAgentDir(), timeout: timeoutMs, maxBuffer: 1024 * 1024 },
 			(err, stdout, stderr) => {
 				const raw = `${stdout ?? ""}${stderr ? `\n${stderr}` : ""}`.trim();
 				if (err && !raw) {
-					// Validator infra unavailable — never block or spam the session.
-					resolve({ ok: true, problems: [], raw: `validator unavailable: ${err.message}` });
+					// Audit infra unavailable — never block or spam the session.
+					resolve({ ok: true, problems: [], raw: `${script} unavailable: ${err.message}` });
 					return;
 				}
 				const problems = raw.split("\n").filter((l) => l.startsWith("ERROR") || l.startsWith("WARN"));
@@ -51,6 +53,19 @@ function runValidator(): Promise<AuditResult> {
 			},
 		);
 	});
+}
+
+/** Static config audit + fast pipeline meta-audit, merged into one result. */
+async function runValidator(full = false): Promise<AuditResult> {
+	const [config, pipelines] = await Promise.all([
+		runScript(VALIDATOR, [], 30_000),
+		runScript(PIPELINE_AUDIT, full ? ["--full"] : [], full ? 180_000 : 30_000),
+	]);
+	return {
+		ok: config.ok && pipelines.ok,
+		problems: [...config.problems, ...pipelines.problems],
+		raw: `── config (validate-config.py) ──\n${config.raw}\n── pipelines (audit-pipelines.py${full ? " --full" : ""}) ──\n${pipelines.raw}`,
+	};
 }
 
 export default function (pi: ExtensionAPI) {
@@ -73,10 +88,10 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.registerCommand("audit", {
-		description: "Run the harness self-audit (validate-config.py) and show the report",
+		description: "Run the harness self-audit (config + pipeline meta-audit) and show the report",
 		handler: async (_args, ctx) => {
-			ctx.ui.notify("Running harness self-audit...", "info");
-			lastAudit = await runValidator();
+			ctx.ui.notify("Running harness self-audit (config + pipelines --full)...", "info");
+			lastAudit = await runValidator(true);
 			ctx.ui.notify(lastAudit.raw.split("\n").slice(-40).join("\n"), lastAudit.ok ? "info" : "warning");
 		},
 	});
