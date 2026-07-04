@@ -1,5 +1,5 @@
 ---
-description: Full tiered pipeline — scope-planner → architect → builder → qa-reviewer → shipper
+description: Full tiered pipeline — scope-planner → architect → builder → qa-reviewer → builder ships
 ---
 Act as orchestrator for this task: $@
 
@@ -10,6 +10,6 @@ Run the full role pipeline using the subagent tool. Between stages, you review t
 3. Rule on any [NEEDS RULING] items. Then delegate to "builder" with the fixed plan.
 4. Delegate to "qa-reviewer" with the design decisions plus the builder's change summary. The reviewer must not be told anything the builder claimed beyond what changed.
 5. If the reviewer finds BLOCKER/MAJOR issues, route the specific findings back to "builder" to fix, then re-verify with "qa-reviewer". Repeat until PASS.
-6. Delegate to "shipper" to run lint/typecheck/build/tests and commit.
+6. Delegate back to "builder" to run lint/typecheck/build/tests and commit.
 
 Every delegated task must state: what to read before acting, the bounded problem, and what to return. Synthesize a final summary for me: what shipped, key decisions, review verdict, commit hash.

@@ -9,4 +9,4 @@ Use the subagent tool:
 2. Delegate to "qa-reviewer" with the spec and the builder's change summary to verify the work. Never let the builder verify itself.
 3. If the verdict has BLOCKER/MAJOR findings, send the specific `file:line` findings back to "builder" to fix, then re-verify with "qa-reviewer". Repeat until PASS.
 
-Report to me: change summary, final review verdict, and remaining MINOR/NIT items. Do not commit — I'll decide whether to run the shipper.
+Report to me: change summary, final review verdict, and remaining MINOR/NIT items. Do not commit — I'll decide whether the builder should ship.
