@@ -4,7 +4,7 @@ category: synthesis
 source_layer: learned
 sources:
   - /Users/harissaif/.pi/agent/heuristics/heuristics.jsonl
-tags: [pi, config, environment]
+tags: [pi, config, synthesis]
 aliases: ["launchd autocommit", "jsonschema PATH", "validate-config gaps"]
 summary: Environment traps around the ~/.pi/agent harness — the launchd autocommit daemon, jsonschema-PATH degradation of the pre-commit gate, validate-config blind spots, and packaged-app relaunch.
 relationships:

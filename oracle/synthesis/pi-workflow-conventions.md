@@ -4,9 +4,9 @@ category: synthesis
 source_layer: learned
 sources:
   - /Users/harissaif/.pi/agent/heuristics/heuristics.jsonl
-tags: [pi, config, workflow]
+tags: [pi, config, synthesis]
 aliases: ["refresh after edit", "task tool usage", "the void", "status bar meaning"]
-summary: Standing workflow habits and this user's vocabulary — refresh after editing loaded resources, track task lists with the task tool, preserve message-queue steering keys, and what "the void" / "status bar" mean.
+summary: Standing workflow habits and vocabulary — refresh after editing loaded resources, use the task tool for lists, preserve message-queue steering keys, and what 'the void'/'status bar' mean.
 relationships:
   - target: "[[concepts/message-queue]]"
     type: related_to

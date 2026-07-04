@@ -4,7 +4,7 @@ category: synthesis
 source_layer: learned
 sources:
   - /Users/harissaif/.pi/agent/heuristics/heuristics.jsonl
-tags: [pi, tui, gotcha]
+tags: [pi, tui, synthesis]
 aliases: ["setHeader crashes", "tui width guard", "full-screen landing component"]
 summary: How pi's TUI stacks header/chat/component/footer and pins the viewport — plus the width-guard and truncateToWidth rules that stop setHeader components from crashing the terminal.
 relationships:

@@ -4,7 +4,7 @@ category: synthesis
 source_layer: learned
 sources:
   - /Users/harissaif/.pi/agent/heuristics/heuristics.jsonl
-tags: [pi, extensions, gotcha]
+tags: [pi, extensions, synthesis]
 aliases: ["extension api traps", "sendUserMessage gotcha"]
 summary: Hard limits of pi's extension/programmatic API — extensions can't dispatch slash commands, sendUserMessage can't run /cmd, and extensions load once per session.
 relationships:

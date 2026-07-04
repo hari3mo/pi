@@ -4,7 +4,7 @@ category: synthesis
 source_layer: learned
 sources:
   - /Users/harissaif/.pi/agent/heuristics/heuristics.jsonl
-tags: [pi, extensions, gotcha]
+tags: [pi, extensions, synthesis]
 aliases: ["read-only mode", "write gate", "--write flag", "redirect blocked"]
 summary: How pi's read-only-default and write-gate extensions change tool availability — pass --write for programmatic sessions, avoid > redirects in read-only mode, and let the gate's UI menu grant write.
 relationships:
