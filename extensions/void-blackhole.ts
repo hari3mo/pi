@@ -335,7 +335,6 @@ class BlackHoleComponent {
 	private dustTheta = new Float32Array(DUST_COUNT);
 	private dustY = new Float32Array(DUST_COUNT);
 	private dustB = new Float32Array(DUST_COUNT);
-	private dustRidge = new Float32Array(DUST_COUNT);
 	private dustCount = 0;
 	private spin = 0;
 
@@ -348,7 +347,6 @@ class BlackHoleComponent {
 		p: number;
 		tw: number;
 		ch: string | null;
-		dep: number;
 	}> = [];
 	private starsKey = "";
 
@@ -383,6 +381,7 @@ class BlackHoleComponent {
 	constructor(
 		tui: { requestRender: () => void },
 		onClose: () => void,
+		_splash: boolean,
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
@@ -451,7 +450,7 @@ class BlackHoleComponent {
 			const bulge = Math.exp(-3.5 * u) * 0.25;
 
 			const winding = theta - u * ARM_TIGHTNESS * Math.PI;
-			const turbulence = 0.06 * Math.sin(r * 4.0 + theta);
+			const turbulence = 0.08 * Math.sin(r * 4.0 + theta);
 			const armBase = (Math.cos(NUM_ARMS * winding + turbulence) + 1) / 2;
 			// Sharper than the site's 5.5 — coarse cells need crisper lanes.
 			const armProfile = Math.pow(armBase, 7.0);
@@ -468,7 +467,6 @@ class BlackHoleComponent {
 
 			this.dustR[placed] = r;
 			this.dustTheta[placed] = theta;
-			this.dustRidge[placed] = armProfile;
 
 			// 3D thickness envelope: puffy bulge, thin arms.
 			const bulgeHeight = 0.3 * Math.exp(-4.0 * u);
@@ -482,10 +480,7 @@ class BlackHoleComponent {
 				(Math.random() + Math.random() + Math.random() - 1.5) * 0.15;
 			this.dustB[placed] = Math.max(
 				0,
-				Math.min(
-					1,
-					Math.sqrt(density) * (0.55 + 0.45 * armProfile) + noise,
-				),
+				Math.min(1, Math.sqrt(density) + noise),
 			);
 			placed++;
 		}
@@ -587,33 +582,25 @@ class BlackHoleComponent {
 			return this.cachedLines;
 		}
 
-		// Expanded art: fill the terminal, centered. The reserve accounts
-		// for everything sharing the screen with the art: the leading blank
-		// line this component emits plus pi's editor/status chrome below —
-		// undershooting here clips the bottom of the galaxy off-screen.
+		// Expanded art: fill the terminal (leaving room for the
+		// the editor below), centered.
 		const artW = Math.max(30, Math.min(ART_MAX_W, width - 2));
 		const termRows = process.stdout.rows ?? 24;
 		const rows = Math.max(
 			10,
-			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 11), Math.round(artW * 0.3)),
+			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.24)),
 		);
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
 		const cy = rows / 2;
-		const smallFrame = artW < 70 || rows < 16;
 
 		// Zoom instead of shrink: fitting the whole DUST_OUTER-radius galaxy
 		// into a tiny terminal squeezes the hole down to an illegible smudge.
-		// Below artW 110 or rows 30 the view radius eases in toward 3.4, zooming
-		// into the inner system instead — a vertically-squashed window zooms in
-		// just the same as a narrow one, since either dimension running short
-		// squeezes the same whole-galaxy view down to a smudge. Outer dust/
-		// comets beyond the frame just clip (deposit/stamp/glyph already
-		// bounds-check), which reads far better than a whole galaxy crammed
-		// into a handful of cells. The floor dropped from 4.0 to 3.4 so the
-		// hole stays legible even on the tiniest frames.
-		const fit = Math.min(smoothstep(50, 110, artW), smoothstep(16, 30, rows));
-		const viewR = 3.4 + (DUST_OUTER - 3.4) * fit;
+		// Below artW 110 the view radius eases in toward 4.0, zooming into the
+		// inner system instead — outer dust/comets beyond the frame just clip
+		// (deposit/stamp/glyph already bounds-check), which reads far better
+		// than a whole galaxy crammed into a handful of cells.
+		const viewR = 4.0 + (DUST_OUTER - 4.0) * smoothstep(50, 110, artW);
 
 		// Terminal cells are ~2:1 tall, so one world unit spans twice as many
 		// columns as rows for an undistorted disk.
@@ -651,7 +638,7 @@ class BlackHoleComponent {
 		// starfield, slowly wheeling over the minutes --
 		// Skip on small frames: at low cell counts the tiny distant spirals
 		// just read as extra noise, with no room to spare for them.
-		if (!smallFrame) {
+		if (artW >= 70 && rows >= 16) {
 			const gs = Math.max(1.2, artW / 46);
 			for (const g of this.deepGalaxies) {
 				const rot = this.elapsed * g.rotSpeed;
@@ -670,10 +657,10 @@ class BlackHoleComponent {
 
 		// -- constellations: bright star patterns joined by faint dotted
 		// lines, pinned to the background alongside the deep galaxies --
-		// Skip constellations on small frames (with the starfield); a shape
+		// Skip constellations entirely below rows 14; below that a shape
 		// too small to read as a pattern is just clutter, so also drop any
 		// single constellation that would render under 9 cells wide.
-		if (!smallFrame) {
+		if (rows >= 14) {
 			for (const c of CONSTELLATIONS) {
 				const cw = c.w * artW;
 				if (cw < 9) continue;
@@ -719,119 +706,99 @@ class BlackHoleComponent {
 		// handful of bright stars with their own glyphs and harder twinkle,
 		// three tight open clusters in the quiet corners, and an ultra-dim
 		// scatter so even the emptiest corners read faintly populated --
-		if (!smallFrame) {
-			const key = `${artW}x${rows}`;
-			if (this.starsKey !== key) {
-				this.starsKey = key;
-				this.stars = [];
-				// Gaussian falloff around the line through (0.5, 0.30) at a
-				// shallow slope — offset upward so it doesn't fight the hole.
-				const bandW = (nx: number, ny: number) => {
-					const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
-					return Math.exp(-d * d);
-				};
-				const nField = Math.floor((artW * rows) / 13);
-				let placed = 0;
-				let guard = 0;
-				while (placed < nField && guard++ < nField * 20) {
-					const nx = Math.random();
-					const ny = Math.random();
-					if (Math.random() > 0.62 + 0.38 * bandW(nx, ny)) continue;
+		const key = `${artW}x${rows}`;
+		if (this.starsKey !== key) {
+			this.starsKey = key;
+			this.stars = [];
+			// Gaussian falloff around the line through (0.5, 0.30) at a
+			// shallow slope — offset upward so it doesn't fight the hole.
+			const bandW = (nx: number, ny: number) => {
+				const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
+				return Math.exp(-d * d);
+			};
+			const nField = Math.floor((artW * rows) / 16);
+			let placed = 0;
+			let guard = 0;
+			while (placed < nField && guard++ < nField * 20) {
+				const nx = Math.random();
+				const ny = Math.random();
+				if (Math.random() > 0.62 + 0.38 * bandW(nx, ny)) continue;
+				this.stars.push({
+					col: Math.floor(nx * artW),
+					row: Math.floor(ny * rows),
+					b: 0.02 + Math.random() * 0.1,
+					p: Math.random() * Math.PI * 2,
+					tw: 0.8 + Math.random() * 1.4,
+					ch: null,
+				});
+				placed++;
+			}
+			const nBright = Math.max(5, Math.floor((artW * rows) / 120));
+			for (let i = 0; i < nBright; i++) {
+				const b = 0.2 + Math.random() * 0.3;
+				this.stars.push({
+					col: Math.floor(Math.random() * artW),
+					row: Math.floor(Math.random() * rows),
+					b,
+					p: Math.random() * Math.PI * 2,
+					tw: 1.6 + Math.random() * 1.6,
+					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
+				});
+			}
+			// Fewer open clusters on small frames — three tight clusters plus
+			// the band and scatter is too much texture for a small canvas.
+			const nClusters = artW < 70 ? 2 : 3;
+			for (let c = 0; c < nClusters; c++) {
+				let ccol = 0;
+				let crow = 0;
+				for (let tries = 0; tries < 16; tries++) {
+					ccol = (0.1 + Math.random() * 0.8) * artW;
+					crow = (0.1 + Math.random() * 0.8) * rows;
+					const ux = ccol / artW - 0.5;
+					const uy = crow / rows - 0.5;
+					if (Math.hypot(ux, uy) > 0.28) break;
+				}
+				const members = 7 + Math.floor(Math.random() * 6);
+				for (let i = 0; i < members; i++) {
+					// Triangular-ish gaussian spread, squashed for cell aspect.
+					const gx =
+						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+					const gy =
+						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
 					this.stars.push({
-						col: Math.floor(nx * artW),
-						row: Math.floor(ny * rows),
-						b: 0.02 + Math.random() * 0.1,
+						col: Math.round(ccol + gx * 4),
+						row: Math.round(crow + gy * 2),
+						b: 0.05 + Math.random() * 0.12,
 						p: Math.random() * Math.PI * 2,
 						tw: 0.8 + Math.random() * 1.4,
 						ch: null,
-						dep: 0.15 + Math.random() * 0.25,
-					});
-					placed++;
-				}
-				const nBright = Math.max(5, Math.floor((artW * rows) / 120));
-				for (let i = 0; i < nBright; i++) {
-					const b = 0.2 + Math.random() * 0.3;
-					this.stars.push({
-						col: Math.floor(Math.random() * artW),
-						row: Math.floor(Math.random() * rows),
-						b,
-						p: Math.random() * Math.PI * 2,
-						tw: 1.6 + Math.random() * 1.6,
-						ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
-						dep: 0.3 + Math.random() * 0.3,
 					});
 				}
-				// Fewer open clusters on small frames — three tight clusters plus
-				// the band and scatter is too much texture for a small canvas.
-				const nClusters = artW < 70 ? 2 : 3;
-				for (let c = 0; c < nClusters; c++) {
-					let ccol = 0;
-					let crow = 0;
-					for (let tries = 0; tries < 16; tries++) {
-						ccol = (0.1 + Math.random() * 0.8) * artW;
-						crow = (0.1 + Math.random() * 0.8) * rows;
-						const ux = ccol / artW - 0.5;
-						const uy = crow / rows - 0.5;
-						if (Math.hypot(ux, uy) > 0.28) break;
-					}
-					const members = 7 + Math.floor(Math.random() * 6);
-					for (let i = 0; i < members; i++) {
-						// Triangular-ish gaussian spread, squashed for cell aspect.
-						const gx =
-							(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
-						const gy =
-							(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
-						this.stars.push({
-							col: Math.round(ccol + gx * 4),
-							row: Math.round(crow + gy * 2),
-							b: 0.05 + Math.random() * 0.12,
-							p: Math.random() * Math.PI * 2,
-							tw: 0.8 + Math.random() * 1.4,
-							ch: null,
-							dep: 0.15 + Math.random() * 0.25,
-						});
-					}
-				}
-				// Ultra-dim uniform scatter: fills in even the corners the band
-				// and clusters skip, so nowhere in the frame reads truly empty.
-				const nScatter = Math.floor(nField / 2.5);
-				for (let i = 0; i < nScatter; i++) {
-					this.stars.push({
-						col: Math.floor(Math.random() * artW),
-						row: Math.floor(Math.random() * rows),
-						b: 0.015 + Math.random() * 0.03,
-						p: Math.random() * Math.PI * 2,
-						tw: 0.8 + Math.random() * 1.4,
-						ch: null,
-						dep: 0.15 + Math.random() * 0.25,
-					});
-				}
+			}
+			// Ultra-dim uniform scatter: fills in even the corners the band
+			// and clusters skip, so nowhere in the frame reads truly empty.
+			const nScatter = Math.floor(nField / 3);
+			for (let i = 0; i < nScatter; i++) {
+				this.stars.push({
+					col: Math.floor(Math.random() * artW),
+					row: Math.floor(Math.random() * rows),
+					b: 0.015 + Math.random() * 0.03,
+					p: Math.random() * Math.PI * 2,
+					tw: 0.8 + Math.random() * 1.4,
+					ch: null,
+				});
 			}
 		}
 		const holeRx = EVENT_HORIZON * sX;
 		const holeRy = EVENT_HORIZON * sY;
-		if (!smallFrame) {
-			for (const s of this.stars) {
-				const dx = (s.col - cx) / holeRx;
-				const dy = (s.row - cy) / holeRy;
-				if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
-				// Staggered twinkle, each star at its own rate and phase, swinging
-				// through a per-star depth so some flicker harder than others.
-				const tw =
-					1 -
-					s.dep +
-					s.dep * (0.5 + 0.5 * Math.sin(this.elapsed * s.tw + s.p));
-				if (s.ch) {
-					glyph(s.col, s.row, s.ch, s.b * tw);
-					if (s.ch === "*") {
-						// Sparkle halo on the brightest tier only.
-						deposit(s.col - 1, s.row, 0.06 * tw);
-						deposit(s.col + 1, s.row, 0.06 * tw);
-					}
-				} else {
-					stamp(s.col, s.row, s.b * tw);
-				}
-			}
+		for (const s of this.stars) {
+			const dx = (s.col - cx) / holeRx;
+			const dy = (s.row - cy) / holeRy;
+			if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
+			// Staggered twinkle, each star at its own rate and phase.
+			const tw = 0.7 + 0.3 * Math.sin(this.elapsed * s.tw + s.p);
+			if (s.ch) glyph(s.col, s.row, s.ch, s.b * tw);
+			else stamp(s.col, s.row, s.b * tw);
 		}
 
 		// -- spiral-arm dust, wheeling behind the accretion disk. Stamped
@@ -848,7 +815,7 @@ class BlackHoleComponent {
 			stamp(
 				Math.round(cx + x * sX),
 				Math.round(cy + projY * sY),
-				this.dustB[i] * (0.6 + 0.15 * this.dustRidge[i]),
+				this.dustB[i] * 0.55,
 			);
 		}
 
@@ -1120,8 +1087,8 @@ class BlackHoleComponent {
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
-			// Too small for the wordmark — skip it entirely, keep the tagline.
-			stampCentered(tagline, 1, 0.14);
+			stampCentered("h a r i m o", 1, 2);
+			stampCentered(tagline, 2, 0.14);
 		}
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
@@ -1137,8 +1104,8 @@ class BlackHoleComponent {
 				}
 				const ch =
 					overlay[row * artW + col] ??
-					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
-				const want = b >= 2 ? BLACK : b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
+					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.85) * RAMP_MAX))];
+				const want = b >= 2 ? BLACK : b < 0.3 ? DIM : b < 0.8 ? "" : BOLD;
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
@@ -1170,42 +1137,26 @@ export default function (pi: ExtensionAPI) {
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
 		if (ctx.mode !== "tui") return;
-		const setVoidHeader = () =>
-			ctx.ui.setHeader((_tui, theme) => ({
-				render(width: number): string[] {
-					const subtitle = theme.fg("dim", `   pi v${VERSION}`);
-					const markW = Math.max(...WORDMARK.map((l) => l.length));
-					if (width < markW + 1) {
-						// Too narrow for the wordmark — no fallback text, just the version.
-						return ["", subtitle, ""];
-					}
-					return [
-						"",
-						...WORDMARK.map((l) => BLACK + l + RESET),
-						subtitle,
-						"",
-					];
-				},
-				invalidate() {},
-			}));
-		if (event.reason !== "startup") {
-			setVoidHeader();
-			return;
-		}
-		// While the splash owns the screen, the header must take no rows:
-		// the TUI stacks header + art + footer and pins the viewport to the
-		// bottom, so a tall header (which duplicates the wordmark already
-		// stamped inside the art) pushes the art's top off-screen. The full
-		// wordmark header is installed only once the splash closes.
-		ctx.ui.setHeader(() => ({
-			render: (): string[] => [],
+		ctx.ui.setHeader((_tui, theme) => ({
+			render(width: number): string[] {
+				const subtitle = theme.fg("dim", `   pi v${VERSION}`);
+				const markW = Math.max(...WORDMARK.map((l) => l.length));
+				if (width < markW + 1) {
+					return ["", BLACK + "harimo" + RESET, subtitle, ""];
+				}
+				return [
+					"",
+					...WORDMARK.map((l) => BLACK + l + RESET),
+					subtitle,
+					"",
+				];
+			},
 			invalidate() {},
 		}));
-		void ctx.ui
-			.custom((tui, _theme, _kb, done) => {
-				return new BlackHoleComponent(tui, () => done(undefined));
-			})
-			.then(setVoidHeader);
+		if (event.reason !== "startup") return;
+		void ctx.ui.custom((tui, _theme, _kb, done) => {
+			return new BlackHoleComponent(tui, () => done(undefined), true);
+		});
 	});
 
 	pi.registerCommand("void", {
@@ -1217,7 +1168,7 @@ export default function (pi: ExtensionAPI) {
 				return;
 			}
 			await ctx.ui.custom((tui, _theme, _kb, done) => {
-				return new BlackHoleComponent(tui, () => done(undefined));
+				return new BlackHoleComponent(tui, () => done(undefined), false);
 			});
 		},
 	});
