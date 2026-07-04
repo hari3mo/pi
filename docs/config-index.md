@@ -49,6 +49,13 @@ Every session that changes config must update it.
 
 ### 2026-07-04
 
+**Doctrine suite is manual-only, not routine validation.** `AGENTS.md` →
+Config Maintenance no longer tells the agent to auto-run
+`~/orch-bench/probes/run_probes.py` after doctrine edits; it now spends real
+tokens only when the user explicitly asks. Files: `AGENTS.md`. Why: the
+probe suite makes live model calls ($1–$8/run) and was being triggered
+automatically as part of the post-edit flow.
+
 **Read-only `scout` agent for investigation at volume.** Added
 `agents/scout.md` (sonnet, read-only fact-finding, returns `file:line`
 findings); `AGENTS.md` routing/Context Hygiene now name `scout` as the
