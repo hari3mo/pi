@@ -74,14 +74,254 @@
   },
   "nodes": [
     {
+      "label": "graphify-bridge.ts",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge",
+      "community": 40,
+      "norm_label": "graphify-bridge.ts"
+    },
+    {
+      "label": "findGraphRoot()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L36",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_findgraphroot",
+      "community": 40,
+      "norm_label": "findgraphroot()"
+    },
+    {
+      "label": "graphifyPython()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphifypython",
+      "community": 40,
+      "norm_label": "graphifypython()"
+    },
+    {
+      "label": "runGraphify()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_rungraphify",
+      "community": 40,
+      "norm_label": "rungraphify()"
+    },
+    {
+      "label": "GraphStats",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L72",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphstats",
+      "community": 40,
+      "norm_label": "graphstats"
+    },
+    {
+      "label": "fmtAge()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L131",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_fmtage",
+      "community": 40,
+      "norm_label": "fmtage()"
+    },
+    {
+      "label": "statusText()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L138",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_statustext",
+      "community": 40,
+      "norm_label": "statustext()"
+    },
+    {
+      "label": "GraphParams",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L153",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_graphparams",
+      "community": 40,
+      "norm_label": "graphparams"
+    },
+    {
+      "label": "execute()",
+      "file_type": "code",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L195",
+      "_origin": "ast",
+      "id": "extensions_graphify_bridge_execute",
+      "community": 40,
+      "norm_label": "execute()"
+    },
+    {
+      "label": "validate-config.py",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_validate_config",
+      "community": 4,
+      "norm_label": "validate-config.py"
+    },
+    {
+      "label": "resolve()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "scripts_validate_config_resolve",
+      "community": 4,
+      "norm_label": "resolve()"
+    },
+    {
+      "label": "Path",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast",
+      "id": "path",
+      "community": 4,
+      "norm_label": "path"
+    },
+    {
+      "label": "load_json()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "scripts_validate_config_load_json",
+      "community": 4,
+      "norm_label": "load_json()"
+    },
+    {
+      "label": "get_validator()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "scripts_validate_config_get_validator",
+      "community": 4,
+      "norm_label": "get_validator()"
+    },
+    {
+      "label": "check_target()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L76",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_target",
+      "community": 4,
+      "norm_label": "check_target()"
+    },
+    {
+      "label": "check_heuristics_hygiene()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L111",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_heuristics_hygiene",
+      "community": 4,
+      "norm_label": "check_heuristics_hygiene()"
+    },
+    {
+      "label": "check_git_hygiene()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L125",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_git_hygiene",
+      "community": 4,
+      "norm_label": "check_git_hygiene()"
+    },
+    {
+      "label": "check_symlinks()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L145",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_symlinks",
+      "community": 4,
+      "norm_label": "check_symlinks()"
+    },
+    {
+      "label": "check_installed_integrity()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L154",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_installed_integrity",
+      "community": 4,
+      "norm_label": "check_installed_integrity()"
+    },
+    {
+      "label": "check_layout()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L187",
+      "_origin": "ast",
+      "id": "scripts_validate_config_check_layout",
+      "community": 4,
+      "norm_label": "check_layout()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L197",
+      "_origin": "ast",
+      "id": "scripts_validate_config_main",
+      "community": 4,
+      "norm_label": "main()"
+    },
+    {
+      "label": "Return callable(obj) -> list[str] of violation messages.",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L59",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_59",
+      "community": 4,
+      "norm_label": "return callable(obj) -> list[str] of violation messages."
+    },
+    {
+      "label": "Validate one manifest target; return parsed jsonl entries (for hygiene).",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L77",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_77",
+      "community": 4,
+      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene)."
+    },
+    {
+      "label": "Guards for fixes that live OUTSIDE tracked config and can silently vanish.",
+      "file_type": "rationale",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L155",
+      "_origin": "ast",
+      "id": "scripts_validate_config_rationale_155",
+      "community": 4,
+      "norm_label": "guards for fixes that live outside tracked config and can silently vanish."
+    },
+    {
       "label": "self-audit.ts",
       "file_type": "code",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_self_audit",
       "community": 52,
-      "norm_label": "self-audit.ts"
+      "norm_label": "self-audit.ts",
+      "id": "extensions_self_audit"
     },
     {
       "label": "VALIDATOR",
@@ -89,9 +329,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L25",
       "_origin": "ast",
-      "id": "extensions_self_audit_validator",
       "community": 52,
-      "norm_label": "validator"
+      "norm_label": "validator",
+      "id": "extensions_self_audit_validator"
     },
     {
       "label": "AuditResult",
@@ -99,9 +339,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L28",
       "_origin": "ast",
-      "id": "extensions_self_audit_auditresult",
       "community": 52,
-      "norm_label": "auditresult"
+      "norm_label": "auditresult",
+      "id": "extensions_self_audit_auditresult"
     },
     {
       "label": "runValidator()",
@@ -109,9 +349,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "extensions_self_audit_runvalidator",
       "community": 52,
-      "norm_label": "runvalidator()"
+      "norm_label": "runvalidator()",
+      "id": "extensions_self_audit_runvalidator"
     },
     {
       "label": "autocommit.sh",
@@ -351,105 +591,6 @@
       "norm_label": "firechime()",
       "community_name": "Baseline Arm",
       "id": "extensions_focus_chime_firechime"
-    },
-    {
-      "label": "graphify-bridge.ts",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "graphify-bridge.ts",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge"
-    },
-    {
-      "label": "findGraphRoot()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L36",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "findgraphroot()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "label": "graphifyPython()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L47",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "graphifypython()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_graphifypython"
-    },
-    {
-      "label": "runGraphify()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L58",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "rungraphify()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "label": "GraphStats",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L72",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "graphstats",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "label": "fmtAge()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L123",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "fmtage()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "label": "statusText()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L130",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "statustext()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_statustext"
-    },
-    {
-      "label": "GraphParams",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L145",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "graphparams",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_graphparams"
-    },
-    {
-      "label": "execute()",
-      "file_type": "code",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L187",
-      "_origin": "ast",
-      "community": 35,
-      "norm_label": "execute()",
-      "community_name": "Local Ollama Benchmark",
-      "id": "extensions_graphify_bridge_execute"
     },
     {
       "label": "command.ts",
@@ -1678,7 +1819,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "agents.ts",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents"
@@ -1689,7 +1830,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L9",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "agentscope",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_agentscope"
@@ -1700,7 +1841,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L11",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "agentconfig",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_agentconfig"
@@ -1711,7 +1852,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L22",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "agentdiscoveryresult",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_agentdiscoveryresult"
@@ -1722,7 +1863,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L27",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "loadagentsfromdir()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_loadagentsfromdir"
@@ -1733,7 +1874,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L79",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "isdirectory()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_isdirectory"
@@ -1744,7 +1885,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L87",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "findnearestprojectagentsdir()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_findnearestprojectagentsdir"
@@ -1755,7 +1896,7 @@
       "source_file": "extensions/subagent/agents.ts",
       "source_location": "L99",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "discoveragents()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_agents_discoveragents"
@@ -1788,7 +1929,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L46",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "issonnetmodel()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_issonnetmodel"
@@ -1810,7 +1951,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L56",
       "_origin": "ast",
-      "community": 63,
+      "community": 3,
       "norm_label": "parseqaverdict()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_parseqaverdict"
@@ -1898,7 +2039,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L220",
       "_origin": "ast",
-      "community": 40,
+      "community": 3,
       "norm_label": "subagentdetails",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_subagentdetails"
@@ -1909,7 +2050,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L227",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "getfinaloutput()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_getfinaloutput"
@@ -1920,7 +2061,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L239",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "isfailedresult()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_isfailedresult"
@@ -1942,7 +2083,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L252",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "getresultoutput()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_getresultoutput"
@@ -1986,7 +2127,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L285",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "mapwithconcurrencylimit()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_mapwithconcurrencylimit"
@@ -1997,7 +2138,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L305",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "writeprompttotempfile()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_writeprompttotempfile"
@@ -2030,7 +2171,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L333",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "runsingleagent()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_runsingleagent"
@@ -2085,7 +2226,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L557",
       "_origin": "ast",
-      "community": 63,
+      "community": 3,
       "norm_label": "persistreworkcount()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_persistreworkcount"
@@ -2096,7 +2237,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L584",
       "_origin": "ast",
-      "community": 63,
+      "community": 3,
       "norm_label": "finalizeqaoutput()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_finalizeqaoutput"
@@ -2107,7 +2248,7 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L622",
       "_origin": "ast",
-      "community": 41,
+      "community": 3,
       "norm_label": "execute()",
       "community_name": "TUI Extensions & Config Index",
       "id": "extensions_subagent_index_execute"
@@ -9183,147 +9324,15 @@
       "id": "schema_trust_schema_additionalproperties_type"
     },
     {
-      "label": "validate-config.py",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "validate-config.py",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config"
-    },
-    {
-      "label": "resolve()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L46",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "resolve()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_resolve"
-    },
-    {
       "label": "Path",
       "file_type": "code",
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 41,
       "norm_label": "path",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "scripts_validate_config_py_path"
-    },
-    {
-      "label": "load_json()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "load_json()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_load_json"
-    },
-    {
-      "label": "get_validator()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L56",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "get_validator()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_get_validator"
-    },
-    {
-      "label": "check_target()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L74",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_target()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_check_target"
-    },
-    {
-      "label": "check_heuristics_hygiene()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L109",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_heuristics_hygiene()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "label": "check_git_hygiene()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L123",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_git_hygiene()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "label": "check_symlinks()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L143",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_symlinks()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "label": "check_layout()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L152",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "check_layout()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_check_layout"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L162",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "main()",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_main"
-    },
-    {
-      "label": "Return callable(obj) -> list[str] of violation messages.",
-      "file_type": "rationale",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L57",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "return callable(obj) -> list[str] of violation messages.",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_rationale_57"
-    },
-    {
-      "label": "Validate one manifest target; return parsed jsonl entries (for hygiene).",
-      "file_type": "rationale",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L75",
-      "_origin": "ast",
-      "community": 4,
-      "norm_label": "validate one manifest target; return parsed jsonl entries (for hygiene).",
-      "community_name": "Ponytail Ruleset & Mirrors",
-      "id": "scripts_validate_config_rationale_75"
     },
     {
       "label": "porcelain-light.json",
@@ -9331,7 +9340,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "porcelain-light.json",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light"
@@ -9342,7 +9351,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "$schema",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_schema"
@@ -9353,7 +9362,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "name",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_name"
@@ -10123,7 +10132,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "export",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_export"
@@ -10134,7 +10143,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "pagebg",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_export_pagebg"
@@ -10145,7 +10154,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "cardbg",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_export_cardbg"
@@ -10156,7 +10165,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 44,
+      "community": 15,
       "norm_label": "infobg",
       "community_name": "Void Black-Hole TUI",
       "id": "themes_porcelain_light_export_infobg"
@@ -10167,7 +10176,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "porcelain.json",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain"
@@ -10178,7 +10187,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "$schema",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_schema"
@@ -10189,7 +10198,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "name",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_name"
@@ -10959,7 +10968,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "export",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_export"
@@ -10970,7 +10979,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "pagebg",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_export_pagebg"
@@ -10981,7 +10990,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "cardbg",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_export_cardbg"
@@ -10992,7 +11001,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 53,
+      "community": 24,
       "norm_label": "infobg",
       "community_name": "Caveman Arm",
       "id": "themes_porcelain_export_infobg"
@@ -13069,14 +13078,453 @@
   ],
   "links": [
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_config_index_audit_map",
+      "target": "extensions_graphify_bridge"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L195",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_execute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L36",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_findgraphroot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L131",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_fmtage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphifypython",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L153",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphparams",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_graphstats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_rungraphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L138",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge",
+      "target": "extensions_graphify_bridge_statustext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L196",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_findgraphroot",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_rungraphify",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L139",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_statustext",
+      "target": "extensions_graphify_bridge_graphstats"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L142",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_statustext",
+      "target": "extensions_graphify_bridge_fmtage",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graphify-bridge.ts",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "extensions_graphify_bridge_execute",
+      "target": "extensions_graphify_bridge_statustext",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "readme_schema_policy",
+      "target": "scripts_validate_config"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L125",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_git_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L111",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_heuristics_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L154",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L187",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_layout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L145",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_symlinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L76",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L197",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "scripts_validate_config",
+      "target": "scripts_validate_config_resolve",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L78",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_resolve",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "scripts_validate_config_resolve",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "scripts_validate_config_get_validator",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L53",
+      "weight": 1.0,
+      "source": "scripts_validate_config_load_json",
+      "target": "path",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L87",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L60",
+      "weight": 1.0,
+      "source": "scripts_validate_config_get_validator",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L203",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_load_json",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L83",
+      "weight": 1.0,
+      "source": "scripts_validate_config_check_target",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_59",
+      "target": "scripts_validate_config_get_validator",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L209",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L77",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_77",
+      "target": "scripts_validate_config_check_target",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L211",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_heuristics_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L212",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_git_hygiene",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L213",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_symlinks",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L214",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L155",
+      "weight": 1.0,
+      "source": "scripts_validate_config_rationale_155",
+      "target": "scripts_validate_config_check_installed_integrity",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate-config.py",
+      "source_location": "L215",
+      "weight": 1.0,
+      "source": "scripts_validate_config_main",
+      "target": "scripts_validate_config_check_layout",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "extensions/self-audit.ts",
       "source_location": "L28",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_auditresult",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_auditresult"
     },
     {
       "relation": "contains",
@@ -13084,9 +13532,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_runvalidator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_runvalidator"
     },
     {
       "relation": "contains",
@@ -13094,9 +13542,9 @@
       "source_file": "extensions/self-audit.ts",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_self_audit",
-      "target": "extensions_self_audit_validator",
-      "confidence_score": 1.0
+      "target": "extensions_self_audit_validator"
     },
     {
       "relation": "contains",
@@ -13428,151 +13876,6 @@
       "confidence_score": 1.0,
       "source": "extensions_focus_chime_firechime",
       "target": "extensions_focus_chime_sanitize"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "extensions_graphify_bridge"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L187",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_execute"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L36",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L47",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphifypython"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L145",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphparams"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L84",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L130",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge",
-      "target": "extensions_graphify_bridge_statustext"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L188",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_findgraphroot"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L201",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_rungraphify"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "INFERRED",
-      "confidence_score": 0.8,
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L131",
-      "weight": 1.0,
-      "source": "extensions_graphify_bridge_statustext",
-      "target": "extensions_graphify_bridge_graphstats"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L134",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_statustext",
-      "target": "extensions_graphify_bridge_fmtage"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "extensions/graphify-bridge.ts",
-      "source_location": "L195",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "extensions_graphify_bridge_execute",
-      "target": "extensions_graphify_bridge_statustext"
     },
     {
       "relation": "contains",
@@ -25887,269 +26190,6 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "readme_schema_policy",
-      "target": "scripts_validate_config"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L123",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L109",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L152",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_layout"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L143",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L74",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L56",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L162",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_main"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L46",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config",
-      "target": "scripts_validate_config_resolve"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L76",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_resolve"
-    },
-    {
-      "relation": "references",
-      "context": "return_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L46",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_resolve",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L56",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_get_validator",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "references",
-      "context": "parameter_type",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_load_json",
-      "target": "scripts_validate_config_py_path"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L85",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L58",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_get_validator",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L168",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_load_json"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L81",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_check_target",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L57",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_rationale_57",
-      "target": "scripts_validate_config_get_validator"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L174",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "rationale_for",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L75",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_rationale_75",
-      "target": "scripts_validate_config_check_target"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L176",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_heuristics_hygiene"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L177",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_git_hygiene"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L178",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_symlinks"
-    },
-    {
-      "relation": "calls",
-      "context": "call",
-      "confidence": "EXTRACTED",
-      "source_file": "scripts/validate-config.py",
-      "source_location": "L179",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "scripts_validate_config_main",
-      "target": "scripts_validate_config_check_layout"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
       "source_file": "docs/config-index.md",
       "source_location": null,
       "weight": 1.0,
@@ -29506,5 +29546,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "7d8f4b2b48b3b45ca0b176336f7b94842834c34b"
+  "built_at_commit": "64ac9b0da1713918b0fa154dd9e53952f9fa934f"
 }

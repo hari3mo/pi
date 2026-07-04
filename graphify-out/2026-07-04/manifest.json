@@ -1078,5 +1078,10 @@
     "mtime": 1783158386.3289292,
     "ast_hash": "de707992d034da2dcc2badceac78bad6",
     "semantic_hash": "de707992d034da2dcc2badceac78bad6"
+  },
+  "extensions/self-audit.ts": {
+    "mtime": 1783159683.3057277,
+    "ast_hash": "85fa980f1526935e5b237c3420e57dbf",
+    "semantic_hash": ""
   }
 }

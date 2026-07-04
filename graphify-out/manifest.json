@@ -475,9 +475,9 @@
     "semantic_hash": "92b72a7ec0bb018853771afa1b41310a"
   },
   "scripts/validate-config.py": {
-    "mtime": 1783124472.5100243,
-    "ast_hash": "d9ae71319bd3bc678f1dfacd8760fc5b",
-    "semantic_hash": "d9ae71319bd3bc678f1dfacd8760fc5b"
+    "mtime": 1783159706.9726653,
+    "ast_hash": "7d97fabd88b5bc7dfc41c28652a57271",
+    "semantic_hash": ""
   },
   "settings.json": {
     "mtime": 1783157230.5280793,
@@ -1055,9 +1055,9 @@
     "semantic_hash": "23ea23cb5fb5f0a50d33fe3ad0379962"
   },
   "extensions/graphify-bridge.ts": {
-    "mtime": 1783159007.2242186,
-    "ast_hash": "2b09027e997f5b2e86e479e631392275",
-    "semantic_hash": "2b09027e997f5b2e86e479e631392275"
+    "mtime": 1783159706.9723248,
+    "ast_hash": "ff6065d509b90d1c1d6cb12b675014df",
+    "semantic_hash": ""
   },
   "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
     "mtime": 1783158099.5084014,
