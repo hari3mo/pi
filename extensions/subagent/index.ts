@@ -594,13 +594,8 @@ class ActiveSubagentPanel {
 	private detail = false;
 	private scroll = 0;
 	private readonly onDataChange: () => void;
-	private spinnerTimer?: ReturnType<typeof setInterval>;
+	private readonly spinnerTimer: ReturnType<typeof setInterval>;
 	private disposed = false;
-	// Orphan heartbeat: render() sets this true; the spinner tick clears it and
-	// checks it next fire. If render() stopped being called (overlay torn down
-	// externally via resetExtensionUI→hideOverlay, which never resolves the custom
-	// promise nor calls dispose()), the flag stays false and the tick self-disposes.
-	private renderedSinceTick = true;
 	// Cache of formatSubagentShell(ref) split into lines, keyed by ref identity
 	// plus (messages.length + endTime) — the only inputs that grow a run's
 	// transcript. Rebuilt when the selected ref or that key changes; the built
@@ -625,11 +620,16 @@ class ActiveSubagentPanel {
 				return;
 			}
 			this.tui.requestRender();
-			this.syncSpinnerTimer();
 		};
 		ACTIVE_SUBAGENT_LISTENERS.add(this.onDataChange);
-		// Animate immediately if a run is already in progress when the panel opens.
-		this.syncSpinnerTimer();
+		// One always-on housekeeping tick for the whole panel lifetime: it just
+		// asks for a re-render so the in-progress spinner animates smoothly. No
+		// liveness tracking needed — disposal is deterministic (done() or
+		// session_shutdown), and the interval is bounded by panel lifetime, so a
+		// panel-lifetime interval at SPINNER_INTERVAL_MS is acceptable.
+		this.spinnerTimer = setInterval(() => this.tui.requestRender(), SPINNER_INTERVAL_MS);
+		(this.spinnerTimer as { unref?: () => void }).unref?.();
+		OPEN_SUBAGENT_PANELS.add(this);
 	}
 
 	// Detail body height: derive from the terminal viewport (the overlay caps at
@@ -651,43 +651,9 @@ class ActiveSubagentPanel {
 		return this.cacheLines;
 	}
 
-	// Animate the list spinner while any run is in progress by ticking
-	// requestRender on an interval (mirrors the renderResult spinnerTimer
-	// pattern). Idempotent: stops the moment nothing is running. Driven by state
-	// changes (constructor + onDataChange) — NOT by render(), which must persist
-	// nothing (finding 2). dispose(), the finally, and the tick's own orphan
-	// self-check all clear it, so it cannot leak.
-	private syncSpinnerTimer(): void {
-		if (this.disposed) return;
-		const anyInProgress = getActiveSubagentRunRefs().some((ref) => runInProgress(ref.result));
-		if (anyInProgress && !this.spinnerTimer) {
-			// Fresh heartbeat so the first tick can't false-trip before render() runs.
-			this.renderedSinceTick = true;
-			this.spinnerTimer = setInterval(() => {
-				// Orphan self-defense (finding 1): render() is only called while we are
-				// still in the overlay stack. If an external teardown popped us without
-				// done()/dispose(), render() stopped clearing→setting this flag, so it is
-				// still false from the previous tick → dispose (clears timer + listener).
-				if (!this.renderedSinceTick) {
-					this.dispose();
-					return;
-				}
-				this.renderedSinceTick = false;
-				this.tui.requestRender();
-			}, SPINNER_INTERVAL_MS);
-			(this.spinnerTimer as { unref?: () => void }).unref?.();
-		} else if (!anyInProgress && this.spinnerTimer) {
-			clearInterval(this.spinnerTimer);
-			this.spinnerTimer = undefined;
-		}
-	}
-
 	render(width: number): string[] {
 		const theme = this.theme;
 		const refs = getActiveSubagentRunRefs();
-		// Heartbeat only — proves render() is still being called (see syncSpinnerTimer
-		// orphan self-check). No timer create/clear here: render persists nothing.
-		this.renderedSinceTick = true;
 		// Local clamped copy — render never persists state.
 		const selected = Math.min(this.selected, Math.max(0, refs.length - 1));
 		const lines: string[] = [];
@@ -764,14 +730,14 @@ class ActiveSubagentPanel {
 		this.tui.requestRender();
 	}
 
+	// Idempotent teardown: called by the ctx.ui.custom() finally on the normal
+	// Esc/q path and by the session_shutdown handler on external teardown.
 	dispose(): void {
 		if (this.disposed) return;
 		this.disposed = true;
 		ACTIVE_SUBAGENT_LISTENERS.delete(this.onDataChange);
-		if (this.spinnerTimer) {
-			clearInterval(this.spinnerTimer);
-			this.spinnerTimer = undefined;
-		}
+		clearInterval(this.spinnerTimer);
+		OPEN_SUBAGENT_PANELS.delete(this);
 	}
 }
 
