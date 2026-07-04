@@ -40,9 +40,9 @@ the user interview and the lead's own dispatch-spec authoring, nothing else.
 
 | Scale | Route | Fable turns |
 |---|---|---|
-| **Micro** — 1 file, ≤20 lines, zero design decisions | ONE `builder` dispatch; the lead judges the RETURNED diff; chain a `verifier` only if there is a runnable acceptance path | 2 |
-| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `solo-engineer` → `verifier` (greenfield with a runnable acceptance path) or `solo-engineer` → `reviewer` (touches existing behavior). The verifier/reviewer MUST be the FINAL chain step — verdict normalization applies only to the last step | 2 |
-| **Large** — scope exceeds one context window, genuine concurrency, or ambiguity surviving the user interview | interview → optional design-only `solo-engineer` dispatch (only when 2+ implementers consume the design) → ONE parallel fan-out (max 8, independent tasks) and/or chains → `reviewer` gate | 4–6 |
+| **Micro** — 1 file, ≤20 lines, zero design decisions | ONE `worker` dispatch; the lead judges the RETURNED diff; chain a `verifier` only if there is a runnable acceptance path | 2 |
+| **Standard** — single-session scope (THE DEFAULT: most tasks) | ONE chain: `engineer` → `verifier` (greenfield with a runnable acceptance path) or `engineer` → `reviewer` (touches existing behavior). The verifier/reviewer MUST be the FINAL chain step — verdict normalization applies only to the last step | 2 |
+| **Large** — scope exceeds one context window, genuine concurrency, or ambiguity surviving the user interview | interview → optional design-only `engineer` dispatch (only when 2+ implementers consume the design) → ONE parallel fan-out (max 8, independent tasks) and/or chains → `reviewer` gate | 4–6 |
 
 The single chain is the default that gets escalated up — the pipeline is NOT a default
 that gets pruned down.
@@ -53,14 +53,14 @@ that gets pruned down.
 |---|---|---|
 | `scout` | Mechanical (`claude-sonnet-5:high`) | Read-only investigation: any read >50 lines or a grep that missed once; returns compressed `file:line` findings; never edits |
 | `builder` | Mechanical | Fully-specified mechanical edits ONLY, zero residual design decisions; ships (commits) after review passes |
-| `solo-engineer` | Deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE: whole bounded tasks at single-session scope end-to-end, design inline; also design-only dispatches when 2+ implementers consume the design |
+| `engineer` | Deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE: whole bounded tasks at single-session scope end-to-end, design inline; also design-only dispatches when 2+ implementers consume the design |
 | `verifier` | Mechanical | Runs the acceptance path, PASS/FAIL + `file:line` evidence; never edits. Only dispatched when something is RUNNABLE — for a small returned diff with nothing to run, the lead judges the diff directly |
 | `reviewer` | Deep reasoning | Gate-tier verification: changes to existing behavior, 3+ files of existing code, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design |
-| `peer-engineer` | Peer (`openai/gpt-5.5:xhigh`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
+| `peer-engineer` | Peer (`openai/gpt-5.5-pro:xhigh`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer |
 | `fable-engineer` | Orchestrator-tier, opt-in | Highest-stakes solo builds, dispatched ONLY with explicit user approval; its task must inline repo conventions (loads no context files) |
 
 There is no standing architect role: when 2+ implementers will consume a design,
-dispatch `solo-engineer` with a design-only task returning the design artifact
+dispatch `engineer` with a design-only task returning the design artifact
 ("architect-as-contract").
 
 ## Fable Budget Invariants (MUST)
@@ -71,15 +71,15 @@ dispatch `solo-engineer` with a design-only task returning the design artifact
   sequential singles only when one result determines the next.
 - FRONT-LOAD SPEC QUALITY: fable's highest-leverage tokens are the dispatch spec itself.
   A generous, precise spec that one-shots beats a terse one that triggers rework chains.
-- Blind fan-out (`solo-engineer` + `peer-engineer` in parallel, neither sees the other)
+- Blind fan-out (`engineer` + `peer-engineer` in parallel, neither sees the other)
   for expensive-to-unwind calls; fable spends only on reconciliation.
 
 ## Escalation
 
-`solo-engineer` → `fable-engineer` ONLY with explicit user approval (the user requested
+`engineer` → `fable-engineer` ONLY with explicit user approval (the user requested
 it, or approved the lead's escalation proposal after two review failures). Core
-algorithmic/stateful modules route to `solo-engineer` even when the design is fixed —
-mechanical builders ship spec-corner defects that reviews miss (benchmarked).
+algorithmic/stateful modules route to `engineer` even when the design is fixed —
+mechanical workers ship spec-corner defects that reviews miss (benchmarked).
 
 ## Dispatch Contract
 
@@ -92,7 +92,7 @@ restate it. Template: `docs/delegation-contract.md`.
 `reviewer` verdict contract (details: `docs/rework-loop.md`):
 
 - `PASS` — ship (the implementing agent commits).
-- `FAIL: implementation` — ONE chain: builder-or-solo fix given the findings verbatim
+- `FAIL: implementation` — ONE chain: worker-or-engineer fix given the findings verbatim
   plus an explicit fix-ONLY-the-findings instruction → fresh `reviewer` as the FINAL
   chain step.
 - `FAIL: design` — re-frame the problem; do not patch around it.
@@ -104,7 +104,7 @@ early, before the budget runs out.
 ## Defaults
 
 - Lead: `claude-fable-5:xhigh`. Tiers pinned: deep reasoning `claude-opus-4-8:xhigh`,
-  mechanical `claude-sonnet-5:high`, peer `openai/gpt-5.5:xhigh`.
+  mechanical `claude-sonnet-5:high`, peer `openai/gpt-5.5-pro:xhigh`.
 - Pass `model:thinking` explicitly when delegating.
 
 ## Config Maintenance (~/.pi/agent)
