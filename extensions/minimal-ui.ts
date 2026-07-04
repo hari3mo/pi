@@ -28,13 +28,13 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	ctx.ui.setWorkingIndicator({
 		frames: [
 			theme.fg("dim", "·"),
+			theme.fg("dim", "•"),
 			theme.fg("muted", "•"),
-			theme.fg("muted", "●"),
-			theme.fg("accent", "●"),
-			theme.fg("muted", "●"),
 			theme.fg("muted", "•"),
+			theme.fg("dim", "•"),
+			theme.fg("dim", "·"),
 		],
-		intervalMs: 160,
+		intervalMs: 220,
 	});
 
 	ctx.ui.setFooter((tui, theme, footerData) => {

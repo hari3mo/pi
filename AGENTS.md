@@ -17,8 +17,24 @@ instead of drowning in half-finished edits.
 The subagent pipeline (scope-planner → architect → builder → qa-reviewer →
 shipper, or any fan-out) is deployed ONLY when one of these holds:
 
-1. **Current selected model is `claude-fable-5`** → the pipeline is always in
-   effect. Fable orchestrates; it does not build.
+1. **Current selected model is `claude-fable-5`** → fable orchestrates; it
+   never builds directly. But it routes by scale — pipeline is NOT the
+   default:
+   - **Micro** (single file, ≤ ~20 changed lines, zero design decisions):
+     dispatch ONE `builder` with the fully specified change; skip
+     scope-planner, architect, and qa-reviewer; spot-check the returned
+     diff with targeted verification reads.
+   - **Single-session scope** (fits comfortably in one context window,
+     requirements clear, no genuinely concurrent workstreams): dispatch ONE
+     `solo-engineer` with the whole bounded task end-to-end, then
+     spot-check against acceptance criteria. NO pipeline. (Benchmarked
+     2026-07: the full pipeline cost 2–14x solo with equal-or-worse
+     quality at this scale — see ~/orch-bench/REPORT.md.)
+   - **Full pipeline** ONLY when at least one holds: scope exceeds one
+     context window (multi-session work, 10+ interacting files); 2+
+     workstreams that can genuinely run concurrently; or requirements
+     ambiguous enough to need scope-planner negotiation. If none holds,
+     the pipeline is the wrong tool.
 2. **Current selected model is `claude-opus-4-8` AND the task is appropriately
    complex** (see the opus complexity test in Hard Delegation Thresholds:
    3+ parallelizable workstreams, context-heavy scope, or mechanical work at
@@ -59,15 +75,16 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into six roles. Do not collapse verification into the builder —
+Real work splits into seven roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
 |------|---------------|------|
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
 | `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
-| `builder` | Implementation, wiring, boilerplate, tests | Mechanical |
+| `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
 | `opus-engineer` | Small-but-hard tasks where design and implementation can't separate: tricky concurrency, subtle algorithms, delicate refactors | Deep reasoning |
+| `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
 | `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
 
@@ -89,6 +106,10 @@ When a task arrives, decompose it and route each piece by weight:
 - **Execution** (careful but mechanical) → mechanical tier
   - writing the code once the design is fixed, wiring/plumbing, test scaffolding,
     lint/type/format fixes, renames, commits
+  - EXCEPT core algorithmic or stateful modules: route those to
+    `solo-engineer` even when the design is fixed — mechanical-tier
+    builders ship subtle spec-corner defects that review does not catch
+    (benchmarked: error-token aliasing, reference canonicalization)
 - **Verification** → deep reasoning tier, and never the same agent that built it
 - **Small-but-hard execution** (design and implementation inseparable) → `opus-engineer`
   - tricky concurrency fixes, subtle algorithms, delicate refactors of dense
@@ -155,9 +176,16 @@ The lead MUST route through `scope-planner` and/or `architect` first when ANY of
 
 The lead MUST send work to `qa-reviewer` when ANY of:
 
-- A builder implemented it (never self-review; always review delegated builds)
-- The change touches **3+ files**, auth/security paths, data migrations, or
-  public API surface
+- The change modifies existing behavior in an existing codebase and was
+  implemented by a delegated agent (never self-review)
+- The change touches **3+ files** of existing code, auth/security paths,
+  data migrations, or public API surface
+
+QA may drop to a lead spot-check (targeted verification reads plus running
+the acceptance path) for: micro dispatches, and `solo-engineer` builds of
+greenfield modules that have a runnable acceptance path. (Benchmarked:
+QA cycles on greenfield code did not lift quality above solo — see
+~/orch-bench/REPORT.md.)
 
 A non-fable lead MAY do the work directly ONLY when ALL of:
 
@@ -233,9 +261,13 @@ even before the budget runs out.
 
 - Lead session: `claude-fable-5` at `xhigh` (set in `~/.pi/agent/settings.json`);
   recommend bumping to max effort when a task genuinely rewards it
-- Deploy the subagent pipeline only when the Delegation Gate is open (fable
-  always; opus only for appropriately complex tasks); when in doubt within an
-  open gate, the Hard Delegation Thresholds above decide
+- Deploy the full pipeline only per the scale-routing in the Delegation
+  Gate (fable routes micro → one builder, single-session → `solo-engineer`,
+  and reserves the pipeline for multi-session scope, genuine concurrency,
+  or ambiguity; opus only for appropriately complex tasks)
+- Orchestration is the exception, not the default: most tasks route to one
+  strong solo agent; the pipeline exists for scope, parallelism, or
+  ambiguity it can actually exploit
 - The orchestrator plans and synthesizes on a clean context and never writes
   code itself — every file change is delegated to a builder-tier agent
 - Delegated builds loop through the Rework Loop until `qa-reviewer` passes
