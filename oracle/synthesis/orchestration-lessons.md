@@ -9,7 +9,7 @@ tags: [pi, orchestration, synthesis]
 aliases: ["delegation lessons", "peer-fail convergence", "subagent verification"]
 summary: Cross-session delegation lessons — converge peer-FAILs by re-framing not patching, re-verify subagent claims, live-fire QA extensions in the subagent, and pay for model tier over pipeline depth.
 relationships:
-  - target: "[[components/subagents]]"
+  - target: "[[components/subagent-extension]]"
     type: derived_from
   - target: "[[concepts/delegation-gate]]"
     type: related_to
@@ -25,7 +25,7 @@ updated: 2026-07-04T00:00:00Z
 
 # Orchestration & Delegation Lessons
 
-Lessons about running the [[components/subagents|subagent]] pipeline and the
+Lessons about running the [[components/subagent-extension|subagent]] pipeline and the
 [[concepts/delegation-gate|delegation gate]] — earned across sessions, and mostly about
 what the doctrine *doesn't* say.
 
@@ -96,6 +96,6 @@ validation rule.
 
 ## See also
 
-- [[components/subagents]] · [[concepts/delegation-gate]] · [[concepts/rework-loop]]
+- [[components/subagent-extension]] · [[concepts/delegation-gate]] · [[concepts/rework-loop]]
 - [[synthesis/write-gate-and-read-only-mode]] — the write-gate inheritance mechanics
 - [[synthesis/pi-extension-api-gotchas]] — why the stale-copy trap bites request_write_mode
