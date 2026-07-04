@@ -7,7 +7,14 @@
  *      session last looked AND the new commits touch files THIS session did
  *      not edit, inject a one-line notice: another session/shell changed
  *      config — re-read before building on remembered content. (Snapshots of
- *      our own edits are filtered out, so autocommit stays silent.)
+ *      our own edits are filtered out, so autocommit stays silent.) The same
+ *      detection emits "config-repo-advanced" on the shared event bus, which
+ *      self-audit uses to auto-re-run validate-config.py so the injected
+ *      problems track the new HEAD with no user action. Loaded resources
+ *      (extensions/skills/prompts/themes/keybindings/AGENTS.md) can only be
+ *      refreshed by pi's /reload, which cannot be triggered from an event hook
+ *      (pi 0.80.3: sendUserMessage does not dispatch commands), so the notice
+ *      tells the user to run /reload when those files changed.
  *   2. tool_call (edit/write) — if the target file under ~/.pi/agent is
  *      git-dirty but was NOT touched by this session, warn into the session:
  *      uncommitted changes from another shell are about to be built over.
@@ -22,6 +29,7 @@ import { execFileSync } from "node:child_process";
 import { isAbsolute, join, resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
+import { isReloadResource } from "./lib/config-paths.ts";
 
 const AGENT_DIR = getAgentDir();
 
@@ -67,13 +75,29 @@ export default function (pi: ExtensionAPI) {
 		const foreign = changed.filter((f) => !touched.has(f));
 		if (foreign.length === 0) return; // just autocommit snapshotting our own edits
 		const list = foreign.slice(0, 8).join(", ") + (foreign.length > 8 ? ", ..." : "");
+		// Auto-refresh the harness self-audit for this cross-shell change: self-audit
+		// listens on this shared-bus signal and re-runs validate-config.py, so its
+		// injected problems track the new HEAD with no user action and no reload. This
+		// is loop-safe: it neither advances HEAD nor commits nor reloads, and
+		// lastKnownHead was just advanced above so this range emits at most once.
+		pi.events.emit("config-repo-advanced", { range, foreign });
+		// Loaded resources (extensions/skills/prompts/themes/keybindings/AGENTS.md) can
+		// only be refreshed by pi's /reload. ponytail: /reload cannot be triggered from
+		// an event hook in pi 0.80.3 (sendUserMessage delivers slash text to the LLM,
+		// it does not dispatch the command), so we tell the user to run it. Upgrade path:
+		// auto-queue /reload once pi exposes reload() off a non-command context.
+		const reloadHint = foreign.some(isReloadResource)
+			? ` These include loaded resources (extensions/skills/prompts/themes/keybindings/AGENTS.md); their in-memory copies are now stale — tell the user to run /reload to refresh them (the conversation is preserved).`
+			: "";
 		return {
 			systemPrompt:
 				event.systemPrompt +
 				`\n\n## Concurrent-session notice (~/.pi/agent)\n\n` +
 				`The config repo advanced (${range}) since this session last looked, touching files ` +
 				`this session did not edit: ${list}. Another shell/session (or its autocommit) changed them — ` +
-				`RE-READ any of these before building on remembered content (git log ${range} for details).`,
+				`RE-READ any of these before building on remembered content (git log ${range} for details). ` +
+				`The harness self-audit was auto-refreshed to reflect this change.` +
+				reloadHint,
 		};
 	});
 
