@@ -4,9 +4,10 @@ category: components
 source_layer: local
 sources:
   - /Users/harissaif/.pi/agent/extensions/concurrency-guard.ts
+  - /Users/harissaif/.pi/agent/extensions/lib/change-detection.ts
 tags: [pi, extensions, config, component]
-aliases: ["concurrency-guard.ts", "/refresh"]
-summary: The extension making concurrent pi sessions safe on ~/.pi/agent — detects HEAD advances, content-checks files this session edited, emits a config-repo-advanced signal, and provides /refresh. Fail-open on any git error.
+aliases: ["concurrency-guard.ts", "/refresh", "change-detection.ts"]
+summary: Thin extension over the lib/change-detection.ts engine — ONE detection/classification pass per repo advance broadcast as config-repo-advanced, a persistent stale-loaded-resource registry (recurring prompt block + widget), an edit gate that blocks the first edit to a stale not-re-read resource, and /refresh. Fail-open on any git error.
 relationships:
   - target: "[[concepts/concurrency-model]]"
     type: implements
@@ -22,51 +23,73 @@ updated: 2026-07-04T00:00:00Z
 
 # Concurrency-Guard Extension
 
-`extensions/concurrency-guard.ts` — the runtime behind the
-[[concepts/concurrency-model]]. It makes concurrent sessions across shells safe
-on `~/.pi/agent` without locking anything.
+`extensions/concurrency-guard.ts` — a **thin consumer** of the single
+cross-shell change engine `extensions/lib/change-detection.ts`
+(`createChangeTracker`). All detection, classification, staleness state, and
+git logic live in the tracker; the extension only wires pi events to it and
+renders results. This is the runtime behind the [[concepts/concurrency-model]].
 
-## The four hooks
+## The engine (lib/change-detection.ts)
 
-1. **`before_agent_start`** — if HEAD advanced since this session last looked,
-   classify each committed file. Not-edited-by-us → a plain foreign-change
-   notice. Edited-by-us → **content-check**: compare the committed blob to the
-   hash recorded on our last write. A match is our own autocommit snapshot (stay
-   silent — no false positives); a mismatch is the highest-risk case (another
-   session committed *different* content over a file we edited) and gets a
-   dedicated "RE-READ before further edits" notice. It also emits
-   `config-repo-advanced` on the shared bus so [[concepts/self-audit-loop]]
-   re-runs the validator.
-2. **`tool_call` (edit/write)** — if the target under `~/.pi/agent` is git-dirty
-   but not touched by this session, warn (once) *before* the edit lands.
-3. **`tool_result` (edit/write, non-error)** — mark the file touched and record
-   its post-edit content hash. Kept off `tool_call` so a failed edit doesn't
-   suppress later foreign-change notices.
-4. **`agent_end`** — if ≥2 same-file collisions occurred, send one nudge to
-   serialize the sessions or split file ownership.
+- **`detectAdvance()`** — THE one detection + classification pass (called once
+  per `before_agent_start`). HEAD moved since the session last looked →
+  classify each committed file: own autocommit snapshot (committed blob hash ==
+  hash recorded on our last write) = **silent**; never-edited-by-us =
+  **foreign**; edited-by-us with different content = **collided** (highest
+  risk). Any changed loaded resource (per `isReloadResource`) is registered in
+  a **persistent staleness registry** with its concrete git delta
+  (`git log --oneline` summary).
+- **`checkEdit()`** — THE one per-edit classification: stale not-re-read
+  resource → *block first attempt, warn once on the second, then stand aside*
+  (never wedge); target git-dirty from another shell → warn once.
+- **`recordWrite()` / `recordRead()`** — feed the session's own edits (touched
+  set + post-edit blob hash) and reads (cures the stale-edit gate) back in.
+- The registry only empties on `reset()` — i.e. on reload, exactly when the
+  in-memory copies stop being stale.
+
+## The consumer interface
+
+Each `RepoAdvance` (`{ range, foreign, collided, staleResources }`) is
+re-broadcast verbatim as **`config-repo-advanced`** on the shared bus — the one
+interface any subscriber uses. [[concepts/self-audit-loop]] re-runs
+`validate-config.py` off it; future consumers get the classified result with no
+extra pass.
+
+## The hooks (rendering only)
+
+1. **`before_agent_start`** — advance notices ("HIGHEST RISK … RE-READ" for
+   collided, plain foreign notice) plus, while ANY loaded resource is stale, a
+   recurring **"Stale loaded resources"** block re-injected EVERY turn (file,
+   range, delta, re-read state) and a persistent widget above the editor — not
+   one forgettable prose notice.
+2. **`tool_call` (edit/write)** — renders `checkEdit()`: `{ block: true }` for
+   the first edit to a stale not-re-read resource (verified pi 0.80.3
+   capability), `[concurrency-guard]` warning messages otherwise.
+3. **`tool_result`** — non-error edit/write → `recordWrite`; non-error read →
+   `recordRead` (cures the gate).
+4. **`agent_end`** — ≥2 same-file collisions → one serialize-the-sessions nudge.
 
 ## `/refresh`
 
-The manual companion to the auto-notice. An event hook *cannot* dispatch a
-command in pi 0.80.3 (`sendUserMessage` delivers slash text to the LLM, it does
-not dispatch), and `ctx.reload()` exists only on a command context — so the
-auto-notice can only *tell* the user to reload. `/refresh` does it in one step:
-re-check repo state, report the delta, and `ctx.reload()` (which re-fires
-`session_start`, resetting the baseline so the notice won't re-fire for the
-change just synced). It lives in this extension so the git-state logic stays in
-one place.
+The manual companion. An event hook *cannot* dispatch a command in pi 0.80.3
+(`sendUserMessage` hard-sets `expandPromptTemplates:false`, verified in
+`dist/core/agent-session.js`) and `ctx.reload()` exists only on a command
+context — so the auto-surfaces can only *tell* the user to reload. `/refresh`
+reports the pending delta (`tracker.pendingDelta()`) then `ctx.reload()`, which
+re-fires `session_start` → `tracker.reset()` clears the baseline, the stale
+registry, and the widget, so nothing re-fires for the change just synced.
 
 ## Design intent (durable)
 
-- **Fail-open.** Any git failure disables the check for that event and never
-  blocks a turn.
-- **Loaded-resource hint.** When the changed files include loaded resources
-  (extensions/skills/prompts/themes/keybindings/AGENTS.md), the notice tells the
-  user to run `/refresh` or `/reload` — their in-memory copies are stale.
+- **Fail-open.** Every handler body is try/caught; any git failure degrades to
+  silence for that event, never blocks a turn. The edit gate blocks at most
+  once per file and warns at most once — it can never wedge a session whose
+  re-read it could not observe (e.g. via bash).
 - It mechanically enforces the archived lesson *"edits in `~/.pi/agent` can be
   silently wiped by a concurrent session — grep the live file rather than
-  trusting session memory."* See [[concepts/concurrency-model]] for the full
-  autocommit-daemon + pre-commit-gate picture.
+  trusting session memory."*
+- Regression contract lives in `scripts/check-concurrency-guard.mjs` (drives
+  the shipped extension against a scratch repo; checks (a)–(k)).
 
 *(Live symbol/call structure → the `graph` tool per
 [[concepts/knowledge-graph-integration]].)*
