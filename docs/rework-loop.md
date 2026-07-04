@@ -10,7 +10,7 @@ agent built the work.
 **Reviewer verdict contract.** Every `qa-reviewer` task must ask for a
 structured verdict, one of:
 
-- `PASS` — proceed to `shipper`
+- `PASS` — proceed to ship (the implementing agent commits)
 - `FAIL: implementation` — findings as `file:line` + what's wrong + expected
   behavior; route back to the implementing agent
 - `FAIL: design` — the flaw is in the approach, not the code; route back to
@@ -43,3 +43,9 @@ prior findings forward so the reviewer checks resolution, not rediscovery.
 If iteration N's findings are unrelated to iteration N-1's (new problems
 keep appearing), treat that as a design smell and escalate to `architect`
 even before the budget runs out.
+
+**Enforcement.** The verdict contract above is not just convention: `extensions/subagent/index.ts`
+`finalizeQaOutput` normalizes every qa-reviewer return with a `[VERDICT: ...]` first line
+(inserting a `MISSING` notice if the agent omitted one) and annotates the session-level
+consecutive-FAIL loop budget of 3 automatically. Ceilings: the counter is per-session and
+consecutive, not per-work-item, and mid-chain qa steps inside a chain dispatch are not counted.
