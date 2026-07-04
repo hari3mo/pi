@@ -66,8 +66,10 @@
   "64": "graphify-bridge.ts",
   "65": "copilot-plugin.test.js",
   "66": "Compact always-on ruleset (AGENTS.md)",
+  "67": "porcelain-light.json",
   "68": "check-parse-verdict.mjs",
   "69": "porcelain.json",
+  "70": "config-paths.ts",
   "71": "ponytail-statusline.sh script",
   "72": "baseline.js",
   "73": "ponytail-statusline.ps1"

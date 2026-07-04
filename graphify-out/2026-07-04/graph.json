@@ -74,14 +74,54 @@
   },
   "nodes": [
     {
+      "label": "config-paths.ts",
+      "file_type": "code",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_lib_config_paths",
+      "community": 70,
+      "norm_label": "config-paths.ts"
+    },
+    {
+      "label": "RESOURCE_PREFIXES",
+      "file_type": "code",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L11",
+      "_origin": "ast",
+      "id": "extensions_lib_config_paths_resource_prefixes",
+      "community": 70,
+      "norm_label": "resource_prefixes"
+    },
+    {
+      "label": "RESOURCE_FILES",
+      "file_type": "code",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L13",
+      "_origin": "ast",
+      "id": "extensions_lib_config_paths_resource_files",
+      "community": 70,
+      "norm_label": "resource_files"
+    },
+    {
+      "label": "isReloadResource()",
+      "file_type": "code",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L22",
+      "_origin": "ast",
+      "id": "extensions_lib_config_paths_isreloadresource",
+      "community": 70,
+      "norm_label": "isreloadresource()"
+    },
+    {
       "label": "audit-pipelines.py",
       "file_type": "code",
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines",
       "community": 44,
-      "norm_label": "audit-pipelines.py"
+      "norm_label": "audit-pipelines.py",
+      "id": "scripts_audit_pipelines"
     },
     {
       "label": "git()",
@@ -89,9 +129,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L62",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_git",
       "community": 44,
-      "norm_label": "git()"
+      "norm_label": "git()",
+      "id": "scripts_audit_pipelines_git"
     },
     {
       "label": "check_graph_freshness()",
@@ -99,9 +139,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L67",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_graph_freshness",
       "community": 44,
-      "norm_label": "check_graph_freshness()"
+      "norm_label": "check_graph_freshness()",
+      "id": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "label": "check_flag_staleness()",
@@ -109,9 +149,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_flag_staleness",
       "community": 44,
-      "norm_label": "check_flag_staleness()"
+      "norm_label": "check_flag_staleness()",
+      "id": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "label": "check_autocommit_liveness()",
@@ -119,9 +159,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L94",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_autocommit_liveness",
       "community": 44,
-      "norm_label": "check_autocommit_liveness()"
+      "norm_label": "check_autocommit_liveness()",
+      "id": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "label": "check_connectivity_ratchet()",
@@ -129,9 +169,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L107",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_connectivity_ratchet",
       "community": 44,
-      "norm_label": "check_connectivity_ratchet()"
+      "norm_label": "check_connectivity_ratchet()",
+      "id": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "label": "_read_baseline()",
@@ -139,9 +179,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L150",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_read_baseline",
       "community": 44,
-      "norm_label": "_read_baseline()"
+      "norm_label": "_read_baseline()",
+      "id": "scripts_audit_pipelines_read_baseline"
     },
     {
       "label": "_write_baseline()",
@@ -149,9 +189,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L159",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_write_baseline",
       "community": 44,
-      "norm_label": "_write_baseline()"
+      "norm_label": "_write_baseline()",
+      "id": "scripts_audit_pipelines_write_baseline"
     },
     {
       "label": "check_toolchain_versions()",
@@ -159,9 +199,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L175",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_toolchain_versions",
       "community": 44,
-      "norm_label": "check_toolchain_versions()"
+      "norm_label": "check_toolchain_versions()",
+      "id": "scripts_audit_pipelines_check_toolchain_versions"
     },
     {
       "label": "check_extension_loads()",
@@ -169,9 +209,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L216",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_extension_loads",
       "community": 44,
-      "norm_label": "check_extension_loads()"
+      "norm_label": "check_extension_loads()",
+      "id": "scripts_audit_pipelines_check_extension_loads"
     },
     {
       "label": "check_reflection_drift()",
@@ -179,9 +219,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L233",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_reflection_drift",
       "community": 44,
-      "norm_label": "check_reflection_drift()"
+      "norm_label": "check_reflection_drift()",
+      "id": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "label": "check_semantic_cache_drift()",
@@ -189,9 +229,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L244",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_check_semantic_cache_drift",
       "community": 44,
-      "norm_label": "check_semantic_cache_drift()"
+      "norm_label": "check_semantic_cache_drift()",
+      "id": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "label": "main()",
@@ -199,9 +239,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L276",
       "_origin": "ast",
-      "id": "scripts_audit_pipelines_main",
       "community": 44,
-      "norm_label": "main()"
+      "norm_label": "main()",
+      "id": "scripts_audit_pipelines_main"
     },
     {
       "label": "validate-config.py",
@@ -8875,7 +8915,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "porcelain-light.json",
       "id": "themes_porcelain_light"
     },
@@ -8885,7 +8925,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "$schema",
       "id": "themes_porcelain_light_schema"
     },
@@ -8895,7 +8935,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "name",
       "id": "themes_porcelain_light_name"
     },
@@ -9595,7 +9635,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "export",
       "id": "themes_porcelain_light_export"
     },
@@ -9605,7 +9645,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "pagebg",
       "id": "themes_porcelain_light_export_pagebg"
     },
@@ -9615,7 +9655,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "cardbg",
       "id": "themes_porcelain_light_export_cardbg"
     },
@@ -9625,7 +9665,7 @@
       "source_file": "themes/porcelain-light.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 15,
+      "community": 67,
       "norm_label": "infobg",
       "id": "themes_porcelain_light_export_infobg"
     },
@@ -12435,6 +12475,36 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "extensions_lib_config_paths",
+      "target": "extensions_lib_config_paths_isreloadresource",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L13",
+      "weight": 1.0,
+      "source": "extensions_lib_config_paths",
+      "target": "extensions_lib_config_paths_resource_files",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/lib/config-paths.ts",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "extensions_lib_config_paths",
+      "target": "extensions_lib_config_paths_resource_prefixes",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -12450,9 +12520,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L94",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "relation": "contains",
@@ -12460,9 +12530,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L107",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "relation": "contains",
@@ -12470,9 +12540,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L216",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_extension_loads",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_extension_loads"
     },
     {
       "relation": "contains",
@@ -12480,9 +12550,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_flag_staleness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "relation": "contains",
@@ -12490,9 +12560,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L67",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_graph_freshness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "relation": "contains",
@@ -12500,9 +12570,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L233",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_reflection_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "relation": "contains",
@@ -12510,9 +12580,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L244",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "relation": "contains",
@@ -12520,9 +12590,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L175",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_check_toolchain_versions",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_toolchain_versions"
     },
     {
       "relation": "contains",
@@ -12530,9 +12600,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L62",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "contains",
@@ -12540,9 +12610,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L276",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_main",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_main"
     },
     {
       "relation": "contains",
@@ -12550,9 +12620,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L150",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_read_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_read_baseline"
     },
     {
       "relation": "contains",
@@ -12560,9 +12630,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L159",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines",
-      "target": "scripts_audit_pipelines_write_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_write_baseline"
     },
     {
       "relation": "calls",
@@ -12571,9 +12641,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L97",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_autocommit_liveness",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "calls",
@@ -12582,9 +12652,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L72",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_graph_freshness",
-      "target": "scripts_audit_pipelines_git",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_git"
     },
     {
       "relation": "calls",
@@ -12593,9 +12663,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L281",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_graph_freshness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_graph_freshness"
     },
     {
       "relation": "calls",
@@ -12604,9 +12674,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L282",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_flag_staleness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_flag_staleness"
     },
     {
       "relation": "calls",
@@ -12615,9 +12685,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L283",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_autocommit_liveness",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_autocommit_liveness"
     },
     {
       "relation": "calls",
@@ -12626,9 +12696,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L137",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "target": "scripts_audit_pipelines_read_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_read_baseline"
     },
     {
       "relation": "calls",
@@ -12637,9 +12707,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L147",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "target": "scripts_audit_pipelines_write_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_write_baseline"
     },
     {
       "relation": "calls",
@@ -12648,9 +12718,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L284",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_connectivity_ratchet",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_connectivity_ratchet"
     },
     {
       "relation": "calls",
@@ -12659,9 +12729,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L202",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_toolchain_versions",
-      "target": "scripts_audit_pipelines_read_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_read_baseline"
     },
     {
       "relation": "calls",
@@ -12670,9 +12740,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L213",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_check_toolchain_versions",
-      "target": "scripts_audit_pipelines_write_baseline",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_write_baseline"
     },
     {
       "relation": "calls",
@@ -12681,9 +12751,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L286",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_toolchain_versions",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_toolchain_versions"
     },
     {
       "relation": "calls",
@@ -12692,9 +12762,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L289",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_extension_loads",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_extension_loads"
     },
     {
       "relation": "calls",
@@ -12703,9 +12773,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L285",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_reflection_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_reflection_drift"
     },
     {
       "relation": "calls",
@@ -12714,9 +12784,9 @@
       "source_file": "scripts/audit-pipelines.py",
       "source_location": "L288",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "scripts_audit_pipelines_main",
-      "target": "scripts_audit_pipelines_check_semantic_cache_drift",
-      "confidence_score": 1.0
+      "target": "scripts_audit_pipelines_check_semantic_cache_drift"
     },
     {
       "relation": "references",
@@ -29543,5 +29613,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "cee406d8d56fba27eaf63ebed56ec7060e492dd6"
+  "built_at_commit": "57bdba2f91a49edb175dfaeeff0be49b0d12af0d"
 }
