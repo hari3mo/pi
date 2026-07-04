@@ -73,6 +73,8 @@ change — only the backing model per role. Files: `agents/reviewer.md`, `agents
 
 ### 2026-07-04
 
+**Cwd-independent wiki + graph session links.** `oracle-first.ts` now injects absolute active-wiki and pi-oracle links into every prompt, so `wiki-query` has the right vault context from any cwd. `graphify-bridge.ts` now prints the absolute graph path/root and documents the nearest-project-graph → pi-agent-graph fallback; `knowledge-compound.ts` uses the same fallback when flushing `graphify save-result`, so graph answers still feed reflections from `$HOME` or unrelated projects. Files: `extensions/oracle-first.ts`, `extensions/graphify-bridge.ts`, `extensions/knowledge-compound.ts`, `docs/config-index.md`.
+
 **Oracle-first mechanized + query-compounding mechanized: `extensions/oracle-first.ts` +
 `extensions/knowledge-compound.ts`.** `oracle-first.ts` mirrors `graph-first.ts` for the
 ORACLE-FIRST doctrine: reads of pi's own docs (README/docs/examples under the installed
