@@ -242,8 +242,17 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	// Tell the model which mode it is in so it behaves accordingly.
-	pi.on("before_agent_start", async () => {
+	pi.on("before_agent_start", async (_event, ctx) => {
 		if (mode === "write") return;
+		// Orchestrator lead (fable) with a closed gate: subagents would inherit
+		// read-only, so the pre-flight prompt must come before ANY exploration.
+		const isOrchestrator = ((ctx.model as { id?: string } | undefined)?.id ?? "").includes("fable");
+		const orchestratorNote = isOrchestrator
+			? "\n\n[ORCHESTRATOR PRE-FLIGHT] You are the orchestrator and the write gate is NOT in write mode.\n" +
+				"Spawned subagents inherit this gate and cannot write. If the task will plausibly require\n" +
+				"file changes, your FIRST action must be to ask the user to run /write — before reading\n" +
+				"code, exploring the repo, or dispatching any subagent."
+			: "";
 		const content =
 			mode === "readonly"
 				? "[READ-ONLY MODE ACTIVE]\n" +
@@ -257,7 +266,7 @@ export default function (pi: ExtensionAPI) {
 		return {
 			message: {
 				customType: "write-gate-context",
-				content,
+				content: content + orchestratorNote,
 				display: false,
 			},
 		};
