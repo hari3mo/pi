@@ -34,7 +34,7 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("session_start", async (_event, ctx) => {
 		startTime = Date.now();
-		if (!ctx.ui.isInteractive) return; // skip print/json modes where setTitle is a no-op
+		if (!ctx.hasUI) return; // skip print/json modes where setTitle is a no-op
 		updateTitle(ctx);
 		if (timer) clearInterval(timer);
 		timer = setInterval(() => updateTitle(ctx), 1000);
