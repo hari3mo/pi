@@ -397,7 +397,6 @@ export default function (pi: ExtensionAPI) {
 
 	// Tell the model which mode it is in so it behaves accordingly.
 	pi.on("before_agent_start", async (_event, ctx) => {
-		if (mode === "write") return;
 		// Orchestrator lead (fable) with a closed gate: subagents would inherit
 		// read-only, so the pre-flight prompt must come before ANY exploration.
 		const isOrchestrator = ((ctx.model as { id?: string } | undefined)?.id ?? "").includes("fable");
@@ -409,15 +408,17 @@ export default function (pi: ExtensionAPI) {
 				"or dispatching any subagent; do not ask in prose."
 			: "";
 		const content =
-			mode === "readonly"
-				? "[READ-ONLY MODE ACTIVE]\n" +
-					"The edit and write tools are disabled, and bash is restricted to non-destructive commands.\n" +
-					"Do not attempt file changes. Investigate, explain findings, and propose a plan instead.\n" +
-					"If changes are actually needed, tell the user to run /write to enable full tool access."
-				: "[CONFIRM-WRITE MODE ACTIVE]\n" +
-					"Reads are unrestricted. Each edit/write tool call or destructive bash command will\n" +
-					"prompt the user for approval before it runs. Proceed normally and make the changes the\n" +
-					"task requires; expect an approval prompt on writes. If the user denies a write, respect it.";
+			mode === "write"
+				? `[WRITE MODE ACTIVE — SCOPED]\nAuto-write is limited to ${AUTO_WRITE_ROOT}. File changes outside that root still prompt in UI sessions and are blocked in headless sessions.`
+				: mode === "readonly"
+					? "[READ-ONLY MODE ACTIVE]\n" +
+						"The edit and write tools are disabled, and bash is restricted to non-destructive commands.\n" +
+						"Do not attempt file changes. Investigate, explain findings, and propose a plan instead.\n" +
+						"If changes are actually needed, tell the user to run /write to enable scoped write access."
+					: "[CONFIRM-WRITE MODE ACTIVE]\n" +
+						"Reads are unrestricted. Each edit/write tool call or destructive bash command will\n" +
+						"prompt the user for approval before it runs. 'Allow all' only auto-approves writes under\n" +
+						`${AUTO_WRITE_ROOT}. If the user denies a write, respect it.`;
 		return {
 			message: {
 				customType: "write-gate-context",
