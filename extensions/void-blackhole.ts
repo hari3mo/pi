@@ -668,7 +668,7 @@ class BlackHoleComponent {
 
 		// -- constellations: bright star patterns joined by faint dotted
 		// lines, pinned to the background alongside the deep galaxies --
-		// Skip constellations entirely below rows 14; below that a shape
+		// Skip constellations on small frames (with the starfield); a shape
 		// too small to read as a pattern is just clutter, so also drop any
 		// single constellation that would render under 9 cells wide.
 		if (!smallFrame) {
