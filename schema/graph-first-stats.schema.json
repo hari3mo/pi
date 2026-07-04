@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pi-agent/graph-first-stats.schema.json",
+  "title": "Graph-first per-session stats",
+  "description": "graphify-out/.graph_first_stats.json — append-only ring (~50 records) of the graph-first extension's per-session escalation counters. Derived/machine-local (under gitignored graphify-out/), optional. Malleable: extra fields allowed so extensions/graph-first.ts can grow the record without breaking validation. audit-pipelines.py:check_graph_first_drift() WARNs when the bypass ratio stays high.",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "additionalProperties": true,
+    "required": ["ts", "nudges", "blocks", "bypasses"],
+    "properties": {
+      "id": { "type": "string", "minLength": 1 },
+      "ts": { "type": "integer", "minimum": 0 },
+      "nudges": { "type": "integer", "minimum": 0 },
+      "blocks": { "type": "integer", "minimum": 0 },
+      "bypasses": { "type": "integer", "minimum": 0 }
+    }
+  }
+}

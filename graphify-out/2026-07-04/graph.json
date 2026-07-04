@@ -74,14 +74,94 @@
   },
   "nodes": [
     {
+      "label": "graph-first.ts",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "extensions_graph_first",
+      "community": 75,
+      "norm_label": "graph-first.ts"
+    },
+    {
+      "label": "GrepClassification",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "extensions_graph_first_grepclassification",
+      "community": 75,
+      "norm_label": "grepclassification"
+    },
+    {
+      "label": "classifyStructureGrep()",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L55",
+      "_origin": "ast",
+      "id": "extensions_graph_first_classifystructuregrep",
+      "community": 75,
+      "norm_label": "classifystructuregrep()"
+    },
+    {
+      "label": "GraphFirstAction",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L181",
+      "_origin": "ast",
+      "id": "extensions_graph_first_graphfirstaction",
+      "community": 75,
+      "norm_label": "graphfirstaction"
+    },
+    {
+      "label": "GraphFirstState",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L182",
+      "_origin": "ast",
+      "id": "extensions_graph_first_graphfirststate",
+      "community": 75,
+      "norm_label": "graphfirststate"
+    },
+    {
+      "label": "decideAction()",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L192",
+      "_origin": "ast",
+      "id": "extensions_graph_first_decideaction",
+      "community": 75,
+      "norm_label": "decideaction()"
+    },
+    {
+      "label": "StatsRecord",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L206",
+      "_origin": "ast",
+      "id": "extensions_graph_first_statsrecord",
+      "community": 75,
+      "norm_label": "statsrecord"
+    },
+    {
+      "label": "persistStats()",
+      "file_type": "code",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L220",
+      "_origin": "ast",
+      "id": "extensions_graph_first_persiststats",
+      "community": 75,
+      "norm_label": "persiststats()"
+    },
+    {
       "label": "index.ts",
       "file_type": "code",
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_subagent_index",
       "community": 3,
-      "norm_label": "index.ts"
+      "norm_label": "index.ts",
+      "id": "extensions_subagent_index"
     },
     {
       "label": "isSonnetModel()",
@@ -89,9 +169,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L39",
       "_origin": "ast",
-      "id": "extensions_subagent_index_issonnetmodel",
       "community": 3,
-      "norm_label": "issonnetmodel()"
+      "norm_label": "issonnetmodel()",
+      "id": "extensions_subagent_index_issonnetmodel"
     },
     {
       "label": "QaVerdict",
@@ -99,9 +179,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L44",
       "_origin": "ast",
-      "id": "extensions_subagent_index_qaverdict",
       "community": 3,
-      "norm_label": "qaverdict"
+      "norm_label": "qaverdict",
+      "id": "extensions_subagent_index_qaverdict"
     },
     {
       "label": "parseQaVerdict()",
@@ -109,9 +189,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L54",
       "_origin": "ast",
-      "id": "extensions_subagent_index_parseqaverdict",
       "community": 3,
-      "norm_label": "parseqaverdict()"
+      "norm_label": "parseqaverdict()",
+      "id": "extensions_subagent_index_parseqaverdict"
     },
     {
       "label": "formatTokens()",
@@ -119,9 +199,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L77",
       "_origin": "ast",
-      "id": "extensions_subagent_index_formattokens",
       "community": 3,
-      "norm_label": "formattokens()"
+      "norm_label": "formattokens()",
+      "id": "extensions_subagent_index_formattokens"
     },
     {
       "label": "getElapsedMs()",
@@ -129,9 +209,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L86",
       "_origin": "ast",
-      "id": "extensions_subagent_index_getelapsedms",
       "community": 3,
-      "norm_label": "getelapsedms()"
+      "norm_label": "getelapsedms()",
+      "id": "extensions_subagent_index_getelapsedms"
     },
     {
       "label": "wallClockElapsedMs()",
@@ -139,9 +219,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L93",
       "_origin": "ast",
-      "id": "extensions_subagent_index_wallclockelapsedms",
       "community": 3,
-      "norm_label": "wallclockelapsedms()"
+      "norm_label": "wallclockelapsedms()",
+      "id": "extensions_subagent_index_wallclockelapsedms"
     },
     {
       "label": "formatUsageStats()",
@@ -149,9 +229,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L100",
       "_origin": "ast",
-      "id": "extensions_subagent_index_formatusagestats",
       "community": 3,
-      "norm_label": "formatusagestats()"
+      "norm_label": "formatusagestats()",
+      "id": "extensions_subagent_index_formatusagestats"
     },
     {
       "label": "formatRunStatus()",
@@ -159,9 +239,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L143",
       "_origin": "ast",
-      "id": "extensions_subagent_index_formatrunstatus",
       "community": 3,
-      "norm_label": "formatrunstatus()"
+      "norm_label": "formatrunstatus()",
+      "id": "extensions_subagent_index_formatrunstatus"
     },
     {
       "label": "formatToolCall()",
@@ -169,9 +249,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L149",
       "_origin": "ast",
-      "id": "extensions_subagent_index_formattoolcall",
       "community": 3,
-      "norm_label": "formattoolcall()"
+      "norm_label": "formattoolcall()",
+      "id": "extensions_subagent_index_formattoolcall"
     },
     {
       "label": "UsageStats",
@@ -179,9 +259,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L217",
       "_origin": "ast",
-      "id": "extensions_subagent_index_usagestats",
       "community": 3,
-      "norm_label": "usagestats"
+      "norm_label": "usagestats",
+      "id": "extensions_subagent_index_usagestats"
     },
     {
       "label": "SingleResult",
@@ -189,9 +269,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L227",
       "_origin": "ast",
-      "id": "extensions_subagent_index_singleresult",
       "community": 3,
-      "norm_label": "singleresult"
+      "norm_label": "singleresult",
+      "id": "extensions_subagent_index_singleresult"
     },
     {
       "label": "SubagentDetails",
@@ -199,9 +279,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L250",
       "_origin": "ast",
-      "id": "extensions_subagent_index_subagentdetails",
       "community": 3,
-      "norm_label": "subagentdetails"
+      "norm_label": "subagentdetails",
+      "id": "extensions_subagent_index_subagentdetails"
     },
     {
       "label": "getFinalOutput()",
@@ -209,9 +289,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L257",
       "_origin": "ast",
-      "id": "extensions_subagent_index_getfinaloutput",
       "community": 3,
-      "norm_label": "getfinaloutput()"
+      "norm_label": "getfinaloutput()",
+      "id": "extensions_subagent_index_getfinaloutput"
     },
     {
       "label": "isFailedResult()",
@@ -219,9 +299,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L269",
       "_origin": "ast",
-      "id": "extensions_subagent_index_isfailedresult",
       "community": 3,
-      "norm_label": "isfailedresult()"
+      "norm_label": "isfailedresult()",
+      "id": "extensions_subagent_index_isfailedresult"
     },
     {
       "label": "runInProgress()",
@@ -229,9 +309,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L276",
       "_origin": "ast",
-      "id": "extensions_subagent_index_runinprogress",
       "community": 3,
-      "norm_label": "runinprogress()"
+      "norm_label": "runinprogress()",
+      "id": "extensions_subagent_index_runinprogress"
     },
     {
       "label": "getResultOutput()",
@@ -239,9 +319,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L282",
       "_origin": "ast",
-      "id": "extensions_subagent_index_getresultoutput",
       "community": 3,
-      "norm_label": "getresultoutput()"
+      "norm_label": "getresultoutput()",
+      "id": "extensions_subagent_index_getresultoutput"
     },
     {
       "label": "truncateParallelOutput()",
@@ -249,9 +329,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L289",
       "_origin": "ast",
-      "id": "extensions_subagent_index_truncateparalleloutput",
       "community": 3,
-      "norm_label": "truncateparalleloutput()"
+      "norm_label": "truncateparalleloutput()",
+      "id": "extensions_subagent_index_truncateparalleloutput"
     },
     {
       "label": "DisplayItem",
@@ -259,9 +339,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L300",
       "_origin": "ast",
-      "id": "extensions_subagent_index_displayitem",
       "community": 3,
-      "norm_label": "displayitem"
+      "norm_label": "displayitem",
+      "id": "extensions_subagent_index_displayitem"
     },
     {
       "label": "getDisplayItems()",
@@ -269,9 +349,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L302",
       "_origin": "ast",
-      "id": "extensions_subagent_index_getdisplayitems",
       "community": 3,
-      "norm_label": "getdisplayitems()"
+      "norm_label": "getdisplayitems()",
+      "id": "extensions_subagent_index_getdisplayitems"
     },
     {
       "label": "mapWithConcurrencyLimit()",
@@ -279,9 +359,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L315",
       "_origin": "ast",
-      "id": "extensions_subagent_index_mapwithconcurrencylimit",
       "community": 3,
-      "norm_label": "mapwithconcurrencylimit()"
+      "norm_label": "mapwithconcurrencylimit()",
+      "id": "extensions_subagent_index_mapwithconcurrencylimit"
     },
     {
       "label": "writePromptToTempFile()",
@@ -289,9 +369,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L335",
       "_origin": "ast",
-      "id": "extensions_subagent_index_writeprompttotempfile",
       "community": 3,
-      "norm_label": "writeprompttotempfile()"
+      "norm_label": "writeprompttotempfile()",
+      "id": "extensions_subagent_index_writeprompttotempfile"
     },
     {
       "label": "getPiInvocation()",
@@ -299,9 +379,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L345",
       "_origin": "ast",
-      "id": "extensions_subagent_index_getpiinvocation",
       "community": 3,
-      "norm_label": "getpiinvocation()"
+      "norm_label": "getpiinvocation()",
+      "id": "extensions_subagent_index_getpiinvocation"
     },
     {
       "label": "OnUpdateCallback",
@@ -309,9 +389,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L361",
       "_origin": "ast",
-      "id": "extensions_subagent_index_onupdatecallback",
       "community": 3,
-      "norm_label": "onupdatecallback"
+      "norm_label": "onupdatecallback",
+      "id": "extensions_subagent_index_onupdatecallback"
     },
     {
       "label": "runSingleAgent()",
@@ -319,9 +399,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L363",
       "_origin": "ast",
-      "id": "extensions_subagent_index_runsingleagent",
       "community": 3,
-      "norm_label": "runsingleagent()"
+      "norm_label": "runsingleagent()",
+      "id": "extensions_subagent_index_runsingleagent"
     },
     {
       "label": "TaskItem",
@@ -329,9 +409,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L552",
       "_origin": "ast",
-      "id": "extensions_subagent_index_taskitem",
       "community": 3,
-      "norm_label": "taskitem"
+      "norm_label": "taskitem",
+      "id": "extensions_subagent_index_taskitem"
     },
     {
       "label": "ChainItem",
@@ -339,9 +419,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L558",
       "_origin": "ast",
-      "id": "extensions_subagent_index_chainitem",
       "community": 3,
-      "norm_label": "chainitem"
+      "norm_label": "chainitem",
+      "id": "extensions_subagent_index_chainitem"
     },
     {
       "label": "AgentScopeSchema",
@@ -349,9 +429,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L564",
       "_origin": "ast",
-      "id": "extensions_subagent_index_agentscopeschema",
       "community": 3,
-      "norm_label": "agentscopeschema"
+      "norm_label": "agentscopeschema",
+      "id": "extensions_subagent_index_agentscopeschema"
     },
     {
       "label": "SubagentParams",
@@ -359,9 +439,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L569",
       "_origin": "ast",
-      "id": "extensions_subagent_index_subagentparams",
       "community": 3,
-      "norm_label": "subagentparams"
+      "norm_label": "subagentparams",
+      "id": "extensions_subagent_index_subagentparams"
     },
     {
       "label": "persistReworkCount()",
@@ -369,9 +449,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L590",
       "_origin": "ast",
-      "id": "extensions_subagent_index_persistreworkcount",
       "community": 3,
-      "norm_label": "persistreworkcount()"
+      "norm_label": "persistreworkcount()",
+      "id": "extensions_subagent_index_persistreworkcount"
     },
     {
       "label": "finalizeQaOutput()",
@@ -379,9 +459,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L617",
       "_origin": "ast",
-      "id": "extensions_subagent_index_finalizeqaoutput",
       "community": 3,
-      "norm_label": "finalizeqaoutput()"
+      "norm_label": "finalizeqaoutput()",
+      "id": "extensions_subagent_index_finalizeqaoutput"
     },
     {
       "label": "execute()",
@@ -389,9 +469,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L655",
       "_origin": "ast",
-      "id": "extensions_subagent_index_execute",
       "community": 3,
-      "norm_label": "execute()"
+      "norm_label": "execute()",
+      "id": "extensions_subagent_index_execute"
     },
     {
       "label": "renderCall()",
@@ -399,9 +479,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L907",
       "_origin": "ast",
-      "id": "extensions_subagent_index_rendercall",
       "community": 3,
-      "norm_label": "rendercall()"
+      "norm_label": "rendercall()",
+      "id": "extensions_subagent_index_rendercall"
     },
     {
       "label": "renderResult()",
@@ -409,9 +489,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L951",
       "_origin": "ast",
-      "id": "extensions_subagent_index_renderresult",
       "community": 3,
-      "norm_label": "renderresult()"
+      "norm_label": "renderresult()",
+      "id": "extensions_subagent_index_renderresult"
     },
     {
       "label": "graph-lookup.ts",
@@ -1069,7 +1149,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 59,
       "norm_label": "path",
       "id": "path"
     },
@@ -4387,7 +4467,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 75,
+      "community": 59,
       "norm_label": "ponytail.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail"
     },
@@ -4397,7 +4477,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 75,
+      "community": 59,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_fs"
     },
@@ -4407,7 +4487,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 75,
+      "community": 59,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_path"
     },
@@ -4417,7 +4497,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 75,
+      "community": 59,
       "norm_label": "system",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_system"
     },
@@ -10045,7 +10125,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "porcelain.json",
       "id": "themes_porcelain"
     },
@@ -10055,7 +10135,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "$schema",
       "id": "themes_porcelain_schema"
     },
@@ -10065,7 +10145,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "name",
       "id": "themes_porcelain_name"
     },
@@ -10765,7 +10845,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "export",
       "id": "themes_porcelain_export"
     },
@@ -10775,7 +10855,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "pagebg",
       "id": "themes_porcelain_export_pagebg"
     },
@@ -10785,7 +10865,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "cardbg",
       "id": "themes_porcelain_export_cardbg"
     },
@@ -10795,7 +10875,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 24,
+      "community": 76,
       "norm_label": "infobg",
       "id": "themes_porcelain_export_infobg"
     },
@@ -12845,6 +12925,76 @@
   ],
   "links": [
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_classifystructuregrep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L192",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_decideaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L181",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_graphfirstaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L182",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_graphfirststate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L45",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_grepclassification",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L220",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_persiststats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/graph-first.ts",
+      "source_location": "L206",
+      "weight": 1.0,
+      "source": "extensions_graph_first",
+      "target": "extensions_graph_first_statsrecord",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "references",
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
@@ -12880,9 +13030,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L564",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_agentscopeschema",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_agentscopeschema"
     },
     {
       "relation": "contains",
@@ -12890,9 +13040,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L558",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_chainitem",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_chainitem"
     },
     {
       "relation": "contains",
@@ -12900,9 +13050,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L300",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_displayitem",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_displayitem"
     },
     {
       "relation": "contains",
@@ -12910,9 +13060,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L655",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_execute",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_execute"
     },
     {
       "relation": "contains",
@@ -12920,9 +13070,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L617",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_finalizeqaoutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_finalizeqaoutput"
     },
     {
       "relation": "contains",
@@ -12930,9 +13080,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L143",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_formatrunstatus",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formatrunstatus"
     },
     {
       "relation": "contains",
@@ -12940,9 +13090,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L77",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_formattokens",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formattokens"
     },
     {
       "relation": "contains",
@@ -12950,9 +13100,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L149",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_formattoolcall",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formattoolcall"
     },
     {
       "relation": "contains",
@@ -12960,9 +13110,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_formatusagestats",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formatusagestats"
     },
     {
       "relation": "contains",
@@ -12970,9 +13120,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L302",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_getdisplayitems",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getdisplayitems"
     },
     {
       "relation": "contains",
@@ -12980,9 +13130,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L86",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_getelapsedms",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getelapsedms"
     },
     {
       "relation": "contains",
@@ -12990,9 +13140,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L257",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_getfinaloutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getfinaloutput"
     },
     {
       "relation": "contains",
@@ -13000,9 +13150,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L345",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_getpiinvocation",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getpiinvocation"
     },
     {
       "relation": "contains",
@@ -13010,9 +13160,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L282",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_getresultoutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getresultoutput"
     },
     {
       "relation": "contains",
@@ -13020,9 +13170,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L269",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_isfailedresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_isfailedresult"
     },
     {
       "relation": "contains",
@@ -13030,9 +13180,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L39",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_issonnetmodel",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_issonnetmodel"
     },
     {
       "relation": "contains",
@@ -13040,9 +13190,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L315",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_mapwithconcurrencylimit",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_mapwithconcurrencylimit"
     },
     {
       "relation": "contains",
@@ -13050,9 +13200,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L361",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_onupdatecallback",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_onupdatecallback"
     },
     {
       "relation": "contains",
@@ -13060,9 +13210,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L54",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_parseqaverdict",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_parseqaverdict"
     },
     {
       "relation": "contains",
@@ -13070,9 +13220,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L590",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_persistreworkcount",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_persistreworkcount"
     },
     {
       "relation": "contains",
@@ -13080,9 +13230,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L44",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_qaverdict",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_qaverdict"
     },
     {
       "relation": "contains",
@@ -13090,9 +13240,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L907",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_rendercall",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_rendercall"
     },
     {
       "relation": "contains",
@@ -13100,9 +13250,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L951",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_renderresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_renderresult"
     },
     {
       "relation": "contains",
@@ -13110,9 +13260,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L276",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_runinprogress",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_runinprogress"
     },
     {
       "relation": "contains",
@@ -13120,9 +13270,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L363",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_runsingleagent",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_runsingleagent"
     },
     {
       "relation": "contains",
@@ -13130,9 +13280,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L227",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_singleresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_singleresult"
     },
     {
       "relation": "contains",
@@ -13140,9 +13290,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L250",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_subagentdetails",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_subagentdetails"
     },
     {
       "relation": "contains",
@@ -13150,9 +13300,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L569",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_subagentparams",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_subagentparams"
     },
     {
       "relation": "contains",
@@ -13160,9 +13310,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L552",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_taskitem",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_taskitem"
     },
     {
       "relation": "contains",
@@ -13170,9 +13320,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L289",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_truncateparalleloutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_truncateparalleloutput"
     },
     {
       "relation": "contains",
@@ -13180,9 +13330,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L217",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_usagestats",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_usagestats"
     },
     {
       "relation": "contains",
@@ -13190,9 +13340,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L93",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_wallclockelapsedms",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_wallclockelapsedms"
     },
     {
       "relation": "contains",
@@ -13200,9 +13350,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L335",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index",
-      "target": "extensions_subagent_index_writeprompttotempfile",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_writeprompttotempfile"
     },
     {
       "relation": "calls",
@@ -13211,9 +13361,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L656",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_issonnetmodel",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_issonnetmodel"
     },
     {
       "relation": "calls",
@@ -13222,9 +13372,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L620",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_finalizeqaoutput",
-      "target": "extensions_subagent_index_parseqaverdict",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_parseqaverdict"
     },
     {
       "relation": "calls",
@@ -13233,9 +13383,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L116",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_formatusagestats",
-      "target": "extensions_subagent_index_formattokens",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formattokens"
     },
     {
       "relation": "calls",
@@ -13244,9 +13394,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1004",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_getelapsedms",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getelapsedms"
     },
     {
       "relation": "calls",
@@ -13255,9 +13405,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1131",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_wallclockelapsedms",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_wallclockelapsedms"
     },
     {
       "relation": "calls",
@@ -13266,9 +13416,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L144",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_formatrunstatus",
-      "target": "extensions_subagent_index_formatusagestats",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formatusagestats"
     },
     {
       "relation": "calls",
@@ -13277,9 +13427,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1131",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_formatusagestats",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formatusagestats"
     },
     {
       "relation": "calls",
@@ -13288,9 +13438,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1038",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_formatrunstatus",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formatrunstatus"
     },
     {
       "relation": "calls",
@@ -13299,9 +13449,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1026",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_formattoolcall",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_formattoolcall"
     },
     {
       "relation": "calls",
@@ -13310,9 +13460,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L770",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_getfinaloutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getfinaloutput"
     },
     {
       "relation": "calls",
@@ -13321,9 +13471,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L284",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_getresultoutput",
-      "target": "extensions_subagent_index_getfinaloutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getfinaloutput"
     },
     {
       "relation": "calls",
@@ -13332,9 +13482,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1003",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_getfinaloutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getfinaloutput"
     },
     {
       "relation": "calls",
@@ -13343,9 +13493,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L761",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_isfailedresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_isfailedresult"
     },
     {
       "relation": "calls",
@@ -13354,9 +13504,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L283",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_getresultoutput",
-      "target": "extensions_subagent_index_isfailedresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_isfailedresult"
     },
     {
       "relation": "calls",
@@ -13365,9 +13515,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L996",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_isfailedresult",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_isfailedresult"
     },
     {
       "relation": "indirect_call",
@@ -13376,9 +13526,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L968",
       "weight": 1.0,
+      "confidence_score": 0.5,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_runinprogress",
-      "confidence_score": 0.5
+      "target": "extensions_subagent_index_runinprogress"
     },
     {
       "relation": "calls",
@@ -13387,9 +13537,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L763",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_getresultoutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getresultoutput"
     },
     {
       "relation": "calls",
@@ -13398,9 +13548,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L1002",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_renderresult",
-      "target": "extensions_subagent_index_getdisplayitems",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_getdisplayitems"
     },
     {
       "relation": "calls",
@@ -13409,9 +13559,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L828",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_mapwithconcurrencylimit",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_mapwithconcurrencylimit"
     },
     {
       "relation": "calls",
@@ -13420,9 +13570,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L434",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_runsingleagent",
-      "target": "extensions_subagent_index_writeprompttotempfile",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_writeprompttotempfile"
     },
     {
       "relation": "calls",
@@ -13431,9 +13581,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L748",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_runsingleagent",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_runsingleagent"
     },
     {
       "relation": "calls",
@@ -13442,9 +13592,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L627",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_finalizeqaoutput",
-      "target": "extensions_subagent_index_persistreworkcount",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_persistreworkcount"
     },
     {
       "relation": "calls",
@@ -13453,9 +13603,9 @@
       "source_file": "extensions/subagent/index.ts",
       "source_location": "L775",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_subagent_index_execute",
-      "target": "extensions_subagent_index_finalizeqaoutput",
-      "confidence_score": 1.0
+      "target": "extensions_subagent_index_finalizeqaoutput"
     },
     {
       "relation": "contains",
@@ -30367,5 +30517,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "19b4f7d85038799332fc9f7af56f1e4ba5b822c4"
+  "built_at_commit": "978b936d69bde68a535e968b2454fda7f5accc44"
 }
