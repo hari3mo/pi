@@ -15,10 +15,18 @@ Fast mode (default, <1s, stdlib-only — run at session start):
      semantic-layer wipe of 2026-07-04: giant 615 -> 126).
   5. Reflection drift: graph memory newer than LESSONS.md means reflect stopped.
 
+  6. Toolchain change detection: pi / graphifyy / node versions are recorded
+     in the baseline; a change WARNs once with the re-verification list
+     (pi-tui patch, extension smoke, hook filter) — upgrades become audited
+     events instead of silent drift.
+
 Full mode (--full, spawns the pinned graphify python — run from /audit):
-  6. Semantic cache drift: LLM-extracted docs whose cache entry no longer
+  7. Semantic cache drift: LLM-extracted docs whose cache entry no longer
      matches content (edited without re-cache) would be silently dropped by
      the next rebuild.
+  8. Extension load smoke: every extension is loaded with pi's own jiti
+     loader against a fake pi (scripts/smoke-extensions.mjs) — catches
+     ExtensionAPI/layout breakage after a pi upgrade.
 
 Output format matches validate-config.py (ERROR/WARN/INFO lines) so
 extensions/self-audit.ts merges both into one injected block.
@@ -126,12 +134,7 @@ def check_connectivity_ratchet() -> None:
         errors.append(f"pipeline: graph.json unreadable for connectivity check — {e}")
         return
 
-    baseline = {}
-    if BASELINE.exists():
-        try:
-            baseline = json.loads(BASELINE.read_text(encoding="utf-8"))
-        except (ValueError, OSError):
-            baseline = {}
+    baseline = _read_baseline()
     best = baseline.get("best_giant_fraction", 0.0)
     if best and giant < best * RATCHET_TOLERANCE:
         errors.append(
@@ -141,10 +144,85 @@ def check_connectivity_ratchet() -> None:
     baseline["best_giant_fraction"] = max(best, giant)
     baseline["last_giant_fraction"] = giant
     baseline["last_checked"] = int(time.time())
+    _write_baseline(baseline)
+
+
+def _read_baseline() -> dict:
+    if BASELINE.exists():
+        try:
+            return json.loads(BASELINE.read_text(encoding="utf-8"))
+        except (ValueError, OSError):
+            pass
+    return {}
+
+
+def _write_baseline(baseline: dict) -> None:
     try:
+        BASELINE.parent.mkdir(parents=True, exist_ok=True)
         BASELINE.write_text(json.dumps(baseline, indent=2), encoding="utf-8")
     except OSError:
         pass
+
+
+PI_PKG = Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent"
+
+
+def check_toolchain_versions() -> None:
+    # Upgrades are audited events: WARN once when pi/graphifyy/node change.
+    current: dict[str, str] = {}
+    pkg = PI_PKG / "package.json"
+    if pkg.exists():
+        try:
+            current["pi"] = json.loads(pkg.read_text(encoding="utf-8")).get("version", "?")
+        except (ValueError, OSError):
+            pass
+    else:
+        infos.append(f"pipeline: pi package not found at {PI_PKG} — install layout "
+                     "changed; update PI_PKG here and the tui path in validate-config.py")
+    py_file = OUT / ".graphify_python"
+    if py_file.exists():
+        try:
+            r = subprocess.run(
+                [py_file.read_text(encoding="utf-8").strip(), "-c",
+                 "import importlib.metadata as m; print(m.version('graphifyy'))"],
+                capture_output=True, text=True, timeout=20)
+            if r.returncode == 0:
+                current["graphifyy"] = r.stdout.strip()
+        except (OSError, subprocess.TimeoutExpired):
+            pass
+    node = subprocess.run(["node", "--version"], capture_output=True, text=True)
+    if node.returncode == 0:
+        current["node"] = node.stdout.strip().lstrip("v").split(".")[0]
+
+    baseline = _read_baseline()
+    recorded = baseline.get("toolchain", {})
+    changed = [f"{k} {recorded[k]} -> {v}" for k, v in current.items()
+               if k in recorded and recorded[k] != v]
+    if changed:
+        warnings.append(
+            f"pipeline: toolchain changed ({'; '.join(changed)}) — re-verify: pi-tui "
+            "scrollback patch (validate-config.py warns if lost), extension loads "
+            "(/audit runs the smoke), graphify hook doc-filter. This warning shows once.")
+    if current and current != recorded:
+        baseline["toolchain"] = {**recorded, **current}
+        _write_baseline(baseline)
+
+
+def check_extension_loads() -> None:
+    smoke = AGENT_DIR / "scripts" / "smoke-extensions.mjs"
+    if not smoke.exists():
+        warnings.append("pipeline: scripts/smoke-extensions.mjs missing — extension "
+                        "load coverage lost")
+        return
+    try:
+        r = subprocess.run(["node", str(smoke)], capture_output=True, text=True,
+                           cwd=str(AGENT_DIR), timeout=120)
+    except (OSError, subprocess.TimeoutExpired) as e:
+        warnings.append(f"pipeline: extension smoke could not run — {e}")
+        return
+    for line in r.stdout.splitlines():
+        if line.startswith("ERROR"):
+            errors.append(line.removeprefix("ERROR").strip())
 
 
 def check_reflection_drift() -> None:
@@ -200,8 +278,10 @@ def main() -> int:
     check_autocommit_liveness()
     check_connectivity_ratchet()
     check_reflection_drift()
+    check_toolchain_versions()
     if args.full:
         check_semantic_cache_drift()
+        check_extension_loads()
 
     for msg in errors:
         print(f"ERROR  {msg}")
