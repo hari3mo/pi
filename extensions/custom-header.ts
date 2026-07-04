@@ -41,8 +41,14 @@ const APHORISMS = [
 // drops it in favor of the compact greeting-only fallback.
 const BANNER_WIDTH = Math.max(...BANNER_LINES.map((line) => line.length));
 
-function getBanner(theme: Theme): string[] {
-	const colored = BANNER_LINES.map((line) => theme.fg("accent", line));
+function getBanner(theme: Theme, width: number): string[] {
+	// truncateToWidth on every line, even though the caller already guards on
+	// BANNER_WIDTH — a stale/raced width can still slip a narrower value in
+	// here than the one the guard checked, and an untruncated ANSI-colored
+	// line would clip the art mid-glyph instead of cutting cleanly.
+	const colored = BANNER_LINES.map((line) =>
+		truncateToWidth(theme.fg("accent", line), width),
+	);
 	return ["", ...colored, ""];
 }
 
@@ -96,8 +102,10 @@ export default function (pi: ExtensionAPI) {
 							truncateToWidth(contextLineStyled, width),
 							truncateToWidth(aphorismLine, width),
 						];
-						if (width < BANNER_WIDTH) return lines;
-						return [...getBanner(theme), ...lines];
+						// +1 margin: BANNER_WIDTH is the widest banner line's exact length,
+						// so require one spare column rather than an exact-fit width.
+						if (width < BANNER_WIDTH + 1) return lines;
+						return [...getBanner(theme, width), ...lines];
 					},
 					invalidate() {},
 				};
