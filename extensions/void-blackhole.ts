@@ -736,6 +736,7 @@ class BlackHoleComponent {
 					p: Math.random() * Math.PI * 2,
 					tw: 0.8 + Math.random() * 1.4,
 					ch: null,
+					dep: 0.15 + Math.random() * 0.25,
 				});
 				placed++;
 			}
@@ -749,6 +750,7 @@ class BlackHoleComponent {
 					p: Math.random() * Math.PI * 2,
 					tw: 1.6 + Math.random() * 1.6,
 					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
+					dep: 0.3 + Math.random() * 0.3,
 				});
 			}
 			// Fewer open clusters on small frames — three tight clusters plus
@@ -778,6 +780,7 @@ class BlackHoleComponent {
 						p: Math.random() * Math.PI * 2,
 						tw: 0.8 + Math.random() * 1.4,
 						ch: null,
+						dep: 0.15 + Math.random() * 0.25,
 					});
 				}
 			}
@@ -792,6 +795,7 @@ class BlackHoleComponent {
 					p: Math.random() * Math.PI * 2,
 					tw: 0.8 + Math.random() * 1.4,
 					ch: null,
+					dep: 0.15 + Math.random() * 0.25,
 				});
 			}
 		}
@@ -801,10 +805,22 @@ class BlackHoleComponent {
 			const dx = (s.col - cx) / holeRx;
 			const dy = (s.row - cy) / holeRy;
 			if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
-			// Staggered twinkle, each star at its own rate and phase.
-			const tw = 0.7 + 0.3 * Math.sin(this.elapsed * s.tw + s.p);
-			if (s.ch) glyph(s.col, s.row, s.ch, s.b * tw);
-			else stamp(s.col, s.row, s.b * tw);
+			// Staggered twinkle, each star at its own rate and phase, swinging
+			// through a per-star depth so some flicker harder than others.
+			const tw =
+				1 -
+				s.dep +
+				s.dep * (0.5 + 0.5 * Math.sin(this.elapsed * s.tw + s.p));
+			if (s.ch) {
+				glyph(s.col, s.row, s.ch, s.b * tw);
+				if (s.ch === "*") {
+					// Sparkle halo on the brightest tier only.
+					deposit(s.col - 1, s.row, 0.06 * tw);
+					deposit(s.col + 1, s.row, 0.06 * tw);
+				}
+			} else {
+				stamp(s.col, s.row, s.b * tw);
+			}
 		}
 
 		// -- spiral-arm dust, wheeling behind the accretion disk. Stamped
@@ -821,7 +837,7 @@ class BlackHoleComponent {
 			stamp(
 				Math.round(cx + x * sX),
 				Math.round(cy + projY * sY),
-				this.dustB[i] * 0.55,
+				this.dustB[i] * (0.6 + 0.15 * this.dustRidge[i]),
 			);
 		}
 
