@@ -587,13 +587,15 @@ class BlackHoleComponent {
 			return this.cachedLines;
 		}
 
-		// Expanded art: fill the terminal (leaving room for the
-		// the editor below), centered.
+		// Expanded art: fill the terminal, centered. The reserve accounts
+		// for everything sharing the screen with the art: the leading blank
+		// line this component emits plus pi's editor/status chrome below —
+		// undershooting here clips the bottom of the galaxy off-screen.
 		const artW = Math.max(30, Math.min(ART_MAX_W, width - 2));
 		const termRows = process.stdout.rows ?? 24;
 		const rows = Math.max(
 			10,
-			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.3)),
+			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 11), Math.round(artW * 0.3)),
 		);
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
