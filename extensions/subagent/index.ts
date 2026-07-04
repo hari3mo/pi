@@ -846,7 +846,8 @@ async function runSingleAgent(
 
 	// Inherit the parent's write gate (published by extensions/read-only-default.ts).
 	// Only a parent in write mode grants children --write; otherwise children
-	// start headless in confirm mode, where writes are blocked.
+	// start headless in confirm mode, where writes are blocked. Even with --write,
+	// the child gate auto-approves mutations only under ~/.pi.
 	const childGate: "write" | "confirm" =
 		(globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write" ? "write" : "confirm";
 	const args: string[] = ["--mode", "json", "-p", "--no-session"];
