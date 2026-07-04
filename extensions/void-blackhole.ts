@@ -148,12 +148,13 @@ interface Constellation {
 	w: number; //  width as a fraction of the frame
 	stars: Array<[number, number]>;
 	edges: Array<[number, number]>;
+	mags?: number[]; // per-star brightness multiplier, default 1
 }
 const CONSTELLATIONS: Constellation[] = [
 	{
 		// Big Dipper
-		nx: 0.3,
-		ny: 0.13,
+		nx: 0.22,
+		ny: 0.16,
 		w: 0.16,
 		stars: [
 			[0, 0.3],
@@ -165,6 +166,8 @@ const CONSTELLATIONS: Constellation[] = [
 			[0.98, 0.34],
 		],
 		edges: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 5], [5, 6], [6, 3]],
+		// Brighter at the Alkaid/Dubhe ends, dimmer through the middle.
+		mags: [1.15, 0.9, 0.85, 0.85, 0.9, 1.0, 1.15],
 	},
 	{
 		// Cassiopeia
@@ -179,6 +182,8 @@ const CONSTELLATIONS: Constellation[] = [
 			[1, 0.42],
 		],
 		edges: [[0, 1], [1, 2], [2, 3], [3, 4]],
+		// Middle star of the W is the brightest.
+		mags: [0.9, 0.95, 1.2, 0.95, 0.9],
 	},
 	{
 		// Orion
@@ -195,6 +200,40 @@ const CONSTELLATIONS: Constellation[] = [
 			[0.9, 1],
 		],
 		edges: [[0, 2], [1, 4], [2, 3], [3, 4], [2, 5], [4, 6]],
+		// Bright shoulders and knees, dimmer belt.
+		mags: [1.2, 1.2, 0.9, 0.9, 0.9, 1.2, 1.2],
+	},
+	{
+		// Cygnus (Northern Cross): Deneb at the top, Sadr at the crossing,
+		// Albireo at the foot, wings forming the crossbar.
+		nx: 0.9,
+		ny: 0.35,
+		w: 0.11,
+		stars: [
+			[0.5, 0.05],
+			[0.15, 0.45],
+			[0.5, 0.45],
+			[0.85, 0.4],
+			[0.5, 0.7],
+			[0.5, 1],
+		],
+		edges: [[0, 2], [2, 4], [4, 5], [1, 2], [2, 3]],
+		mags: [1.25, 0.9, 1.0, 0.9, 0.85, 0.95],
+	},
+	{
+		// Lyra: Vega anchoring the small parallelogram below it.
+		nx: 0.12,
+		ny: 0.92,
+		w: 0.07,
+		stars: [
+			[0.5, 0],
+			[0.15, 0.5],
+			[0.85, 0.45],
+			[0.8, 1],
+			[0.2, 0.95],
+		],
+		edges: [[0, 1], [0, 2], [1, 2], [2, 3], [3, 4], [4, 1]],
+		mags: [1.3, 0.8, 0.8, 0.8, 0.8],
 	},
 ];
 
