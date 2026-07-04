@@ -1156,6 +1156,7 @@ export default function (pi: ExtensionAPI) {
 						signal,
 						chainUpdate,
 						makeDetails("chain"),
+						{ mode: "chain", batchSize: params.chain.length, resultIndex: i },
 					);
 					results.push(result);
 
@@ -1245,6 +1246,7 @@ export default function (pi: ExtensionAPI) {
 							}
 						},
 						makeDetails("parallel"),
+						{ mode: "parallel", batchSize: tasks.length, resultIndex: index },
 					);
 					allResults[index] = result;
 					emitParallelUpdate();
@@ -1282,6 +1284,7 @@ export default function (pi: ExtensionAPI) {
 					signal,
 					onUpdate,
 					makeDetails("single"),
+					{ mode: "single", batchSize: 1, resultIndex: 0 },
 				);
 				const isError = isFailedResult(result);
 				if (isError) {

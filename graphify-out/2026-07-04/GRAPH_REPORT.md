@@ -1,16 +1,16 @@
 # Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- 203 files · ~165,492 words
+- 203 files · ~165,922 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1299 nodes · 1786 edges · 81 communities (72 shown, 9 thin omitted)
+- 1300 nodes · 1787 edges · 81 communities (72 shown, 9 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `4b19f9cf`
+- Built from commit: `e92ca730`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -146,7 +146,7 @@ Nodes (46): ACTIVE_SUBAGENT_LISTENERS, ACTIVE_SUBAGENT_RUNS, ActiveSubagentMeta,
 
 ### Community 4 - "Ponytail Ruleset & Mirrors"
 Cohesion: 0.26
-Nodes (13): check_git_hygiene(), check_heuristics_hygiene(), check_installed_integrity(), check_layout(), check_symlinks(), check_target(), get_validator(), load_json() (+5 more)
+Nodes (14): Path, check_git_hygiene(), check_heuristics_hygiene(), check_installed_integrity(), check_layout(), check_symlinks(), check_target(), get_validator() (+6 more)
 
 ### Community 5 - "Subagent Dispatch Tool"
 Cohesion: 0.05
@@ -351,8 +351,8 @@ Cohesion: 0.40
 Nodes (4): dependencies, pi-rewind, name, private
 
 ### Community 59 - "Single-shot benchmark (promptfoo, 5 tasks x 3 models)"
-Cohesion: 0.22
-Nodes (7): fs, path, system, fs, path, system, Path
+Cohesion: 0.21
+Nodes (6): fs, path, system, fs, path, system
 
 ### Community 60 - "Publish Workflow"
 Cohesion: 0.50
@@ -414,18 +414,18 @@ Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.990743902)
-- `~/.pi/agent config repo overview` (3× useful, score=2.990713839)
+- `Config Index (semantic audit map)` (3× useful, score=2.990735248)
+- `~/.pi/agent config repo overview` (3× useful, score=2.990705185)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `Keybindings Schema`, `Ponytail MCP Server`, `read-only-default.ts`, `TUI Extensions & Config Index`, `Subagent Dispatch Tool`, `porcelain.json`, `Ponytail Hook Tests`, `Orchestration Doctrine (AGENTS.md)`, `porcelain.json`, `Pi Extension (Ponytail)`, `Package Scripts`, `focus-chime.ts`, `Correctness Gate`, `Void Black-Hole TUI`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.361) - this node is a cross-community bridge._
+  _High betweenness centrality (0.379) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Subagent Dispatch Tool` to `Example Generator & LOC Metric`, `porcelain.json`?**
-  _High betweenness centrality (0.300) - this node is a cross-community bridge._
+  _High betweenness centrality (0.311) - this node is a cross-community bridge._
 - **Why does `Malleable schema policy` connect `Subagent Dispatch Tool` to `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.242) - this node is a cross-community bridge._
+  _High betweenness centrality (0.252) - this node is a cross-community bridge._
 - **What connects `QaVerdict`, `UsageStats`, `SingleResult` to the rest of the system?**
   _696 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
