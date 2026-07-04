@@ -1083,22 +1083,27 @@ class BlackHoleComponent {
 		}
 
 		// -- landing-page chrome: wordmark and tagline, drawn last so nothing
-		// washes them out. Each text row is stamped onto a cleared plate (the
-		// cells behind it swept dark, one cell of margin either side) so the
-		// letterforms read crisply instead of dissolving into the disk. The
-		// slanted block is left-aligned as a unit; only the block is centered.
+		// washes them out. The tagline is stamped onto a cleared plate (the
+		// cells behind it swept dark, one cell of margin either side) so it
+		// reads crisply instead of dissolving into the disk. The wordmark is
+		// drawn with no plate so the spiral shows through behind/between its
+		// letterforms. The slanted block is left-aligned as a unit; only the
+		// block is centered.
 		const stampAt = (
 			col: number,
 			row: number,
 			text: string,
 			b: number,
 			plateW: number,
+			plate = true,
 		) => {
 			if (row < 0 || row >= rows) return;
-			for (let c = col - 1; c <= col + plateW; c++) {
-				if (c < 0 || c >= artW) continue;
-				bright[row * artW + c] = -1;
-				overlay[row * artW + c] = null;
+			if (plate) {
+				for (let c = col - 1; c <= col + plateW; c++) {
+					if (c < 0 || c >= artW) continue;
+					bright[row * artW + c] = -1;
+					overlay[row * artW + c] = null;
+				}
 			}
 			for (let i = 0; i < text.length; i++) {
 				if (text[i] !== " ") glyph(col + i, row, text[i], b);
@@ -1120,7 +1125,7 @@ class BlackHoleComponent {
 		if (rows >= 16 && artW >= markW + 6) {
 			markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
-				stampAt(markCol, markRow + i, WORDMARK[i], 2, markW);
+				stampAt(markCol, markRow + i, WORDMARK[i], 2, markW, false);
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
