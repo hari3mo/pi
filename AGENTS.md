@@ -37,7 +37,7 @@ conditional on this gate being open.
 | Orchestrator | `claude-fable-5` | `xhigh` (recommend max effort when the task is worthy of it) | Plans, decomposes, synthesizes, decides. Writes no code when delegation is available. |
 | Deep reasoning | `claude-opus-4-8` | `xhigh` | Architecture, complex debugging, code review, edge-case hunting |
 | Mechanical | `claude-sonnet-5` | `high` | Implementation, boilerplate, tests, chores, commits |
-| Peer engineer (optional) | Different lineage (e.g. Codex/GPT) | — | Independent second opinion on high-stakes calls — never shown the other's answer; orchestrator reconciles |
+| Peer engineer | `openai/gpt-5.3-codex` | `xhigh` | Independent second opinion on high-stakes calls — never shown the other's answer; orchestrator reconciles (agent: `peer-engineer`) |
 
 When delegating (subagents, `pi -p`, or any spawned session), pass the pinned model
 and thinking level explicitly, e.g. `claude-opus-4-8:xhigh` for design/review work
