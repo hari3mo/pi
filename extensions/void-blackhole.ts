@@ -321,6 +321,7 @@ class BlackHoleComponent {
 	private tui: { requestRender: () => void };
 	private onClose: () => void;
 	private tagline: string;
+	private accentAnsi: string;
 	private interval: ReturnType<typeof setInterval> | null = null;
 
 	// Per-particle state (polar position, radial velocity, angular momentum).
@@ -383,10 +384,13 @@ class BlackHoleComponent {
 
 	constructor(
 		tui: { requestRender: () => void },
+		theme: { getFgAnsi?: (name: string) => string },
 		onClose: () => void,
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
+		this.accentAnsi =
+			typeof theme?.getFgAnsi === "function" ? theme.getFgAnsi("accent") : "";
 
 		const home = process.env.HOME ?? "";
 		const cwd =
@@ -1109,16 +1113,26 @@ class BlackHoleComponent {
 			this.tagline.length > artW - 4
 				? this.tagline.slice(0, Math.max(0, artW - 5)) + "…"
 				: this.tagline;
+		// markCol stays -1 when the wordmark is skipped (small frame) — the
+		// glint check below never fires then, since no b>=2 cells exist.
+		let markCol = -1;
+		const markRow = 1;
 		if (rows >= 16 && artW >= markW + 6) {
-			const markCol = Math.round(cx - markW / 2);
+			markCol = Math.round(cx - markW / 2);
 			for (let i = 0; i < WORDMARK.length; i++) {
-				stampAt(markCol, 1 + i, WORDMARK[i], 2, markW);
+				stampAt(markCol, markRow + i, WORDMARK[i], 2, markW);
 			}
 			stampCentered(tagline, WORDMARK.length + 2, 0.14);
 		} else {
 			// Too small for the wordmark — skip it entirely, keep the tagline.
 			stampCentered(tagline, 1, 0.14);
 		}
+		// Diagonal glint sweep over the stamped wordmark — same cadence as the
+		// post-splash header's shimmerLine, so the look matches across both
+		// render paths. Computed once per render, not per cell.
+		const glintRange = markW + WORDMARK.length + 40;
+		const glintPos = Math.floor(this.elapsed / 0.12) % glintRange;
+		const glintTier = BOLD + this.accentAnsi;
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
 		const lines: string[] = [""];
@@ -1134,7 +1148,16 @@ class BlackHoleComponent {
 				const ch =
 					overlay[row * artW + col] ??
 					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
-				const want = b >= 2 ? DIM : b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
+				const want =
+					b >= 2
+						? Math.abs(col - markCol + (row - markRow) - glintPos) < 3
+							? glintTier
+							: DIM
+						: b < 0.4
+							? DIM
+							: b < 0.95
+								? ""
+								: BOLD;
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
@@ -1259,8 +1282,8 @@ export default function (pi: ExtensionAPI) {
 			invalidate() {},
 		}));
 		void ctx.ui
-			.custom((tui, _theme, _kb, done) => {
-				return new BlackHoleComponent(tui, () => done(undefined));
+			.custom((tui, theme, _kb, done) => {
+				return new BlackHoleComponent(tui, theme, () => done(undefined));
 			})
 			.then(setVoidHeader);
 	});
@@ -1273,8 +1296,8 @@ export default function (pi: ExtensionAPI) {
 				ctx.ui.notify("The void requires interactive mode", "error");
 				return;
 			}
-			await ctx.ui.custom((tui, _theme, _kb, done) => {
-				return new BlackHoleComponent(tui, () => done(undefined));
+			await ctx.ui.custom((tui, theme, _kb, done) => {
+				return new BlackHoleComponent(tui, theme, () => done(undefined));
 			});
 		},
 	});
