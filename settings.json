@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.80.3",
   "theme": "porcelain-light/porcelain",
-  "defaultProvider": "google",
-  "defaultModel": "gemini-3.5-flash",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
   "quietStartup": false,
   "enabledModels": [
