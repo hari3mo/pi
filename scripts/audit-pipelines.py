@@ -332,20 +332,25 @@ def check_extension_loads() -> None:
             errors.append(line.removeprefix("ERROR").strip())
 
 
+def _read_stats_list(path: Path) -> list | None:
+    """A JSON stats array, or None if absent/unreadable/not-a-list (fail open)."""
+    if not path.exists():
+        return None
+    try:
+        recs = json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return None
+    return recs if isinstance(recs, list) else None
+
+
 def check_graph_first_drift() -> None:
     # Fast path: a local file read. The graph-first extension appends per-session
     # {nudges,blocks,bypasses} to .graph_first_stats.json. A high bypass ratio
     # means the graph keeps failing to answer structure searches (users re-run
     # the blocked grep to proceed) — re-cache or loosen the detector. Silent when
     # the stats file is absent (feature not yet exercised — fail open).
-    stats = OUT / ".graph_first_stats.json"
-    if not stats.exists():
-        return
-    try:
-        recs = json.loads(stats.read_text(encoding="utf-8"))
-    except (ValueError, OSError):
-        return
-    if not isinstance(recs, list):
+    recs = _read_stats_list(OUT / ".graph_first_stats.json")
+    if recs is None:
         return
     blocks = sum(int(r.get("blocks", 0)) for r in recs if isinstance(r, dict))
     bypasses = sum(int(r.get("bypasses", 0)) for r in recs if isinstance(r, dict))
@@ -366,14 +371,8 @@ def check_lead_profile_coverage() -> None:
     # often with only generic doctrine — add a tailored profile or extend a
     # match pattern in config/lead-profiles.json. Silent when the stats file is
     # absent (feature not yet exercised — fail open).
-    stats = OUT / ".lead_config_stats.json"
-    if not stats.exists():
-        return
-    try:
-        recs = json.loads(stats.read_text(encoding="utf-8"))
-    except (ValueError, OSError):
-        return
-    if not isinstance(recs, list):
+    recs = _read_stats_list(OUT / ".lead_config_stats.json")
+    if recs is None:
         return
     # Count DISTINCT sessions each model id fell back in.
     sessions_by_model: dict[str, int] = {}
