@@ -37,9 +37,12 @@ fi
 
 # harness-local filter: exclude docs/images from the AST rebuild. graphify's
 # .md structural extractor would REPLACE the semantic (LLM-authored) layer for
-# any changed doc via replace-on-re-extract. Doc changes are handled by the
-# needs_update flag section at the bottom of this hook instead.
-# (Re-apply this filter if `graphify hook install` ever regenerates this hook.)
+# any changed doc via replace-on-re-extract. Doc changes only flag the graph
+# stale (needs_update) — the pi graphify-bridge extension surfaces it.
+# (Re-apply this block if `graphify hook install` ever regenerates this hook.)
+if echo "$CHANGED" | grep -qE '\.(md|mdx|qmd|txt|rst|pdf|png|jpe?g|webp|svg|gif)$'; then
+    mkdir -p graphify-out && touch graphify-out/needs_update
+fi
 CHANGED=$(echo "$CHANGED" | grep -vE '\.(md|mdx|qmd|txt|rst|pdf|png|jpe?g|webp|svg|gif)$' || true)
 if [ -z "$CHANGED" ]; then
     exit 0
@@ -178,11 +181,3 @@ else:
 "
 # graphify-hook-end
 
-# graphify-doc-flag-start
-# Doc/image changes need LLM re-extraction (the graphify block above only
-# rebuilds code via AST). Flag them so the pi graphify-bridge extension
-# surfaces "STALE — run /graphify --update" at session start.
-if git diff --name-only HEAD~1 HEAD 2>/dev/null | grep -qE '\.(md|txt|rst|pdf|png|jpe?g|webp|svg)$'; then
-    mkdir -p graphify-out && touch graphify-out/needs_update
-fi
-# graphify-doc-flag-end
