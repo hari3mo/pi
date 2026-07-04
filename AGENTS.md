@@ -212,6 +212,7 @@ even before the budget runs out.
 
 ## Standing Orders
 
-- After recording a lesson with `learn_heuristic`, always display the exact
-  heuristic text that was saved.
+- (Enforced in config, no action needed: the heuristics extension itself now
+  echoes the exact saved text in every `learn_heuristic` / `/heuristics add`
+  result — see `extensions/heuristics/store.ts` `SaveResult.text`.)
 
