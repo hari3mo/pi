@@ -16,7 +16,7 @@ fi
 # Fail-open if the validator infra is missing (never wedge the audit trail);
 # fail-closed if it runs and reports errors.
 VALIDATOR="$(git rev-parse --show-toplevel)/scripts/validate-config.py"
-if command -v python3 &&/dev/null && [ -f "$VALIDATOR" ]; then
+if command -v python3 >/dev/null 2>&1 && [ -f "$VALIDATOR" ]; then
   if ! python3 "$VALIDATOR" >&2; then
     echo "pre-commit BLOCKED — config validation failed (see errors above)." >&2
     echo "Fix the config or run: python3 $VALIDATOR" >&2
