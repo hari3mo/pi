@@ -41,6 +41,24 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 	return /sonnet/i.test(model.id ?? "") || /sonnet/i.test(model.name ?? "");
 }
 
+// Override a model string's trailing ":<thinking>" suffix with `level`. The
+// provider/id half uses "/", so the last ":" cleanly delimits the thinking
+// level (mirrors formatUsageStats' split). Children inherit the orchestrator's
+// thinking level this way instead of the tier baked into agent frontmatter.
+function withThinking(model: string, level: string | undefined): string {
+	if (!level) return model;
+	const sep = model.lastIndexOf(":");
+	const base = sep > model.indexOf("/") ? model.slice(0, sep) : model;
+	return `${base}:${level}`;
+}
+
+// The orchestrator's current thinking level, published by the subagent tool's
+// execute handler (which has `pi`) and read by module-level runSingleAgent
+// (which does not) — same cross-scope hand-off as __piWriteGateMode.
+function inheritedThinking(): string | undefined {
+	return (globalThis as { __piOrchestratorThinking?: string }).__piOrchestratorThinking;
+}
+
 type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
 
 // Parse a peer verdict from free text per docs/rework-loop.md. Peers
@@ -396,7 +414,8 @@ async function runSingleAgent(
 	if (childGate === "write") {
 		args.push("--write");
 	}
-	if (agent.model) args.push("--model", agent.model);
+	const childModel = agent.model ? withThinking(agent.model, inheritedThinking()) : undefined;
+	if (childModel) args.push("--model", childModel);
 	if (agent.tools && agent.tools.length > 0) args.push("--tools", agent.tools.join(","));
 	if (agent.noContextFiles) args.push("--no-context-files");
 
@@ -411,7 +430,7 @@ async function runSingleAgent(
 		messages: [],
 		stderr: "",
 		usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
-		model: agent.model,
+		model: childModel,
 		mode: childGate,
 		step,
 	};
@@ -653,6 +672,9 @@ export default function (pi: ExtensionAPI) {
 		parameters: SubagentParams,
 
 		async execute(_toolCallId, params, signal, onUpdate, ctx) {
+			// Publish the orchestrator's live thinking level so spawned children
+			// inherit it (see inheritedThinking / withThinking).
+			(globalThis as { __piOrchestratorThinking?: string }).__piOrchestratorThinking = pi.getThinkingLevel();
 			if (isSonnetModel(ctx.model)) {
 				return {
 					isError: true,
@@ -807,7 +829,7 @@ export default function (pi: ExtensionAPI) {
 						messages: [],
 						stderr: "",
 						usage: { input: 0, output: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
-						model: agents.find((a) => a.name === params.tasks[i].agent)?.model,
+						model: withThinking(agents.find((a) => a.name === params.tasks[i].agent)?.model ?? "", inheritedThinking()) || undefined,
 						mode: pendingGate,
 					};
 				}
