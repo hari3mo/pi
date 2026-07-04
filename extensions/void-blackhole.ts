@@ -312,7 +312,8 @@ const smoothstep = (e0: number, e1: number, x: number): number => {
 
 const DIM = "\x1b[2m";
 const BOLD = "\x1b[1m";
-const BLACK = "\x1b[30m"; // wordmark ink (b >= 2 sentinel in the rasterizer)
+const BLACK = "\x1b[39m"; // wordmark ink (default fg, not literal black — b >= 2
+// sentinel in the rasterizer; \x1b[30m is invisible against a dark theme/terminal bg
 const RESET = "\x1b[0m";
 
 // ------------------------------------------------------------ component ----
