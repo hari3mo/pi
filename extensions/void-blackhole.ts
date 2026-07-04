@@ -1195,11 +1195,11 @@ export default function (pi: ExtensionAPI) {
 						const pos = phase % range;
 						const bandWidth = 3;
 						// Glint runs render in the theme's accent color (the same
-							// token the docs call out for "logo" use) plus BOLD, not just
-							// BOLD alone — on dark themes bold-vs-dim ink is nearly the
-							// same brightness, so the sweep needs a hue shift to read as
-							// a highlight instead of disappearing into the base tier.
-							const shimmerLine = (line: string, y: number): string => {
+						// token the docs call out for "logo" use) plus BOLD, not just
+						// BOLD alone — on dark themes bold-vs-dim ink is nearly the
+						// same brightness, so the sweep needs a hue shift to read as
+						// a highlight instead of disappearing into the base tier.
+						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
 							let tier: "" | "dim" | "glint" = "";
 							let run = "";

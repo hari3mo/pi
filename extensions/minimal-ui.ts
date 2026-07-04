@@ -9,6 +9,7 @@
  */
 
 import type { AssistantMessage } from "@earendil-works/pi-ai";
+import { CustomEditor } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 import { fmtTokens } from "./lib/format.ts";
@@ -86,9 +87,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 				if (input + output > 0) rightParts.push(`${fmtTokens(input)}↑ ${fmtTokens(output)}↓`);
 				if (cost > 0) rightParts.push(`$${cost.toFixed(2)}`);
 
-				const pulseRamp = ["dim", "muted", "accent", "muted"] as const;
-				const leftTone = working ? pulseRamp[pulseFrame % pulseRamp.length] : "dim";
-				const left = theme.fg(leftTone, leftParts.join(SEP));
+				const left = theme.fg("dim", leftParts.join(SEP));
 				const right = theme.fg("dim", rightParts.join(SEP));
 
 				const gap = width - visibleWidth(left) - visibleWidth(right);
@@ -97,11 +96,24 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 			},
 		};
 	});
+
+	const ramp = ["dim", "muted", "accent", "muted"] as const;
+	ctx.ui.setEditorComponent((tui, editorTheme, keybindings) => {
+		const ed = new CustomEditor(tui, editorTheme, keybindings);
+		const idleBorder = ed.borderColor; // capture default
+		const origRender = ed.render.bind(ed);
+		ed.render = (width: number) => {
+			ed.borderColor = working ? (s: string) => theme.fg(ramp[pulseFrame % ramp.length], s) : idleBorder;
+			return origRender(width);
+		};
+		return ed;
+	});
 }
 
 function restoreDefaults(ctx: ExtensionContext): void {
 	ctx.ui.setFooter(undefined);
 	ctx.ui.setWorkingIndicator(undefined);
+	ctx.ui.setEditorComponent(undefined);
 }
 
 export default function (pi: ExtensionAPI) {
