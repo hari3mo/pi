@@ -1069,7 +1069,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 59,
+      "community": 4,
       "norm_label": "path",
       "id": "path"
     },
@@ -4387,7 +4387,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 59,
+      "community": 75,
       "norm_label": "ponytail.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail"
     },
@@ -4397,7 +4397,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 59,
+      "community": 75,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_fs"
     },
@@ -4407,7 +4407,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 59,
+      "community": 75,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_path"
     },
@@ -4417,7 +4417,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/ponytail.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 59,
+      "community": 75,
       "norm_label": "system",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_ponytail_system"
     },
@@ -11424,7 +11424,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -11508,7 +11508,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "opencode /ponytail command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -11592,7 +11592,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -11690,7 +11690,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "hermes after-install notes",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -11914,7 +11914,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -12194,7 +12194,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "hermes plugin manifest",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -12292,7 +12292,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -12306,7 +12306,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 10,
+      "community": 5,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -12418,7 +12418,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify skill (knowledge-graph pipeline)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_skill"
@@ -12432,7 +12432,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_pipeline"
@@ -12446,7 +12446,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify honesty rules (extracted/inferred/ambiguous)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_honesty_rules"
@@ -12460,7 +12460,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: url add + folder watch",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_add_watch_ref"
@@ -12474,7 +12474,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: extra exports + benchmark",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_exports_ref"
@@ -12488,7 +12488,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: extraction subagent prompt spec",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_extraction_spec_ref"
@@ -12502,7 +12502,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: github clone + cross-repo merge",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_github_and_merge_ref"
@@ -12516,7 +12516,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: commit hook + claude.md integration",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_hooks_ref"
@@ -12530,7 +12530,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_ref"
@@ -12544,7 +12544,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -12558,7 +12558,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -12572,7 +12572,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: whisper video transcription",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_transcribe_ref"
@@ -12586,7 +12586,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 44,
       "norm_label": "graphify ref: incremental update + cluster-only",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_update_ref"
@@ -13253,7 +13253,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1136",
+      "source_location": "L1131",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_wallclockelapsedms",
@@ -13275,10 +13275,21 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "extensions/subagent/index.ts",
-      "source_location": "L1037",
+      "source_location": "L1131",
       "weight": 1.0,
       "source": "extensions_subagent_index_renderresult",
       "target": "extensions_subagent_index_formatusagestats",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "extensions/subagent/index.ts",
+      "source_location": "L1038",
+      "weight": 1.0,
+      "source": "extensions_subagent_index_renderresult",
+      "target": "extensions_subagent_index_formatrunstatus",
       "confidence_score": 1.0
     },
     {
@@ -30356,5 +30367,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "abefd21aad1d2d41ec98f97213fd281f78738513"
+  "built_at_commit": "19b4f7d85038799332fc9f7af56f1e4ba5b822c4"
 }
