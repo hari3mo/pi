@@ -35,7 +35,7 @@ import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
 const MAX_ITEMS = 3; // cap durable candidates per session
 const MIN_ANSWER_CHARS = 200; // durability floor: below this, not worth compounding
 const ANSWER_CAP = 4000; // keep staged notes / save-result args compact
-const SAVE_TIMEOUT_MS = 5000; // per save-result call bound
+const SAVE_TIMEOUT_MS = 2000; // per save-result call bound
 const STAGING_SUBDIR = "_raw"; // oracle raw/staging area (mirrors wiki-capture quick mode)
 const CAPTURED_ACTIONS = new Set(["query", "explain"]); // status/path are not durable knowledge
 
@@ -251,10 +251,14 @@ export default function (pi: ExtensionAPI) {
 			const py = root ? graphifyPython(root) : undefined;
 			const now = new Date();
 
+			const graphJsonPath = root ? join(root, OUT, "graph.json") : undefined;
+
 			buffer.forEach((item, i) => {
 				if (canStage) {
 					try {
-						const { filename, content } = buildStagedNote(item, now, i);
+						const { filename, content } = graphJsonPath
+							? buildStagedNote(item, now, i, graphJsonPath)
+							: buildStagedNote(item, now, i);
 						writeFileSync(join(stagingDir, filename), content);
 					} catch {
 						// one bad note must not skip the rest or the CLI flush
