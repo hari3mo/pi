@@ -38,7 +38,7 @@
       },
       {
         "id": "benchmark_honesty_arc",
-        "label": "Benchmark honesty arc (single-shot \u2192 critique \u2192 agentic \u2192 verification)",
+        "label": "Benchmark honesty arc (single-shot → critique → agentic → verification)",
         "nodes": [
           "git_github_com_dietrichgebert_ponytail_benchmarks_readme_single_shot",
           "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_17_agentic_safety_result",
@@ -3562,14 +3562,14 @@
       "norm_label": "main()"
     },
     {
-      "label": "Ponytail local benchmark \u2014 runs the same 5 tasks against any Ollama model. No pr",
+      "label": "Ponytail local benchmark — runs the same 5 tasks against any Ollama model. No pr",
       "file_type": "rationale",
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/benchmark-local.py",
       "source_location": "L1",
       "_origin": "ast",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_benchmark_local_rationale_1",
       "community": 41,
-      "norm_label": "ponytail local benchmark \u2014 runs the same 5 tasks against any ollama model. no pr"
+      "norm_label": "ponytail local benchmark — runs the same 5 tasks against any ollama model. no pr"
     },
     {
       "label": "Non-blank, non-comment lines of code: fenced blocks, or the whole     response w",
@@ -9981,7 +9981,7 @@
       "norm_label": "blind fan-out (peer second opinion)"
     },
     {
-      "label": "engineer role card \u2014 THE DEFAULT WORKHORSE: whole bounded tasks end-to-end",
+      "label": "engineer role card — THE DEFAULT WORKHORSE: whole bounded tasks end-to-end",
       "file_type": "concept",
       "source_file": "agents/engineer.md",
       "source_location": null,
@@ -9991,10 +9991,10 @@
       "contributor": null,
       "id": "agents_engineer_role",
       "community": 21,
-      "norm_label": "engineer role card \u2014 the default workhorse: whole bounded tasks end-to-end"
+      "norm_label": "engineer role card — the default workhorse: whole bounded tasks end-to-end"
     },
     {
-      "label": "worker role card \u2014 Mechanical edits, ships after review",
+      "label": "worker role card — Mechanical edits, ships after review",
       "file_type": "concept",
       "source_file": "agents/worker.md",
       "source_location": null,
@@ -10004,10 +10004,10 @@
       "contributor": null,
       "id": "agents_worker_role",
       "community": 21,
-      "norm_label": "worker role card \u2014 mechanical edits, ships after review"
+      "norm_label": "worker role card — mechanical edits, ships after review"
     },
     {
-      "label": "scout role card \u2014 Read-only investigation, compressed file:line findings",
+      "label": "scout role card — Read-only investigation, compressed file:line findings",
       "file_type": "concept",
       "source_file": "agents/scout.md",
       "source_location": null,
@@ -10017,10 +10017,10 @@
       "contributor": null,
       "id": "agents_scout_role",
       "community": 21,
-      "norm_label": "scout role card \u2014 read-only investigation, compressed file:line findings"
+      "norm_label": "scout role card — read-only investigation, compressed file:line findings"
     },
     {
-      "label": "verifier role card \u2014 Runs acceptance path, PASS/FAIL",
+      "label": "verifier role card — Runs acceptance path, PASS/FAIL",
       "file_type": "concept",
       "source_file": "agents/verifier.md",
       "source_location": null,
@@ -10030,10 +10030,10 @@
       "contributor": null,
       "id": "agents_verifier_role",
       "community": 21,
-      "norm_label": "verifier role card \u2014 runs acceptance path, pass/fail"
+      "norm_label": "verifier role card — runs acceptance path, pass/fail"
     },
     {
-      "label": "reviewer role card \u2014 Deep-reasoning gate: PASS / FAIL:implementation / FAIL:design",
+      "label": "reviewer role card — Deep-reasoning gate: PASS / FAIL:implementation / FAIL:design",
       "file_type": "concept",
       "source_file": "agents/reviewer.md",
       "source_location": null,
@@ -10043,10 +10043,10 @@
       "contributor": null,
       "id": "agents_reviewer_role",
       "community": 21,
-      "norm_label": "reviewer role card \u2014 deep-reasoning gate: pass / fail:implementation / fail:design"
+      "norm_label": "reviewer role card — deep-reasoning gate: pass / fail:implementation / fail:design"
     },
     {
-      "label": "peer-engineer role card \u2014 Blind second opinion (GPT lineage)",
+      "label": "peer-engineer role card — Blind second opinion (GPT lineage)",
       "file_type": "concept",
       "source_file": "agents/peer-engineer.md",
       "source_location": null,
@@ -10056,10 +10056,10 @@
       "contributor": null,
       "id": "agents_peer_engineer_role",
       "community": 21,
-      "norm_label": "peer-engineer role card \u2014 blind second opinion (gpt lineage)"
+      "norm_label": "peer-engineer role card — blind second opinion (gpt lineage)"
     },
     {
-      "label": "fable-engineer role card \u2014 Opt-in orchestrator-tier solo executor",
+      "label": "fable-engineer role card — Opt-in orchestrator-tier solo executor",
       "file_type": "concept",
       "source_file": "agents/fable-engineer.md",
       "source_location": null,
@@ -10069,7 +10069,7 @@
       "contributor": null,
       "id": "agents_fable_engineer_role",
       "community": 21,
-      "norm_label": "fable-engineer role card \u2014 opt-in orchestrator-tier solo executor"
+      "norm_label": "fable-engineer role card — opt-in orchestrator-tier solo executor"
     },
     {
       "label": "Delegation Contract Template",
@@ -10280,7 +10280,7 @@
       "norm_label": "heuristics extension design (v2, authoritative)"
     },
     {
-      "label": "learn_heuristic capture pipeline (sanitize\u2192scrub\u2192lint\u2192dedup\u2192evict)",
+      "label": "learn_heuristic capture pipeline (sanitize→scrub→lint→dedup→evict)",
       "file_type": "concept",
       "source_file": "extensions/heuristics/DESIGN.md",
       "source_location": null,
@@ -10290,7 +10290,7 @@
       "contributor": null,
       "id": "extensions_heuristics_design_capture_pipeline",
       "community": 0,
-      "norm_label": "learn_heuristic capture pipeline (sanitize\u2192scrub\u2192lint\u2192dedup\u2192evict)"
+      "norm_label": "learn_heuristic capture pipeline (sanitize→scrub→lint→dedup→evict)"
     },
     {
       "label": "Heuristics injection block (4000-char budget, orch reserve)",
@@ -10345,7 +10345,7 @@
       "norm_label": "graphify skill (knowledge-graph pipeline)"
     },
     {
-      "label": "Graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
+      "label": "Graphify build pipeline (detect→extract→cluster→report)",
       "file_type": "concept",
       "source_file": "skills/graphify/SKILL.md",
       "source_location": null,
@@ -10355,7 +10355,7 @@
       "contributor": null,
       "id": "skills_graphify_skill_pipeline",
       "community": 20,
-      "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)"
+      "norm_label": "graphify build pipeline (detect→extract→cluster→report)"
     },
     {
       "label": "Graphify honesty rules (EXTRACTED/INFERRED/AMBIGUOUS)",
@@ -10683,7 +10683,7 @@
       "norm_label": "compact always-on ruleset (agents.md)"
     },
     {
-      "label": "The Ladder (YAGNI\u2192reuse\u2192stdlib\u2192native\u2192dep\u2192one line\u2192minimum)",
+      "label": "The Ladder (YAGNI→reuse→stdlib→native→dep→one line→minimum)",
       "file_type": "concept",
       "source_file": "git/github.com/DietrichGebert/ponytail/AGENTS.md",
       "source_location": null,
@@ -10693,7 +10693,7 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_agents_ladder",
       "community": 7,
-      "norm_label": "the ladder (yagni\u2192reuse\u2192stdlib\u2192native\u2192dep\u2192one line\u2192minimum)"
+      "norm_label": "the ladder (yagni→reuse→stdlib→native→dep→one line→minimum)"
     },
     {
       "label": "Bug fix = root cause, not symptom (grep every caller)",
@@ -10761,7 +10761,7 @@
       "norm_label": "intensity levels (lite/full/ultra)"
     },
     {
-      "label": "ponytail-review skill \u2014 Over-engineering diff review",
+      "label": "ponytail-review skill — Over-engineering diff review",
       "file_type": "document",
       "source_file": "git/github.com/DietrichGebert/ponytail/skills/ponytail-review/SKILL.md",
       "source_location": null,
@@ -10771,10 +10771,10 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_review_skill_skill",
       "community": 4,
-      "norm_label": "ponytail-review skill \u2014 over-engineering diff review"
+      "norm_label": "ponytail-review skill — over-engineering diff review"
     },
     {
-      "label": "ponytail-audit skill \u2014 Whole-repo over-engineering audit",
+      "label": "ponytail-audit skill — Whole-repo over-engineering audit",
       "file_type": "document",
       "source_file": "git/github.com/DietrichGebert/ponytail/skills/ponytail-audit/SKILL.md",
       "source_location": null,
@@ -10784,10 +10784,10 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_audit_skill_skill",
       "community": 4,
-      "norm_label": "ponytail-audit skill \u2014 whole-repo over-engineering audit"
+      "norm_label": "ponytail-audit skill — whole-repo over-engineering audit"
     },
     {
-      "label": "ponytail-debt skill \u2014 ponytail: comment debt ledger",
+      "label": "ponytail-debt skill — ponytail: comment debt ledger",
       "file_type": "document",
       "source_file": "git/github.com/DietrichGebert/ponytail/skills/ponytail-debt/SKILL.md",
       "source_location": null,
@@ -10797,10 +10797,10 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_debt_skill_skill",
       "community": 4,
-      "norm_label": "ponytail-debt skill \u2014 ponytail: comment debt ledger"
+      "norm_label": "ponytail-debt skill — ponytail: comment debt ledger"
     },
     {
-      "label": "ponytail-gain skill \u2014 Measured-impact scoreboard",
+      "label": "ponytail-gain skill — Measured-impact scoreboard",
       "file_type": "document",
       "source_file": "git/github.com/DietrichGebert/ponytail/skills/ponytail-gain/SKILL.md",
       "source_location": null,
@@ -10810,10 +10810,10 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_gain_skill_skill",
       "community": 4,
-      "norm_label": "ponytail-gain skill \u2014 measured-impact scoreboard"
+      "norm_label": "ponytail-gain skill — measured-impact scoreboard"
     },
     {
-      "label": "ponytail-help skill \u2014 Quick-reference card",
+      "label": "ponytail-help skill — Quick-reference card",
       "file_type": "document",
       "source_file": "git/github.com/DietrichGebert/ponytail/skills/ponytail-help/SKILL.md",
       "source_location": null,
@@ -10823,7 +10823,7 @@
       "contributor": null,
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_help_skill_skill",
       "community": 4,
-      "norm_label": "ponytail-help skill \u2014 quick-reference card"
+      "norm_label": "ponytail-help skill — quick-reference card"
     },
     {
       "label": "OpenClaw copy of ponytail-review skill (generated)",
@@ -27802,6 +27802,106 @@
       "weight": 1.0,
       "source": "git_github_com_dietrichgebert_ponytail_assets_logo_greenpt_dark_sponsor",
       "target": "git_github_com_dietrichgebert_ponytail_assets_logo_greenpt_sponsor"
+    },
+    {
+      "source": "docs_config_index_audit_map",
+      "target": "themes_porcelain",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_config_index_audit_map",
+      "target": "themes_porcelain_light",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "docs_config_index_audit_map",
+      "target": "schema_manifest",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "schema_manifest",
+      "target": "schema_settings_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "schema_manifest",
+      "target": "schema_keybindings_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "schema_manifest",
+      "target": "schema_heuristic_entry_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "schema_manifest",
+      "target": "schema_trust_schema",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_autocommit_infra",
+      "target": "pi_vcs_autocommit",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "git_github_com_dietrichgebert_ponytail_github_workflows_publish_ci",
+      "target": "git_github_com_dietrichgebert_ponytail_package",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/git/github.com/DietrichGebert/ponytail/.github/workflows/publish.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "readme_pi_config_repo",
+      "target": "skills_graphify_skill_skill",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/Users/harissaif/.pi/agent/README.md",
+      "source_location": null,
+      "weight": 1.0
     }
   ],
   "hyperedges": [
@@ -27840,7 +27940,7 @@
     },
     {
       "id": "benchmark_honesty_arc",
-      "label": "Benchmark honesty arc (single-shot \u2192 critique \u2192 agentic \u2192 verification)",
+      "label": "Benchmark honesty arc (single-shot → critique → agentic → verification)",
       "nodes": [
         "git_github_com_dietrichgebert_ponytail_benchmarks_readme_single_shot",
         "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_17_agentic_safety_result",
