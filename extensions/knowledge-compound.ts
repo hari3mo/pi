@@ -26,11 +26,11 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
+import { findGraphRoot, graphifyPython, OUT } from "./lib/graph-lookup.ts";
 
 const MAX_ITEMS = 3; // cap durable candidates per session
 const MIN_ANSWER_CHARS = 200; // durability floor: below this, not worth compounding
@@ -183,16 +183,6 @@ ${item.answer}
 - captured: ${iso}
 `;
 	return { filename, content };
-}
-
-function graphifyPython(root: string): string {
-	try {
-		const p = readFileSync(join(root, OUT, ".graphify_python"), "utf8").trim();
-		if (p && !/[^a-zA-Z0-9/_.@:\\-]/.test(p) && existsSync(p)) return p;
-	} catch {
-		// fall through to system python
-	}
-	return "python3";
 }
 
 function answerFrom(content: unknown): string {
