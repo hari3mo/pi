@@ -587,14 +587,15 @@ class BlackHoleComponent {
 			return this.cachedLines;
 		}
 
-		// Expanded art: fill the terminal (leaving room for the editor and
-		// footer below — the splash keeps the header at zero rows, which is
-		// what makes this reserve sufficient), centered.
-		const artW = Math.max(30, Math.min(ART_MAX_W, width - 2));
+		// Expanded art: the art claims every terminal row except a small
+		// reserve for the footer/status chrome below (the splash header stays
+		// at zero rows). Rows beyond what the galaxy's uniform-scale fit needs
+		// just fill with starfield, which is why no aspect cap is needed.
+		const artW = Math.max(30, Math.min(ART_MAX_W, width));
 		const termRows = process.stdout.rows ?? 24;
 		const rows = Math.max(
 			10,
-			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 8), Math.round(artW * 0.24)),
+			Math.min(ART_MAX_ROWS, Math.max(14, termRows - 5)),
 		);
 		const offset = " ".repeat(Math.max(0, Math.floor((width - artW) / 2)));
 		const cx = artW / 2;
