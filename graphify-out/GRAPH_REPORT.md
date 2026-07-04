@@ -1,15 +1,16 @@
-# Graph Report - .  (2026-07-04)
+# Graph Report - agent  (2026-07-04)
 
 ## Corpus Check
-- cluster-only mode — file stats not available
+- 188 files · ~151,120 words
+- Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1142 nodes · 1612 edges · 67 communities (59 shown, 8 thin omitted)
+- 1142 nodes · 1601 edges · 67 communities (59 shown, 8 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `1a217245`
+- Built from commit: `3a18dbfd`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -117,7 +118,7 @@
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
-Nodes (81): findEntry(), formatEntry(), handleAdd(), handleDemote(), handleEdit(), handlePin(), handlePromote(), handleRm() (+73 more)
+Nodes (79): findEntry(), formatEntry(), handleAdd(), handleDemote(), handleEdit(), handlePin(), handlePromote(), handleRm() (+71 more)
 
 ### Community 1 - "Porcelain Dark Palette"
 Cohesion: 0.04
@@ -350,14 +351,14 @@ Cohesion: 0.67
 Nodes (3): doRender off-screen clamp, pi-tui scrollback-wipe fix, Viewport reflow on content collapse
 
 ## Knowledge Gaps
-- **582 isolated node(s):** `autocommit.sh script`, `BANNER_LINES`, `APHORISMS`, `BANNER_WIDTH`, `GraphParams` (+577 more)
+- **582 isolated node(s):** `churnMap`, `SubagentResultLike`, `STOPWORDS`, `autocommit.sh script`, `BANNER_LINES` (+577 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.998804517)
+- `Config Index (semantic audit map)` (3× useful, score=2.998804517) _(code changed — re-verify)_
 - `~/.pi/agent config repo overview` (3× useful, score=2.998774373)
 
 ## Suggested Questions
@@ -369,10 +370,10 @@ _Questions this graph is uniquely positioned to answer:_
   _High betweenness centrality (0.083) - this node is a cross-community bridge._
 - **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`, `Ponytail Ruleset & Mirrors`?**
   _High betweenness centrality (0.067) - this node is a cross-community bridge._
-- **What connects `autocommit.sh script`, `BANNER_LINES`, `APHORISMS` to the rest of the system?**
+- **What connects `churnMap`, `SubagentResultLike`, `STOPWORDS` to the rest of the system?**
   _615 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
-  _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.05515832482124617 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**
   _Cohesion score 0.038461538461538464 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Light Palette` be split into smaller, more focused modules?**
