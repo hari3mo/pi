@@ -255,7 +255,6 @@ const RESET = "\x1b[0m";
 class BlackHoleComponent {
 	private tui: { requestRender: () => void };
 	private onClose: () => void;
-	private splash: boolean;
 	private tagline: string;
 	private hint: string;
 	private interval: ReturnType<typeof setInterval> | null = null;
@@ -309,7 +308,6 @@ class BlackHoleComponent {
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
-		this.splash = splash;
 
 		const home = process.env.HOME ?? "";
 		const cwd =
