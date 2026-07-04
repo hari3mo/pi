@@ -18,7 +18,6 @@ const SEP = "  ·  ";
 
 // Lets the top-level thinking_level_select handler nudge the minimal footer.
 let requestFooterRender: (() => void) | undefined;
-let working = false;
 
 function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 	// Breathing dot — theme-derived luminance ramp (dim -> muted -> accent -> dim)
@@ -107,16 +106,6 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.on("thinking_level_select", async () => {
-		requestFooterRender?.();
-	});
-
-	pi.on("agent_start", async () => {
-		working = true;
-		requestFooterRender?.();
-	});
-
-	pi.on("agent_end", async () => {
-		working = false;
 		requestFooterRender?.();
 	});
 
