@@ -59,12 +59,17 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 				let cost = 0;
 				let lastContext = 0;
 				for (const e of ctx.sessionManager.getBranch()) {
-					if (e.type === "message" && e.message.role === "assistant") {
+					if (e.type !== "message") continue;
+					if (e.message.role === "assistant") {
 						const m = e.message as AssistantMessage;
 						input += m.usage.input;
 						output += m.usage.output;
 						cost += m.usage.cost.total;
 						lastContext = m.usage.input + m.usage.output + m.usage.cacheRead + m.usage.cacheWrite;
+					} else if (e.message.role === "toolResult" && (e.message as { toolName?: string }).toolName === "subagent") {
+						// Fold in delegated subagent spend (persisted in tool result details).
+						const details = (e.message as { details?: { results?: Array<{ usage?: { cost?: number } }> } }).details;
+						for (const r of details?.results ?? []) cost += r.usage?.cost ?? 0;
 					}
 				}
 
