@@ -64,6 +64,7 @@ import type {
 	ExtensionCommandContext,
 } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
+import { truncateToWidth } from "@earendil-works/pi-tui";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -1229,10 +1230,14 @@ export default function (pi: ExtensionAPI) {
 							if (tier !== "") out += RESET;
 							return out;
 						};
+						// Belt-and-suspenders: the guard above should already keep the
+						// wordmark out at this width, but clamp the actual output too —
+						// a stale/raced `width` must never let a line overflow the
+						// terminal (see custom-header.ts, which does the same).
 						return [
 							"",
-							...WORDMARK.map((l, y) => shimmerLine(l, y)),
-							subtitle,
+							...WORDMARK.map((l, y) => truncateToWidth(shimmerLine(l, y), width)),
+							truncateToWidth(subtitle, width),
 							"",
 						];
 					},
