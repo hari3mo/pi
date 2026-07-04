@@ -44,6 +44,11 @@ entries saved before this field existed remain valid. Not rendered into the inje
 block (§8) — it is metadata for the capture gate and for `/heuristics list`/`stats`
 (§10), not for the system prompt.
 
+Scope is bound to the STORE FILE, not the record: a "global" entry is one that lives
+in the global store file; fixing scope drift means MOVING the line between store
+files, not flipping the record's `scope` field (that just trades drift warnings for
+misfiled warnings).
+
 Reader: per-line JSON.parse in try/catch; skip bad lines (count + notify once); ignore
 blank lines and `#`-prefixed lines; dedup by id (last wins); cap read at 5000 lines with
 warning. Whole file unreadable → treat as empty, warn once, never throw. Files are

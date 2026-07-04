@@ -16,6 +16,7 @@ an audit trail; `git log` is the change history.
 | `skills/` | Skills (symlinks into the obsidian_wiki package) | yes (as links) |
 | `themes/` | Theme JSON | yes |
 | `heuristics/` | **Global** heuristics store (`heuristics.jsonl`) — injected into every session | yes |
+| `.pi/` | **Project** heuristics store for THIS repo (git root = agent dir) — live state, never delete wholesale | yes |
 | `sessions/` | Conversation logs | **no** (may contain pasted secrets) |
 | `bin/` | Third-party binaries (rg, fd) | **no** (reproducible via brew) |
 | `auth.json`, `trust.json` | Credentials / machine-local state | **no** (fail-closed `.gitignore`) |
@@ -48,7 +49,11 @@ python3 ~/.pi/agent/scripts/validate-config.py --strict   # warnings fail too
 
 Checks: schema conformance (json + jsonl), heuristics scope drift, credential
 patterns in tracked files, gitignore coverage of sensitive paths, dangling
-skill symlinks, and layout conformance. Errors exit 1; the layout check only
+skill symlinks, and layout conformance.
+
+When correlating session logs to git history: session filenames and log-line
+timestamps are UTC (`Z`); git commit dates are local time — offset accordingly
+before matching sessions to commits or file birth times. Errors exit 1; the layout check only
 reports unrecognized directories as info (add them to `manifest.json` →
 `layout` when intentional).
 

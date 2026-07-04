@@ -73,6 +73,10 @@ dispatch `engineer` with a design-only task returning the design artifact
   A generous, precise spec that one-shots beats a terse one that triggers rework chains.
 - Blind fan-out (`engineer` + `peer-engineer` in parallel, neither sees the other)
   for expensive-to-unwind calls; fable spends only on reconciliation.
+- GRAPH-FIRST: when `graphify-out/graph.json` exists, answer structure/architecture
+  questions with the `graph` tool (query/explain/path) BEFORE dispatching scout or
+  reading files — ~30x cheaper; subagents inherit the tool, so dispatched tasks may
+  assume it too.
 
 ## Escalation
 
@@ -110,7 +114,12 @@ early, before the budget runs out.
 ## Config Maintenance (~/.pi/agent)
 
 - After config edits, run `python3 ~/.pi/agent/scripts/validate-config.py` and fix
-  every error — the pre-commit hook blocks snapshots on validation failure.
+  every error — the pre-commit hook blocks snapshots on validation failure. Do NOT
+  auto-run the orch-bench probe suite after doctrine edits; it spends real tokens and
+  runs only on explicit user request.
+- Doctrine prose IS behavior: even editorial rewording of AGENTS.md measurably shifts
+  borderline routing (benchmarked) — treat every doctrine edit as a behavior change,
+  not documentation.
 - A NEW machine-readable config artifact gets a malleable JSON Schema in `schema/`
   (known keys typed, `additionalProperties: true`) registered in `schema/manifest.json`;
   the validator is manifest-driven.
@@ -130,6 +139,8 @@ The harness audits itself; problems become prompts:
   mark it STALE until `/graphify --update`.
 - Lessons close the loop: graph queries save results back (`--outcome`), `reflect`
   distills them, and `learn_heuristic` persists durable ones.
+- When a standing order or prompt rule can be enforced mechanically, promote it to
+  code (extension, validator check, or hook) — prompts drift, enforcement does not.
 - Errors are never just worked around: root-cause the failure, then integrate the fix
   downstream — a `learn_heuristic` lesson, a `validate-config.py` guard, a hook fix, or
   a graph re-cache. Repeated tool errors in one run trigger a nudge enforcing this
