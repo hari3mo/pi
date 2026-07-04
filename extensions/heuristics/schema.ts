@@ -224,8 +224,14 @@ export function scoreOf(h: Heuristic, now: number = Date.now()): number {
 // Orchestration role matching (DESIGN.md §9, S4)
 // ---------------------------------------------------------------------------
 
-const BUILDER_SUBSTRING_RE = /build|coder|impl/i;
+const BUILDER_SUBSTRING_RE = /build|coder|impl|work/i;
 
 export function matchesBuilderRole(agentName: string): boolean {
 	return BUILDER_SUBSTRING_RE.test(agentName);
+}
+
+// ponytail: self-check — if a future mechanical-role rename stops matching here, S4
+// (edit-after-mechanical-dispatch nudge) silently goes dead. Fails fast at module load.
+if (!matchesBuilderRole("worker")) {
+	throw new Error('matchesBuilderRole("worker") must be true — S4 orchestration signal is dead');
 }
