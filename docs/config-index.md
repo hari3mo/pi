@@ -47,7 +47,122 @@ Every session that changes config must update it.
 > or removed. Format: date, summary, files touched, why. Keep entries to
 > 2–4 lines.
 
-### 2026-07-03
+**~22:55 — Changelog backfilled (this entry).** Reconstructed the full
+pre-index history below from `~/.pi/agent/sessions/` logs, the 373 auto-snapshot
+commits, file birth times, and the heuristics store. Files: `docs/config-index.md`.
+Why: git history only begins 2026-07-03 15:41 (repo init), but the config was
+built across ~2 days of sessions — the semantic arc needed to be auditable.
 
-Baseline — feature index created; all entries above this line predate the
-index. Use `git log` in ~/.pi/agent for raw pre-index history.
+**~22:52 — Autocommit now checks git status first.** `.pi-vcs/autocommit.sh`
+gained a git-status review before snapshotting, so unrelated/unintended working-tree
+changes aren't swept into an auto snapshot. Session: "always check git status
+before auto commit".
+
+**~22:50 — Config index created (baseline).** `docs/config-index.md` — the
+feature→files→purpose map plus this changelog, per AGENTS.md → Config Maintenance.
+Session: "create some sort of index/mapping so future sessions can fully audit".
+All entries dated below this one are reconstructed after the fact **(backfilled)** —
+not written contemporaneously; use `git log` in ~/.pi/agent for the raw diffs.
+
+**~22:44 — Model-cycle order finalized + rework-loop doc.** (backfilled)
+Shift+Tab cycle pinned to sonnet-5 → opus-4-8 → fable-5 → gemini-3.5-flash → gpt-5.5
+(`settings.json` `enabledModels`, `extensions/model-cycle.ts`); `docs/rework-loop.md`
+formalized the qa-reviewer PASS / FAIL:implementation / FAIL:design verdict contract.
+
+**~22:34 — Task tracker extension.** (backfilled) `extensions/task-tracker.ts` —
+demo `task` tool + `/tasks` command; state lives in tool-result details so branch/rewind
+stays correct. Session: "add task tracker to pi tui".
+
+**~21:16–22:16 — Solo/fable engineer roles added.** (backfilled)
+`agents/solo-engineer.md` (renamed from a short-lived `opus-engineer.md`) and
+`agents/fable-engineer.md`; `AGENTS.md` tiers updated. Why: a single-session
+whole-task tier and a highest-stakes orchestrator-tier solo tier, beyond the
+scope-planner→…→shipper pipeline. Surfaced during the "fix scrollbar jumping" work.
+
+**~21:28–22:21 — pi-tui scrollback fix documented + harness.** (backfilled)
+`patches/pi-tui-scrollback-fix.md` + `…-harness.mjs` / `….harness.mjs`. Documents and
+regression-tests a manual patch to the installed `pi-tui` dist that stops
+scrollback-wiping full redraws when content above the viewport changes; must be
+re-applied after pi updates. Session: "fix entirely with claude fable (bypass pipeline)".
+
+**~18:58 — Shared format helpers extracted.** (backfilled) `extensions/lib/format.ts` —
+duration/token/cwd formatters shared by several extensions (kept outside `extensions/*.ts`
+so it isn't auto-loaded as an extension). Emerged from a UI audit/refine pass.
+
+**~17:43 — Model-awareness extension.** (backfilled) `extensions/model-awareness.ts` —
+injects the live active model into the system prompt so the Delegation Gate's model
+checks stay correct after a mid-session Shift+Tab switch. Session: "pi should always
+recognize current model … subagent orchestration does not trigger when fable is selected".
+
+**~17:13–17:24 — Config governance: schema + validator + README.** (backfilled)
+`schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py`, `README.md`,
+`.gitignore`, and a validator-gating `.pi-vcs/hooks/pre-commit`; heuristics store/command/index
+reworked to harness scope; `agents/peer-engineer.md` added. Why: standardize the directory
+layout and enforce malleable, manifest-driven schema validation for auditability. Session:
+"initialize and organize pi configuration. standardize directory and enforce malleable schema".
+
+**~15:52–16:25 — Continuous-learning heuristics extension.** (backfilled)
+`extensions/heuristics/{DESIGN.md,schema.ts,sanitize.ts,store.ts,inject.ts,index.ts,command.ts}`
++ `heuristics/heuristics.jsonl`. `learn_heuristic` tool, before-agent injection of a
+"Learned heuristics" block, capture/sanitize/dedup pipeline, and the `/heuristics` command.
+DESIGN.md spec came first (~15:21). Session: "I want pi to continuously learn and improve".
+
+**~16:16–17:05 — Chat-title header extension.** (backfilled) `extensions/chat-title.ts`
+(evolved from a short-lived `chat-descriptor.ts`) — sets the iTerm2 tab/window title to
+project + condensed last prompt, prefixed with a live session timer. Sessions: "add summary
+descriptor of chat to iterm2 window header", "add session running timer to window header".
+
+**~14:32–17:47 — Write-gate (confirm-by-default) extension.** (backfilled)
+`extensions/read-only-default.ts` (consolidated from earlier `confirm-edits.ts` /
+`edit-mode.ts` / `read-edit-mode.ts` experiments). New sessions start in confirm mode;
+`/write` `/confirm` `/read-only` (and Ctrl+\`) switch modes; confirm mode still allows
+read-only bash. Sessions: "how to stop pi auto edit", "default pi mode should be full
+read + confirm write", "allow confirm mode to use read only bash commands".
+
+**~15:13 — Version-control infra: git + launchd autocommit.** (backfilled)
+`.pi-vcs/autocommit.sh`, `.pi-vcs/hooks/pre-commit`, `extensions/pi-vcs-breadcrumb.ts`.
+Set up git tracking of `~/.pi/agent` (remote `github.com/hari3mo/pi`, commits authored by the
+user), launchd-triggered auto-snapshots, and a breadcrumb log of tool-touched files folded
+into commit messages. Initial snapshot committed 15:41. Session: "I want to implement
+comprehensive version control to easily revert/audit changes".
+
+**~14:51 → evening — Minimal UI + Porcelain themes.** (backfilled)
+`extensions/minimal-ui.ts`, `themes/porcelain.json`, `themes/porcelain-light.json`.
+Quiet one-line footer + grayscale breathing working-indicator, `/minimal-ui` toggle; later
+revisions added thinking-level display, session time, and softened/then removed the prompt-bar
+thinking animation. Session: "comprehensive redesign of pi tui. award-winning, minimal design".
+
+**~14:50 — Model-cycle extension + keybinding rebinds.** (backfilled)
+`extensions/model-cycle.ts`, `keybindings.json`. Shift+Tab cycles the pinned model list;
+`app.thinking.cycle` rebound to Option+Tab (and later `app.session.rename` to Option+R) to
+free Shift+Tab and resolve a Ctrl+R built-in conflict. Session: "remove rainbow from hari3mo,
+change to harimo everywhere".
+
+**~14:36 → evening — Delegation doctrine: AGENTS.md + roles + prompts.** (backfilled)
+`AGENTS.md`, `agents/{scope-planner,architect,builder,qa-reviewer,shipper}.md`,
+`prompts/{design,build,ship,feature}.md`, and the `extensions/subagent/` tool. Model-tier
+hierarchy from the "Fable 5 where it pays" article; the Delegation Gate (pipeline only when
+lead is fable, or opus past a complexity test), model-switch order, read/write-mode rules, and
+a request-write-mode selection prompt were layered in across the day.
+
+**~00:06 → ~21:00 — Void black-hole landing page.** (backfilled)
+`extensions/void-blackhole.ts` (+ `extensions/_void_harness.mts` test harness). Animated ASCII
+black-hole / accretion-disk `/void` screensaver + starfield with a "harimo" wordmark; many
+refinements (constellations, keypress-to-quit, realism, 3D wordmark, shimmer, contrast).
+Session: "add animated black hole from void to pi cli".
+
+**by ~15:41 — Focus chime + session receipt (approx).** (backfilled)
+`extensions/focus-chime.ts` (macOS notification when a turn exceeds 25s; `/chime`) and
+`extensions/session-receipt.ts` ("shop receipt" summary; `/receipt`, later extended to include
+subagent cost). Both present in the initial 15:41 snapshot; exact creation session not isolated.
+
+### 2026-07-02
+
+**~22:40 — Custom header banner.** (backfilled) `extensions/custom-header.ts` — replaces pi's
+built-in header with a figlet "harimo" banner + greeting/cwd/aphorism subtitle (later extended
+to hide the startup [Skills]/[Prompts]/[Extensions]/[Themes] sections). Earliest surviving
+custom extension. Sessions: "add ascii art of pi symbol to start page", "creative custom touches to pi".
+
+**~20:49 — First pi customizations (approx).** (backfilled) `settings.json` (ASCII-art launch,
+provider/model defaults) plus early experiment extensions `claude-statusline.ts` and `effort.ts`
+(both later removed). The starting point of the config. Session: "hi" / "set pi ascii art on launch".
