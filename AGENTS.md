@@ -14,8 +14,7 @@ instead of drowning in half-finished edits.
 
 ## Delegation Gate (read this first)
 
-The subagent pipeline (scope-planner → architect → builder → qa-reviewer →
-shipper, or any fan-out) is deployed ONLY when one of these holds:
+The subagent pipeline (scope-planner → architect → builder → qa-reviewer, or any fan-out) is deployed ONLY when one of these holds:
 
 1. **Current selected model is `claude-fable-5`** → fable orchestrates; it
    never builds directly. But it routes by scale — pipeline is NOT the
@@ -101,13 +100,12 @@ an agent must not review its own code.
 | Role | Responsibility | Tier |
 |------|---------------|------|
 | `scope-planner` | Cut scope, pin down requirements, turn ambiguity into a bounded problem | Deep reasoning |
-| `architect` | Design decisions: algorithms, storage, failure modes, tradeoffs | Deep reasoning |
-| `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits | Mechanical |
+| `architect` | Design artifacts consumed by 2+ parallel builders; FAIL: design bounces; blind fan-outs with peer-engineer — never when a single agent will implement the design | Deep reasoning |
+| `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits; ships after review passes (commits, CI, lint/type fixes, chores) | Mechanical |
 | `scout` | Read-only bulk investigation: map structure, extract facts, return compressed `file:line` findings for the orchestrator — never edits | Mechanical |
 | `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
 | `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
-| `shipper` | Commits, CI, lint/type fixes, chores | Mechanical |
 
 Note the orchestrator does NOT hand its own frontier model to `architect` or
 `qa-reviewer`. By the time work reaches those roles, the hardest part — framing an
@@ -126,7 +124,8 @@ When a task arrives, decompose it and route each piece by weight:
     failure-mode analysis, security tradeoffs
 - **Execution** (careful but mechanical) → mechanical tier
   - writing the code once the design is fixed, wiring/plumbing, test scaffolding,
-    lint/type/format fixes, renames, commits
+    lint/type/format fixes, renames, commits (the implementing builder ships after
+    review passes)
   - EXCEPT core algorithmic or stateful modules: route those to
     `solo-engineer` (or `fable-engineer` at highest stakes) even when the
     design is fixed — mechanical-tier builders ship subtle spec-corner
@@ -200,11 +199,15 @@ The lead MUST route through `scope-planner` and/or `architect` first when ANY of
   root-cause bug unprompted and shipped the right fix.)
 - The change introduces a new API contract, schema, storage decision, or
   dependency into an EXISTING system, or one that will outlive the task →
-  `architect`. For greenfield single-session builds, these calls are made
-  inline by `solo-engineer`/`fable-engineer` — that is their charter; do
+  `architect` when the design will fan out to 2+ builders or pairs with a
+  blind `peer-engineer` opinion; otherwise route the whole task, design
+  inline, to `solo-engineer` (or `fable-engineer` at highest stakes). For
+  greenfield single-session builds, these calls are made inline by
+  `solo-engineer`/`fable-engineer` — that is their charter; do
   not route a self-contained new module through `architect` just because
   it contains design decisions.
 - The wrong approach would be expensive to unwind later → `architect`
+  (fan-out / blind-opinion cases) or `solo-engineer` (single implementer)
 
 The lead MUST send work to `qa-reviewer` when ANY of:
 
@@ -255,13 +258,12 @@ Subagents cannot see the main conversation. Every delegated task must state:
 3. **What to return** — a conclusion, a diff, or `file:line` findings; never a
    raw dump the orchestrator has to clean up
 
-Every delegated task also inherits a standing hygiene rule (state it when
-the workspace contains files the agent might touch): never delete, move,
-or overwrite files you did not create unless the task explicitly asks;
-logs, notes, and unfamiliar artifacts in the working directory belong to
-the user or the harness. Workspace tidying is out of scope by default.
-(Observed 2026-07: a delegated build deleted an actively-written harness
-log from its cwd.)
+Every delegated task automatically inherits the standing hygiene/return contract —
+the subagent extension appends it to every dispatched task (see
+`extensions/subagent/index.ts` `STANDING_CONTRACT_FOOTER`); do not restate it
+manually. The canonical task-spec template lives in `docs/delegation-contract.md` —
+author dispatches against it. (Observed 2026-07: a delegated build deleted an
+actively-written harness log from its cwd.)
 
 Vague role descriptions cause routing drift. Keep descriptions sharp about *when*
 a role gets work, not just what it does.
@@ -275,7 +277,7 @@ loop budget is exhausted.
 **Reviewer verdict contract.** Every `qa-reviewer` task must ask for a
 structured verdict, one of:
 
-- `PASS` — proceed to `shipper`
+- `PASS` — proceed to ship (the implementing builder commits)
 - `FAIL: implementation` — findings as `file:line` + what's wrong + expected
   behavior; route back to `builder`
 - `FAIL: design` — the flaw is in the approach, not the code; route back to
@@ -307,6 +309,12 @@ prior findings forward so the reviewer checks resolution, not rediscovery.
 If iteration N's findings are unrelated to iteration N-1's (new problems
 keep appearing), treat that as a design smell and escalate to `architect`
 even before the budget runs out.
+
+(Enforced in config: qa-reviewer returns are verdict-normalized with a
+`[VERDICT: ...]` first line and the session-level 3-FAIL budget is annotated
+automatically — see `extensions/subagent/index.ts` `finalizeQaOutput`. Ceiling:
+the counter is per-session and consecutive, not per-work-item; mid-chain qa
+steps are not counted.)
 
 ## Defaults
 
@@ -350,4 +358,12 @@ inside `~/.pi/agent`:
   to write mode, and spawned children inherit `--write` only when the parent
   gate is in write mode — see `extensions/read-only-default.ts` and
   `extensions/subagent/index.ts` `__piWriteGateMode`.)
+- (Enforced in config, no action needed: `extensions/read-only-default.ts` hard-blocks
+  `edit`/`write` tool calls whenever the lead model is fable, in all gate modes,
+  regardless of confirm/write state — spawned children are exempted via the
+  `PI_SUBAGENT=1` env var so builders can still write.)
+- (Enforced in config, no action needed: `extensions/subagent/index.ts`
+  `finalizeQaOutput` normalizes every qa-reviewer return with a `[VERDICT: ...]`
+  first line and annotates the session-level consecutive-FAIL loop budget of 3;
+  the counter is per-session, not per-work-item, and mid-chain qa steps aren't counted.)
 
