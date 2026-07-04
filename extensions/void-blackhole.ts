@@ -718,71 +718,87 @@ class BlackHoleComponent {
 		// handful of bright stars with their own glyphs and harder twinkle,
 		// three tight open clusters in the quiet corners, and an ultra-dim
 		// scatter so even the emptiest corners read faintly populated --
-		const key = `${artW}x${rows}`;
-		if (this.starsKey !== key) {
-			this.starsKey = key;
-			this.stars = [];
-			// Gaussian falloff around the line through (0.5, 0.30) at a
-			// shallow slope — offset upward so it doesn't fight the hole.
-			const bandW = (nx: number, ny: number) => {
-				const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
-				return Math.exp(-d * d);
-			};
-			const nField = Math.floor((artW * rows) / 13);
-			let placed = 0;
-			let guard = 0;
-			while (placed < nField && guard++ < nField * 20) {
-				const nx = Math.random();
-				const ny = Math.random();
-				if (Math.random() > 0.62 + 0.38 * bandW(nx, ny)) continue;
-				this.stars.push({
-					col: Math.floor(nx * artW),
-					row: Math.floor(ny * rows),
-					b: 0.02 + Math.random() * 0.1,
-					p: Math.random() * Math.PI * 2,
-					tw: 0.8 + Math.random() * 1.4,
-					ch: null,
-					dep: 0.15 + Math.random() * 0.25,
-				});
-				placed++;
-			}
-			const nBright = Math.max(5, Math.floor((artW * rows) / 120));
-			for (let i = 0; i < nBright; i++) {
-				const b = 0.2 + Math.random() * 0.3;
-				this.stars.push({
-					col: Math.floor(Math.random() * artW),
-					row: Math.floor(Math.random() * rows),
-					b,
-					p: Math.random() * Math.PI * 2,
-					tw: 1.6 + Math.random() * 1.6,
-					ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
-					dep: 0.3 + Math.random() * 0.3,
-				});
-			}
-			// Fewer open clusters on small frames — three tight clusters plus
-			// the band and scatter is too much texture for a small canvas.
-			const nClusters = artW < 70 ? 2 : 3;
-			for (let c = 0; c < nClusters; c++) {
-				let ccol = 0;
-				let crow = 0;
-				for (let tries = 0; tries < 16; tries++) {
-					ccol = (0.1 + Math.random() * 0.8) * artW;
-					crow = (0.1 + Math.random() * 0.8) * rows;
-					const ux = ccol / artW - 0.5;
-					const uy = crow / rows - 0.5;
-					if (Math.hypot(ux, uy) > 0.28) break;
-				}
-				const members = 7 + Math.floor(Math.random() * 6);
-				for (let i = 0; i < members; i++) {
-					// Triangular-ish gaussian spread, squashed for cell aspect.
-					const gx =
-						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
-					const gy =
-						(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+		if (!smallFrame) {
+			const key = `${artW}x${rows}`;
+			if (this.starsKey !== key) {
+				this.starsKey = key;
+				this.stars = [];
+				// Gaussian falloff around the line through (0.5, 0.30) at a
+				// shallow slope — offset upward so it doesn't fight the hole.
+				const bandW = (nx: number, ny: number) => {
+					const d = (ny - 0.3 - (nx - 0.5) * 0.35) / 0.18;
+					return Math.exp(-d * d);
+				};
+				const nField = Math.floor((artW * rows) / 13);
+				let placed = 0;
+				let guard = 0;
+				while (placed < nField && guard++ < nField * 20) {
+					const nx = Math.random();
+					const ny = Math.random();
+					if (Math.random() > 0.62 + 0.38 * bandW(nx, ny)) continue;
 					this.stars.push({
-						col: Math.round(ccol + gx * 4),
-						row: Math.round(crow + gy * 2),
-						b: 0.05 + Math.random() * 0.12,
+						col: Math.floor(nx * artW),
+						row: Math.floor(ny * rows),
+						b: 0.02 + Math.random() * 0.1,
+						p: Math.random() * Math.PI * 2,
+						tw: 0.8 + Math.random() * 1.4,
+						ch: null,
+						dep: 0.15 + Math.random() * 0.25,
+					});
+					placed++;
+				}
+				const nBright = Math.max(5, Math.floor((artW * rows) / 120));
+				for (let i = 0; i < nBright; i++) {
+					const b = 0.2 + Math.random() * 0.3;
+					this.stars.push({
+						col: Math.floor(Math.random() * artW),
+						row: Math.floor(Math.random() * rows),
+						b,
+						p: Math.random() * Math.PI * 2,
+						tw: 1.6 + Math.random() * 1.6,
+						ch: b > 0.4 ? "*" : b > 0.28 ? "+" : ".",
+						dep: 0.3 + Math.random() * 0.3,
+					});
+				}
+				// Fewer open clusters on small frames — three tight clusters plus
+				// the band and scatter is too much texture for a small canvas.
+				const nClusters = artW < 70 ? 2 : 3;
+				for (let c = 0; c < nClusters; c++) {
+					let ccol = 0;
+					let crow = 0;
+					for (let tries = 0; tries < 16; tries++) {
+						ccol = (0.1 + Math.random() * 0.8) * artW;
+						crow = (0.1 + Math.random() * 0.8) * rows;
+						const ux = ccol / artW - 0.5;
+						const uy = crow / rows - 0.5;
+						if (Math.hypot(ux, uy) > 0.28) break;
+					}
+					const members = 7 + Math.floor(Math.random() * 6);
+					for (let i = 0; i < members; i++) {
+						// Triangular-ish gaussian spread, squashed for cell aspect.
+						const gx =
+							(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+						const gy =
+							(Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
+						this.stars.push({
+							col: Math.round(ccol + gx * 4),
+							row: Math.round(crow + gy * 2),
+							b: 0.05 + Math.random() * 0.12,
+							p: Math.random() * Math.PI * 2,
+							tw: 0.8 + Math.random() * 1.4,
+							ch: null,
+							dep: 0.15 + Math.random() * 0.25,
+						});
+					}
+				}
+				// Ultra-dim uniform scatter: fills in even the corners the band
+				// and clusters skip, so nowhere in the frame reads truly empty.
+				const nScatter = Math.floor(nField / 2.5);
+				for (let i = 0; i < nScatter; i++) {
+					this.stars.push({
+						col: Math.floor(Math.random() * artW),
+						row: Math.floor(Math.random() * rows),
+						b: 0.015 + Math.random() * 0.03,
 						p: Math.random() * Math.PI * 2,
 						tw: 0.8 + Math.random() * 1.4,
 						ch: null,
@@ -790,42 +806,30 @@ class BlackHoleComponent {
 					});
 				}
 			}
-			// Ultra-dim uniform scatter: fills in even the corners the band
-			// and clusters skip, so nowhere in the frame reads truly empty.
-			const nScatter = Math.floor(nField / 2.5);
-			for (let i = 0; i < nScatter; i++) {
-				this.stars.push({
-					col: Math.floor(Math.random() * artW),
-					row: Math.floor(Math.random() * rows),
-					b: 0.015 + Math.random() * 0.03,
-					p: Math.random() * Math.PI * 2,
-					tw: 0.8 + Math.random() * 1.4,
-					ch: null,
-					dep: 0.15 + Math.random() * 0.25,
-				});
-			}
 		}
 		const holeRx = EVENT_HORIZON * sX;
 		const holeRy = EVENT_HORIZON * sY;
-		for (const s of this.stars) {
-			const dx = (s.col - cx) / holeRx;
-			const dy = (s.row - cy) / holeRy;
-			if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
-			// Staggered twinkle, each star at its own rate and phase, swinging
-			// through a per-star depth so some flicker harder than others.
-			const tw =
-				1 -
-				s.dep +
-				s.dep * (0.5 + 0.5 * Math.sin(this.elapsed * s.tw + s.p));
-			if (s.ch) {
-				glyph(s.col, s.row, s.ch, s.b * tw);
-				if (s.ch === "*") {
-					// Sparkle halo on the brightest tier only.
-					deposit(s.col - 1, s.row, 0.06 * tw);
-					deposit(s.col + 1, s.row, 0.06 * tw);
+		if (!smallFrame) {
+			for (const s of this.stars) {
+				const dx = (s.col - cx) / holeRx;
+				const dy = (s.row - cy) / holeRy;
+				if (dx * dx + dy * dy < 1.2) continue; // swallowed by the shadow
+				// Staggered twinkle, each star at its own rate and phase, swinging
+				// through a per-star depth so some flicker harder than others.
+				const tw =
+					1 -
+					s.dep +
+					s.dep * (0.5 + 0.5 * Math.sin(this.elapsed * s.tw + s.p));
+				if (s.ch) {
+					glyph(s.col, s.row, s.ch, s.b * tw);
+					if (s.ch === "*") {
+						// Sparkle halo on the brightest tier only.
+						deposit(s.col - 1, s.row, 0.06 * tw);
+						deposit(s.col + 1, s.row, 0.06 * tw);
+					}
+				} else {
+					stamp(s.col, s.row, s.b * tw);
 				}
-			} else {
-				stamp(s.col, s.row, s.b * tw);
 			}
 		}
 
