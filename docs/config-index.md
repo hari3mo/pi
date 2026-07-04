@@ -67,7 +67,11 @@ Contracts, Standing Orders). Files: `extensions/subagent/index.ts`,
 `extensions/read-only-default.ts`, `agents/architect.md`, `agents/builder.md`,
 `agents/shipper.md` (deleted), `docs/delegation-contract.md`, `docs/rework-loop.md`,
 `AGENTS.md`, `docs/config-index.md`. Why: code shipped ahead of docs; this closes the gap
-and prunes a redundant role.
+and prunes a redundant role. Follow-up same day: parallel-mode result assembly in
+`extensions/subagent/index.ts` no longer runs `finalizeQaOutput` on failed subprocess
+results (a crashed qa-reviewer's error text could mutate the FAIL counter); `prompts/ship.md`,
+`prompts/build.md`, `prompts/feature.md` updated to delegate shipping to "builder" instead
+of the deleted "shipper" role.
 
 **Doctrine suite is manual-only, not routine validation.** `AGENTS.md` →
 Config Maintenance no longer tells the agent to auto-run
