@@ -21,24 +21,33 @@ The subagent pipeline (scope-planner → architect → builder → qa-reviewer, 
    default:
    - **Micro** (single file, ≤ ~20 changed lines, zero design decisions):
      dispatch ONE `builder` with the fully specified change; skip
-     scope-planner, architect, and qa-reviewer; spot-check the returned
-     diff with targeted verification reads.
+     scope-planner, architect, and qa-reviewer. The builder returns the
+     diff; the lead judges that RETURNED diff only. Any in-repo confirmation
+     goes to `verifier` — the lead never opens files to verify.
    - **Single-session scope** (fits comfortably in one context window,
-     requirements clear, no genuinely concurrent workstreams): dispatch ONE
-     `solo-engineer` with the whole bounded task end-to-end, then
-     spot-check against acceptance criteria. NO pipeline. Escalate the
+     requirements clear, no genuinely concurrent workstreams): dispatch the
+     whole bounded task end-to-end as ONE chain call — `solo-engineer` →
+     `verifier` (greenfield with a runnable acceptance path) or
+     `solo-engineer` → `qa-reviewer` (touches existing behavior). The
+     verifier/reviewer MUST be the FINAL chain step — verdict normalization
+     only applies to the last chain result. NO pipeline. Escalating the
      dispatch to `fable-engineer` (≈1.6x cost, benchmarked best blind-review
-     quality) when the code is expensive to change later — core algorithms,
-     dense state, long-lived public contracts — or after `solo-engineer`
-     fails review twice; its task text must inline any repo conventions
-     since it loads no context files. (Benchmarked
-     2026-07: the full pipeline cost 2–14x solo with equal-or-worse
-     quality at this scale — see ~/orch-bench/REPORT.md.)
+     quality) requires explicit user approval: when the code is expensive to
+     change later — core algorithms, dense state, long-lived public contracts
+     — or after `solo-engineer` fails review twice, the lead PROPOSES
+     `fable-engineer` to the user and dispatches it only once approved (never
+     automatically). Its task text must inline any repo conventions since it
+     loads no context files. (Benchmarked 2026-07: the full pipeline cost
+     2–14x solo with equal-or-worse quality at this scale — see
+     ~/orch-bench/REPORT.md.)
    - **Full pipeline** ONLY when at least one holds: scope exceeds one
      context window (multi-session work, 10+ interacting files); 2+
      workstreams that can genuinely run concurrently; or requirements
      ambiguous enough to need scope-planner negotiation. If none holds,
-     the pipeline is the wrong tool.
+     the pipeline is the wrong tool. Within the pipeline, independent
+     builders fan out in a single parallel call (max 8 tasks) and dependent
+     sequences dispatch as chains; the lead's own turns are reserved for
+     routing and synthesis.
 2. **Current selected model is `claude-opus-4-8` AND the task is appropriately
    complex** (see the opus complexity test in Hard Delegation Thresholds:
    3+ parallelizable workstreams, context-heavy scope, or mechanical work at
@@ -79,6 +88,26 @@ interview — do not add friction to clear requests; (2) in a non-interactive
 stated assumptions and list them in the final report, mirroring the
 write-gate's headless contract.
 
+### Fable Token Economy (MUST when the lead is `claude-fable-5`)
+
+The lead is the only orchestrator-tier context in play, so its own reads and
+turns are the most expensive tokens in the session. Guard them:
+
+- **Read almost nothing.** The lead reads only dispatch returns, a first-try
+  locating grep with a known, specific target, and at most one targeted
+  excerpt ≤50 lines needed to author a dispatch spec. Anything beyond that —
+  a longer read, a second excerpt, an iterating search — goes to `scout`.
+- **Never verify by reading.** Post-build checks go to `verifier` (spot-check
+  tier) or `qa-reviewer` (gate tier); the lead does not open files to confirm
+  a build.
+- **Batch every dispatch.** All independent subtasks go out in ONE parallel
+  subagent call, and dependent steps go out in ONE chain call. Sequential
+  single dispatches are allowed only when one result genuinely determines
+  whether — or what — the next dispatch is.
+- **Rework is one chain.** Each rework iteration is a single chain call
+  (`builder` fix → fresh `qa-reviewer` re-review), not two separate
+  dispatches.
+
 ## Model Tiers (pinned)
 
 | Tier | Model | Thinking level | Role |
@@ -94,7 +123,7 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into eight roles. Do not collapse verification into the builder —
+Real work splits into nine roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
@@ -104,8 +133,9 @@ an agent must not review its own code.
 | `builder` | Genuinely mechanical implementation: boilerplate, test scaffolding, wiring, renames, bulk edits; ships after review passes (commits, CI, lint/type fixes, chores) | Mechanical |
 | `scout` | Read-only bulk investigation: map structure, extract facts, return compressed `file:line` findings for the orchestrator — never edits | Mechanical |
 | `solo-engineer` | Whole bounded tasks at single-session scope, executed end-to-end — including small-but-hard tasks where design and implementation cannot separate; also core algorithmic/stateful modules inside a pipeline | Deep reasoning |
-| `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — or escalation after two failed reviews. Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
+| `fable-engineer` | Highest-stakes solo builds: core algorithms, dense state, long-lived contracts, delicate refactors — dispatched ONLY with explicit user approval this session (requested, or an approved escalation). Clean context: inline repo conventions in the task | Orchestrator-tier model, solo |
 | `qa-reviewer` | Verification, edge cases, regression risk | Deep reasoning |
+| `verifier` | Post-build spot-check verification: runs the acceptance path plus targeted confirmation reads, returns PASS/FAIL with `file:line` evidence; never edits | Mechanical |
 
 Note the orchestrator does NOT hand its own frontier model to `architect` or
 `qa-reviewer`. By the time work reaches those roles, the hardest part — framing an
@@ -127,11 +157,16 @@ When a task arrives, decompose it and route each piece by weight:
     lint/type/format fixes, renames, commits (the implementing builder ships after
     review passes)
   - EXCEPT core algorithmic or stateful modules: route those to
-    `solo-engineer` (or `fable-engineer` at highest stakes) even when the
+    `solo-engineer` (or, with explicit user approval, `fable-engineer` at
+    highest stakes) even when the
     design is fixed — mechanical-tier builders ship subtle spec-corner
     defects that review does not catch (benchmarked: error-token
     aliasing, reference canonicalization)
-- **Verification** → deep reasoning tier, and never the same agent that built it
+- **Verification** — split by weight:
+  - gate-tier verification (existing-behavior/high-risk changes) → `qa-reviewer`
+    (deep reasoning, never the same agent that built it)
+  - spot-check-tier verification (confirm a greenfield/micro build against its
+    acceptance criteria) → `verifier` (mechanical)
 - **Small-but-hard execution** (design and implementation inseparable) → `solo-engineer`
   - tricky concurrency fixes, subtle algorithms, delicate refactors of dense
     logic — one bounded task, executed end-to-end; still reviewed by
@@ -201,7 +236,8 @@ The lead MUST route through `scope-planner` and/or `architect` first when ANY of
   dependency into an EXISTING system, or one that will outlive the task →
   `architect` when the design will fan out to 2+ builders or pairs with a
   blind `peer-engineer` opinion; otherwise route the whole task, design
-  inline, to `solo-engineer` (or `fable-engineer` at highest stakes). For
+  inline, to `solo-engineer` (or, with explicit user approval,
+  `fable-engineer` at highest stakes). For
   greenfield single-session builds, these calls are made inline by
   `solo-engineer`/`fable-engineer` — that is their charter; do
   not route a self-contained new module through `architect` just because
@@ -216,19 +252,19 @@ The lead MUST send work to `qa-reviewer` when ANY of:
 - The change touches **3+ files** of existing code, auth/security paths,
   data migrations, or public API surface
 
-QA may drop to a lead spot-check (targeted verification reads plus running
-the acceptance path) for: micro dispatches, and `solo-engineer` builds of
-greenfield modules that have a runnable acceptance path. (Benchmarked:
-QA cycles on greenfield code did not lift quality above solo — see
-~/orch-bench/REPORT.md.)
+QA may drop to a `verifier` dispatch (which runs the acceptance path plus
+targeted confirmation reads and returns PASS/FAIL) for: micro dispatches, and
+`solo-engineer` builds of greenfield modules that have a runnable acceptance
+path — the lead never verifies by reading. (Benchmarked: QA cycles on
+greenfield code did not lift quality above solo — see ~/orch-bench/REPORT.md.)
 
 The lead MUST dispatch `scout` (not read/grep inline) when ANY of:
 
 - A locating search (grep/find for a symbol, name, or file) misses on the
   first try — an iterating filesystem hunt is already bulk investigation
-- Understanding the code requires a 100+ line read or a hunt through
-  package internals — the lead keeps only compressed `file:line` findings,
-  enough to route the task
+- Understanding the code requires a read beyond one targeted ≤50-line
+  excerpt, or a hunt through package internals — the lead keeps only
+  compressed `file:line` findings, enough to route the task
 
 A first-try locating grep with a known, specific target is fine inline;
 the moment it becomes a search *strategy*, it belongs to `scout`.
@@ -285,11 +321,13 @@ structured verdict, one of:
 
 **Loop mechanics:**
 
-1. On `FAIL: implementation`, re-delegate to `builder` with (a) the original
-   bounded task, (b) the reviewer's findings verbatim, and (c) an explicit
-   instruction to fix ONLY the findings — no opportunistic refactoring.
-2. Re-review the fix. A fresh `qa-reviewer` invocation checks the findings
-   are resolved AND nothing regressed. Never let the builder self-certify.
+1. On `FAIL: implementation`, dispatch the iteration as ONE chain call:
+   `builder` (given (a) the original bounded task, (b) the reviewer's findings
+   verbatim, and (c) an explicit instruction to fix ONLY the findings — no
+   opportunistic refactoring) → a fresh `qa-reviewer` as the FINAL chain step.
+2. The chain's closing `qa-reviewer` checks the findings are resolved AND
+   nothing regressed; verdict normalization applies because it is the last
+   step. Never let the builder self-certify.
 3. On `FAIL: design`, do not patch around it. Route back to `architect`
    with the reviewer's findings; the revised design then flows forward
    through `builder` → `qa-reviewer` again.
@@ -321,9 +359,10 @@ steps are not counted.)
 - Lead session: `claude-fable-5` at `xhigh` (set in `~/.pi/agent/settings.json`);
   recommend bumping to max effort when a task genuinely rewards it
 - Deploy the full pipeline only per the scale-routing in the Delegation
-  Gate (fable routes micro → one builder, single-session → `solo-engineer`,
-  and reserves the pipeline for multi-session scope, genuine concurrency,
-  or ambiguity; opus only for appropriately complex tasks)
+  Gate (fable routes micro → one builder, single-session → a `solo-engineer`
+  → `verifier`/`qa-reviewer` chain, and reserves the pipeline for
+  multi-session scope, genuine concurrency, or ambiguity; opus only for
+  appropriately complex tasks)
 - Orchestration is the exception, not the default: most tasks route to one
   strong solo agent; the pipeline exists for scope, parallelism, or
   ambiguity it can actually exploit
@@ -331,6 +370,15 @@ steps are not counted.)
   code itself — every file change is delegated to a builder-tier agent
 - Delegated builds loop through the Rework Loop until `qa-reviewer` passes
   or the 3-iteration budget forces re-framing/escalation
+- Independent subtasks dispatch in ONE parallel subagent call and dependent
+  steps in ONE chain call; sequential single dispatches only when one result
+  determines the next — the lead's turns are for routing and synthesis
+- Verification never consumes lead tokens: post-build checks go to `verifier`
+  (spot-check) or `qa-reviewer` (gate), and the lead never opens files to
+  confirm a build
+- `fable-engineer` is opt-in only — dispatched solely with explicit user
+  approval this session (requested, or an approved escalation), since it is
+  the only subagent that burns orchestrator-tier tokens
 - Spend the priciest model only where it pays for itself
 
 ## Config Maintenance (~/.pi/agent)
