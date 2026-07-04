@@ -22,12 +22,17 @@ Fast mode (default, <1s, stdlib-only — run at session start):
      in the baseline; a change WARNs once with the re-verification list
      (pi-tui patch, extension smoke, hook filter) — upgrades become audited
      events instead of silent drift.
+  7. Oracle upstream staleness: oracle vault pages stamped source_layer:
+     upstream carry a pi_version:; a page stamped against a pi version other
+     than the live one WARNs once (count + examples) so the session re-verifies
+     it against the updated docs. Fail-open: no vault / no obtainable pi
+     version -> skip (local/learned pages never go stale).
 
 Full mode (--full, spawns the pinned graphify python — run from /audit):
-  7. Semantic cache drift: LLM-extracted docs whose cache entry no longer
+  8. Semantic cache drift: LLM-extracted docs whose cache entry no longer
      matches content (edited without re-cache) would be silently dropped by
      the next rebuild.
-  8. Extension load smoke: every extension is loaded with pi's own jiti
+  9. Extension load smoke: every extension is loaded with pi's own jiti
      loader against a fake pi (scripts/smoke-extensions.mjs) — catches
      ExtensionAPI/layout breakage after a pi upgrade.
 
@@ -49,6 +54,7 @@ from pathlib import Path
 AGENT_DIR = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi" / "agent"))
 OUT = AGENT_DIR / "graphify-out"
 BASELINE = OUT / ".pipeline_baseline.json"
+ORACLE = AGENT_DIR / "oracle"
 
 REBUILD_SLACK_S = 15 * 60
 FLAG_STALE_S = 24 * 3600
@@ -173,6 +179,64 @@ def _write_baseline(baseline: dict) -> None:
 
 
 PI_PKG = Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent"
+
+
+def _pi_version() -> str | None:
+    """Live installed pi version from its package manifest (the same source the
+    toolchain baseline reads), or None if unobtainable — callers fail open."""
+    try:
+        return json.loads((PI_PKG / "package.json").read_text(encoding="utf-8")).get("version") or None
+    except (ValueError, OSError):
+        return None
+
+
+def check_oracle_staleness() -> None:
+    # Fast path: a line-grep of the oracle vault frontmatter (no YAML dep).
+    # Upstream oracle pages (source_layer: upstream) carry a pi_version: stamp;
+    # per oracle/SCHEMA.md a pi update makes any page stamped against the old
+    # version suspect (local/learned pages never go stale). WARN once with the
+    # count + a few examples so the session re-verifies them against the updated
+    # docs before trusting them. Fail open: no vault or no obtainable pi version
+    # -> skip silently.
+    if not ORACLE.is_dir():
+        return
+    cur = _pi_version()
+    if not cur:
+        return
+
+    def field(fm: list[str], key: str) -> str | None:
+        for line in fm:
+            if line.startswith(key + ":"):
+                # strip the value's inline "# comment" (SCHEMA.md-style stamps)
+                return line.split(":", 1)[1].split("#", 1)[0].strip()
+        return None
+
+    stale: list[str] = []
+    for page in sorted(ORACLE.rglob("*.md")):
+        try:
+            lines = page.read_text(encoding="utf-8", errors="replace").splitlines()
+        except OSError:
+            continue
+        # Only inspect the YAML frontmatter block (--- ... ---), never the body,
+        # so SCHEMA.md's own template/examples cannot false-match.
+        if not lines or lines[0].strip() != "---":
+            continue
+        end = next((i for i in range(1, len(lines)) if lines[i].strip() == "---"), None)
+        if end is None:
+            continue
+        fm = lines[1:end]
+        if field(fm, "source_layer") != "upstream":
+            continue
+        ver = field(fm, "pi_version")
+        if ver and ver != cur:
+            stale.append(str(page.relative_to(ORACLE)))
+    if stale:
+        sample = ", ".join(stale[:5])
+        warnings.append(
+            f"pipeline: {len(stale)} oracle upstream page(s) stamped for a pi version "
+            f"other than the live {cur} — re-verify their claims against the updated pi "
+            f"docs/examples and re-stamp (oracle/SCHEMA.md staleness protocol): "
+            f"{sample}{'...' if len(stale) > 5 else ''}")
 
 
 def check_toolchain_versions() -> None:
@@ -352,6 +416,7 @@ def main() -> int:
     check_lead_profile_coverage()
     check_reflection_drift()
     check_toolchain_versions()
+    check_oracle_staleness()
     if args.full:
         check_semantic_cache_drift()
         check_extension_loads()
