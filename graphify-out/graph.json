@@ -74,14 +74,94 @@
   },
   "nodes": [
     {
+      "label": "manifest.json",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "schema_manifest",
+      "community": 33,
+      "norm_label": "manifest.json"
+    },
+    {
+      "label": "$comment",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L2",
+      "_origin": "ast",
+      "id": "schema_manifest_comment",
+      "community": 33,
+      "norm_label": "$comment"
+    },
+    {
+      "label": "schemaVersion",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L3",
+      "_origin": "ast",
+      "id": "schema_manifest_schemaversion",
+      "community": 33,
+      "norm_label": "schemaversion"
+    },
+    {
+      "label": "targets",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L4",
+      "_origin": "ast",
+      "id": "schema_manifest_targets",
+      "community": 33,
+      "norm_label": "targets"
+    },
+    {
+      "label": "layout",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L46",
+      "_origin": "ast",
+      "id": "schema_manifest_layout",
+      "community": 33,
+      "norm_label": "layout"
+    },
+    {
+      "label": "$comment",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L47",
+      "_origin": "ast",
+      "id": "schema_manifest_layout_comment",
+      "community": 33,
+      "norm_label": "$comment"
+    },
+    {
+      "label": "expected",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "schema_manifest_layout_expected",
+      "community": 33,
+      "norm_label": "expected"
+    },
+    {
+      "label": "known",
+      "file_type": "code",
+      "source_file": "schema/manifest.json",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "schema_manifest_layout_known",
+      "community": 33,
+      "norm_label": "known"
+    },
+    {
       "label": "graph-first-stats.schema.json",
       "file_type": "code",
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema",
       "community": 76,
-      "norm_label": "graph-first-stats.schema.json"
+      "norm_label": "graph-first-stats.schema.json",
+      "id": "schema_graph_first_stats_schema"
     },
     {
       "label": "$schema",
@@ -89,9 +169,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L2",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_schema",
       "community": 76,
-      "norm_label": "$schema"
+      "norm_label": "$schema",
+      "id": "schema_graph_first_stats_schema_schema"
     },
     {
       "label": "$id",
@@ -99,9 +179,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L3",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_id",
       "community": 76,
-      "norm_label": "$id"
+      "norm_label": "$id",
+      "id": "schema_graph_first_stats_schema_id"
     },
     {
       "label": "title",
@@ -109,9 +189,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L4",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_title",
       "community": 76,
-      "norm_label": "title"
+      "norm_label": "title",
+      "id": "schema_graph_first_stats_schema_title"
     },
     {
       "label": "description",
@@ -119,9 +199,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L5",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_description",
       "community": 76,
-      "norm_label": "description"
+      "norm_label": "description",
+      "id": "schema_graph_first_stats_schema_description"
     },
     {
       "label": "type",
@@ -129,9 +209,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L6",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_type"
     },
     {
       "label": "items",
@@ -139,9 +219,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L7",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_items",
       "community": 76,
-      "norm_label": "items"
+      "norm_label": "items",
+      "id": "schema_graph_first_stats_schema_items"
     },
     {
       "label": "type",
@@ -149,9 +229,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L8",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_items_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_items_type"
     },
     {
       "label": "additionalProperties",
@@ -159,9 +239,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L9",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_items_additionalproperties",
       "community": 76,
-      "norm_label": "additionalproperties"
+      "norm_label": "additionalproperties",
+      "id": "schema_graph_first_stats_schema_items_additionalproperties"
     },
     {
       "label": "required",
@@ -169,9 +249,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L10",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_items_required",
       "community": 76,
-      "norm_label": "required"
+      "norm_label": "required",
+      "id": "schema_graph_first_stats_schema_items_required"
     },
     {
       "label": "properties",
@@ -179,9 +259,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L11",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_items_properties",
       "community": 76,
-      "norm_label": "properties"
+      "norm_label": "properties",
+      "id": "schema_graph_first_stats_schema_items_properties"
     },
     {
       "label": "id",
@@ -189,9 +269,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_properties_id",
       "community": 76,
-      "norm_label": "id"
+      "norm_label": "id",
+      "id": "schema_graph_first_stats_schema_properties_id"
     },
     {
       "label": "type",
@@ -199,9 +279,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_id_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_id_type"
     },
     {
       "label": "minLength",
@@ -209,9 +289,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_id_minlength",
       "community": 76,
-      "norm_label": "minlength"
+      "norm_label": "minlength",
+      "id": "schema_graph_first_stats_schema_id_minlength"
     },
     {
       "label": "ts",
@@ -219,9 +299,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_properties_ts",
       "community": 76,
-      "norm_label": "ts"
+      "norm_label": "ts",
+      "id": "schema_graph_first_stats_schema_properties_ts"
     },
     {
       "label": "type",
@@ -229,9 +309,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_ts_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_ts_type"
     },
     {
       "label": "minimum",
@@ -239,9 +319,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_ts_minimum",
       "community": 76,
-      "norm_label": "minimum"
+      "norm_label": "minimum",
+      "id": "schema_graph_first_stats_schema_ts_minimum"
     },
     {
       "label": "nudges",
@@ -249,9 +329,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_properties_nudges",
       "community": 76,
-      "norm_label": "nudges"
+      "norm_label": "nudges",
+      "id": "schema_graph_first_stats_schema_properties_nudges"
     },
     {
       "label": "type",
@@ -259,9 +339,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_nudges_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_nudges_type"
     },
     {
       "label": "minimum",
@@ -269,9 +349,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_nudges_minimum",
       "community": 76,
-      "norm_label": "minimum"
+      "norm_label": "minimum",
+      "id": "schema_graph_first_stats_schema_nudges_minimum"
     },
     {
       "label": "blocks",
@@ -279,9 +359,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_properties_blocks",
       "community": 76,
-      "norm_label": "blocks"
+      "norm_label": "blocks",
+      "id": "schema_graph_first_stats_schema_properties_blocks"
     },
     {
       "label": "type",
@@ -289,9 +369,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_blocks_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_blocks_type"
     },
     {
       "label": "minimum",
@@ -299,9 +379,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_blocks_minimum",
       "community": 76,
-      "norm_label": "minimum"
+      "norm_label": "minimum",
+      "id": "schema_graph_first_stats_schema_blocks_minimum"
     },
     {
       "label": "bypasses",
@@ -309,9 +389,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_properties_bypasses",
       "community": 76,
-      "norm_label": "bypasses"
+      "norm_label": "bypasses",
+      "id": "schema_graph_first_stats_schema_properties_bypasses"
     },
     {
       "label": "type",
@@ -319,9 +399,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_bypasses_type",
       "community": 76,
-      "norm_label": "type"
+      "norm_label": "type",
+      "id": "schema_graph_first_stats_schema_bypasses_type"
     },
     {
       "label": "minimum",
@@ -329,9 +409,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "_origin": "ast",
-      "id": "schema_graph_first_stats_schema_bypasses_minimum",
       "community": 76,
-      "norm_label": "minimum"
+      "norm_label": "minimum",
+      "id": "schema_graph_first_stats_schema_bypasses_minimum"
     },
     {
       "label": "impact-trace.ts",
@@ -9100,86 +9180,6 @@
       "id": "schema_keybindings_schema_additionalproperties_minitems"
     },
     {
-      "label": "manifest.json",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L1",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "manifest.json",
-      "id": "schema_manifest"
-    },
-    {
-      "label": "$comment",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L2",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "$comment",
-      "id": "schema_manifest_comment"
-    },
-    {
-      "label": "schemaVersion",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L3",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "schemaversion",
-      "id": "schema_manifest_schemaversion"
-    },
-    {
-      "label": "targets",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L4",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "targets",
-      "id": "schema_manifest_targets"
-    },
-    {
-      "label": "layout",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L40",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "layout",
-      "id": "schema_manifest_layout"
-    },
-    {
-      "label": "$comment",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L41",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "$comment",
-      "id": "schema_manifest_layout_comment"
-    },
-    {
-      "label": "expected",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L42",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "expected",
-      "id": "schema_manifest_layout_expected"
-    },
-    {
-      "label": "known",
-      "file_type": "code",
-      "source_file": "schema/manifest.json",
-      "source_location": "L51",
-      "_origin": "ast",
-      "community": 33,
-      "norm_label": "known",
-      "id": "schema_manifest_layout_known"
-    },
-    {
       "label": "settings.schema.json",
       "file_type": "code",
       "source_file": "schema/settings.schema.json",
@@ -13195,14 +13195,134 @@
   ],
   "links": [
     {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "docs/config-index.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "docs_config_index_audit_map",
+      "target": "schema_manifest"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_heuristic_entry_schema"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_keybindings_schema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L2",
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_manifest_comment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L46",
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_manifest_layout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_manifest_schemaversion",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L4",
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_manifest_targets",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_settings_schema"
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "README.md",
+      "source_location": null,
+      "weight": 1.0,
+      "source": "schema_manifest",
+      "target": "schema_trust_schema"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L47",
+      "weight": 1.0,
+      "source": "schema_manifest_layout",
+      "target": "schema_manifest_layout_comment",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "schema_manifest_layout",
+      "target": "schema_manifest_layout_expected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "schema/manifest.json",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "schema_manifest_layout",
+      "target": "schema_manifest_layout_known",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_description",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_description"
     },
     {
       "relation": "contains",
@@ -13210,9 +13330,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_id",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_id"
     },
     {
       "relation": "contains",
@@ -13220,9 +13340,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_items",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_items"
     },
     {
       "relation": "contains",
@@ -13230,9 +13350,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_schema",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_schema"
     },
     {
       "relation": "contains",
@@ -13240,9 +13360,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_title",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_title"
     },
     {
       "relation": "contains",
@@ -13250,9 +13370,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema",
-      "target": "schema_graph_first_stats_schema_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_type"
     },
     {
       "relation": "contains",
@@ -13260,9 +13380,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items",
-      "target": "schema_graph_first_stats_schema_items_additionalproperties",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_items_additionalproperties"
     },
     {
       "relation": "contains",
@@ -13270,9 +13390,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items",
-      "target": "schema_graph_first_stats_schema_items_properties",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_items_properties"
     },
     {
       "relation": "contains",
@@ -13280,9 +13400,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items",
-      "target": "schema_graph_first_stats_schema_items_required",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_items_required"
     },
     {
       "relation": "contains",
@@ -13290,9 +13410,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items",
-      "target": "schema_graph_first_stats_schema_items_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_items_type"
     },
     {
       "relation": "contains",
@@ -13300,9 +13420,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items_properties",
-      "target": "schema_graph_first_stats_schema_properties_blocks",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_properties_blocks"
     },
     {
       "relation": "contains",
@@ -13310,9 +13430,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items_properties",
-      "target": "schema_graph_first_stats_schema_properties_bypasses",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_properties_bypasses"
     },
     {
       "relation": "contains",
@@ -13320,9 +13440,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items_properties",
-      "target": "schema_graph_first_stats_schema_properties_id",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_properties_id"
     },
     {
       "relation": "contains",
@@ -13330,9 +13450,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items_properties",
-      "target": "schema_graph_first_stats_schema_properties_nudges",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_properties_nudges"
     },
     {
       "relation": "contains",
@@ -13340,9 +13460,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_items_properties",
-      "target": "schema_graph_first_stats_schema_properties_ts",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_properties_ts"
     },
     {
       "relation": "contains",
@@ -13350,9 +13470,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_id",
-      "target": "schema_graph_first_stats_schema_id_minlength",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_id_minlength"
     },
     {
       "relation": "contains",
@@ -13360,9 +13480,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_id",
-      "target": "schema_graph_first_stats_schema_id_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_id_type"
     },
     {
       "relation": "contains",
@@ -13370,9 +13490,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_ts",
-      "target": "schema_graph_first_stats_schema_ts_minimum",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_ts_minimum"
     },
     {
       "relation": "contains",
@@ -13380,9 +13500,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_ts",
-      "target": "schema_graph_first_stats_schema_ts_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_ts_type"
     },
     {
       "relation": "contains",
@@ -13390,9 +13510,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_nudges",
-      "target": "schema_graph_first_stats_schema_nudges_minimum",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_nudges_minimum"
     },
     {
       "relation": "contains",
@@ -13400,9 +13520,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_nudges",
-      "target": "schema_graph_first_stats_schema_nudges_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_nudges_type"
     },
     {
       "relation": "contains",
@@ -13410,9 +13530,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_blocks",
-      "target": "schema_graph_first_stats_schema_blocks_minimum",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_blocks_minimum"
     },
     {
       "relation": "contains",
@@ -13420,9 +13540,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_blocks",
-      "target": "schema_graph_first_stats_schema_blocks_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_blocks_type"
     },
     {
       "relation": "contains",
@@ -13430,9 +13550,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_bypasses",
-      "target": "schema_graph_first_stats_schema_bypasses_minimum",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_bypasses_minimum"
     },
     {
       "relation": "contains",
@@ -13440,9 +13560,9 @@
       "source_file": "schema/graph-first-stats.schema.json",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "schema_graph_first_stats_schema_properties_bypasses",
-      "target": "schema_graph_first_stats_schema_bypasses_type",
-      "confidence_score": 1.0
+      "target": "schema_graph_first_stats_schema_bypasses_type"
     },
     {
       "relation": "contains",
@@ -26695,16 +26815,6 @@
       "target": "schema_heuristic_entry_schema_type"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_heuristic_entry_schema"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "schema/heuristic-entry.schema.json",
@@ -27085,16 +27195,6 @@
       "target": "schema_keybindings_schema_type"
     },
     {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_keybindings_schema"
-    },
-    {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "schema/keybindings.schema.json",
@@ -27143,106 +27243,6 @@
       "confidence_score": 1.0,
       "source": "schema_keybindings_schema_additionalproperties_items",
       "target": "schema_keybindings_schema_items_type"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "docs/config-index.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "docs_config_index_audit_map",
-      "target": "schema_manifest"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L2",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_manifest_comment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L40",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_manifest_layout"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L3",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_manifest_schemaversion"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L4",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_manifest_targets"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_settings_schema"
-    },
-    {
-      "relation": "references",
-      "confidence": "EXTRACTED",
-      "confidence_score": 1.0,
-      "source_file": "README.md",
-      "source_location": null,
-      "weight": 1.0,
-      "source": "schema_manifest",
-      "target": "schema_trust_schema"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L41",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_comment"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L42",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_expected"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "schema/manifest.json",
-      "source_location": "L51",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "schema_manifest_layout",
-      "target": "schema_manifest_layout_known"
     },
     {
       "relation": "contains",
@@ -31037,5 +31037,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "4494efc2acbdebdad9c5600366f566249580ddb5"
+  "built_at_commit": "c4fb9a2bba106541297bc72764881a4c34525b77"
 }

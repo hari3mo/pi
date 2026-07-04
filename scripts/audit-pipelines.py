@@ -14,6 +14,9 @@ Fast mode (default, <1s, stdlib-only — run at session start):
      a >20% drop below baseline means structural regression (e.g. the
      semantic-layer wipe of 2026-07-04: giant 615 -> 126).
   5. Reflection drift: graph memory newer than LESSONS.md means reflect stopped.
+  5b. Graph-first bypass drift: a high recorded bypass ratio in
+     .graph_first_stats.json means the graph keeps failing to answer structure
+     searches (re-cache or loosen the detector). Silent when the file is absent.
 
   6. Toolchain change detection: pi / graphifyy / node versions are recorded
      in the baseline; a change WARNs once with the re-verification list
@@ -230,6 +233,32 @@ def check_extension_loads() -> None:
             errors.append(line.removeprefix("ERROR").strip())
 
 
+def check_graph_first_drift() -> None:
+    # Fast path: a local file read. The graph-first extension appends per-session
+    # {nudges,blocks,bypasses} to .graph_first_stats.json. A high bypass ratio
+    # means the graph keeps failing to answer structure searches (users re-run
+    # the blocked grep to proceed) — re-cache or loosen the detector. Silent when
+    # the stats file is absent (feature not yet exercised — fail open).
+    stats = OUT / ".graph_first_stats.json"
+    if not stats.exists():
+        return
+    try:
+        recs = json.loads(stats.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return
+    if not isinstance(recs, list):
+        return
+    blocks = sum(int(r.get("blocks", 0)) for r in recs if isinstance(r, dict))
+    bypasses = sum(int(r.get("bypasses", 0)) for r in recs if isinstance(r, dict))
+    denom = blocks + bypasses
+    # Require a few events so a single bypass can't trip the warning.
+    if denom >= 4 and bypasses / denom > 0.5:
+        warnings.append(
+            f"pipeline: graph-first bypass ratio {bypasses}/{denom} exceeds 50% across "
+            "recorded sessions — the graph is not answering structure searches; re-cache "
+            "(/graphify --update) or loosen the detector in extensions/graph-first.ts")
+
+
 def check_reflection_drift() -> None:
     mem = OUT / "memory"
     lessons = OUT / "reflections" / "LESSONS.md"
@@ -282,6 +311,7 @@ def main() -> int:
     check_flag_staleness()
     check_autocommit_liveness()
     check_connectivity_ratchet()
+    check_graph_first_drift()
     check_reflection_drift()
     check_toolchain_versions()
     if args.full:
