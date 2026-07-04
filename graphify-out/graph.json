@@ -74,14 +74,54 @@
   },
   "nodes": [
     {
+      "label": "test-config-paths.mjs",
+      "file_type": "code",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "scripts_test_config_paths",
+      "community": 60,
+      "norm_label": "test-config-paths.mjs"
+    },
+    {
+      "label": "PKG",
+      "file_type": "code",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L12",
+      "_origin": "ast",
+      "id": "scripts_test_config_paths_pkg",
+      "community": 60,
+      "norm_label": "pkg"
+    },
+    {
+      "label": "jiti",
+      "file_type": "code",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L15",
+      "_origin": "ast",
+      "id": "scripts_test_config_paths_jiti",
+      "community": 60,
+      "norm_label": "jiti"
+    },
+    {
+      "label": "cases",
+      "file_type": "code",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L18",
+      "_origin": "ast",
+      "id": "scripts_test_config_paths_cases",
+      "community": 60,
+      "norm_label": "cases"
+    },
+    {
       "label": "concurrency-guard.ts",
       "file_type": "code",
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "extensions_concurrency_guard",
       "community": 40,
-      "norm_label": "concurrency-guard.ts"
+      "norm_label": "concurrency-guard.ts",
+      "id": "extensions_concurrency_guard"
     },
     {
       "label": "AGENT_DIR",
@@ -89,9 +129,9 @@
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L34",
       "_origin": "ast",
-      "id": "extensions_concurrency_guard_agent_dir",
       "community": 40,
-      "norm_label": "agent_dir"
+      "norm_label": "agent_dir",
+      "id": "extensions_concurrency_guard_agent_dir"
     },
     {
       "label": "git()",
@@ -99,9 +139,9 @@
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L36",
       "_origin": "ast",
-      "id": "extensions_concurrency_guard_git",
       "community": 40,
-      "norm_label": "git()"
+      "norm_label": "git()",
+      "id": "extensions_concurrency_guard_git"
     },
     {
       "label": "agentRel()",
@@ -109,9 +149,9 @@
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L49",
       "_origin": "ast",
-      "id": "extensions_concurrency_guard_agentrel",
       "community": 40,
-      "norm_label": "agentrel()"
+      "norm_label": "agentrel()",
+      "id": "extensions_concurrency_guard_agentrel"
     },
     {
       "label": "self-audit.ts",
@@ -369,7 +409,7 @@
       "source_file": "",
       "source_location": "",
       "_origin": "ast",
-      "community": 4,
+      "community": 59,
       "norm_label": "path",
       "id": "path"
     },
@@ -3977,7 +4017,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "caveman.js",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman"
     },
@@ -3987,7 +4027,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "fs",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman_fs"
     },
@@ -3997,7 +4037,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "path",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman_path"
     },
@@ -4007,7 +4047,7 @@
       "source_file": "git/github.com/DietrichGebert/ponytail/benchmarks/arms/caveman.js",
       "source_location": "L4",
       "_origin": "ast",
-      "community": 60,
+      "community": 59,
       "norm_label": "system",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_arms_caveman_system"
     },
@@ -9675,7 +9715,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L1",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "porcelain.json",
       "id": "themes_porcelain"
     },
@@ -9685,7 +9725,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L2",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "$schema",
       "id": "themes_porcelain_schema"
     },
@@ -9695,7 +9735,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L3",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "name",
       "id": "themes_porcelain_name"
     },
@@ -10395,7 +10435,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L81",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "export",
       "id": "themes_porcelain_export"
     },
@@ -10405,7 +10445,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L82",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "pagebg",
       "id": "themes_porcelain_export_pagebg"
     },
@@ -10415,7 +10455,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L83",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "cardbg",
       "id": "themes_porcelain_export_cardbg"
     },
@@ -10425,7 +10465,7 @@
       "source_file": "themes/porcelain.json",
       "source_location": "L84",
       "_origin": "ast",
-      "community": 69,
+      "community": 24,
       "norm_label": "infobg",
       "id": "themes_porcelain_export_infobg"
     },
@@ -11054,7 +11094,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "openclaw copy of ponytail skill (generated)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_openclaw_skills_ponytail_skill_skill"
@@ -11138,7 +11178,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "opencode /ponytail command",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_opencode_command_ponytail_command"
@@ -11222,7 +11262,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "never-lazy floor (validation, data loss, security, a11y)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_agents_safety_floor"
@@ -11320,7 +11360,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "hermes after-install notes",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_after_install_notes"
@@ -11544,7 +11584,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "benchmark result: parseaddr email slip is provider-specific (openai), claude 100%",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_benchmarks_results_2026_06_16_robustness_audit_result"
@@ -11824,7 +11864,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "hermes plugin manifest",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_plugin_manifest"
@@ -11922,7 +11962,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "ponytail skill (lazy senior dev mode)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_skill"
@@ -11936,7 +11976,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 5,
+      "community": 10,
       "norm_label": "intensity levels (lite/full/ultra)",
       "community_name": "Subagent Dispatch Tool",
       "id": "git_github_com_dietrichgebert_ponytail_skills_ponytail_skill_levels"
@@ -12048,7 +12088,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify skill (knowledge-graph pipeline)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_skill"
@@ -12062,7 +12102,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify build pipeline (detect\u2192extract\u2192cluster\u2192report)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_pipeline"
@@ -12076,7 +12116,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify honesty rules (extracted/inferred/ambiguous)",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_skill_honesty_rules"
@@ -12090,7 +12130,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: url add + folder watch",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_add_watch_ref"
@@ -12104,7 +12144,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: extra exports + benchmark",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_exports_ref"
@@ -12118,7 +12158,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: extraction subagent prompt spec",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_extraction_spec_ref"
@@ -12132,7 +12172,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: github clone + cross-repo merge",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_github_and_merge_ref"
@@ -12146,7 +12186,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: commit hook + claude.md integration",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_hooks_ref"
@@ -12160,7 +12200,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: query/path/explain traversal",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_ref"
@@ -12174,7 +12214,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "constrained query vocab expansion",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_vocab_expansion"
@@ -12188,7 +12228,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "save-result self-improving feedback loop",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_query_save_result_loop"
@@ -12202,7 +12242,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: whisper video transcription",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_transcribe_ref"
@@ -12216,7 +12256,7 @@
       "captured_at": null,
       "author": null,
       "contributor": null,
-      "community": 44,
+      "community": 5,
       "norm_label": "graphify ref: incremental update + cluster-only",
       "community_name": "Ponytail Ruleset & Mirrors",
       "id": "skills_graphify_references_update_ref"
@@ -12477,12 +12517,42 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "scripts_test_config_paths",
+      "target": "scripts_test_config_paths_cases",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "scripts_test_config_paths",
+      "target": "scripts_test_config_paths_jiti",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/test-config-paths.mjs",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "scripts_test_config_paths",
+      "target": "scripts_test_config_paths_pkg",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L34",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agent_dir",
-      "confidence_score": 1.0
+      "target": "extensions_concurrency_guard_agent_dir"
     },
     {
       "relation": "contains",
@@ -12490,9 +12560,9 @@
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L49",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_agentrel",
-      "confidence_score": 1.0
+      "target": "extensions_concurrency_guard_agentrel"
     },
     {
       "relation": "contains",
@@ -12500,9 +12570,9 @@
       "source_file": "extensions/concurrency-guard.ts",
       "source_location": "L36",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "extensions_concurrency_guard",
-      "target": "extensions_concurrency_guard_git",
-      "confidence_score": 1.0
+      "target": "extensions_concurrency_guard_git"
     },
     {
       "relation": "contains",
@@ -29613,5 +29683,5 @@
       "source_file": "skills/graphify/SKILL.md"
     }
   ],
-  "built_at_commit": "0a9afcdecab74e1fe361ea0f83ff05026909a58f"
+  "built_at_commit": "f1d86810ac3f9e46246463cc01be3b2b843bb833"
 }

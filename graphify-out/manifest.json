@@ -1073,5 +1073,10 @@
     "mtime": 1783165530.6792846,
     "ast_hash": "ea688f6d80318af4c4e8e3cfaf4b1fc3",
     "semantic_hash": ""
+  },
+  "scripts/test-config-paths.mjs": {
+    "mtime": 1783165596.061307,
+    "ast_hash": "2a27ecc1ffc41302922fe4241ac771d3",
+    "semantic_hash": ""
   }
 }
