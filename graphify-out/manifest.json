@@ -477,7 +477,7 @@
   "scripts/validate-config.py": {
     "mtime": 1783159706.9726653,
     "ast_hash": "7d97fabd88b5bc7dfc41c28652a57271",
-    "semantic_hash": ""
+    "semantic_hash": "7d97fabd88b5bc7dfc41c28652a57271"
   },
   "settings.json": {
     "mtime": 1783157230.5280793,
@@ -497,7 +497,7 @@
   "AGENTS.md": {
     "mtime": 1783159742.172775,
     "ast_hash": "2012185b4617bbf3107aa7a754e46d6c",
-    "semantic_hash": ""
+    "semantic_hash": "2012185b4617bbf3107aa7a754e46d6c"
   },
   "README.md": {
     "mtime": 1783155869.6552408,
@@ -542,7 +542,7 @@
   "docs/config-index.md": {
     "mtime": 1783159742.1730037,
     "ast_hash": "d7bdd069f9e6b379031f10ebd4e9e6c7",
-    "semantic_hash": ""
+    "semantic_hash": "d7bdd069f9e6b379031f10ebd4e9e6c7"
   },
   "docs/delegation-contract.md": {
     "mtime": 1783153148.9725547,
@@ -1012,7 +1012,7 @@
   "extensions/graphify-bridge.ts": {
     "mtime": 1783159706.9723248,
     "ast_hash": "ff6065d509b90d1c1d6cb12b675014df",
-    "semantic_hash": ""
+    "semantic_hash": "ff6065d509b90d1c1d6cb12b675014df"
   },
   "graphify-out/memory/query_20260704_094139_why_does_the_config_index_bridge_six_communities.md": {
     "mtime": 1783158099.5084014,
@@ -1037,6 +1037,6 @@
   "extensions/self-audit.ts": {
     "mtime": 1783159683.3057277,
     "ast_hash": "85fa980f1526935e5b237c3420e57dbf",
-    "semantic_hash": ""
+    "semantic_hash": "85fa980f1526935e5b237c3420e57dbf"
   }
 }

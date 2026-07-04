@@ -1,16 +1,15 @@
-# Graph Report - agent  (2026-07-04)
+# Graph Report - .  (2026-07-04)
 
 ## Corpus Check
-- 197 files · ~160,192 words
-- Verdict: corpus is large enough that graph structure adds value.
+- cluster-only mode — file stats not available
 
 ## Summary
-- 1143 nodes · 1588 edges · 66 communities (57 shown, 9 thin omitted)
-- Extraction: 95% EXTRACTED · 5% INFERRED · 0% AMBIGUOUS · INFERRED: 76 edges (avg confidence: 0.66)
+- 1142 nodes · 1612 edges · 67 communities (59 shown, 8 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 0% AMBIGUOUS · INFERRED: 67 edges (avg confidence: 0.62)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `64ac9b0d`
+- Built from commit: `1a217245`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -59,6 +58,7 @@
 - [[_COMMUNITY_Local Ollama Benchmark|Local Ollama Benchmark]]
 - [[_COMMUNITY_Plugin Marketplace Manifest|Plugin Marketplace Manifest]]
 - [[_COMMUNITY_OpenCode Plugin|OpenCode Plugin]]
+- [[_COMMUNITY_porcelain.json|porcelain.json]]
 - [[_COMMUNITY_Command Tests|Command Tests]]
 - [[_COMMUNITY_Copilot Plugin Tests|Copilot Plugin Tests]]
 - [[_COMMUNITY_Schema Manifest|Schema Manifest]]
@@ -67,6 +67,7 @@
 - [[_COMMUNITY_Package Scripts|Package Scripts]]
 - [[_COMMUNITY_Pi Rewind Package|Pi Rewind Package]]
 - [[_COMMUNITY_Scrollback Fix Harness|Scrollback Fix Harness]]
+- [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
 - [[_COMMUNITY_Ponytail Arm|Ponytail Arm]]
 - [[_COMMUNITY_Scrollback Harness Copy|Scrollback Harness Copy]]
 - [[_COMMUNITY_OpenCode Config|OpenCode Config]]
@@ -74,7 +75,6 @@
 - [[_COMMUNITY_Autocommit Script|Autocommit Script]]
 - [[_COMMUNITY_Baseline Arm|Baseline Arm]]
 - [[_COMMUNITY_Publish Workflow|Publish Workflow]]
-- [[_COMMUNITY_Statusline (Windows)|Statusline (Windows)]]
 - [[_COMMUNITY_execute|execute]]
 - [[_COMMUNITY_graphify-bridge.ts|graphify-bridge.ts]]
 - [[_COMMUNITY_porcelain-light.json|porcelain-light.json]]
@@ -93,16 +93,16 @@
 10. `_fail()` - 13 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `graphify SKILL.md (nested duplicate copy)` --semantically_similar_to--> `Graphify skill (knowledge-graph pipeline)`  [INFERRED] [semantically similar]
-  .pi/agent/skills/graphify/SKILL.md → skills/graphify/SKILL.md
-- `graphify references/add-watch.md (nested duplicate copy)` --semantically_similar_to--> `graphify ref: URL add + folder watch`  [INFERRED] [semantically similar]
-  .pi/agent/skills/graphify/references/add-watch.md → skills/graphify/references/add-watch.md
-- `graphify references/exports.md (nested duplicate copy)` --semantically_similar_to--> `graphify ref: Extra exports + benchmark`  [INFERRED] [semantically similar]
-  .pi/agent/skills/graphify/references/exports.md → skills/graphify/references/exports.md
-- `graphify references/extraction-spec.md (nested duplicate copy)` --semantically_similar_to--> `graphify ref: Extraction subagent prompt spec`  [INFERRED] [semantically similar]
-  .pi/agent/skills/graphify/references/extraction-spec.md → skills/graphify/references/extraction-spec.md
-- `graphify references/github-and-merge.md (nested duplicate copy)` --semantically_similar_to--> `graphify ref: GitHub clone + cross-repo merge`  [INFERRED] [semantically similar]
-  .pi/agent/skills/graphify/references/github-and-merge.md → skills/graphify/references/github-and-merge.md
+- `Ponytail project (lazy senior dev skill)` --conceptually_related_to--> `~/.pi/agent config repo overview`  [INFERRED]
+  git/github.com/DietrichGebert/ponytail/README.md → README.md
+- `Config Index (semantic audit map)` --references--> `pi-tui scrollback-wipe fix`  [EXTRACTED]
+  docs/config-index.md → patches/pi-tui-scrollback-fix.md
+- `fable-engineer role card — Opt-in orchestrator-tier solo executor` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
+  agents/fable-engineer.md → AGENTS.md
+- `Orchestration Doctrine (AGENTS.md)` --references--> `Delegation Contract Template`  [EXTRACTED]
+  AGENTS.md → docs/delegation-contract.md
+- `peer-engineer role card — Blind second opinion (GPT lineage)` --implements--> `Orchestration Doctrine (AGENTS.md)`  [EXTRACTED]
+  agents/peer-engineer.md → AGENTS.md
 
 ## Import Cycles
 - None detected.
@@ -113,7 +113,7 @@
 - **Cross-agent rule distribution (aligned mirrors)** — git_github_com_dietrichgebert_ponytail_agents_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_clinerules_ponytail_rules, git_github_com_dietrichgebert_ponytail_github_copilot_instructions_rules, git_github_com_dietrichgebert_ponytail_kiro_steering_ponytail_rules, git_github_com_dietrichgebert_ponytail_windsurf_rules_ponytail_rules, git_github_com_dietrichgebert_ponytail_agents_ruleset [EXTRACTED 1.00]
 - **Graphify pipeline documentation set** — skills_graphify_skill_skill, skills_graphify_references_add_watch_ref, skills_graphify_references_exports_ref, skills_graphify_references_extraction_spec_ref, skills_graphify_references_github_and_merge_ref, skills_graphify_references_hooks_ref, skills_graphify_references_query_ref, skills_graphify_references_transcribe_ref, skills_graphify_references_update_ref [EXTRACTED 1.00]
 
-## Communities (66 total, 9 thin omitted)
+## Communities (67 total, 8 thin omitted)
 
 ### Community 0 - "Heuristics Extension"
 Cohesion: 0.06
@@ -129,11 +129,11 @@ Nodes (52): colors, accent, bashMode, border, borderAccent, borderMuted, customM
 
 ### Community 3 - "TUI Extensions & Config Index"
 Cohesion: 0.08
-Nodes (38): fmtDuration(), AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir() (+30 more)
+Nodes (38): fmtDuration(), AgentScopeSchema, ChainItem, DisplayItem, execute(), finalizeQaOutput(), formatTokens(), formatToolCall() (+30 more)
 
 ### Community 4 - "Ponytail Ruleset & Mirrors"
-Cohesion: 0.06
-Nodes (40): Path, graphify references/add-watch.md (nested duplicate copy), graphify references/exports.md (nested duplicate copy), graphify references/extraction-spec.md (nested duplicate copy), graphify references/github-and-merge.md (nested duplicate copy), graphify references/hooks.md (nested duplicate copy), graphify references/query.md (nested duplicate copy), graphify references/transcribe.md (nested duplicate copy) (+32 more)
+Cohesion: 0.09
+Nodes (31): autocommit.sh script, Autocommit snapshot infra (launchd + pre-commit), ~/.pi/agent config repo overview, Malleable schema policy, check_git_hygiene(), check_heuristics_hygiene(), check_installed_integrity(), check_layout() (+23 more)
 
 ### Community 5 - "Subagent Dispatch Tool"
 Cohesion: 0.06
@@ -182,8 +182,8 @@ Cohesion: 0.11
 Nodes (11): BlackHoleComponent, COMET_DEFS, CometDef, Constellation, CONSTELLATIONS, COS_T, DeepGalaxy, PLANETS (+3 more)
 
 ### Community 15 - "Void Black-Hole TUI"
-Cohesion: 0.08
-Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, amber (+15 more)
+Cohesion: 0.12
+Nodes (17): vars, amber, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bronze (+9 more)
 
 ### Community 16 - "Porcelain Light Theme"
 Cohesion: 0.19
@@ -218,8 +218,8 @@ Cohesion: 0.14
 Nodes (15): fs, getClaudeDir(), getConfigDir(), getConfigPath(), getDefaultMode(), isShellSafe(), os, path (+7 more)
 
 ### Community 24 - "Uninstall Script Tests"
-Cohesion: 0.08
-Nodes (23): export, cardBg, infoBg, pageBg, name, $schema, vars, ash (+15 more)
+Cohesion: 0.12
+Nodes (17): vars, ash, bgRaise, bgSelect, bgTool, bgToolErr, bgToolOk, bright (+9 more)
 
 ### Community 25 - "Ponytail Config Loader"
 Cohesion: 0.21
@@ -285,6 +285,10 @@ Nodes (8): assert, fs, os, path, { pathToFileURL }, statePath, test, tmp
 Cohesion: 0.36
 Nodes (7): execute(), findGraphRoot(), fmtAge(), GraphParams, GraphStats, runGraphify(), statusText()
 
+### Community 41 - "Local Ollama Benchmark"
+Cohesion: 0.36
+Nodes (7): AgentConfig, AgentDiscoveryResult, AgentScope, discoverAgents(), findNearestProjectAgentsDir(), isDirectory(), loadAgentsFromDir()
+
 ### Community 42 - "Plugin Marketplace Manifest"
 Cohesion: 0.25
 Nodes (5): CHECKS, assert, behavior, check(), test
@@ -292,6 +296,10 @@ Nodes (5): CHECKS, assert, behavior, check(), test
 ### Community 43 - "OpenCode Plugin"
 Cohesion: 0.22
 Nodes (7): assert, fs, HOST_PLUGIN_MANIFESTS, path, root, { spawn }, test
+
+### Community 44 - "porcelain.json"
+Cohesion: 0.29
+Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
 
 ### Community 46 - "Copilot Plugin Tests"
 Cohesion: 0.39
@@ -317,6 +325,10 @@ Nodes (7): assert, commands, fs, path, piSource, root, test
 Cohesion: 0.25
 Nodes (6): assert, fs, path, REQUIRED_COMMAND_FILES, root, test
 
+### Community 53 - "porcelain-light.json"
+Cohesion: 0.29
+Nodes (6): export, cardBg, infoBg, pageBg, name, $schema
+
 ### Community 55 - "Scrollback Harness Copy"
 Cohesion: 0.33
 Nodes (5): name, private, scripts, test, type
@@ -330,39 +342,35 @@ Cohesion: 0.83
 Nodes (3): fireChime(), fmtDuration(), sanitize()
 
 ### Community 60 - "Publish Workflow"
-Cohesion: 0.50
-Nodes (3): fs, path, system
-
-### Community 61 - "Statusline (Windows)"
-Cohesion: 0.50
-Nodes (3): fs, path, system
+Cohesion: 0.22
+Nodes (7): fs, path, system, fs, path, system, Path
 
 ### Community 65 - "porcelain-light.json"
 Cohesion: 0.67
 Nodes (3): doRender off-screen clamp, pi-tui scrollback-wipe fix, Viewport reflow on content collapse
 
 ## Knowledge Gaps
-- **581 isolated node(s):** `GraphParams`, `VALIDATOR`, `AuditResult`, `autocommit.sh script`, `BANNER_LINES` (+576 more)
+- **582 isolated node(s):** `autocommit.sh script`, `BANNER_LINES`, `APHORISMS`, `BANNER_WIDTH`, `GraphParams` (+577 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **9 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **8 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Work-memory lessons
 
 **Preferred sources** — corroborated by past sessions; start here.
-- `Config Index (semantic audit map)` (3× useful, score=2.998846671)
-- `~/.pi/agent config repo overview` (3× useful, score=2.998816527)
+- `Config Index (semantic audit map)` (3× useful, score=2.998804517)
+- `~/.pi/agent config repo overview` (3× useful, score=2.998774373)
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `porcelain-light.json`, `Ponytail MCP Server`, `Hermes Plugin Tests`, `TUI Extensions & Config Index`, `Keybindings Schema`, `Ponytail Ruleset & Mirrors`, `Windows Hook Tests`, `Command Tests`, `Ponytail Hook Tests`, `Void Black-Hole TUI`, `Correctness Gate`, `OpenCode Config`, `Uninstall Script Tests`, `Baseline Arm`, `Task Tracker Extension`?**
-  _High betweenness centrality (0.255) - this node is a cross-community bridge._
+- **Why does `Config Index (semantic audit map)` connect `Example Generator & LOC Metric` to `Heuristics Extension`, `porcelain-light.json`, `Ponytail MCP Server`, `Hermes Plugin Tests`, `TUI Extensions & Config Index`, `Keybindings Schema`, `Ponytail Ruleset & Mirrors`, `Windows Hook Tests`, `porcelain.json`, `Command Tests`, `Ponytail Hook Tests`, `Correctness Gate`, `porcelain-light.json`, `OpenCode Config`, `Baseline Arm`, `Task Tracker Extension`?**
+  _High betweenness centrality (0.262) - this node is a cross-community bridge._
 - **Why does `~/.pi/agent config repo overview` connect `Ponytail Ruleset & Mirrors` to `Example Generator & LOC Metric`, `Subagent Dispatch Tool`?**
-  _High betweenness centrality (0.086) - this node is a cross-community bridge._
+  _High betweenness centrality (0.083) - this node is a cross-community bridge._
 - **Why does `Ponytail project (lazy senior dev skill)` connect `Subagent Dispatch Tool` to `Hermes Plugin`, `Ponytail Ruleset & Mirrors`?**
-  _High betweenness centrality (0.062) - this node is a cross-community bridge._
-- **What connects `GraphParams`, `Return callable(obj) -> list[str] of violation messages.`, `Validate one manifest target; return parsed jsonl entries (for hygiene).` to the rest of the system?**
-  _614 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _High betweenness centrality (0.067) - this node is a cross-community bridge._
+- **What connects `autocommit.sh script`, `BANNER_LINES`, `APHORISMS` to the rest of the system?**
+  _615 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Heuristics Extension` be split into smaller, more focused modules?**
   _Cohesion score 0.057967313585291114 - nodes in this community are weakly interconnected._
 - **Should `Porcelain Dark Palette` be split into smaller, more focused modules?**
