@@ -59,7 +59,7 @@ and `claude-sonnet-5:high` for build/ship work.
 
 ## Role Split (not just thinker/doer)
 
-Real work splits into five roles. Do not collapse verification into the builder —
+Real work splits into six roles. Do not collapse verification into the builder —
 an agent must not review its own code.
 
 | Role | Responsibility | Tier |
