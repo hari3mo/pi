@@ -36,7 +36,7 @@ let pendingNudgeText: string | null = null;
 /** Orchestration-signal reason accumulated during the current run; first signal wins. */
 let pendingOrchNudgeReason: string | null = null;
 
-/** Armed after a successful builder-role subagent call; watches the next N lead tool calls for edit/write. */
+/** Armed after a successful worker-role subagent call; watches the next N lead tool calls for edit/write. */
 let builderWatch: { remaining: number } | null = null;
 
 /** session key -> recent subagent agent names (most recent last), capped at CHURN_CAP. */
@@ -256,7 +256,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 		try {
 			if (!builderWatch) return;
 			if (builderWatch.remaining > 0 && (event.toolName === "edit" || event.toolName === "write")) {
-				if (!pendingOrchNudgeReason) pendingOrchNudgeReason = "you edited files right after a builder run";
+				if (!pendingOrchNudgeReason) pendingOrchNudgeReason = "you edited files right after a worker run";
 				builderWatch = null;
 				return;
 			}
