@@ -3,7 +3,7 @@
   "theme": "porcelain-light/porcelain",
   "defaultProvider": "anthropic",
   "defaultModel": "claude-fable-5",
-  "defaultThinkingLevel": "high",
+  "defaultThinkingLevel": "xhigh",
   "quietStartup": false,
   "enabledModels": [
     "claude-sonnet-5",
