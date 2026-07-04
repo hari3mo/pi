@@ -55,13 +55,13 @@ Every session that changes config must update it.
 
 ### 2026-07-04
 
-**Orchestration pipeline made graph-aware; 26 heuristics distilled into canon.**
+**Orchestration pipeline made graph-aware; 27 heuristics distilled into canon.**
 Graph-first is now doctrine at every dispatch point: AGENTS.md budget invariant
 (query the `graph` tool before scout/reads), `agents/scout.md` + `agents/engineer.md`
 role cards, `docs/delegation-contract.md` read-first item, and
 `extensions/subagent/index.ts` STANDING_CONTRACT_FOOTER (every dispatched task told
 to orient via the graph). Heuristics sweep per user directive ("any heuristic that
-can be distilled into appropriate canon source, should"): 26 store entries distilled
+can be distilled into appropriate canon source, should"): 27 store entries distilled
 into AGENTS.md (probe-suite prohibition, doctrine-prose-is-behavior,
 mechanical-enforcement principle, graph-first), README.md (UTC-vs-local timestamps,
 `.pi/` project-store row), `docs/delegation-contract.md` (evidence-reconstruction
