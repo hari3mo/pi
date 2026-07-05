@@ -4,17 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "520863c7f46bd12b",
+        "id": "305c878fb5db9a43",
         "type": "tabs",
         "children": [
           {
-            "id": "90f95f090c2aae38",
+            "id": "790f8a6f143954e6",
             "type": "leaf",
             "state": {
-              "type": "graph",
+              "type": "empty",
               "state": {},
-              "icon": "lucide-git-fork",
-              "title": "Graph view"
+              "icon": "lucide-file",
+              "title": "New tab"
             }
           }
         ]
@@ -176,7 +176,7 @@
       "bases:Create new base": false
     }
   },
-  "active": "90f95f090c2aae38",
+  "active": "790f8a6f143954e6",
   "lastOpenFiles": [
     "_raw/graph-20260704-224249-2-concurrency-model.md",
     "_raw/graph-20260704-224249-1-concurrency-guard-multiple-shell-concurrent-sess.md",
