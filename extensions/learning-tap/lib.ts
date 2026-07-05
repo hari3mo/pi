@@ -9,8 +9,7 @@
  * ~/.hermes/plans/2026-07-04_210500-pi-learning-loop-redesign.md.
  */
 
-import { closeSync, existsSync, mkdirSync, openSync, renameSync, statSync, unlinkSync, writeFileSync } from "node:fs";
-import { appendFileSync, readFileSync } from "node:fs";
+import { appendFileSync, closeSync, existsSync, mkdirSync, openSync, statSync, unlinkSync } from "node:fs";
 import { join } from "node:path";
 
 // ---------------------------------------------------------------------------
