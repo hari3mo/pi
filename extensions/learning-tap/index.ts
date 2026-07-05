@@ -26,8 +26,8 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { StringEnum } from "@earendil-works/pi-ai";
 import { Type } from "typebox";
+import { BasisSchema, CategorySchema, ScopeSchema } from "../heuristics/schema.ts";
 import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "../lib/graph-lookup.ts";
 import {
 	addEvent,
@@ -120,28 +120,19 @@ export default function (pi: ExtensionAPI) {
 			"One imperative sentence; evidence pointers required.",
 		parameters: Type.Object({
 			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
-			category: StringEnum([
-				"correction",
-				"gotcha",
-				"environment",
-				"workflow",
-				"convention",
-				"orchestration",
-			] as const),
-			scope: StringEnum(["global", "project"] as const, { default: "global" }),
+			category: CategorySchema,
+			scope: ScopeSchema,
 			evidence: Type.Array(Type.String(), {
 				description: "Pointers backing the lesson: file:line, session:<id>, verdict text, doc path.",
 				minItems: 1,
 			}),
-			basis: Type.Optional(
-				StringEnum(["user-confirmed", "directly-observed", "reproduced", "documented"] as const),
-			),
+			basis: Type.Optional(BasisSchema),
 		}),
 		async execute(_toolCallId, params) {
 			const p = params as {
 				text: string;
 				category: string;
-				scope: string;
+				scope?: string;
 				evidence: string[];
 				basis?: string;
 			};
@@ -150,7 +141,7 @@ export default function (pi: ExtensionAPI) {
 				{
 					text: cap(p.text, USERTEXT_CAP),
 					category: p.category,
-					scope: p.scope,
+					scope: p.scope ?? "global",
 					basis: p.basis ?? "directly-observed",
 				},
 				p.evidence,
