@@ -63,6 +63,10 @@ FLAG_STALE_S = 24 * 3600
 AUTOCOMMIT_STALE_S = 2 * 3600
 RAW_STALE_S = 14 * 24 * 3600  # oracle/_raw drafts older than this are rotting
 RAW_MAX_FILES = 5             # more than this many un-promoted drafts backs up
+LEARNING = AGENT_DIR / "learning"
+EVENTS_STALE_S = 7 * 24 * 3600   # events.jsonl untouched this long -> taps dead
+CURSOR_LAG_S = 7 * 24 * 3600     # distiller cursor this far behind -> distiller dead
+EVENTS_MAX_BYTES = 10 * 1024 * 1024  # runaway tap guard (learning/SCHEMA.md)
 RATCHET_TOLERANCE = 0.8  # warn when giant fraction < 80% of best-ever
 # The ratchet measures CONFIG-REPO cohesion only. Nodes under the vendored git/
 # subtree (git/github.com/DietrichGebert/ponytail — a registered pi extension
@@ -395,9 +399,9 @@ def check_lead_profile_coverage() -> None:
 
 
 def check_raw_staging_rot() -> None:
-    # Fast path: a directory listing. knowledge-compound.ts stages draft synthesis
-    # notes into oracle/_raw/ for MANUAL promotion (oracle/SCHEMA.md query-
-    # compounding rule); nothing else watches it, so drafts rot silently. WARN
+    # Fast path: a directory listing. oracle/_raw is LEGACY staging (the old
+    # knowledge-compound flow); the nightly distiller drains it, after which
+    # this checks residual/manual drafts only. WARN
     # when the backlog grows (> RAW_MAX_FILES) or a draft has sat unpromoted for
     # > 14 days. Fail open: no vault / no _raw dir -> skip (not an error).
     raw = ORACLE / "_raw"
@@ -418,8 +422,44 @@ def check_raw_staging_rot() -> None:
         reasons.append(f"{len(stale)} older than 14d (oldest ~{oldest_days}d)")
     warnings.append(
         f"pipeline: oracle/_raw staging is backing up ({'; '.join(reasons)}) — review "
-        "and promote to synthesis/ (or delete) per oracle/SCHEMA.md's query-compounding "
-        "rule so knowledge-compound drafts don't rot unreviewed")
+        "and promote to synthesis/ (or delete) per oracle/SCHEMA.md, or let the "
+        "nightly distiller drain it (learning/SCHEMA.md)")
+
+
+def check_learning_liveness() -> None:
+    # Learning-pipeline liveness (learning/SCHEMA.md): the v1 loop died silently
+    # because nothing watched its stages. Guard both ends: taps writing (events
+    # mtime), distiller consuming (cursor lag), and runaway growth.
+    events = LEARNING / "events.jsonl"
+    if not events.exists():
+        return  # pipeline not yet active in this install — not an error
+    now = time.time()
+    size = events.stat().st_size
+    if size > EVENTS_MAX_BYTES:
+        errors.append(
+            f"pipeline: learning/events.jsonl is {size // (1024 * 1024)}MB (> 10MB) — "
+            "runaway tap; inspect learning-tap buffering/caps before it floods the distiller")
+    if now - events.stat().st_mtime > EVENTS_STALE_S:
+        warnings.append(
+            "pipeline: learning/events.jsonl untouched for > 7d — capture taps may be "
+            "dead (learning-tap extension not loading, or genuinely no sessions)")
+    cursor = LEARNING / ".distiller-cursor"
+    if not cursor.exists():
+        if now - events.stat().st_mtime > CURSOR_LAG_S:
+            warnings.append(
+                "pipeline: learning events exist but no .distiller-cursor — the nightly "
+                "distiller (Hermes cron) has never run; check `hermes` cron wiring")
+        return
+    try:
+        last_run = json.loads(cursor.read_text(encoding="utf-8")).get("lastRunTs", "")
+        run_ts = time.mktime(time.strptime(last_run[:19], "%Y-%m-%dT%H:%M:%S")) if last_run else 0
+    except Exception:
+        warnings.append("pipeline: learning/.distiller-cursor unreadable — distiller state suspect")
+        return
+    if events.stat().st_mtime - run_ts > CURSOR_LAG_S:
+        warnings.append(
+            "pipeline: distiller cursor > 7d behind newest learning events — the nightly "
+            "distiller (Hermes cron) looks dead; new lessons are piling up unprocessed")
 
 
 def check_reflection_drift() -> None:
@@ -477,6 +517,7 @@ def main() -> int:
     check_graph_first_drift()
     check_lead_profile_coverage()
     check_raw_staging_rot()
+    check_learning_liveness()
     check_reflection_drift()
     check_toolchain_versions()
     check_oracle_staleness()
