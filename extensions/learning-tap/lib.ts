@@ -237,3 +237,91 @@ export function answerFrom(content: unknown): string {
 export function cap(s: string, n: number): string {
 	return s.length > n ? s.slice(0, n) : s;
 }
+
+// ---------------------------------------------------------------------------
+// Correction tap classifier (v1, deliberately narrow — SCHEMA.md `correction`)
+//
+// A correction candidate is a USER input that plausibly reverses/amends what
+// the agent just did. False positives are the failure mode (they waste the
+// distiller's higher-bar review), so the match requires a corrective marker
+// ANCHORED near the start of the message, not anywhere: mid-sentence "no"
+// or a quoted "wrong" must not fire. All candidates carry basis "inferred";
+// the distiller holds them to a higher promotion bar than observed events.
+// ---------------------------------------------------------------------------
+
+const CORRECTION_RE =
+	/^\s*(?:no+[,.!\s]|wrong\b|not (?:that|this|what)\b|that'?s (?:not|wrong)\b|undo\b|revert\b|don'?t\b|stop\b|actually[,\s]|instead[,\s]|i (?:said|meant)\b|why did you\b|you (?:shouldn'?t|weren'?t supposed)\b)/i;
+
+/** Inputs that LOOK corrective but are routine and must not fire. */
+const CORRECTION_EXCLUDE_RE = /^\s*(?:no+[,.!\s]*(?:thanks|thank you|that'?s (?:all|fine|ok))|don'?t worry|stop(?:ping)? (?:by|at)\b)/i;
+
+export const MAX_CORRECTIONS_PER_SESSION = 3;
+
+export function isCorrectionCandidate(text: string): boolean {
+	const t = (text ?? "").trim();
+	if (t.length < 3 || t.length > 2000) return false; // too short to mean anything / too long to be a snap correction
+	if (t.startsWith("/") || t.startsWith("!")) return false; // slash command / bash, not prose
+	if (CORRECTION_EXCLUDE_RE.test(t)) return false;
+	return CORRECTION_RE.test(t);
+}
+
+// ---------------------------------------------------------------------------
+// Receipts (SCHEMA.md `receipts.jsonl`) — consumed-knowledge manifest, one
+// line per session, written at shutdown alongside the events flush. The
+// distiller's MEASURE pass joins these against outcomes.
+// ---------------------------------------------------------------------------
+
+export interface Receipt {
+	session: string;
+	ts: string;
+	cwd: string;
+	heuristicIdsInjected: string[];
+	oraclePagesRead: string[];
+	graphQueries: number;
+	correctionsCaptured: number;
+	violations: number;
+	outcome: QaVerdict | null; // last verdict seen this session, if any
+}
+
+/** Parse heuristic ids out of a heuristics.jsonl file body (skip bad lines). */
+export function heuristicIdsFrom(jsonl: string): string[] {
+	const ids: string[] = [];
+	for (const line of jsonl.split("\n")) {
+		const t = line.trim();
+		if (!t || t.startsWith("#")) continue;
+		try {
+			const id = (JSON.parse(t) as { id?: unknown }).id;
+			if (typeof id === "string") ids.push(id);
+		} catch {
+			/* skip bad line */
+		}
+	}
+	return ids;
+}
+
+/** Append one receipt line under the same lock protocol as events. */
+export function appendReceipt(learningDir: string, receipt: Receipt): boolean {
+	const line = JSON.stringify(receipt);
+	if (Buffer.byteLength(line, "utf8") > MAX_LINE_BYTES) return false;
+	// Reuse appendEvents' lock machinery via a minimal shim: receipts are a
+	// different file but the same directory lock serializes both writers.
+	const lockPath = join(learningDir, ".lock");
+	let locked = false;
+	try {
+		mkdirSync(learningDir, { recursive: true });
+		locked = acquireLockShared(lockPath);
+		if (!locked) return false;
+		appendFileSync(join(learningDir, "receipts.jsonl"), `${line}\n`, "utf8");
+		return true;
+	} catch {
+		return false;
+	} finally {
+		if (locked) {
+			try {
+				unlinkSync(lockPath);
+			} catch {
+				/* already gone */
+			}
+		}
+	}
+}
