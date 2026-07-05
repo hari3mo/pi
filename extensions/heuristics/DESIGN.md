@@ -71,7 +71,21 @@ Write path `mutateStore(dir, fn)` — used by capture/reinforce/delete/edit/evic
 Read path (injection): lock-free `readFile`; on ENOENT retry once after 20ms. Cache by
 mtime — re-stat before each injection, reload only on change. Injection NEVER writes.
 
-## 3. Capture — `learn_heuristic` tool
+## 3. Capture — RETIRED (moved to the learning pipeline)
+
+> **Phase-4 note (2026-07):** the `learn_heuristic` tool no longer exists. Explicit
+> capture is the `learn` tool in `extensions/learning-tap/` (same category/basis
+> enums, plus a REQUIRED `evidence` array), which buffers to
+> `learning/events.jsonl`; the nightly distiller (Hermes cron; contract
+> `learning/SCHEMA.md`) dedupes candidates against the oracle vault and BOTH
+> heuristic stores, then writes the surviving records here per §1's schema. The
+> stores, injection (§8), nudges (§9), and `/heuristics` commands (§10) are
+> unchanged — this extension is now the CONSUME side only. §§3-followups below
+> describe the retired direct-write flow for historical context; the capture
+> gate they specify (verified-true bases, generalizable one-liners) is enforced
+> by the distiller instead.
+
+Historical (retired direct-write tool):
 
 ```ts
 name: "learn_heuristic"

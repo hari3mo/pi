@@ -8,7 +8,11 @@ treat THIS file as authoritative. Full design:
 ## Files (this directory)
 
 - `events.jsonl`      — append-only intake. Writers: learning-tap, `learn` tool.
-- `receipts.jsonl`    — per-session consumed-knowledge manifests (Phase 3).
+- `receipts.jsonl`    — per-session consumed-knowledge manifests (Phase 3, LIVE):
+                        `{ session, ts, cwd, heuristicIdsInjected, oraclePagesRead,
+                        graphQueries, correctionsCaptured, violations, outcome }`.
+                        Written at session_shutdown even when no events were
+                        buffered (the "consumed but nothing happened" signal).
 - `.distiller-cursor` — JSON `{ "lastEventId": "...", "lastRunTs": "ISO" }`.
                         Writer: distiller only.
 - `digests/YYYY-MM-DD.md` — human-readable distiller run reports.
