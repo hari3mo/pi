@@ -132,7 +132,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 			promptIndex++;
 
 			if (pendingOrchNudgeReason) {
-				pendingNudgeText = `A recent delegation had trouble (${pendingOrchNudgeReason}); if there is a durable delegation lesson, call learn_heuristic (category: orchestration).`;
+				pendingNudgeText = `A recent delegation had trouble (${pendingOrchNudgeReason}); if there is a durable delegation lesson, call learn (category: orchestration).`;
 				pendingOrchNudgeReason = null;
 				return;
 			}
@@ -142,7 +142,7 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 			const errorsThisRun = runToolErrors;
 			runToolErrors = 0;
 			if (errorsThisRun >= TOOL_ERROR_THRESHOLD && promptIndex - lastGenericFirePromptIndex >= GENERIC_RATE_LIMIT_PROMPTS) {
-				pendingNudgeText = `This run hit ${errorsThisRun} tool errors — root-cause them; if the fix is a durable lesson call learn_heuristic, and if it exposes a harness defect, integrate a guard downstream (validate-config.py check, hook fix, or graph re-cache).`;
+				pendingNudgeText = `This run hit ${errorsThisRun} tool errors — root-cause them; if the fix is a durable lesson call learn, and if it exposes a harness defect, integrate a guard downstream (validate-config.py check, hook fix, or graph re-cache).`;
 				lastGenericFirePromptIndex = promptIndex;
 				return;
 			}
@@ -154,15 +154,15 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 					if (CORRECTION_RE.test(extractUserText(msg.content))) correctionSeen = true;
 				} else if (msg.role === "assistant" && Array.isArray(msg.content)) {
 					for (const part of msg.content as Array<Record<string, unknown>>) {
-						if (part.type === "toolCall" && part.name === "learn_heuristic") learnCalled = true;
+						if (part.type === "toolCall" && (part.name === "learn" || part.name === "learn_heuristic")) learnCalled = true;
 					}
-				} else if (msg.role === "toolResult" && msg.toolName === "learn_heuristic") {
+				} else if (msg.role === "toolResult" && (msg.toolName === "learn" || msg.toolName === "learn_heuristic")) {
 					learnCalled = true;
 				}
 			}
 
 			if (correctionSeen && !learnCalled && promptIndex - lastGenericFirePromptIndex >= GENERIC_RATE_LIMIT_PROMPTS) {
-				pendingNudgeText = "Note: the user corrected you recently — if that was a durable lesson, call learn_heuristic.";
+				pendingNudgeText = "Note: the user corrected you recently — if that was a durable lesson, call learn.";
 				lastGenericFirePromptIndex = promptIndex;
 			}
 		} catch {
