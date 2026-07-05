@@ -14,6 +14,7 @@
   ],
   "packages": [
     "npm:pi-rewind",
-    "git:github.com/DietrichGebert/ponytail"
+    "git:github.com/DietrichGebert/ponytail",
+    "npm:@mohndoe/pi-atlas"
   ]
 }
