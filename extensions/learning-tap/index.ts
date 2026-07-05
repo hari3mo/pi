@@ -152,7 +152,7 @@ export default function (pi: ExtensionAPI) {
 			return {
 				content: [
 					{
-						type: "text",
+						type: "text" as const,
 						text: ok
 							? `Lesson buffered for the nightly distiller (${ev.id}). It will be deduped against the oracle before storage.`
 							: "Duplicate of an already-buffered lesson this session (or session cap reached) — skipped.",
