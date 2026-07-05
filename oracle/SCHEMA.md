@@ -30,7 +30,7 @@ whether a `pi update` can invalidate it.
 |---|---|---|
 | `upstream` | The pi installation itself — README/docs/examples under `/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/` | **Yes** — carries `pi_version:`; see *Staleness Protocol* |
 | `local` | The local harness config — `~/.pi/agent` (AGENTS.md doctrine, extensions, skills, scripts, schemas) | No |
-| `learned` | Accumulated lessons — `/Users/harissaif/.pi/agent/heuristics/heuristics.jsonl` (the global heuristic store), `/Users/harissaif/.pi/agent/graphify-out/reflections/LESSONS.md` | No |
+| `learned` | Accumulated lessons — `/Users/harissaif/.pi/agent/heuristics/heuristics.jsonl` (the global heuristic store), `/Users/harissaif/.pi/agent/learning/events.jsonl` (capture-tap intake; distilled nightly per `learning/SCHEMA.md`), `/Users/harissaif/.pi/agent/graphify-out/reflections/LESSONS.md` | No |
 
 `upstream` pages MUST carry `pi_version:` (the pi version they were distilled against).
 `local` and `learned` pages MUST NOT carry `pi_version:` — their sources evolve
