@@ -309,7 +309,7 @@ export function appendReceipt(learningDir: string, receipt: Receipt): boolean {
 	let locked = false;
 	try {
 		mkdirSync(learningDir, { recursive: true });
-		locked = acquireLockShared(lockPath);
+		locked = acquireLock(lockPath);
 		if (!locked) return false;
 		appendFileSync(join(learningDir, "receipts.jsonl"), `${line}\n`, "utf8");
 		return true;
