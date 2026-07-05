@@ -2,7 +2,10 @@
  * Continuous-Learning Extension — entry point. See DESIGN.md (authoritative, v2).
  *
  * Wires together:
- *  - `learn_heuristic` tool (capture, DESIGN.md §3)
+ *  - capture now lives in the learning pipeline: the `learn` tool
+ *    (extensions/learning-tap) buffers explicit lessons to
+ *    learning/events.jsonl; the nightly distiller dedupes and writes THIS
+ *    extension's stores. Direct-write capture (learn_heuristic) is retired.
  *  - `before_agent_start` injection (DESIGN.md §8)
  *  - `agent_end` generic reflection nudge (DESIGN.md §9)
  *  - `tool_result` / `tool_call` orchestration nudge signals S1-S4 + lead
@@ -11,7 +14,6 @@
  */
 
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { Type } from "typebox";
 import { registerHeuristicsCommand } from "./command.ts";
 import { buildInjectionBlock } from "./inject.ts";
 import {
@@ -26,7 +28,7 @@ import {
 	type Scope,
 	matchesBuilderRole,
 } from "./schema.ts";
-import { findGitRoot, globalDir, projectDirFor, readStoreForInjection, saveHeuristic } from "./store.ts";
+import { globalDir, projectDirFor, readStoreForInjection } from "./store.ts";
 
 // ---------------------------------------------------------------------------
 // Module state (per process; cleared on session_start). See DESIGN.md §9.
@@ -92,63 +94,11 @@ export default function heuristicsExtension(pi: ExtensionAPI) {
 	});
 
 	// -------------------------------------------------------------------
-	// learn_heuristic tool (DESIGN.md §3)
+	// Capture retired (Phase 4): explicit lessons go through the `learn`
+	// tool (extensions/learning-tap) into learning/events.jsonl; the nightly
+	// distiller is the only writer of these stores besides /heuristics
+	// commands. DESIGN.md §3's learn_heuristic tool no longer exists.
 	// -------------------------------------------------------------------
-	pi.registerTool({
-		name: "learn_heuristic",
-		label: "Learn Heuristic",
-		description:
-			"Record a durable, generalizable, cross-session lesson: a user correction, a non-obvious " +
-			"gotcha, an environment/tooling quirk, a workflow/convention preference, or a delegation lesson.",
-		promptSnippet:
-			"Record a durable, verified, cross-session lesson (user corrections, gotchas, environment quirks, " +
-			"workflow preferences) — only facts determined to be true",
-		promptGuidelines: [
-			"Call learn_heuristic when you discover a durable lesson worth remembering across sessions: a user correction of your behavior, a non-obvious gotcha, an environment/tooling quirk, or a workflow/convention preference.",
-			"Use learn_heuristic scope 'project' for lessons specific to the current repository; use scope 'global' only for lessons that apply to every project.",
-			"Only call learn_heuristic for lessons determined to be TRUE: directly observed behavior, explicit user confirmation, a reproduced result, or authoritative documentation — never speculation, assumptions, plausible guesses, or single unverified inferences.",
-			"Do not call learn_heuristic for one-off facts, transient state, secrets, or anything already stated in AGENTS.md or the current task.",
-			"Phrase learn_heuristic text as a GENERALIZABLE lesson that will help future sessions: 'When X, do Y because Z' — never session-specific details like line numbers, temporary paths, ticket IDs, or one-off values.",
-			"Keep learn_heuristic text to one short imperative sentence.",
-			"After a delegated/subagent task fails, is misrouted to the wrong role or tier, needs rework, or reveals a better way to frame the hand-off, call learn_heuristic with category 'orchestration' capturing the durable delegation lesson — which role fits this kind of task, what context/files the task text must include, how to frame the contract, and what verification the return needed.",
-		],
-		parameters: Type.Object({
-			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
-			category: CategorySchema,
-			basis: BasisSchema,
-			scope: Type.Optional(ScopeSchema),
-		}),
-		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-			if (!params.text || !params.text.trim()) {
-				throw new Error("learn_heuristic: text must not be empty.");
-			}
-
-			let scope: Scope = (params.scope as Scope | undefined) ?? "project";
-			let project: string | null = null;
-			const warnings: string[] = [];
-
-			if (scope === "project") {
-				if (!ctx.isProjectTrusted()) {
-					scope = "global";
-					warnings.push("project not trusted; saved to global heuristics");
-				} else {
-					project = findGitRoot(ctx.cwd);
-				}
-			}
-
-			const dir = scope === "global" ? globalDir() : projectDirFor(ctx.cwd);
-			const category = params.category as Category;
-
-			const result = await saveHeuristic(dir, scope, project, params.text, category, "agent", params.basis as string);
-			const allWarnings = [...warnings, ...result.warnings];
-			const text = `Learned (${result.status}) [${result.id}]\n“${result.text}”${allWarnings.length ? `\n${allWarnings.join("\n")}` : ""}`;
-
-			return {
-				content: [{ type: "text" as const, text }],
-				details: { status: result.status, id: result.id, text: result.text, scope, warnings: allWarnings },
-			};
-		},
-	});
 
 	// -------------------------------------------------------------------
 	// before_agent_start: injection (DESIGN.md §8). Never blocks the turn.
