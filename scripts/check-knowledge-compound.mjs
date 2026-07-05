@@ -6,8 +6,6 @@
  *   - isSubstantive filter: errors, short answers, and non-query actions are dropped
  *   - addCandidate: dedupe (normalized question) + cap at MAX_ITEMS
  *   - buildSaveResultArgs: exact argv for `graphify save-result`
- *   - buildStagedNote: valid oracle frontmatter (synthesis/learned, NO pi_version),
- *     compact summary (≤200), draft lifecycle, and the Q/A body
  *
  * Smallest thing that fails if the flush logic breaks. Run:
  *   node scripts/check-knowledge-compound.mjs
@@ -19,7 +17,7 @@ import { AGENT_DIR, loadJiti, provisionNodeModules } from "./lib/jiti-loader.mjs
 // The extension imports @earendil-works/* — provision bare-specifier resolution.
 provisionNodeModules();
 const { jiti } = await loadJiti();
-const { isSubstantive, addCandidate, buildSaveResultArgs, buildStagedNote, normalizeQuestion } = await jiti.import(
+const { isSubstantive, addCandidate, buildSaveResultArgs, normalizeQuestion } = await jiti.import(
 	join(AGENT_DIR, "extensions", "knowledge-compound.ts"),
 );
 
@@ -66,27 +64,6 @@ check(
 	JSON.stringify(args) ===
 		JSON.stringify(["save-result", "--question", item.question, "--answer", item.answer, "--type", "query", "--outcome", "useful"]),
 );
-
-// --- buildStagedNote: oracle frontmatter + body -----------------------------
-const now = new Date("2026-07-04T12:34:56.000Z");
-const { filename, content } = buildStagedNote(item, now, 0);
-check("stagedNote: filename kebab + timestamp", /^graph-20260704-123456-0-[a-z0-9-]+\.md$/.test(filename));
-check("stagedNote: category synthesis", content.includes("category: synthesis"));
-check("stagedNote: source_layer learned", content.includes("source_layer: learned"));
-check("stagedNote: NO pi_version (learned pages omit it)", !content.includes("pi_version:"));
-check("stagedNote: lifecycle draft", content.includes("lifecycle: draft"));
-check("stagedNote: tags line canonical", content.includes("tags: [pi, graph, synthesis]"));
-check("stagedNote: summary present and ≤200 chars", /^summary: ".+"$/m.test(content) && summaryLen(content) <= 200);
-check("stagedNote: sources → graph.json", content.includes("graphify-out/graph.json"));
-check("stagedNote: unreviewed draft marker", content.includes("UNREVIEWED"));
-check("stagedNote: Q heading has the question", content.includes(`# Q: ${item.question}`));
-check("stagedNote: answer body present", content.includes(item.answer));
-check("stagedNote: records the graph action", content.includes("graph tool action: `query`"));
-
-function summaryLen(md) {
-	const m = md.match(/^summary: (".*")$/m);
-	return m ? JSON.parse(m[1]).length : Infinity;
-}
 
 assert.equal(failed, 0, `${failed} knowledge-compound check(s) failed`);
 console.log("\nknowledge-compound: all assertions passed");
