@@ -84,6 +84,27 @@ export default function (pi: ExtensionAPI) {
 		lastToolLabel = "";
 	});
 
+	// --- violation tap: guard extensions emit on the shared bus ------------
+	// oracle-first / graph-first emit "learning-violation" at nudge/block
+	// (same bus pattern as concurrency-guard -> self-audit). Payload:
+	// { doctrine: "oracle-first"|"graph-first"|"budget", detail: string }.
+	pi.events.on("learning-violation", (v: { doctrine?: string; detail?: string }) => {
+		try {
+			addEvent(
+				buffer,
+				makeEvent(
+					"violation",
+					{ doctrine: String(v?.doctrine ?? "unknown"), detail: cap(String(v?.detail ?? ""), 500) },
+					[`session:${sessionId}`],
+					sessionId,
+					cwd,
+				),
+			);
+		} catch {
+			/* never wedge the bus */
+		}
+	});
+
 	// --- correction tap: user inputs that reverse/amend the agent ----------
 	pi.on("input", async (event) => {
 		try {
