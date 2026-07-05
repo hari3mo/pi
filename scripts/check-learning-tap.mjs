@@ -122,5 +122,44 @@ check(
 	check("unstructured falls back to one entry", flat.length === 1 && flat[0].agent === "");
 }
 
+// --- Phase 3 additions: correction classifier, receipts ----------------------
+{
+	const { isCorrectionCandidate, heuristicIdsFrom, appendReceipt } = lib;
+	// corrections that must fire
+	check("correction: leading 'no,'", isCorrectionCandidate("no, use the other file"));
+	check("correction: 'wrong'", isCorrectionCandidate("wrong branch — I meant main"));
+	check("correction: 'undo'", isCorrectionCandidate("undo that last change"));
+	check("correction: 'actually,'", isCorrectionCandidate("actually, put it in lib.ts"));
+	check("correction: 'i meant'", isCorrectionCandidate("I meant the global store"));
+	// non-corrections that must NOT fire
+	check("no-fire: plain request", !isCorrectionCandidate("add a test for the parser"));
+	check("no-fire: mid-sentence 'no'", !isCorrectionCandidate("there is no lock file here"));
+	check("no-fire: 'no thanks'", !isCorrectionCandidate("no thanks, that's all"));
+	check("no-fire: slash command", !isCorrectionCandidate("/heuristics list"));
+	check("no-fire: bash prefix", !isCorrectionCandidate("!git status"));
+	check("no-fire: huge paste", !isCorrectionCandidate("no " + "x".repeat(3000)));
+
+	// heuristicIdsFrom
+	const jsonl = '{"id":"h_a"}\n# comment\nnot json\n{"id":"h_b"}\n{"noid":true}\n';
+	const ids = heuristicIdsFrom(jsonl);
+	check("heuristicIdsFrom skips junk, keeps ids", ids.length === 2 && ids[0] === "h_a" && ids[1] === "h_b");
+
+	// receipt round-trip
+	const dir = mkdtempSync(join(tmpdir(), "learning-receipt-check-"));
+	try {
+		const ok = appendReceipt(dir, {
+			session: "s1", ts: new Date().toISOString(), cwd: "/tmp",
+			heuristicIdsInjected: ["h_a"], oraclePagesRead: ["concepts/x.md"],
+			graphQueries: 2, correctionsCaptured: 1, violations: 0, outcome: "PASS",
+		});
+		check("receipt written", ok);
+		const parsed = JSON.parse(readFileSync(join(dir, "receipts.jsonl"), "utf8").trim());
+		check("receipt parses with outcome", parsed.outcome === "PASS" && parsed.heuristicIdsInjected[0] === "h_a");
+		check("receipt lock released", !existsSync(join(dir, ".lock")));
+	} finally {
+		rmSync(dir, { recursive: true, force: true });
+	}
+}
+
 console.log(failed === 0 ? "\nall checks passed" : `\n${failed} check(s) FAILED`);
 process.exit(failed === 0 ? 0 : 1);
