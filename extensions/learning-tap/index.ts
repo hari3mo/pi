@@ -246,6 +246,69 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	// --- flush ---------------------------------------------------------------
+	pi.registerCommand("learning", {
+		description: "Learning-pipeline stats: events, receipts, top heuristics, eviction candidates",
+		handler: async (_args, ctx) => {
+			try {
+				const lines: string[] = [];
+				const eventsPath = join(LEARNING_DIR, "events.jsonl");
+				const receiptsPath = join(LEARNING_DIR, "receipts.jsonl");
+				const kinds = new Map<string, number>();
+				if (existsSync(eventsPath)) {
+					for (const line of readFileSync(eventsPath, "utf8").split("\n")) {
+						if (!line.trim()) continue;
+						try {
+							const k = (JSON.parse(line) as { kind?: string }).kind ?? "?";
+							kinds.set(k, (kinds.get(k) ?? 0) + 1);
+						} catch {
+							/* skip */
+						}
+					}
+				}
+				const receipts = existsSync(receiptsPath)
+					? readFileSync(receiptsPath, "utf8").split("\n").filter((l) => l.trim()).length
+					: 0;
+				lines.push(`events: ${[...kinds.entries()].map(([k, n]) => `${k} ${n}`).join(" · ") || "none"}`);
+				lines.push(`receipts: ${receipts} session(s)`);
+
+				// Heuristics by reinforcement (both stores), plus never-reinforced count.
+				const stores = [
+					join(getAgentDir(), "heuristics", "heuristics.jsonl"),
+					join(ctx.cwd, ".pi", "heuristics", "heuristics.jsonl"),
+				];
+				const heur: { id: string; text: string; hits: number; created: string }[] = [];
+				for (const s of stores) {
+					if (!existsSync(s)) continue;
+					for (const line of readFileSync(s, "utf8").split("\n")) {
+						const t = line.trim();
+						if (!t || t.startsWith("#")) continue;
+						try {
+							const h = JSON.parse(t) as { id?: string; text?: string; hits?: number; created?: string };
+							if (h.id) heur.push({ id: h.id, text: h.text ?? "", hits: h.hits ?? 0, created: h.created ?? "" });
+						} catch {
+							/* skip */
+						}
+					}
+				}
+				const top = [...heur].sort((a, b) => b.hits - a.hits).slice(0, 5);
+				lines.push(`heuristics: ${heur.length} stored`);
+				for (const h of top) lines.push(`  ${h.hits}× ${h.text.slice(0, 80)}${h.text.length > 80 ? "…" : ""}`);
+				const STALE_DAYS = 30;
+				const staleMs = Date.now() - STALE_DAYS * 86400_000;
+				const evictable = heur.filter((h) => h.hits === 0 && Date.parse(h.created || "") < staleMs);
+				lines.push(
+					`eviction candidates (0 hits, >${STALE_DAYS}d old): ${evictable.length}` +
+						(evictable.length > 0 ? ` — next distiller run reviews: ${evictable.slice(0, 3).map((h) => h.id).join(", ")}${evictable.length > 3 ? ", …" : ""}` : ""),
+				);
+				const digests = join(LEARNING_DIR, "digests");
+				lines.push(`digests: ${existsSync(digests) ? "see " + digests : "none yet"}`);
+				ctx.ui.notify(lines.join("\n"), "info");
+			} catch (e) {
+				ctx.ui.notify(`learning stats failed: ${e instanceof Error ? e.message : String(e)}`, "warning");
+			}
+		},
+	});
+
 	pi.on("session_shutdown", async (_event, ctx) => {
 		try {
 			// Receipt first: written even for event-less sessions, so MEASURE can
