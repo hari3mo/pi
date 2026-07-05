@@ -226,6 +226,34 @@ export default function (pi: ExtensionAPI) {
 	// --- flush ---------------------------------------------------------------
 	pi.on("session_shutdown", async (_event, ctx) => {
 		try {
+			// Receipt first: written even for event-less sessions, so MEASURE can
+			// see sessions where injected knowledge produced no new lessons (the
+			// "consumed but nothing happened" signal eviction needs).
+			try {
+				const ids: string[] = [];
+				for (const store of [
+					join(getAgentDir(), "heuristics", "heuristics.jsonl"),
+					join(ctx.cwd, ".pi", "heuristics", "heuristics.jsonl"),
+				]) {
+					// Approximates the injected set: injection reads these same
+					// stores at before_agent_start (heuristics DESIGN.md §8).
+					if (existsSync(store)) ids.push(...heuristicIdsFrom(readFileSync(store, "utf8")));
+				}
+				appendReceipt(LEARNING_DIR, {
+					session: sessionId,
+					ts: new Date().toISOString(),
+					cwd: ctx.cwd,
+					heuristicIdsInjected: ids,
+					oraclePagesRead: [...oraclePagesRead],
+					graphQueries,
+					correctionsCaptured,
+					violations: buffer.filter((b) => b.kind === "violation").length,
+					outcome: lastVerdict,
+				} satisfies Receipt);
+			} catch {
+				/* receipts are best-effort */
+			}
+
 			if (buffer.length === 0) return;
 			appendEvents(LEARNING_DIR, buffer);
 
