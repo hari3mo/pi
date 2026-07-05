@@ -299,6 +299,7 @@ export default function (pi: ExtensionAPI) {
 			switch (action) {
 				case "nudge":
 					counts.nudges++;
+					pi.events.emit("learning-violation", { doctrine: "graph-first", detail: `nudge: ${command.slice(0, 200)}` });
 					pi.sendMessage(
 						{
 							customType: "graph-first-nudge",
@@ -310,6 +311,7 @@ export default function (pi: ExtensionAPI) {
 					return;
 				case "block":
 					counts.blocks++;
+					pi.events.emit("learning-violation", { doctrine: "graph-first", detail: `block: ${command.slice(0, 200)}` });
 					return {
 						block: true,
 						reason: buildBlock(identifier, command),
