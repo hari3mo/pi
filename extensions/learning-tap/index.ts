@@ -22,24 +22,31 @@
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync } from "node:fs";
-import { join } from "node:path";
+import { existsSync, readFileSync } from "node:fs";
+import { join, resolve } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { BasisSchema, CategorySchema, ScopeSchema } from "../heuristics/schema.ts";
 import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "../lib/graph-lookup.ts";
+import { ORACLE_VAULT } from "../lib/knowledge-router.ts";
 import {
 	addEvent,
 	answerFrom,
 	appendEvents,
+	appendReceipt,
 	cap,
 	extractReturns,
+	heuristicIdsFrom,
+	isCorrectionCandidate,
 	isSubstantiveQuery,
 	type LearningEvent,
 	makeEvent,
+	MAX_CORRECTIONS_PER_SESSION,
 	parseVerdict,
 	QA_AGENTS,
+	type QaVerdict,
+	type Receipt,
 	USERTEXT_CAP,
 } from "./lib.ts";
 
@@ -58,21 +65,74 @@ export default function (pi: ExtensionAPI) {
 	let buffer: LearningEvent[] = [];
 	let cwd = "/";
 	let sessionId = "";
+	// Receipt accumulators (MEASURE side — learning/SCHEMA.md receipts.jsonl)
+	let oraclePagesRead: Set<string> = new Set();
+	let graphQueries = 0;
+	let lastVerdict: QaVerdict | null = null;
+	let correctionsCaptured = 0;
+	// Correction tap: the agent's last visible action, for precedingAction context.
+	let lastToolLabel = "";
 
 	pi.on("session_start", async (_event, ctx) => {
 		buffer = [];
 		cwd = ctx.cwd || "/";
 		sessionId = ctx.sessionManager.getSessionFile?.() ?? "<unknown>";
+		oraclePagesRead = new Set();
+		graphQueries = 0;
+		lastVerdict = null;
+		correctionsCaptured = 0;
+		lastToolLabel = "";
+	});
+
+	// --- correction tap: user inputs that reverse/amend the agent ----------
+	pi.on("input", async (event) => {
+		try {
+			if (event.source !== "interactive") return; // only real user prose
+			if (correctionsCaptured >= MAX_CORRECTIONS_PER_SESSION) return;
+			if (!isCorrectionCandidate(event.text)) return;
+			const added = addEvent(
+				buffer,
+				makeEvent(
+					"correction",
+					{
+						precedingAction: cap(lastToolLabel, 200),
+						userText: cap(event.text.trim(), USERTEXT_CAP),
+						basis: "inferred",
+					},
+					[`session:${sessionId}`],
+					sessionId,
+					cwd,
+				),
+			);
+			if (added) correctionsCaptured++;
+		} catch {
+			/* never interfere with input handling */
+		}
+		return; // explicit: never transform/handle the input
 	});
 
 	// --- query + verdict taps: one observer on the stream we already get ----
 	pi.on("tool_result", async (event) => {
 		try {
 			const text = answerFrom(event.content);
+			// Track the last tool action for correction context (cheap label).
+			lastToolLabel = `${event.toolName}: ${cap(JSON.stringify(event.input ?? {}), 150)}`;
+
+			// Receipt: oracle page reads (mirrors oracle-first's consult signal).
+			if (event.toolName === "read") {
+				const raw = (event.input as { path?: string; file_path?: string })?.path ??
+					(event.input as { file_path?: string })?.file_path;
+				if (raw) {
+					const abs = resolve(cwd || "/", String(raw));
+					if (abs.startsWith(`${ORACLE_VAULT}/`)) oraclePagesRead.add(abs.slice(ORACLE_VAULT.length + 1));
+				}
+				return;
+			}
 
 			if (event.toolName === "graph") {
 				const input = (event.input ?? {}) as { action?: string; q?: string };
 				const action = String(input.action ?? "");
+				graphQueries++;
 				if (!isSubstantiveQuery(action, Boolean(event.isError), text)) return;
 				addEvent(
 					buffer,
@@ -93,6 +153,7 @@ export default function (pi: ExtensionAPI) {
 					const verdict = parseVerdict(ret.text);
 					if (!verdict) continue;
 					const role = ret.agent || (ret.text.includes("[VERDICT:") ? "peer" : "doctor");
+					lastVerdict = verdict;
 					addEvent(
 						buffer,
 						makeEvent(
