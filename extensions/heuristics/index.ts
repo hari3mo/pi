@@ -17,15 +17,10 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { registerHeuristicsCommand } from "./command.ts";
 import { buildInjectionBlock } from "./inject.ts";
 import {
-	BasisSchema,
 	BUILDER_WATCH_CALLS,
 	TOOL_ERROR_THRESHOLD,
-	CategorySchema,
 	CHURN_CAP,
 	CHURN_WINDOW,
-	type Category,
-	ScopeSchema,
-	type Scope,
 	matchesBuilderRole,
 } from "./schema.ts";
 import { globalDir, projectDirFor, readStoreForInjection } from "./store.ts";
