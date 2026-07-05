@@ -26,6 +26,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { StringEnum } from "@earendil-works/pi-ai";
 import { Type } from "typebox";
 import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "../lib/graph-lookup.ts";
 import {
@@ -61,7 +62,7 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		buffer = [];
 		cwd = ctx.cwd || "/";
-		sessionId = ctx.sessionId ?? "";
+		sessionId = ctx.sessionManager.getSessionFile?.() ?? "<unknown>";
 	});
 
 	// --- query + verdict taps: one observer on the stream we already get ----
@@ -119,20 +120,21 @@ export default function (pi: ExtensionAPI) {
 			"One imperative sentence; evidence pointers required.",
 		parameters: Type.Object({
 			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
-			category: Type.Union(
-				["correction", "gotcha", "environment", "workflow", "convention", "orchestration"].map((c) =>
-					Type.Literal(c),
-				),
-			),
-			scope: Type.Union([Type.Literal("global"), Type.Literal("project")], { default: "global" }),
+			category: StringEnum([
+				"correction",
+				"gotcha",
+				"environment",
+				"workflow",
+				"convention",
+				"orchestration",
+			] as const),
+			scope: StringEnum(["global", "project"] as const, { default: "global" }),
 			evidence: Type.Array(Type.String(), {
 				description: "Pointers backing the lesson: file:line, session:<id>, verdict text, doc path.",
 				minItems: 1,
 			}),
 			basis: Type.Optional(
-				Type.Union(
-					["user-confirmed", "directly-observed", "reproduced", "documented"].map((b) => Type.Literal(b)),
-				),
+				StringEnum(["user-confirmed", "directly-observed", "reproduced", "documented"] as const),
 			),
 		}),
 		async execute(_toolCallId, params) {
