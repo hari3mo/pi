@@ -12,21 +12,24 @@
  * prompts, no user interaction (extensions cannot dispatch slash commands or
  * reach the LLM from event hooks in this pi version):
  *
- *   (a) `graphify save-result --outcome useful ...` for each buffered query, so
- *       the answer feeds `graphify reflect` → graphify-out/reflections/LESSONS.md.
- *   (b) A compact DRAFT synthesis note staged into oracle/_raw/ (NEVER published
- *       as a final page) per oracle/SCHEMA.md, for later review/promotion.
+ *   `graphify save-result --outcome useful ...` for each buffered query, so the
+ *   answer feeds `graphify reflect` → graphify-out/reflections/LESSONS.md.
+ *
+ * It does NOT stage anything into oracle/_raw: the `graph` tool only ever emits
+ * node/edge dumps (never distilled prose), which are regenerable on demand and
+ * were pure noise in the prose vault. `reflect` is the real distiller; the
+ * save-result channel feeds it. Distilled oracle pages are authored by hand.
  *
  * Volume discipline: dedupe by (action, normalized-question), cap at MAX_ITEMS
  * per session, skip trivial/failed queries via a cheap textual filter
  * (isSubstantive). Fail-open and silent on ANY error — never block shutdown.
  *
- * The buffering + note/argv construction are pure exported functions so the
- * flush logic is checkable without pi: scripts/check-knowledge-compound.mjs.
+ * The buffering + argv construction are pure exported functions so the flush
+ * logic is checkable without pi: scripts/check-knowledge-compound.mjs.
  */
 
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, writeFileSync } from "node:fs";
+import { existsSync } from "node:fs";
 import { join } from "node:path";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
@@ -36,7 +39,6 @@ const MAX_ITEMS = 3; // cap durable candidates per session
 const MIN_ANSWER_CHARS = 200; // durability floor: below this, not worth compounding
 const ANSWER_CAP = 4000; // keep staged notes / save-result args compact
 const SAVE_TIMEOUT_MS = 2000; // per save-result call bound
-const STAGING_SUBDIR = "_raw"; // oracle raw/staging area (mirrors wiki-capture quick mode)
 const CAPTURED_ACTIONS = new Set(["query", "explain"]); // status/path are not durable knowledge
 
 function findSessionGraphRoot(cwd: string): string | undefined {
@@ -117,81 +119,6 @@ export function buildSaveResultArgs(item: Captured): string[] {
 	];
 }
 
-function slugify(q: string): string {
-	return (
-		normalizeQuestion(q)
-			.replace(/[^a-z0-9]+/g, "-")
-			.replace(/^-+|-+$/g, "")
-			.slice(0, 48) || "query"
-	);
-}
-
-/** First meaningful line of the answer, header-stripped, ≤190 chars (SCHEMA: summary ≤200). */
-function deriveSummary(answer: string): string {
-	const line = answer
-		.split("\n")
-		.map((l) => l.replace(/^#+\s*/, "").replace(/^>\s*/, "").trim())
-		.find((l) => l.length > 0) ?? "";
-	return line.length <= 190 ? line : `${line.slice(0, 189)}\u2026`;
-}
-
-function pad(n: number): string {
-	return String(n).padStart(2, "0");
-}
-
-/**
- * A DRAFT synthesis note for oracle/_raw/, with valid oracle frontmatter so
- * promotion to synthesis/ is trivial. `source_layer: learned` → no pi_version
- * (SCHEMA staleness protocol). `index` disambiguates same-second filenames.
- */
-export function buildStagedNote(
-	item: Captured,
-	now: Date,
-	index: number,
-	graphJsonPath = `${OUT}/graph.json`,
-): { filename: string; content: string } {
-	const iso = now.toISOString();
-	const date = iso.slice(0, 10);
-	const stamp = `${date.replace(/-/g, "")}-${pad(now.getUTCHours())}${pad(now.getUTCMinutes())}${pad(now.getUTCSeconds())}`;
-	const filename = `graph-${stamp}-${index}-${slugify(item.question)}.md`;
-	const title = item.question.length <= 80 ? item.question : `${item.question.slice(0, 79)}\u2026`;
-	const summary = deriveSummary(item.answer) || `Auto-captured graph ${item.action} answer.`;
-
-	// JSON.stringify → valid YAML double-quoted scalars (escapes quotes/newlines).
-	const content = `---
-title: ${JSON.stringify(title)}
-category: synthesis
-source_layer: learned
-sources:
-  - ${graphJsonPath}
-tags: [pi, graph, synthesis]
-summary: ${JSON.stringify(summary)}
-base_confidence: 0.5
-lifecycle: draft
-lifecycle_changed: ${date}
-tier: peripheral
-created: ${iso}
-updated: ${iso}
----
-
-> [!draft] Auto-captured graph \`${item.action}\` answer — UNREVIEWED.
-> Staged by the knowledge-compound extension. Verify against the graph, then
-> promote into \`synthesis/\` (or fold into an existing page) or delete.
-
-# Q: ${item.question}
-
-## Answer
-
-${item.answer}
-
-## Provenance
-
-- graph tool action: \`${item.action}\`
-- captured: ${iso}
-`;
-	return { filename, content };
-}
-
 function answerFrom(content: unknown): string {
 	if (!Array.isArray(content)) return "";
 	return content
@@ -235,44 +162,21 @@ export default function (pi: ExtensionAPI) {
 		try {
 			if (buffer.length === 0) return;
 			const root = findSessionGraphRoot(ctx.cwd);
-			const vault = join(getAgentDir(), "oracle");
-			const canStage = existsSync(vault);
-			const stagingDir = join(vault, STAGING_SUBDIR);
-			if (canStage) {
+			if (!root) return;
+			const py = graphifyPython(root);
+			if (!py) return;
+
+			for (const item of buffer) {
 				try {
-					mkdirSync(stagingDir, { recursive: true });
+					execFileSync(py, ["-m", "graphify", ...buildSaveResultArgs(item)], {
+						cwd: root,
+						timeout: SAVE_TIMEOUT_MS,
+						stdio: "ignore",
+					});
 				} catch {
-					// staging optional; save-result path still runs
+					// best-effort; graphify absent / slow / errored → skip silently
 				}
 			}
-			const py = root ? graphifyPython(root) : undefined;
-			const now = new Date();
-
-			const graphJsonPath = root ? join(root, OUT, "graph.json") : undefined;
-
-			buffer.forEach((item, i) => {
-				if (canStage) {
-					try {
-						const { filename, content } = graphJsonPath
-							? buildStagedNote(item, now, i, graphJsonPath)
-							: buildStagedNote(item, now, i);
-						writeFileSync(join(stagingDir, filename), content);
-					} catch {
-						// one bad note must not skip the rest or the CLI flush
-					}
-				}
-				if (root && py) {
-					try {
-						execFileSync(py, ["-m", "graphify", ...buildSaveResultArgs(item)], {
-							cwd: root,
-							timeout: SAVE_TIMEOUT_MS,
-							stdio: "ignore",
-						});
-					} catch {
-						// best-effort; graphify absent / slow / errored → skip silently
-					}
-				}
-			});
 			buffer = [];
 		} catch {
 			// never block or throw from shutdown
