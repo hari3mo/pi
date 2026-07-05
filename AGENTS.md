@@ -87,11 +87,14 @@ dispatch `engineer` with a design-only task returning the design artifact
   conventions, past lessons) are answered from the oracle vault (`wiki-query` against
   the oracle profile at `~/.obsidian-wiki/config.oracle`) plus the `graph` tool BEFORE
   reading pi docs or dispatching a scout — compiled knowledge beats re-derivation.
-  Durable lessons and valuable query answers are filed BACK into oracle per its
-  `SCHEMA.md` (query-compounding: the next identical question is a read, not a
-  re-derivation) — staging into `oracle/_raw/` is mechanized at session end
-  (`extensions/knowledge-compound.ts`); promotion to final pages stays a reviewed step.
-  Oracle `upstream` pages are pi-version-stamped; the session-start
+  Durable lessons and valuable query answers flow BACK automatically: the
+  `learning-tap` extension observes graph queries, peer/doctor verdicts, and
+  `learn` tool calls, appending them to `learning/events.jsonl` at session end
+  (contract: `learning/SCHEMA.md`); a nightly out-of-session distiller dedupes
+  against oracle and promotes into heuristics or `learned` pages
+  (query-compounding: the next identical question is a read, not a
+  re-derivation). Explicit lessons go through the `learn` tool, not direct
+  heuristics writes. Oracle `upstream` pages are pi-version-stamped; the session-start
   self-audit flags them stale after a `pi update`.
 
 ## Escalation
