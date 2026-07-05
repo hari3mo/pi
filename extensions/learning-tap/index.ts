@@ -240,6 +240,7 @@ export default function (pi: ExtensionAPI) {
 							: "Duplicate of an already-buffered lesson this session (or session cap reached) — skipped.",
 					},
 				],
+				details: { buffered: ok, eventId: ok ? ev.id : undefined },
 			};
 		},
 	});
