@@ -249,6 +249,7 @@ export default function (pi: ExtensionAPI) {
 			const { flagged, target, key } = classifyPiDocRead(event.toolName, input, cwd);
 			switch (decideAction(state, key, flagged)) {
 				case "nudge":
+					pi.events.emit("learning-violation", { doctrine: "oracle-first", detail: `nudge: ${target}` });
 					pi.sendMessage(
 						{
 							customType: "oracle-first-nudge",
@@ -259,6 +260,7 @@ export default function (pi: ExtensionAPI) {
 					);
 					return;
 				case "block":
+					pi.events.emit("learning-violation", { doctrine: "oracle-first", detail: `block: ${target}` });
 					return {
 						block: true,
 						reason: buildBlock(target),
