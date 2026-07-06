@@ -127,7 +127,7 @@ early, before the budget runs out.
 ## Defaults
 
 - Lead: `claude-fable-5:xhigh`. Tiers pinned: deep reasoning `claude-opus-4-8:xhigh`,
-  mechanical `claude-sonnet-5:high`, peer/doctor `google/gemini-3.1-pro-preview:high`.
+  mechanical `claude-sonnet-5:high`, doctor `claude-sonnet-5:high`, peer `openai/gpt-5.5:high`.
 - Pass `model:thinking` explicitly when delegating.
 
 ## Config Maintenance (~/.pi/agent)
