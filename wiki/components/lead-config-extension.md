@@ -38,15 +38,15 @@ model can switch mid-session (shift+tab), this re-evaluates **every turn** — t
 lead profile always tracks the *currently* selected model, not the one that
 started the session.
 
-## The three profiles
+## The two profiles
 
 `config/lead-profiles.json` holds an ordered list; the first non-fallback profile
 whose `match` regex hits the id wins, else the `fallback`:
 
 - **fable** (`match: "fable"`) — confirms AGENTS.md is canon and adds nothing
   else (duplicating the doctrine would only let it drift).
-- **opus-lead** (`match: "opus"`) — the editing-capable-at-small-scale block.
-- **direct** (`match: ".*"`, `fallback: true`) — work directly, no pipeline.
+- **direct** (`match: ".*"`, catch-all) — work directly, no pipeline; this now
+  covers `claude-opus-4-8` too (opus is a direct-work lead, not an orchestrator).
 
 ## Design intent (durable)
 
@@ -56,7 +56,7 @@ whose `match` regex hits the id wins, else the `fallback`:
 - **Enforcement is untouched.** This only *injects doctrine*; the actual fable
   edit-block lives in the [[components/write-gate-extension]]. Injection and
   enforcement are deliberately separate concerns.
-- **Applies to subagent children too** — a child may itself be an opus/sonnet
+- **Applies to subagent children too** — a child may itself be a direct-work
   lead of its own sub-work, which is correct.
 - **Self-improving closure.** Per-session {models seen, profile applied, fallback
   count} are appended to `graphify-out/.lead_config_stats.json`;
