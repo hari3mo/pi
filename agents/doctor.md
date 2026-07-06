@@ -1,7 +1,7 @@
 ---
 name: doctor
 description: "Post-build spot-check verification — given a diff or the worker's claims plus acceptance criteria, runs the acceptance path and does targeted confirmation reads, returning 'PASS' or 'FAIL' with file:line evidence. Only dispatched when something is RUNNABLE; runs commands and reads, never edits or fixes. Distinct from lawyer, the deep-reasoning review gate for existing-behavior/high-risk changes."
-model: google/gemini-3.5-flash:high
+model: anthropic/claude-sonnet-5:high
 tools: read, grep, find, ls, bash
 ---
 
