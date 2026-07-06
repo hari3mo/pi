@@ -41,8 +41,8 @@
  * The galaxy is populated with the rest of the void system, ported from
  * void/js/planets.js, events.js and starfield.js:
  *   - orbiting planets riding the disk at their own Keplerian rates
- *   - several comets on criss-crossing eccentric orbits, tails always
- *     streaming away from the core, longest and brightest at perihelion
+ *   - comets are currently disabled; their implementation is left commented
+ *     out below for easy restore
  *   - constellations pinned to the far background: recognizable star
  *     patterns joined by faint dotted lines, twinkling slowly
  *   - occasional shooting stars streaking across the field
@@ -128,6 +128,8 @@ const PLANETS = [
 // Several of them, each with its own eccentricity, size and orbit
 // orientation (w, the argument of perihelion) so the ellipses criss-cross:
 // perihelion dips through the planets, aphelion swings past the dust rim.
+// Comets disabled for now; implementation kept commented for easy restore.
+/*
 interface CometDef {
 	e: number;
 	p: number;
@@ -140,6 +142,7 @@ const COMET_DEFS: CometDef[] = [
 ];
 const COMET_TAIL = 10;
 const COMET_TAIL_CHARS = "+=~;:-,.";
+*/
 
 // Constellations: recognizable star patterns pinned to the far background —
 // bright twinkling stars joined by faint dotted lines. Star coordinates in
@@ -243,7 +246,8 @@ const CONSTELLATIONS: Constellation[] = [
 // session should actually get to see one.
 const SHOOT_MIN = 1; //   seconds between shooting stars
 const SHOOT_MAX = 3;
-const SHOOT_CHARS = "*+=;:."; // bright head, dimming trail
+const SHOOT_MAX_ACTIVE = 5;
+const SHOOT_CHARS = "*+=-;:,."; // bright head, dimming trail
 const NOVA_MIN = 8; //   seconds between supernovae
 const NOVA_MAX = 18;
 const NOVA_DUR = 2.5;
@@ -354,8 +358,9 @@ class BlackHoleComponent {
 	private deepGalaxies = makeDeepGalaxies();
 
 	// Comets + transient events (events.js state).
-	private cometThetas = COMET_DEFS.map(() => Math.random() * Math.PI * 2);
-	// Up to 3 shooting-star streaks active at once, each with its own
+	// Comets disabled for now; state kept commented with implementation above.
+	// private cometThetas = COMET_DEFS.map(() => Math.random() * Math.PI * 2);
+	// Up to SHOOT_MAX_ACTIVE shooting-star streaks active at once, each with its own
 	// randomized duration and length.
 	private shoots: Array<{
 		t: number;
@@ -515,28 +520,32 @@ class BlackHoleComponent {
 			this.diskTheta[i] = theta;
 		}
 
+		/*
 		// Comets: each swings along its conic, fastest at perihelion.
 		for (let i = 0; i < COMET_DEFS.length; i++) {
 			const d = COMET_DEFS[i];
 			const rc = d.p / (1 + d.e * Math.cos(this.cometThetas[i]));
 			this.cometThetas[i] += (d.l / (rc * rc)) * dt;
 		}
+		*/
 
-		// Shooting stars: straight streaks across the frame, started on a
-		// random timer (events.js, intervals shortened for the terminal) —
-		// several can be in flight together, up to a cap of 3.
+		// Shooting stars: edge-to-edge streaks, started on a random timer —
+		// several can be in flight together, up to SHOOT_MAX_ACTIVE.
 		this.shootTimer -= dt;
-		if (this.shootTimer <= 0 && this.shoots.length < 3) {
-			const ang = Math.random() * Math.PI * 2;
-			const dx = Math.cos(ang);
-			const dy = Math.sin(ang);
-			const dur = 1.0 + Math.random() * 0.8;
-			const len = 0.35 + Math.random() * 0.35;
+		if (this.shootTimer <= 0 && this.shoots.length < SHOOT_MAX_ACTIVE) {
+			const fromLeft = Math.random() < 0.5;
+			const vx = fromLeft ? 0.75 + Math.random() * 0.45 : -0.75 - Math.random() * 0.45;
+			const vy = 0.25 + Math.random() * 0.45;
+			const mag = Math.hypot(vx, vy);
+			const dx = vx / mag;
+			const dy = vy / mag;
+			const dur = 0.8 + Math.random() * 0.7;
+			const len = 0.75 + Math.random() * 0.35;
 			this.shoots.push({
 				t: 0,
-				// Center the streak on a random on-screen point.
-				x: 0.2 + Math.random() * 0.6 - (dx * len) / 2,
-				y: 0.2 + Math.random() * 0.6 - (dy * len) / 2,
+				// Start just outside the side edge so the streak crosses the frame.
+				x: fromLeft ? -0.12 : 1.12,
+				y: -0.08 + Math.random() * 0.65,
 				dx,
 				dy,
 				dur,
@@ -920,22 +929,23 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- shooting stars: bright head, six dimming glyphs trailing, each
-		// streak's own duration/length scaling its envelope and trail --
+		// -- shooting stars: bright head, longer dimming trail, edge-to-edge --
 		for (const s of this.shoots) {
 			const u = s.t / s.dur;
-			const env = Math.min(1, u / 0.15) * (1 - smoothstep(0.6, 1, u));
+			const env = Math.min(1, u / 0.12) * (1 - smoothstep(0.68, 1, u));
 			const hx = s.x + s.dx * u * s.len;
 			const hy = s.y + s.dy * u * s.len;
-			const trailStep = 0.035 * (s.len / 0.55);
+			const trailStep = 0.045 * (s.len / 0.9);
 			for (let i = 0; i < SHOOT_CHARS.length; i++) {
 				const d = i * trailStep;
-				glyph(
-					Math.round((hx - s.dx * d) * artW),
-					Math.round((hy - s.dy * d) * rows),
-					SHOOT_CHARS[i],
-					env * (1 - i / SHOOT_CHARS.length),
-				);
+				const col = Math.round((hx - s.dx * d) * artW);
+				const row = Math.round((hy - s.dy * d) * rows);
+				const b = env * (1 - i / SHOOT_CHARS.length);
+				glyph(col, row, SHOOT_CHARS[i], i === 0 ? Math.min(1.2, b * 1.35) : b);
+				if (i === 0) {
+					deposit(col - 1, row, 0.12 * env);
+					deposit(col + 1, row, 0.12 * env);
+				}
 			}
 		}
 
@@ -1031,6 +1041,7 @@ class BlackHoleComponent {
 			}
 		}
 
+		/*
 		// -- comets: bright heads, tails streaming anti-solar (away from the
 		// core), longest and brightest near perihelion; each glyph vanishes
 		// while it is behind the hole --
@@ -1071,6 +1082,7 @@ class BlackHoleComponent {
 				);
 			}
 		}
+		*/
 
 		// -- landing-page chrome: wordmark and tagline, drawn last so nothing
 		// washes them out. Both are stamped onto cleared plates (the cells behind
@@ -1295,7 +1307,7 @@ export default function (pi: ExtensionAPI) {
 	};
 
 	pi.registerCommand("void", {
-		description: "The void — black hole, planets, comets, constellations",
+		description: "The void — black hole, planets, shooting stars, constellations",
 		handler: async (_args, ctx) => openVoid(ctx),
 	});
 	pi.registerCommand("galaxy", {
