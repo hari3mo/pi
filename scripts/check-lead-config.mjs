@@ -8,8 +8,8 @@
  *
  * Asserts the Delegation-Gate mechanization contract:
  *   - 'anthropic/claude-fable-5'        → fable
- *   - 'claude-opus-4-8'                 → opus-lead
- *   - 'anthropic/claude-opus-4-8:xhigh' → opus-lead
+ *   - 'claude-opus-4-8'                 → direct   (opus is a direct-work lead)
+ *   - 'anthropic/claude-opus-4-8:xhigh' → direct
  *   - 'claude-sonnet-5'                 → direct   (universal catch-all match)
  *   - 'openai/gpt-5.5'                  → direct   (universal catch-all match)
  *   - empty / whitespace / no-word-char garbage id → no injection (fail open)
@@ -36,7 +36,7 @@ const check = (label, cond) => {
 
 // --- the shipped profiles ---
 const profiles = parseProfiles(readFileSync(join(AGENT_DIR, "config", "lead-profiles.json"), "utf8"));
-check("shipped config parses to ≥3 profiles", Array.isArray(profiles) && profiles.length >= 3);
+check("shipped config parses to ≥2 profiles", Array.isArray(profiles) && profiles.length >= 2);
 check("shipped config has a universal catch-all profile", profiles.some((p) => p.match === ".*"));
 
 const nameFor = (id) => matchProfile(profiles, id)?.name ?? null;
@@ -45,8 +45,8 @@ const nameFor = (id) => matchProfile(profiles, id)?.name ?? null;
 const cases = [
 	["anthropic/claude-fable-5", "fable"],
 	["claude-fable-5", "fable"],
-	["claude-opus-4-8", "opus-lead"],
-	["anthropic/claude-opus-4-8:xhigh", "opus-lead"],
+	["claude-opus-4-8", "direct"],
+	["anthropic/claude-opus-4-8:xhigh", "direct"],
 	["claude-sonnet-5", "direct"],
 	["openai/gpt-5.5", "direct"],
 	["google/gemini-3.5-flash:xhigh", "direct"],
@@ -68,14 +68,12 @@ check("isUsableId accepts a real id", isUsableId("claude-opus-4-8"));
 const fableBlock = buildLeadBlock(matchProfile(profiles, "anthropic/claude-fable-5"), "anthropic/claude-fable-5");
 const opusBlock = buildLeadBlock(matchProfile(profiles, "claude-opus-4-8"), "anthropic/claude-opus-4-8");
 check("fable block names the profile", fableBlock.includes("→ fable") && fableBlock.startsWith("## Lead profile"));
-check("opus block names the profile", opusBlock.includes("→ opus-lead"));
-check("opus block states it complements AGENTS.md", /COMPLEMENTS AGENTS\.md/i.test(opusBlock));
-check("opus block keeps verdict vocabulary", opusBlock.includes("PASS / FAIL: implementation / FAIL: design"));
-check("opus block keeps graph-first mandate", /GRAPH-FIRST/i.test(opusBlock));
-check("opus doctrine ≤ 2KB", Buffer.byteLength(opusBlock, "utf8") <= 2048);
+check("opus resolves to the direct profile", opusBlock.includes("→ direct"));
+check("direct block states it complements AGENTS.md", /COMPLEMENTS AGENTS\.md/i.test(opusBlock));
+check("direct doctrine ≤ 2KB", Buffer.byteLength(opusBlock, "utf8") <= 2048);
 
 // --- mid-session switch fable → opus swaps the block ---
-check("mid-session switch swaps the injected block", fableBlock !== opusBlock && !fableBlock.includes("opus-lead"));
+check("mid-session switch swaps the injected block", fableBlock !== opusBlock && !fableBlock.includes("→ direct"));
 
 // --- fail-open: malformed profiles JSON → no profiles → no injection ---
 for (const junk of ["{not json", "", "null", "42", '"a string"', "{}", "[{}]"]) {
