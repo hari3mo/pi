@@ -2,7 +2,7 @@
  * Custom Header Extension
  *
  * Replaces the built-in pi header (logo + keybinding hints) with a
- * figlet ASCII-art banner reading "harimo", followed by three quiet
+ * two-tone ANSI-Shadow banner reading "HARIMO", followed by three quiet
  * subtitle lines: a time-of-day greeting, a cwd/git-branch context line,
  * and a deterministic "aphorism of the day".
  */
@@ -48,8 +48,14 @@ function getBanner(theme: Theme, width: number): string[] {
 	// BANNER_WIDTH — a stale/raced width can still slip a narrower value in
 	// here than the one the guard checked, and an untruncated ANSI-colored
 	// line would clip the art mid-glyph instead of cutting cleanly.
+	// Two-tone: solid blocks in accent, shadow glyphs (╔╗╚╝═║, spaces, ®) dim.
 	const colored = BANNER_LINES.map((line) =>
-		truncateToWidth(theme.fg("accent", line), width),
+		truncateToWidth(
+			line.replace(/█+|[^█]+/g, (run) =>
+				run.startsWith("█") ? theme.fg("accent", run) : theme.fg("dim", run),
+			),
+			width,
+		),
 	);
 	return ["", ...colored, ""];
 }
