@@ -81,7 +81,7 @@ When spawning pi subagents on `claude-sonnet-5` or `gemini-3.5-flash`, pin think
 
 ## Don't narrate delegate-vs-direct when the gate doesn't apply
 
-When the active lead model is `claude-sonnet-5` (or any non-fable / non-opus model), the
+When the active lead model is anything other than `claude-fable-5` (opus, sonnet, etc.), the
 [[concepts/delegation-gate|Delegation Gate]] section **doesn't apply at all** — so don't
 narrate a delegate-vs-direct decision or mention subagents; just do the work
 (heuristic `h_mr5tyavr_bvs1e5qx`).
