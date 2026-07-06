@@ -241,11 +241,11 @@ const CONSTELLATIONS: Constellation[] = [
 
 // Transient events (events.js): shorter intervals than the site — a TUI
 // session should actually get to see one.
-const SHOOT_MIN = 8; //   seconds between shooting stars
-const SHOOT_MAX = 18;
+const SHOOT_MIN = 1; //   seconds between shooting stars
+const SHOOT_MAX = 3;
 const SHOOT_CHARS = "*+=;:."; // bright head, dimming trail
-const NOVA_MIN = 30; //   seconds between supernovae
-const NOVA_MAX = 90;
+const NOVA_MIN = 8; //   seconds between supernovae
+const NOVA_MAX = 18;
 const NOVA_DUR = 2.5;
 
 // Deep space (starfield.js buildDeepSpace): tiny prebuilt two-arm glyph
@@ -366,9 +366,9 @@ class BlackHoleComponent {
 		dur: number;
 		len: number;
 	}> = [];
-	private shootTimer = 2 + Math.random() * 4; // first one early, for the splash
+	private shootTimer = 0.3 + Math.random() * 0.8; // first one early, for the splash
 	private nova = { active: false, t: 0, x: 0, y: 0 };
-	private novaTimer = NOVA_MIN * (0.5 + Math.random() * 0.5);
+	private novaTimer = 3 + Math.random() * 4;
 
 	private elapsed = 0;
 
