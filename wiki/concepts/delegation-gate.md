@@ -30,7 +30,7 @@ updated: 2026-07-04T00:00:00Z
 The first decision every lead makes: **do I orchestrate, or do I work directly?**
 The answer branches on which model is the lead.
 
-## The branch (three lead profiles)
+## The branch (two lead profiles)
 
 Encoded in `config/lead-profiles.json` and injected each prompt by the
 [[components/lead-config-extension]]:
@@ -38,13 +38,10 @@ Encoded in `config/lead-profiles.json` and injected each prompt by the
 | Lead | Profile | Posture |
 |---|---|---|
 | `claude-fable-5` | **fable** | Always orchestrates, never edits/writes files. Its `edit`/`write` are hard-blocked by the [[components/write-gate-extension]] in every gate mode. |
-| `claude-opus-4-8` | **opus-lead** | Editing-capable. MAY implement directly at Micro/Standard scale; MUST orchestrate at Large scale (the complexity test). |
-| any other model | **direct** (fallback) | Works directly — no subagents, no pipeline — design → execute → verify inline. |
+| any other model (incl. `claude-opus-4-8`) | **direct** (catch-all `.*`) | Works directly — no subagents, no pipeline — design → execute → verify inline. |
 
-"Large" = the complexity test verbatim: **3+ parallelizable workstreams,
-context-heavy scope, or mechanical work at volume.** Below that threshold, even
-an editing-capable lead should just do the work; the pipeline is not a default
-to prune down but an escalation to reach for.
+Only fable orchestrates. Every other lead — opus included — works directly; the
+pipeline is not a default to prune down but the sole province of the fable lead.
 
 ## Two MUST pre-flights (fable lead)
 
