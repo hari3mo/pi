@@ -57,6 +57,23 @@ Every session that changes config must update it.
 
 ## Changelog
 
+**Removed the `opus-lead` profile: opus is now just a direct-work lead.**
+User-directed: dropped the delegation-biased Opus orchestration doctrine. `claude-opus-4-8`
+no longer gets a tailored profile — it falls through the catch-all `.*` to `direct` (work
+directly, no subagents/pipeline), same as every non-fable model. Only `claude-fable-5`
+orchestrates now. Edits: removed the `opus-lead` object from `config/lead-profiles.json`
+(2 profiles remain: `fable`, `direct`); AGENTS.md Delegation Gate collapsed to "fable
+orchestrates; any other model incl. opus works directly" + the mechanization sentence
+(`fable / direct`); `extensions/lead-config.ts` header comment; `scripts/check-lead-config.mjs`
+(opus → direct, ≥2 profiles); the live feature-index row above; and the wiki concept/component
+pages. Verified: validate-config clean, check-lead-config green. Note: `direct` is a plain
+`.*` match (not `fallback: true`), so opus resolving to it does NOT trip
+`check_lead_profile_coverage()` roster-drift. Files: `config/lead-profiles.json`, `AGENTS.md`,
+`extensions/lead-config.ts`, `scripts/check-lead-config.mjs`, `docs/config-index.md`,
+`wiki/concepts/delegation-gate.md`, `wiki/components/lead-config-extension.md`,
+`wiki/index.md`, `wiki/synthesis/orchestration-lessons.md`. Why: opus should be just opus
+when active.
+
 **Peer/doctor model repin: `peer` → `openai/gpt-5.5:xhigh` (inherits lead thinking), `doctor` → `anthropic/claude-sonnet-5:high`.**
 User-directed. `peer` (gate-tier verification) moves from `google/gemini-3.5-flash:high` to
 `openai/gpt-5.5`; because gpt-5.5 is not in `withThinking`'s pinned set (only sonnet-5/gemini-3.5-flash
