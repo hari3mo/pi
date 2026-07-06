@@ -22,11 +22,11 @@
  *   (g) foreign commit to a resource -> stale block in prompt + classified
  *       staleResources in the config-repo-advanced payload
  *   (h) first edit to a stale, not-re-read resource -> { block: true }
- *   (i) repeat edits without a read stay BLOCKED (halt until re-read)
+ *   (i) second edit without a read -> allowed with ONE warning (never wedge)
  *   (j) staleness persists: next turn re-injects the stale block
  *   (k) a read tool result cures the edit gate for that file
- *   (l) every further edit with no observed read stays blocked (halt, not wedge:
- *       the read tool is the cure)
+ *   (l) after block+warn, further edits (unobservable bash read) stand fully
+ *       aside — no block, no new warning — so the gate never wedges a session
  *   (m) another shell DELETING a file this session edited -> collision notice
  *
  * Run: node scripts/check-concurrency-guard.mjs
@@ -162,13 +162,16 @@ check("(g) config-repo-advanced payload carries classified staleResources", !!ad
 r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
 check("(h) first edit to a stale resource is BLOCKED", r?.block === true && /stale/i.test(r?.reason ?? ""));
 
-// (i) second edit without a read -> still BLOCKED (halt until re-read).
+// (i) second edit without a read -> allowed, exactly one warning (never wedge).
+const staleWarnsBefore = sent.filter((m) => /no re-read was observed/.test(m.content)).length;
 r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
-check("(i) second edit without a read is still BLOCKED", r?.block === true && /stale/i.test(r?.reason ?? ""));
+check("(i) second edit is NOT blocked (escape hatch)", !r?.block);
+r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
+check("(i) escape hatch warns exactly once", !r?.block && sent.filter((m) => /no re-read was observed/.test(m.content)).length === staleWarnsBefore + 1);
 
-// (l) a THIRD edit with no observed read is STILL blocked (halt, not wedge — read cures it).
+// (l) a THIRD edit with no observed read stands fully aside (never wedge, no new warn).
 r = await fire("tool_call", { toolName: "edit", input: { path: abs("extensions/mod.ts") } }, ctx);
-check("(l) further edits with no observed read stay blocked (halt until re-read)", r?.block === true);
+check("(l) after block+warn, further edits stand aside (no block, no new warning)", !r?.block && sent.filter((m) => /no re-read was observed/.test(m.content)).length === staleWarnsBefore + 1);
 
 // (j) staleness persists across turns with no new commits.
 r = await fire("before_agent_start", startPrompt);
