@@ -1120,12 +1120,22 @@ class BlackHoleComponent {
 			// Too small for the wordmark — skip it entirely, keep the tagline.
 			stampCentered(tagline, 1, 0.14);
 		}
-		// Diagonal glint sweep over the stamped wordmark — same cadence as the
-		// post-splash header's shimmerLine, so the look matches across both
-		// render paths. Computed once per render, not per cell.
+		// Wordmark animation, both keyed off elapsed. The plate is already
+		// cleared (stampAt swept the cells dark), so any cell we choose NOT to
+		// draw stays blank — no starfield bleeds through mid-animation.
+		//   phase 1 (t < REVEAL_DUR): a hot accent wavefront sweeps left→right,
+		//     tracing the extruded letterforms in and settling to normal fg;
+		//   phase 2 (idle): a soft specular shimmer sweeps across — bold accent
+		//     on the lit crest, plain accent on the skirt, normal fg elsewhere,
+		//     with a dark resting beat between sweeps (the +40 range padding).
+		const REVEAL_DUR = 1.4; // seconds for the ignition sweep to finish
+		const revealing = this.elapsed < REVEAL_DUR;
+		const revealFront = (this.elapsed / REVEAL_DUR) * (markW + 8);
 		const glintRange = markW + WORDMARK.length + 40;
-		const glintPos = Math.floor(this.elapsed / 0.12) % glintRange;
-		const glintTier = BOLD + this.accentAnsi;
+		const glintPos =
+			Math.floor(Math.max(0, this.elapsed - REVEAL_DUR) / 0.12) % glintRange;
+		const glintHot = BOLD + this.accentAnsi; // crest / ignition wavefront
+		const glintWarm = this.accentAnsi; //       specular skirt
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
 		const lines: string[] = [""];
@@ -1141,16 +1151,26 @@ class BlackHoleComponent {
 				const ch =
 					overlay[row * artW + col] ??
 					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
-				const want =
-					b >= 2
-						? Math.abs(col - markCol + (row - markRow) - glintPos) < 3
-							? glintTier
-							: ""
-						: b < 0.4
-							? DIM
-							: b < 0.95
-								? ""
-								: BOLD;
+				let want: string;
+				if (b >= 2) {
+					// Wordmark cell: ignition sweep first, then idle shimmer.
+					const rc = col - markCol;
+					const rr = row - markRow;
+					if (revealing) {
+						const d = revealFront - (rc + rr * 0.5);
+						if (d < 0) {
+							// Ahead of the wavefront — still dark cleared plate.
+							line += " ";
+							continue;
+						}
+						want = d < 4 ? glintHot : d < 7 ? glintWarm : "";
+					} else {
+						const dist = Math.abs(rc + rr - glintPos);
+						want = dist < 1.5 ? glintHot : dist < 3 ? glintWarm : "";
+					}
+				} else {
+					want = b < 0.4 ? DIM : b < 0.95 ? "" : BOLD;
+				}
 				if (want !== tier) {
 					line += RESET + want;
 					tier = want;
@@ -1215,13 +1235,21 @@ export default function (pi: ExtensionAPI) {
 						const range = markW + WORDMARK.length + 40;
 						const pos = phase % range;
 						const bandWidth = 3;
+						// First sweep doubles as a draw-on ignition: columns ahead of
+						// the glint front stay blank until the wavefront reaches them,
+						// so the mark writes itself on left→right, then flows straight
+						// into the idle shimmer once the first pass completes (pos is
+						// monotonic == phase while phase < range). Same interval, same
+						// rate — the reveal is just the shimmer with everything ahead of
+						// the front held dark.
+						const revealing = phase < range;
 						// Glint runs render in the theme's accent color (the same
 						// token the docs call out for "logo" use) plus BOLD. The base
 						// wordmark stays normal foreground; dim ink disappears on dark
 						// themes before the sweep reaches it.
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier: "" | "base" | "glint" = "";
+							let tier: "" | "off" | "base" | "glint" = "";
 							let run = "";
 							const flush = () => {
 								if (!run) return;
@@ -1237,13 +1265,20 @@ export default function (pi: ExtensionAPI) {
 									run += ch;
 									continue;
 								}
-								const want: "base" | "glint" =
-									Math.abs(x + y - pos) < bandWidth ? "glint" : "base";
+								const d = x + y;
+								const want: "off" | "base" | "glint" =
+									revealing && d > pos
+										? "off"
+										: Math.abs(d - pos) < bandWidth
+											? "glint"
+											: "base";
 								if (want !== tier) {
 									flush();
 									tier = want;
 								}
-								run += ch;
+								// Columns not yet reached by the ignition front render as
+								// blanks (held dark) instead of their glyph.
+								run += want === "off" ? " " : ch;
 							}
 							flush();
 							if (tier !== "") out += RESET;

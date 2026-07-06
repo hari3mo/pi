@@ -41,6 +41,57 @@ const APHORISMS = [
 // drops it in favor of the compact greeting-only fallback.
 const BANNER_WIDTH = Math.max(...BANNER_LINES.map((line) => line.length));
 
+// One-shot ignition reveal: a hot accent wavefront sweeps the banner in
+// left→right over REVEAL_MS, then the header settles to the static accent
+// mark. The driving timer is self-clearing (it stops itself once the sweep
+// completes), so it never outlives the reveal or fights the differential
+// renderer at idle.
+const REVEAL_MS = 1200;
+const IGNITE = 3; // width in columns of the bold ignition wavefront
+const BOLD = "\x1b[1m";
+const RESET = "\x1b[0m";
+
+// Render one banner line partway through the reveal: chars behind the front
+// are lit (bold on the wavefront, plain accent behind it), chars ahead of it
+// are blanked. Run-length ANSI, mirroring void-blackhole's shimmerLine.
+function revealLine(
+	theme: Theme,
+	line: string,
+	y: number,
+	front: number,
+): string {
+	let out = "";
+	let tier = ""; // "" | "off" | "on" | "hot"
+	let run = "";
+	const flush = () => {
+		if (!run) return;
+		out +=
+			tier === "hot"
+				? RESET + BOLD + theme.fg("accent", run)
+				: tier === "on"
+					? RESET + theme.fg("accent", run)
+					: RESET + run; // "off"/"" — plain (blanked to spaces already)
+		run = "";
+	};
+	for (let x = 0; x < line.length; x++) {
+		const ch = line[x];
+		if (ch === " ") {
+			run += " "; // spaces inherit the current run, harmless
+			continue;
+		}
+		const d = front - (x + y * 0.5); // slight diagonal lean
+		const want = d < 0 ? "off" : d < IGNITE ? "hot" : "on";
+		if (want !== tier) {
+			flush();
+			tier = want;
+		}
+		run += want === "off" ? " " : ch;
+	}
+	flush();
+	if (tier !== "") out += RESET;
+	return out;
+}
+
 function getBanner(theme: Theme, width: number): string[] {
 	// truncateToWidth on every line, even though the caller already guards on
 	// BANNER_WIDTH — a stale/raced width can still slip a narrower value in
@@ -84,6 +135,10 @@ function computeContextLine(cwd: string): string {
 	}
 }
 
+// Module-scoped so a re-installed header (a second session_start) never
+// leaves an orphaned reveal ticker running — cleared and restarted per install.
+let revealTimer: ReturnType<typeof setInterval> | null = null;
+
 export default function (pi: ExtensionAPI) {
 	let contextLine = "";
 
@@ -91,7 +146,17 @@ export default function (pi: ExtensionAPI) {
 		contextLine = computeContextLine(ctx.cwd);
 
 		if (ctx.mode === "tui") {
-			ctx.ui.setHeader((_tui, theme) => {
+			ctx.ui.setHeader((tui, theme) => {
+				const start = Date.now();
+				// Self-clearing one-shot ticker: drives the reveal, then stops.
+				if (revealTimer) clearInterval(revealTimer);
+				revealTimer = setInterval(() => {
+					if (Date.now() - start >= REVEAL_MS && revealTimer) {
+						clearInterval(revealTimer);
+						revealTimer = null;
+					}
+					tui.requestRender();
+				}, 60);
 				return {
 					render(width: number): string[] {
 						const greetingLine = `${theme.fg("muted", `   ${getGreeting()}`)}${theme.fg("dim", ` v${VERSION}`)}`;
@@ -105,6 +170,24 @@ export default function (pi: ExtensionAPI) {
 						// +1 margin: BANNER_WIDTH is the widest banner line's exact length,
 						// so require one spare column rather than an exact-fit width.
 						if (width < BANNER_WIDTH + 1) return lines;
+						// Ignition reveal while the sweep is running; fail-open to the
+						// static banner if anything in the animated path throws.
+						const elapsed = Date.now() - start;
+						if (elapsed < REVEAL_MS) {
+							try {
+								const front = (elapsed / REVEAL_MS) * (BANNER_WIDTH + 6);
+								return [
+									"",
+									...BANNER_LINES.map((l, y) =>
+										truncateToWidth(revealLine(theme, l, y, front), width),
+									),
+									"",
+									...lines,
+								];
+							} catch {
+								// fall through to the static banner
+							}
+						}
 						return [...getBanner(theme, width), ...lines];
 					},
 					invalidate() {},
