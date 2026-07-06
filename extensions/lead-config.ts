@@ -2,8 +2,8 @@
  * Lead-Config Extension — model-aware lead profiles.
  *
  * The Delegation Gate in AGENTS.md branches on which model is the lead
- * (fable orchestrates; opus may edit at small scale / must orchestrate at
- * large scale; any other model works directly). That branch used to live only
+ * (fable orchestrates; any other model — opus included — works directly).
+ * That branch used to live only
  * as prose the agent had to remember. This extension MECHANIZES it: every
  * prompt it reads the active model id (ctx.model.id — the same field
  * read-only-default.ts and model-awareness.ts use), first-matches it against
@@ -22,8 +22,8 @@
  * (atomic temp+rename, ~50-record ring — the graph-first stats pattern) at
  * agent_end; audit-pipelines.py:check_lead_profile_coverage() WARNs when a
  * model id repeatedly resolves to the fallback profile across sessions (roster
- * drift). Applies to PI_SUBAGENT children too — a child may itself be an
- * opus/sonnet lead of its own sub-work, which is correct.
+ * drift). Applies to PI_SUBAGENT children too — a child may itself be a
+ * direct-work lead of its own sub-work, which is correct.
  *
  * Pure matching/injection functions (parseProfiles, matchProfile,
  * buildLeadBlock) have no bare value imports, so scripts/check-lead-config.mjs
