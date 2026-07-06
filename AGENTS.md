@@ -83,18 +83,18 @@ dispatch `engineer` with a design-only task returning the design artifact
   questions with the `graph` tool (query/explain/path) BEFORE dispatching scout or
   reading files — ~30x cheaper; subagents inherit the tool, so dispatched tasks may
   assume it too.
-- ORACLE-FIRST: knowledge questions about pi itself (its APIs, features, docs,
-  conventions, past lessons) are answered from the oracle vault (`wiki-query` against
-  the oracle profile at `~/.obsidian-wiki/config.oracle`) plus the `graph` tool BEFORE
+- WIKI-FIRST: knowledge questions about pi itself (its APIs, features, docs,
+  conventions, past lessons) are answered from the wiki vault (`wiki-query` against
+  the wiki profile at `~/.obsidian-wiki/config.wiki`) plus the `graph` tool BEFORE
   reading pi docs or dispatching a scout — compiled knowledge beats re-derivation.
   Durable lessons and valuable query answers flow BACK automatically: the
   `learning-tap` extension observes graph queries, peer/doctor verdicts, and
   `learn` tool calls, appending them to `learning/events.jsonl` at session end
   (contract: `learning/SCHEMA.md`); a nightly out-of-session distiller dedupes
-  against oracle and promotes into heuristics or `learned` pages
+  against wiki and promotes into heuristics or `learned` pages
   (query-compounding: the next identical question is a read, not a
   re-derivation). Explicit lessons go through the `learn` tool, not direct
-  heuristics writes. Oracle `upstream` pages are pi-version-stamped; the session-start
+  heuristics writes. Wiki `upstream` pages are pi-version-stamped; the session-start
   self-audit flags them stale after a `pi update`.
 
 ## Escalation
@@ -148,8 +148,8 @@ early, before the budget runs out.
   a "Concurrent-session notice" in the prompt means another shell changed config files —
   RE-READ them before building on remembered content; a `[concurrency-guard]` message on
   edit means the target has another shell's uncommitted work.
-- The oracle vault (`oracle/`, an llm-wiki knowledge base of pi governed by
-  `oracle/SCHEMA.md`) lives in-repo and is autocommitted like the rest of the config; its
+- The wiki vault (`wiki/`, an llm-wiki knowledge base of pi governed by
+  `wiki/SCHEMA.md`) lives in-repo and is autocommitted like the rest of the config; its
   content edits mark the knowledge graph STALE until `/graphify --update` — that is
   expected, not a regression.
 
@@ -166,7 +166,7 @@ The harness audits itself; problems become prompts:
   mark it STALE until `/graphify --update`.
 - Lessons close the loop: substantive `graph` outcomes are auto-flushed at session
   shutdown by `extensions/knowledge-compound.ts` (`graphify save-result --outcome`
-  plus draft notes staged into `oracle/_raw/`; capped, deduped, fail-open);
+  plus draft notes staged into `wiki/_raw/`; capped, deduped, fail-open);
   mid-session manual `save-result` remains available; `reflect --if-stale` distills
   them automatically at session start, and `learn_heuristic` persists durable ones.
 - When a standing order or prompt rule can be enforced mechanically, promote it to
@@ -211,11 +211,11 @@ The harness audits itself; problems become prompts:
   (the fable edit-block) is untouched. Self-improving: per-session model/profile/fallback
   stats land in `graphify-out/.lead_config_stats.json` and
   `audit-pipelines.py:check_lead_profile_coverage()` WARNs on repeated fallback drift.
-- `extensions/oracle-first.ts` mirrors graph-first for the oracle: reads of pi's own
-  docs (README/docs/examples under the installed package) before an oracle consult get
+- `extensions/wiki-first.ts` mirrors graph-first for the wiki: reads of pi's own
+  docs (README/docs/examples under the installed package) before an wiki consult get
   a first-offense nudge, then a block with the identical-retry bypass; active only when
-  the oracle vault and `~/.obsidian-wiki/config.oracle` exist; fail-open.
+  the wiki vault and `~/.obsidian-wiki/config.wiki` exist; fail-open.
 - `extensions/knowledge-compound.ts` mechanizes query-compounding: it buffers
   substantive `graph` tool outcomes during the session and on shutdown runs `graphify
-  save-result --outcome` and stages draft notes into `oracle/_raw/` (≤3/session,
+  save-result --outcome` and stages draft notes into `wiki/_raw/` (≤3/session,
   deduped, no LLM calls, never blocks shutdown, fail-open).

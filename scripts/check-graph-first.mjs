@@ -21,7 +21,7 @@ const { jiti } = await loadJiti();
 const { classifyStructureGrep, decideAction, buildNudge, buildBlock } = await jiti.import(
 	join(AGENT_DIR, "extensions", "graph-first.ts"),
 );
-const { grepIsOracleQuestion, CROSS_STORE_GUIDANCE, PI_PKG } = await jiti.import(
+const { grepIsWikiQuestion, CROSS_STORE_GUIDANCE, PI_PKG } = await jiti.import(
 	join(AGENT_DIR, "extensions", "lib", "knowledge-router.ts"),
 );
 
@@ -76,10 +76,10 @@ check("non-flagged command → allow", decideAction(state, "echo hi", false) ===
 check("third distinct flagged → block", decideAction(state, 'rg "interface C"', true) === "block");
 
 // --- cross-store routing (deliverable 2) ---
-check("cross: grep into pi package path → oracle question", grepIsOracleQuestion(`grep -rn "def foo" ${PI_PKG}/dist`) === true);
-check("cross: grep into oracle/ path → oracle question", grepIsOracleQuestion('grep -rn "def x" oracle/') === true);
-check("cross: ordinary repo grep → NOT an oracle question", grepIsOracleQuestion("grep -rn myHelper extensions/") === false);
-check("cross: bare 'moral/oracle' word not a path → false", grepIsOracleQuestion("grep -rn suboracle/x .") === false);
+check("cross: grep into pi package path → wiki question", grepIsWikiQuestion(`grep -rn "def foo" ${PI_PKG}/dist`) === true);
+check("cross: grep into wiki/ path → wiki question", grepIsWikiQuestion('grep -rn "def x" wiki/') === true);
+check("cross: ordinary repo grep → NOT an wiki question", grepIsWikiQuestion("grep -rn myHelper extensions/") === false);
+check("cross: bare 'moral/wiki' word not a path → false", grepIsWikiQuestion("grep -rn subwiki/x .") === false);
 
 // --- redirect messages name BOTH stores (deliverable 2) ---
 const defNudge = buildNudge("myHelper", "grep -rn myHelper extensions/");
@@ -89,8 +89,8 @@ check("msg: every message carries cross-store guidance", defNudge.includes(CROSS
 check("msg: default block keeps IDENTICAL-retry escape", /IDENTICAL command to proceed/.test(defBlock));
 const oraNudge = buildNudge("foo", `grep -rn "def foo" ${PI_PKG}/dist`);
 const oraBlock = buildBlock("foo", `grep -rn "def foo" ${PI_PKG}/dist`);
-check("msg: oracle-targeted nudge leads with wiki-query", oraNudge.includes("wiki-query") && oraNudge.includes("oracle"));
-check("msg: oracle-targeted block keeps IDENTICAL-retry escape", /IDENTICAL command to proceed/.test(oraBlock));
+check("msg: wiki-targeted nudge leads with wiki-query", oraNudge.includes("wiki-query") && oraNudge.includes("wiki"));
+check("msg: wiki-targeted block keeps IDENTICAL-retry escape", /IDENTICAL command to proceed/.test(oraBlock));
 check("msg: every message names both stores (graph + wiki-query)", oraNudge.includes("graph") && defNudge.includes("wiki-query"));
 
 assert.equal(failed, 0, `${failed} graph-first check(s) failed`);

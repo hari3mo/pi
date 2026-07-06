@@ -24,7 +24,7 @@ Fast mode (default, <1s, stdlib-only — run at session start):
      in the baseline; a change WARNs once with the re-verification list
      (pi-tui patch, extension smoke, hook filter) — upgrades become audited
      events instead of silent drift.
-  7. Oracle upstream staleness: oracle vault pages stamped source_layer:
+  7. Wiki upstream staleness: wiki vault pages stamped source_layer:
      upstream carry a pi_version:; a page stamped against a pi version other
      than the live one WARNs once (count + examples) so the session re-verifies
      it against the updated docs. Fail-open: no vault / no obtainable pi
@@ -56,12 +56,12 @@ from pathlib import Path
 AGENT_DIR = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi" / "agent"))
 OUT = AGENT_DIR / "graphify-out"
 BASELINE = OUT / ".pipeline_baseline.json"
-ORACLE = AGENT_DIR / "oracle"
+WIKI = AGENT_DIR / "wiki"
 
 REBUILD_SLACK_S = 15 * 60
 FLAG_STALE_S = 24 * 3600
 AUTOCOMMIT_STALE_S = 2 * 3600
-RAW_STALE_S = 14 * 24 * 3600  # oracle/_raw drafts older than this are rotting
+RAW_STALE_S = 14 * 24 * 3600  # wiki/_raw drafts older than this are rotting
 RAW_MAX_FILES = 5             # more than this many un-promoted drafts backs up
 LEARNING = AGENT_DIR / "learning"
 EVENTS_STALE_S = 7 * 24 * 3600   # events.jsonl untouched this long -> taps dead
@@ -217,15 +217,15 @@ def _pi_version() -> str | None:
         return None
 
 
-def check_oracle_staleness() -> None:
-    # Fast path: a line-grep of the oracle vault frontmatter (no YAML dep).
-    # Upstream oracle pages (source_layer: upstream) carry a pi_version: stamp;
-    # per oracle/SCHEMA.md a pi update makes any page stamped against the old
+def check_wiki_staleness() -> None:
+    # Fast path: a line-grep of the wiki vault frontmatter (no YAML dep).
+    # Upstream wiki pages (source_layer: upstream) carry a pi_version: stamp;
+    # per wiki/SCHEMA.md a pi update makes any page stamped against the old
     # version suspect (local/learned pages never go stale). WARN once with the
     # count + a few examples so the session re-verifies them against the updated
     # docs before trusting them. Fail open: no vault or no obtainable pi version
     # -> skip silently.
-    if not ORACLE.is_dir():
+    if not WIKI.is_dir():
         return
     cur = _pi_version()
     if not cur:
@@ -240,7 +240,7 @@ def check_oracle_staleness() -> None:
 
     stale: list[str] = []
     unstamped: list[str] = []
-    for page in sorted(ORACLE.rglob("*.md")):
+    for page in sorted(WIKI.rglob("*.md")):
         try:
             lines = page.read_text(encoding="utf-8", errors="replace").splitlines()
         except OSError:
@@ -256,7 +256,7 @@ def check_oracle_staleness() -> None:
         if field(fm, "source_layer") != "upstream":
             continue
         ver = field(fm, "pi_version")
-        rel = str(page.relative_to(ORACLE))
+        rel = str(page.relative_to(WIKI))
         # SCHEMA.md requires every upstream page to carry pi_version; a missing or
         # empty stamp is unstamped (can't be checked for staleness), so it warns too.
         if not ver:
@@ -272,9 +272,9 @@ def check_oracle_staleness() -> None:
             kinds.append(f"{len(unstamped)} with a missing/empty pi_version (unstamped)")
         sample = ", ".join(flagged[:5])
         warnings.append(
-            f"pipeline: {len(flagged)} oracle upstream page(s) need re-verification "
+            f"pipeline: {len(flagged)} wiki upstream page(s) need re-verification "
             f"({'; '.join(kinds)}) — re-verify their claims against the current pi "
-            f"docs/examples and re-stamp (oracle/SCHEMA.md staleness protocol): "
+            f"docs/examples and re-stamp (wiki/SCHEMA.md staleness protocol): "
             f"{sample}{'...' if len(flagged) > 5 else ''}")
 
 
@@ -399,12 +399,12 @@ def check_lead_profile_coverage() -> None:
 
 
 def check_raw_staging_rot() -> None:
-    # Fast path: a directory listing. oracle/_raw is LEGACY staging (the old
+    # Fast path: a directory listing. wiki/_raw is LEGACY staging (the old
     # knowledge-compound flow); the nightly distiller drains it, after which
     # this checks residual/manual drafts only. WARN
     # when the backlog grows (> RAW_MAX_FILES) or a draft has sat unpromoted for
     # > 14 days. Fail open: no vault / no _raw dir -> skip (not an error).
-    raw = ORACLE / "_raw"
+    raw = WIKI / "_raw"
     if not raw.is_dir():
         return
     files = [p for p in raw.iterdir() if p.is_file() and not p.name.startswith(".")]
@@ -421,8 +421,8 @@ def check_raw_staging_rot() -> None:
         oldest_days = int((now - min(p.stat().st_mtime for p in stale)) / 86400)
         reasons.append(f"{len(stale)} older than 14d (oldest ~{oldest_days}d)")
     warnings.append(
-        f"pipeline: oracle/_raw staging is backing up ({'; '.join(reasons)}) — review "
-        "and promote to synthesis/ (or delete) per oracle/SCHEMA.md, or let the "
+        f"pipeline: wiki/_raw staging is backing up ({'; '.join(reasons)}) — review "
+        "and promote to synthesis/ (or delete) per wiki/SCHEMA.md, or let the "
         "nightly distiller drain it (learning/SCHEMA.md)")
 
 
@@ -520,7 +520,7 @@ def main() -> int:
     check_learning_liveness()
     check_reflection_drift()
     check_toolchain_versions()
-    check_oracle_staleness()
+    check_wiki_staleness()
     if args.full:
         check_semantic_cache_drift()
         check_extension_loads()

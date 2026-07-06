@@ -149,7 +149,7 @@ check(
 	try {
 		const ok = appendReceipt(dir, {
 			session: "s1", ts: new Date().toISOString(), cwd: "/tmp",
-			heuristicIdsInjected: ["h_a"], oraclePagesRead: ["concepts/x.md"],
+			heuristicIdsInjected: ["h_a"], wikiPagesRead: ["concepts/x.md"],
 			graphQueries: 2, correctionsCaptured: 1, violations: 0, outcome: "PASS",
 		});
 		check("receipt written", ok);

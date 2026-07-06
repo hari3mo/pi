@@ -77,7 +77,7 @@ mtime — re-stat before each injection, reload only on change. Injection NEVER 
 > capture is the `learn` tool in `extensions/learning-tap/` (same category/basis
 > enums, plus a REQUIRED `evidence` array), which buffers to
 > `learning/events.jsonl`; the nightly distiller (Hermes cron; contract
-> `learning/SCHEMA.md`) dedupes candidates against the oracle vault and BOTH
+> `learning/SCHEMA.md`) dedupes candidates against the wiki vault and BOTH
 > heuristic stores, then writes the surviving records here per §1's schema. The
 > stores, injection (§8), nudges (§9), and `/heuristics` commands (§10) are
 > unchanged — this extension is now the CONSUME side only. §§3-followups below

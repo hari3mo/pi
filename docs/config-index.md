@@ -14,7 +14,7 @@ Every session that changes config must update it.
 | Pipeline meta-audit | `scripts/audit-pipelines.py`, `extensions/self-audit.ts` | Audits the pipelines themselves (dynamics, not static config): post-commit rebuild firing, needs_update staleness, launchd autocommit liveness, reflection drift, semantic-cache drift (`--full`), and a self-maintaining graph-connectivity ratchet (`graphify-out/.pipeline_baseline.json`, best-ever giant fraction; >20% drop = ERROR). Merged with validate-config.py into the session-start injection and `/audit`. |
 | Self-audit loop | `extensions/self-audit.ts`, `scripts/validate-config.py` | Session-start validator run with ERROR/WARN injected into the system prompt (silent when healthy); `/audit` on-demand report; validator gained installed-artifact integrity checks (graphify hook doc-filter present, no post-checkout rebuild hook, pi-tui scrollback patch still applied). |
 | Graph-first redirect | `extensions/graph-first.ts`, `extensions/lib/graph-lookup.ts`, `schema/graph-first-stats.schema.json`, `scripts/check-graph-first.mjs` | Steers structure-shaped `grep`/`rg` (symbol def/ref/import hunts) to the `graph` tool via a per-session escalation ladder: 1st offense = allow + nudge, 2nd+ = block, identical retry = bypass; content greps pass untouched (false positives worse than misses). Self-improving: per-session `{nudges,blocks,bypasses}` appended to `graphify-out/.graph_first_stats.json` (~50 records); at agent_end a high bypass ratio nudges a `/graphify --update` re-cache, and `audit-pipelines.py:check_graph_first_drift()` WARNs when the recorded ratio stays >50%. Active only when `graphify-out/graph.json` exists; applies to subagents; fail-open. |
-| Wiki/oracle session link | `extensions/oracle-first.ts`, `extensions/lib/knowledge-router.ts` | Injects absolute active-wiki and pi-oracle links into every prompt so wiki access is independent of cwd; also enforces ORACLE-FIRST for pi docs (nudge then block with identical-retry bypass) and names both stores so agents pick `wiki-query` for durable pi knowledge vs `graph` for live code structure. |
+| Wiki/wiki session link | `extensions/wiki-first.ts`, `extensions/lib/knowledge-router.ts` | Injects absolute active-wiki and pi-wiki links into every prompt so wiki access is independent of cwd; also enforces WIKI-FIRST for pi docs (nudge then block with identical-retry bypass) and names both stores so agents pick `wiki-query` for durable pi knowledge vs `graph` for live code structure. |
 | Knowledge compounding | `extensions/learning-tap/` (`index.ts`, `lib.ts`) | Mechanized capture for the learning pipeline (`learning/SCHEMA.md`): observes substantive `graph` query/explain answers and peer/doctor verdicts in subagent returns, provides the `learn` tool for explicit lessons, and flushes buffered events to `learning/events.jsonl` at shutdown plus `graphify save-result --outcome useful` (nearest project graph, pi-agent-graph fallback) so reflections stay fed. Triage/promotion happens out-of-session (nightly Hermes distiller). Replaces `knowledge-compound.ts`. Check: `scripts/check-learning-tap.mjs`. |
 | Impact tracing | `extensions/impact-trace.ts`, `extensions/lib/graph-lookup.ts`, `scripts/check-impact-trace.mjs` | After every successful edit/write, looks the file up in `graphify-out/graph.json` and injects its INBOUND cross-file dependents (`fileA:line (references)`, capped at 10) so cross-file impact is visible without asking; appends a staleness note when the graph predates the edit or `needs_update` is set. Debounced once per file per session; follow-through reminder at agent_end for flagged dependents never subsequently edited. Silent on no-refs / not-in-graph / any error — never wedges an edit. |
 | Graph lookup lib | `extensions/lib/graph-lookup.ts` | Shared, pi-package-free graph.json access (findGraphRoot, mtime-cached loadGraph, inboundRefs, markSeen debounce, isGraphStale) for graph-first + impact-trace; handles both `links` and `edges` keys. Follows the `lib/config-paths.ts` pattern (not auto-loaded). |
@@ -63,7 +63,7 @@ User-directed. `peer` (gate-tier verification) moves from `google/gemini-3.5-fla
 `google/gemini-3.5-flash:high` to `anthropic/claude-sonnet-5:high` (the mechanical tier). Updated
 the `model:` frontmatter in `agents/peer.md` and `agents/doctor.md`, plus every doctrine reference:
 AGENTS.md Defaults tiers, `config/lead-profiles.json` opus-lead doctrine, and
-`oracle/concepts/routing-and-roles.md` role table.
+`wiki/concepts/routing-and-roles.md` role table.
 
 **Peer/reviewer model swap: `reviewer` → `openai/gpt-5.5:xhigh`, `peer` → `google/gemini-3.5-flash:high`.**
 User-directed: the two model pins on the second-opinion roles were exchanged. `reviewer`
@@ -84,18 +84,18 @@ change — only the backing model per role. Files: `agents/reviewer.md`, `agents
 
 **Model usage menu.** Added `extensions/model-usage.ts`, registering `/usage` and `/model-usage` with a simple scope picker (current branch/current project/today/all/clear) and a width-safe widget table grouped by provider/model. It reads persisted pi session JSONL usage, includes subagent tool-result usage, and reports turns, input/output/cache tokens, cost share, and last-used time. Verified with extension smoke + config validator. Files: `extensions/model-usage.ts`, `docs/config-index.md`. Why: user wanted a comprehensive pi menu showing usage breakdown for each model.
 
-**Cwd-independent wiki + graph session links.** `oracle-first.ts` now injects absolute active-wiki and pi-oracle links into every prompt, so `wiki-query` has the right vault context from any cwd. `graphify-bridge.ts` now prints the absolute graph path/root and documents the nearest-project-graph → pi-agent-graph fallback; `knowledge-compound.ts` uses the same fallback when flushing `graphify save-result`, so graph answers still feed reflections from `$HOME` or unrelated projects. Files: `extensions/oracle-first.ts`, `extensions/graphify-bridge.ts`, `extensions/knowledge-compound.ts`, `docs/config-index.md`.
+**Cwd-independent wiki + graph session links.** `wiki-first.ts` now injects absolute active-wiki and pi-wiki links into every prompt, so `wiki-query` has the right vault context from any cwd. `graphify-bridge.ts` now prints the absolute graph path/root and documents the nearest-project-graph → pi-agent-graph fallback; `knowledge-compound.ts` uses the same fallback when flushing `graphify save-result`, so graph answers still feed reflections from `$HOME` or unrelated projects. Files: `extensions/wiki-first.ts`, `extensions/graphify-bridge.ts`, `extensions/knowledge-compound.ts`, `docs/config-index.md`.
 
-**Oracle-first mechanized + query-compounding mechanized: `extensions/oracle-first.ts` +
-`extensions/knowledge-compound.ts`.** `oracle-first.ts` mirrors `graph-first.ts` for the
-ORACLE-FIRST doctrine: reads of pi's own docs (README/docs/examples under the installed
-package) before an oracle consult get a first-offense nudge, then a block with an
-identical-retry bypass; active only when the oracle vault and `~/.obsidian-wiki/config.oracle`
+**Wiki-first mechanized + query-compounding mechanized: `extensions/wiki-first.ts` +
+`extensions/knowledge-compound.ts`.** `wiki-first.ts` mirrors `graph-first.ts` for the
+WIKI-FIRST doctrine: reads of pi's own docs (README/docs/examples under the installed
+package) before an wiki consult get a first-offense nudge, then a block with an
+identical-retry bypass; active only when the wiki vault and `~/.obsidian-wiki/config.wiki`
 exist; fail-open. `knowledge-compound.ts` mechanizes query-compounding: it buffers
 substantive `graph` tool query/explain outcomes during the session and on
 `session_shutdown` runs `graphify save-result --outcome` plus stages draft synthesis notes
-into `oracle/_raw/` (≤3/session, deduped, no LLM calls, never blocks shutdown, fail-open).
-Both peer-reviewed: PASS. Files: `extensions/oracle-first.ts` (new),
+into `wiki/_raw/` (≤3/session, deduped, no LLM calls, never blocks shutdown, fail-open).
+Both peer-reviewed: PASS. Files: `extensions/wiki-first.ts` (new),
 `extensions/knowledge-compound.ts` (new), `AGENTS.md`, `docs/config-index.md`.
 
 **Incident + restore: knowledge-graph giant-component collapse (0.79→0.24), semantic

@@ -1,22 +1,22 @@
 ---
-title: Oracle Schema
+title: Wiki Schema
 ---
 
-# Oracle — Schema & Conventions
+# Wiki — Schema & Conventions
 
-> This is the **schema layer** for the `oracle` vault (an `llm-wiki`-pattern
+> This is the **schema layer** for the `wiki` vault (an `llm-wiki`-pattern
 > knowledge base). It governs how every page in this vault is structured. Read it
 > before writing or updating any page. Downstream ingest tasks consume it verbatim.
 
 ## Purpose
 
-Oracle is a persistent, compounding knowledge map of **everything related to the
+Wiki is a persistent, compounding knowledge map of **everything related to the
 `pi` coding agent**: what it is, why it is built the way it is, and how to use it —
 across three sources of truth (the pi installation, the local harness config, and
 accumulated lessons). It is a compiled artifact, not a chat log: knowledge is
 distilled once and kept current, per the "compile, don't retrieve" principle.
 
-Oracle answers **knowledge questions** — "what / why / how do I use pi". It does
+Wiki answers **knowledge questions** — "what / why / how do I use pi". It does
 **not** track volatile, file-level code structure of `~/.pi/agent`; that is the job
 of the graphify `graph` tool (see *Graph-Tool Division of Labor* below).
 
@@ -132,10 +132,10 @@ re-derivation.
 
 | Question shape | Answer with |
 |---|---|
-| "What is X / why does pi do Y / how do I use Z" (durable knowledge) | **Oracle** (this vault) |
+| "What is X / why does pi do Y / how do I use Z" (durable knowledge) | **Wiki** (this vault) |
 | "Where is symbol S defined / what references file F / current call graph of `~/.pi/agent`" (live code structure) | **graphify `graph` tool** (query / explain / path) |
 
-Oracle pages MUST NOT duplicate volatile file-level structure (line numbers, current
+Wiki pages MUST NOT duplicate volatile file-level structure (line numbers, current
 import graphs, symbol locations) — that drifts on every commit and belongs to the
 `graph` tool. When a page needs to point at code, name the file/concept and defer the
 live structure to `graph`.

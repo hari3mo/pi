@@ -276,7 +276,7 @@ export interface Receipt {
 	ts: string;
 	cwd: string;
 	heuristicIdsInjected: string[];
-	oraclePagesRead: string[];
+	wikiPagesRead: string[];
 	graphQueries: number;
 	correctionsCaptured: number;
 	violations: number;

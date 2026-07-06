@@ -12,7 +12,7 @@
  *              so `graphify reflect` still gets fed).
  *   verdict  — peer/doctor verdict lines parsed from subagent tool returns.
  *   explicit — the `learn` tool (replaces direct heuristics writes; the
- *              distiller dedupes against oracle/heuristics before storing).
+ *              distiller dedupes against wiki/heuristics before storing).
  *
  * Deliberately NOT here yet: correction tap (needs a precision-tested
  *              heuristic), violation tap (one-line emits belong in the guard
@@ -29,7 +29,7 @@ import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { BasisSchema, CategorySchema, ScopeSchema } from "../heuristics/schema.ts";
 import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "../lib/graph-lookup.ts";
-import { ORACLE_VAULT } from "../lib/knowledge-router.ts";
+import { WIKI_VAULT } from "../lib/knowledge-router.ts";
 import {
 	addEvent,
 	answerFrom,
@@ -66,7 +66,7 @@ export default function (pi: ExtensionAPI) {
 	let cwd = "/";
 	let sessionId = "";
 	// Receipt accumulators (MEASURE side — learning/SCHEMA.md receipts.jsonl)
-	let oraclePagesRead: Set<string> = new Set();
+	let wikiPagesRead: Set<string> = new Set();
 	let graphQueries = 0;
 	let lastVerdict: QaVerdict | null = null;
 	let correctionsCaptured = 0;
@@ -77,7 +77,7 @@ export default function (pi: ExtensionAPI) {
 		buffer = [];
 		cwd = ctx.cwd || "/";
 		sessionId = ctx.sessionManager.getSessionFile?.() ?? "<unknown>";
-		oraclePagesRead = new Set();
+		wikiPagesRead = new Set();
 		graphQueries = 0;
 		lastVerdict = null;
 		correctionsCaptured = 0;
@@ -85,9 +85,9 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	// --- violation tap: guard extensions emit on the shared bus ------------
-	// oracle-first / graph-first emit "learning-violation" at nudge/block
+	// wiki-first / graph-first emit "learning-violation" at nudge/block
 	// (same bus pattern as concurrency-guard -> self-audit). Payload:
-	// { doctrine: "oracle-first"|"graph-first"|"budget", detail: string }.
+	// { doctrine: "wiki-first"|"graph-first"|"budget", detail: string }.
 	pi.events.on("learning-violation", (v: { doctrine?: string; detail?: string }) => {
 		try {
 			addEvent(
@@ -139,13 +139,13 @@ export default function (pi: ExtensionAPI) {
 			// Track the last tool action for correction context (cheap label).
 			lastToolLabel = `${event.toolName}: ${cap(JSON.stringify(event.input ?? {}), 150)}`;
 
-			// Receipt: oracle page reads (mirrors oracle-first's consult signal).
+			// Receipt: wiki page reads (mirrors wiki-first's consult signal).
 			if (event.toolName === "read") {
 				const raw = (event.input as { path?: string; file_path?: string })?.path ??
 					(event.input as { file_path?: string })?.file_path;
 				if (raw) {
 					const abs = resolve(cwd || "/", String(raw));
-					if (abs.startsWith(`${ORACLE_VAULT}/`)) oraclePagesRead.add(abs.slice(ORACLE_VAULT.length + 1));
+					if (abs.startsWith(`${WIKI_VAULT}/`)) wikiPagesRead.add(abs.slice(WIKI_VAULT.length + 1));
 				}
 				return;
 			}
@@ -198,7 +198,7 @@ export default function (pi: ExtensionAPI) {
 		label: "Learn",
 		description:
 			"File a durable, generalizable lesson into the learning pipeline (learning/events.jsonl). " +
-			"The nightly distiller dedupes against the oracle vault and heuristics store, then promotes. " +
+			"The nightly distiller dedupes against the wiki vault and heuristics store, then promotes. " +
 			"One imperative sentence; evidence pointers required.",
 		parameters: Type.Object({
 			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
@@ -236,7 +236,7 @@ export default function (pi: ExtensionAPI) {
 					{
 						type: "text" as const,
 						text: ok
-							? `Lesson buffered for the nightly distiller (${ev.id}). It will be deduped against the oracle before storage.`
+							? `Lesson buffered for the nightly distiller (${ev.id}). It will be deduped against the wiki before storage.`
 							: "Duplicate of an already-buffered lesson this session (or session cap reached) — skipped.",
 					},
 				],
@@ -329,7 +329,7 @@ export default function (pi: ExtensionAPI) {
 					ts: new Date().toISOString(),
 					cwd: ctx.cwd,
 					heuristicIdsInjected: ids,
-					oraclePagesRead: [...oraclePagesRead],
+					wikiPagesRead: [...wikiPagesRead],
 					graphQueries,
 					correctionsCaptured,
 					violations: buffer.filter((b) => b.kind === "violation").length,

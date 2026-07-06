@@ -49,14 +49,14 @@ reading files or dispatching a scout. Two extensions make this real:
 Code changes rebuild the graph automatically via a git post-commit hook; **doc**
 changes leave it STALE (`needs_update`) until `/graphify --update`.
 
-## Division of labor with this vault (critical for Oracle)
+## Division of labor with this vault (critical for Wiki)
 
 | Question shape | Answer with |
 |---|---|
-| "What is X / why does pi do Y / how do I use Z" (durable knowledge) | **Oracle** (this vault) |
+| "What is X / why does pi do Y / how do I use Z" (durable knowledge) | **Wiki** (this vault) |
 | "Where is symbol S defined / what references F / current call graph" (live structure) | **graphify `graph` tool** |
 
-Oracle pages MUST NOT duplicate volatile file-level structure (line numbers,
+Wiki pages MUST NOT duplicate volatile file-level structure (line numbers,
 current import graphs, symbol locations) — that drifts on every commit and
 belongs to the graph. This vault distills **durable design and intent**; when a
 page needs to point at code it names the file/concept and defers the live

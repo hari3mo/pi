@@ -35,7 +35,7 @@ import { persistStatsRecord } from "./lib/stats-store.ts";
 import {
 	CROSS_STORE_GUIDANCE,
 	decide,
-	grepIsOracleQuestion,
+	grepIsWikiQuestion,
 	makeRouterState,
 	resetRouterState,
 	type RouterAction,
@@ -237,15 +237,15 @@ export function decideAction(state: GraphFirstState, command: string, flagged: b
 
 // ---------------------------------------------------------------------------
 // Redirect messages (cross-store aware — deliverable 2). Pure + exported so the
-// check asserts both stores are named and the oracle-targeted grep leads with
-// the oracle. A structure grep into pi's OWN source / the oracle vault is a
-// pi-knowledge question the local graph cannot answer → point at the oracle.
+// check asserts both stores are named and the wiki-targeted grep leads with
+// the wiki. A structure grep into pi's OWN source / the wiki vault is a
+// pi-knowledge question the local graph cannot answer → point at the wiki.
 // ---------------------------------------------------------------------------
 
 export function buildNudge(identifier: string, command: string): string {
-	const primary = grepIsOracleQuestion(command)
-		? `[graph-first] This greps pi's own source / the oracle vault — the local graph does not ` +
-			`index it. Try \`wiki-query\` against the oracle profile (~/.obsidian-wiki/config.oracle) instead. ` +
+	const primary = grepIsWikiQuestion(command)
+		? `[graph-first] This greps pi's own source / the wiki vault — the local graph does not ` +
+			`index it. Try \`wiki-query\` against the wiki profile (~/.obsidian-wiki/config.wiki) instead. ` +
 			`grep allowed this once.`
 		: `[graph-first] Structure search — the \`graph\` tool is ~30x cheaper than grep. ` +
 			`Try: explain '${identifier}' (or query). grep allowed this once.`;
@@ -253,9 +253,9 @@ export function buildNudge(identifier: string, command: string): string {
 }
 
 export function buildBlock(identifier: string, command: string): string {
-	const primary = grepIsOracleQuestion(command)
-		? `[graph-first] This targets pi's own source / the oracle vault — consult the oracle, not the ` +
-			`local graph: \`wiki-query\` (~/.obsidian-wiki/config.oracle). If it genuinely lacks this, ` +
+	const primary = grepIsWikiQuestion(command)
+		? `[graph-first] This targets pi's own source / the wiki vault — consult the wiki, not the ` +
+			`local graph: \`wiki-query\` (~/.obsidian-wiki/config.wiki). If it genuinely lacks this, ` +
 			`re-run the IDENTICAL command to proceed.`
 		: `[graph-first] Structure searches should hit the knowledge graph first. Use the \`graph\` tool: ` +
 			`explain '${identifier}' (or query). If the graph genuinely cannot answer, re-run the ` +

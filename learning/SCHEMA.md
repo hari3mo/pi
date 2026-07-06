@@ -9,7 +9,7 @@ treat THIS file as authoritative. Full design:
 
 - `events.jsonl`      — append-only intake. Writers: learning-tap, `learn` tool.
 - `receipts.jsonl`    — per-session consumed-knowledge manifests (Phase 3, LIVE):
-                        `{ session, ts, cwd, heuristicIdsInjected, oraclePagesRead,
+                        `{ session, ts, cwd, heuristicIdsInjected, wikiPagesRead,
                         graphQueries, correctionsCaptured, violations, outcome }`.
                         Written at session_shutdown even when no events were
                         buffered (the "consumed but nothing happened" signal).
@@ -50,17 +50,17 @@ Caps: payload strings individually ≤4000 chars (findings/answer) or ≤1000
               apply knowledge-compound's isSubstantive filter AND skip answers
               matching /^Traversal: BFS/ (regenerable; distiller drops them).
 - `explicit`  `{ text, category: "correction"|"gotcha"|"environment"|"workflow"|"convention"|"orchestration", scope: "global"|"project", basis }`
-- `violation` `{ doctrine: "budget"|"oracle-first"|"graph-first", detail }`
+- `violation` `{ doctrine: "budget"|"wiki-first"|"graph-first", detail }`
 
 ## Distiller contract (what Pi may assume)
 
 - Runs nightly out-of-session; reads events after `.distiller-cursor`, plus
-  `graphify-out/reflections/LESSONS.md` and any legacy `oracle/_raw/*` files.
-- Dedupes against the oracle vault before writing; reinforces instead of
+  `graphify-out/reflections/LESSONS.md` and any legacy `wiki/_raw/*` files.
+- Dedupes against the wiki vault before writing; reinforces instead of
   duplicating.
-- Writes ONLY: heuristics stores (per their DESIGN.md schema), oracle
-  `learned`-layer pages (per oracle/SCHEMA.md), `digests/`, the cursor, and
-  archival moves into `oracle/_archives/`. Never edits upstream/local pages —
+- Writes ONLY: heuristics stores (per their DESIGN.md schema), wiki
+  `learned`-layer pages (per wiki/SCHEMA.md), `digests/`, the cursor, and
+  archival moves into `wiki/_archives/`. Never edits upstream/local pages —
   contradictions are flagged `disputed` in the digest instead.
 - Advances the cursor only after a fully successful run (crash-safe replay).
 
@@ -68,5 +68,5 @@ Caps: payload strings individually ≤4000 chars (findings/answer) or ≤1000
 
 - WARN: events.jsonl exists and mtime > 7 days (taps dead)
 - WARN: cursor lastRunTs > 7 days behind newest event (distiller dead)
-- WARN: oracle/_raw/ contains files older than 14 days (staging stalled)
+- WARN: wiki/_raw/ contains files older than 14 days (staging stalled)
 - ERROR: events.jsonl > 10 MB (runaway tap)

@@ -9,7 +9,7 @@ updated: 2026-07-04T00:00:00Z
 
 ## Recent Activity
 
-- [2026-07-04] INIT — oracle vault created at /Users/harissaif/.pi/agent/oracle
+- [2026-07-04] INIT — wiki vault created at /Users/harissaif/.pi/agent/wiki
 
 ## Active Threads
 

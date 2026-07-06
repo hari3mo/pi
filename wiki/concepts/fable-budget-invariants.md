@@ -6,7 +6,7 @@ sources:
   - /Users/harissaif/.pi/agent/AGENTS.md
 tags: [pi, orchestration, concept]
 aliases: ["Budget Invariants", "Token-Spend Rules"]
-summary: The MUST rules keeping the orchestrator's context on judgment: one read before dispatch, never verify by reading, batch dispatches, front-load specs, blind fan-out, graph-first, oracle-first.
+summary: The MUST rules keeping the orchestrator's context on judgment: one read before dispatch, never verify by reading, batch dispatches, front-load specs, blind fan-out, graph-first, wiki-first.
 relationships:
   - target: "[[concepts/orchestration-doctrine]]"
     type: derived_from
@@ -50,13 +50,13 @@ land on judgment, not on reading and re-verifying.
   scout or reading files — ~30x cheaper. Subagents inherit the tool, so
   dispatched tasks may assume it too. See
   [[concepts/knowledge-graph-integration]].
-- **ORACLE-FIRST.** Knowledge questions about pi itself (its APIs, features, docs,
-  conventions, past lessons) are answered from the oracle vault (`wiki-query` against
-  the oracle profile at `~/.obsidian-wiki/config.oracle`) plus the `graph` tool BEFORE
+- **WIKI-FIRST.** Knowledge questions about pi itself (its APIs, features, docs,
+  conventions, past lessons) are answered from the wiki vault (`wiki-query` against
+  the wiki profile at `~/.obsidian-wiki/config.wiki`) plus the `graph` tool BEFORE
   reading pi docs or dispatching a scout — compiled knowledge beats re-derivation.
-  Durable lessons and valuable query answers are filed BACK into oracle per its
+  Durable lessons and valuable query answers are filed BACK into wiki per its
   `SCHEMA.md` (query-compounding: the next identical question is a read, not a
-  re-derivation). Oracle `upstream` pages are pi-version-stamped; the session-start
+  re-derivation). Wiki `upstream` pages are pi-version-stamped; the session-start
   self-audit flags them stale after a `pi update`.
 
 ## Why they are invariants, not guidelines
@@ -64,7 +64,7 @@ land on judgment, not on reading and re-verifying.
 Each rule removes a specific way the orchestrator's context silently bleeds:
 exploratory reading, verification-by-reading, serial dispatch latency, thin
 specs that boomerang, single-source high-stakes calls, grep where the graph
-is cheaper, and re-deriving knowledge already compiled in the oracle vault. They are the enforcement teeth of the "touch each task twice"
+is cheaper, and re-deriving knowledge already compiled in the wiki vault. They are the enforcement teeth of the "touch each task twice"
 principle — without them the lead drifts back into doing the work itself.
 
 Several are also enforced in code rather than trusted to prose: GRAPH-FIRST is

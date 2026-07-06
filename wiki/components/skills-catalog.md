@@ -33,7 +33,7 @@ what they do — not a page per skill. Skills live in three roots:
 ## LLM-Wiki family (the largest)
 
 An Obsidian-based knowledge distillation system built on Karpathy's "compile,
-don't retrieve" pattern (the same paradigm this `oracle` vault follows).
+don't retrieve" pattern (the same paradigm this `wiki` vault follows).
 
 - **Theory & setup:** `llm-wiki` (the foundational three-layer pattern),
   `wiki-setup`, `wiki-switch` (vault profiles), `tag-taxonomy`.

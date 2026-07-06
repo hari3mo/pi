@@ -2,9 +2,9 @@
 title: Tag Taxonomy
 ---
 
-# Oracle — Tag Taxonomy
+# Wiki — Tag Taxonomy
 
-Canonical tag vocabulary for the oracle vault. **Read this before tagging any page.**
+Canonical tag vocabulary for the wiki vault. **Read this before tagging any page.**
 Rules: max 5 tags/page (1–2 domain + 1 type + optional descriptors), lowercase-hyphenated,
 canonical forms only. `visibility/*` tags are reserved and do not count toward the limit.
 
