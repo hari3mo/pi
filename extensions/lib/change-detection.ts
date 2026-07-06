@@ -10,8 +10,8 @@
  *     content over a file we edited) and register any changed loaded resource
  *     (per isReloadResource) as STALE with its concrete git delta.
  *   - checkEdit() is the one per-edit classification: stale loaded resource not
- *     re-read → block (once, then warn once — never wedge, fail-open); target
- *     dirty from another shell → warn once.
+ *     re-read → block EVERY attempt until the live file is re-read (the read
+ *     tool cures it); target dirty from another shell → warn once.
  *   - recordWrite()/recordRead() feed the session's own activity back in.
  *   - staleResources() is the persistent staleness registry consumers render
  *     (prompt block, widget); it only empties on reset() — i.e. on /reload,
@@ -57,13 +57,9 @@ export interface RepoAdvance {
 
 export type EditVerdict =
 	| { kind: "stale-block"; rel: string; reason: string }
-	| { kind: "stale-warn"; rel: string; reason: string }
 	| { kind: "dirty-foreign"; rel: string; reason: string };
 
-interface StaleEntry extends StaleResource {
-	blockedOnce: boolean;
-	warnedStale: boolean;
-}
+type StaleEntry = StaleResource;
 
 export function createChangeTracker(agentDir: string) {
 	function git(...args: string[]): string {
@@ -162,8 +158,6 @@ export function createChangeTracker(agentDir: string) {
 					delta: delta || prev?.delta || "",
 					collided: collided.includes(f) || (prev?.collided ?? false),
 					readSince: false, // new foreign content on disk → any earlier re-read is void
-					blockedOnce: prev?.blockedOnce ?? false,
-					warnedStale: false,
 				});
 			}
 			return { range, foreign, collided, staleResources: staleNow };
@@ -189,35 +183,22 @@ export function createChangeTracker(agentDir: string) {
 
 		/**
 		 * THE per-edit classification (call from tool_call for edit/write).
-		 * Stale-not-re-read resource → block the FIRST attempt (cure: one read
-		 * tool call), warn on the second, then stand aside — the gate must never
-		 * wedge a session whose re-read we could not observe (e.g. via bash).
+		 * Stale-not-re-read resource → HALT every attempt (return stale-block)
+		 * until the live file is re-read; recordRead()/recordWrite() set readSince
+		 * and cure the gate. A re-read done only via bash is unobservable here, so
+		 * that path stays blocked — re-read with the read tool to proceed.
 		 */
 		checkEdit(rel: string): EditVerdict | undefined {
 			const s = stale.get(rel);
 			if (s && !s.readSince) {
 				const what = `${rel} is a loaded resource another shell changed (${s.range}${s.delta ? ` — ${s.delta}` : ""}); its in-memory copy is stale`;
-				if (!s.blockedOnce) {
-					s.blockedOnce = true;
-					return {
-						kind: "stale-block",
-						rel,
-						reason:
-							`[concurrency-guard] BLOCKED: ${what}. Read the live file (read tool) before editing, ` +
-							`then retry. Tell the user to run /refresh to reload resources.`,
-					};
-				}
-				if (!s.warnedStale) {
-					s.warnedStale = true;
-					return {
-						kind: "stale-warn",
-						rel,
-						reason:
-							`[concurrency-guard] ${what} and no re-read was observed. Proceeding, but verify ` +
-							`against the live content — and tell the user to run /refresh.`,
-					};
-				}
-				return undefined;
+				return {
+					kind: "stale-block",
+					rel,
+					reason:
+						`[concurrency-guard] BLOCKED: ${what}. Read the live file (read tool) before editing, ` +
+						`then retry. Tell the user to run /refresh to reload resources.`,
+				};
 			}
 			if (!touched.has(rel) && !warnedDirty.has(rel)) {
 				const dirty = git("status", "--porcelain", "--", rel);
