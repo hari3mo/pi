@@ -1235,13 +1235,21 @@ export default function (pi: ExtensionAPI) {
 						const range = markW + WORDMARK.length + 40;
 						const pos = phase % range;
 						const bandWidth = 3;
+						// First sweep doubles as a draw-on ignition: columns ahead of
+						// the glint front stay blank until the wavefront reaches them,
+						// so the mark writes itself on left→right, then flows straight
+						// into the idle shimmer once the first pass completes (pos is
+						// monotonic == phase while phase < range). Same interval, same
+						// rate — the reveal is just the shimmer with everything ahead of
+						// the front held dark.
+						const revealing = phase < range;
 						// Glint runs render in the theme's accent color (the same
 						// token the docs call out for "logo" use) plus BOLD. The base
 						// wordmark stays normal foreground; dim ink disappears on dark
 						// themes before the sweep reaches it.
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier: "" | "base" | "glint" = "";
+							let tier: "" | "off" | "base" | "glint" = "";
 							let run = "";
 							const flush = () => {
 								if (!run) return;
@@ -1257,13 +1265,20 @@ export default function (pi: ExtensionAPI) {
 									run += ch;
 									continue;
 								}
-								const want: "base" | "glint" =
-									Math.abs(x + y - pos) < bandWidth ? "glint" : "base";
+								const d = x + y;
+								const want: "off" | "base" | "glint" =
+									revealing && d > pos
+										? "off"
+										: Math.abs(d - pos) < bandWidth
+											? "glint"
+											: "base";
 								if (want !== tier) {
 									flush();
 									tier = want;
 								}
-								run += ch;
+								// Columns not yet reached by the ignition front render as
+								// blanks (held dark) instead of their glyph.
+								run += want === "off" ? " " : ch;
 							}
 							flush();
 							if (tier !== "") out += RESET;
