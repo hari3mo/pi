@@ -10,7 +10,10 @@ import { basename } from "node:path";
 /** Repo-relative dir prefixes whose contents pi loads as resources (need /reload). */
 const RESOURCE_PREFIXES = ["extensions/", "skills/", "prompts/", "themes/"];
 /** Repo-relative files pi loads at session/reload time (need /reload). */
-const RESOURCE_FILES = new Set(["keybindings.json", "settings.json"]);
+// ponytail: settings.json excluded — pi rewrites it on every thinking-level/
+// model/theme toggle, so tracking it as a reload resource just flags noise on
+// every concurrent session. Add back only if it stops being machine-churned.
+const RESOURCE_FILES = new Set(["keybindings.json"]);
 
 /**
  * True when a repo-relative path is a pi-loaded resource whose in-memory copy
@@ -23,5 +26,6 @@ export function isReloadResource(rel: string): boolean {
 	if (RESOURCE_PREFIXES.some((p) => rel.startsWith(p))) return true;
 	if (RESOURCE_FILES.has(rel)) return true;
 	// AGENTS.md at the repo root or nested in a subdir is loaded into the prompt.
+	// (settings.json is deliberately NOT here — see RESOURCE_FILES.)
 	return basename(rel) === "AGENTS.md";
 }
