@@ -18,10 +18,11 @@ const cases = [
 	["prompts/bar.md", true],
 	["themes/dark.json", true],
 	["keybindings.json", true],
-	["settings.json", true],
 	["AGENTS.md", true],
 	["some/nested/AGENTS.md", true],
 	// audit-relevant but NOT reload resources
+	// settings.json is machine-churned live UI state, not a tracked reload resource
+	["settings.json", false],
 	["docs/config-index.md", false],
 	["schema/manifest.json", false],
 	["scripts/validate-config.py", false],
