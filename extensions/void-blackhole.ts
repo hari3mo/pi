@@ -41,14 +41,20 @@
  * The galaxy is populated with the rest of the void system, ported from
  * void/js/planets.js, events.js and starfield.js:
  *   - orbiting planets riding the disk at their own Keplerian rates
- *   - comets are currently disabled; their implementation is left commented
- *     out below for easy restore
+ *   - a pair of comets on criss-crossing conic orbits, tails streaming
+ *     anti-solar, longest and brightest at perihelion
  *   - constellations pinned to the far background: recognizable star
  *     patterns joined by faint dotted lines, twinkling slowly
- *   - occasional shooting stars streaking across the field
+ *   - occasional shooting stars streaking across the field — sometimes a
+ *     whole shower fanning out of one radiant, sometimes a bolide ending
+ *     in a terminal flash
  *   - the occasional supernova: a star swells up the glyph ramp, flashes,
  *     blows a faint expanding shock ring, and sinks back down the ramp
  *     to nothing
+ *   - rare tidal disruption events: a doomed star spirals in past the
+ *     Roche limit, stretched into a luminous debris stream that wraps
+ *     the hole (spaghettification) and vanishes at the horizon — then
+ *     the disk briefly brightens as the debris feeds it
  *   - a quiet layered starfield: sparse field stars gathered into a faint
  *     diagonal band, a few bright glyph stars, and one small open cluster —
  *     every star at its own twinkle rate and phase
@@ -129,8 +135,6 @@ const PLANETS = [
 // Several of them, each with its own eccentricity, size and orbit
 // orientation (w, the argument of perihelion) so the ellipses criss-cross:
 // perihelion dips through the planets, aphelion swings past the dust rim.
-// Comets disabled for now; implementation kept commented for easy restore.
-/*
 interface CometDef {
 	e: number;
 	p: number;
@@ -143,7 +147,6 @@ const COMET_DEFS: CometDef[] = [
 ];
 const COMET_TAIL = 10;
 const COMET_TAIL_CHARS = "+=~;:-,.";
-*/
 
 // Constellations: recognizable star patterns pinned to the far background —
 // bright twinkling stars joined by faint dotted lines. Star coordinates in
@@ -252,6 +255,16 @@ const SHOOT_CHARS = "*+=-;:,."; // bright head, dimming trail
 const NOVA_MIN = 8; //   seconds between supernovae
 const NOVA_MAX = 18;
 const NOVA_DUR = 2.5;
+const SHOWER_CHANCE = 0.18; // a meteor spawn becomes a radiant burst instead
+const BOLIDE_CHANCE = 0.18; // a meteor ends in a terminal flash
+
+// Tidal disruption events (the black-hole set piece): a star wanders in,
+// is shredded, and feeds the disk.
+const TDE_MIN = 60; //  seconds between events
+const TDE_MAX = 150;
+const TDE_DUR = 9; //   the doomed star's whole death spiral
+const TDE_R0 = 4.2; //  where it wanders in past the Roche limit
+const TDE_CHARS = "+=~;:,."; // stripped stellar material, head -> tail
 
 // Deep space (starfield.js buildDeepSpace): tiny prebuilt two-arm glyph
 // spirals, extremely dim, far behind everything.
@@ -359,10 +372,9 @@ class BlackHoleComponent {
 	private deepGalaxies = makeDeepGalaxies();
 
 	// Comets + transient events (events.js state).
-	// Comets disabled for now; state kept commented with implementation above.
-	// private cometThetas = COMET_DEFS.map(() => Math.random() * Math.PI * 2);
-	// Up to SHOOT_MAX_ACTIVE shooting-star streaks active at once, each with its own
-	// randomized duration and length.
+	private cometThetas = COMET_DEFS.map(() => Math.random() * Math.PI * 2);
+	// Up to SHOOT_MAX_ACTIVE shooting-star streaks active at once, each with
+	// its own randomized duration and length; bolides end in a terminal flash.
 	private shoots: Array<{
 		t: number;
 		x: number;
@@ -371,10 +383,18 @@ class BlackHoleComponent {
 		dy: number;
 		dur: number;
 		len: number;
+		bolide: boolean;
 	}> = [];
 	private shootTimer = 0.3 + Math.random() * 0.8; // first one early, for the splash
+	// A meteor shower: several meteors fanning out of one shared radiant.
+	private shower: { left: number; x: number; y: number; next: number } | null =
+		null;
 	private nova = { active: false, t: 0, x: 0, y: 0 };
 	private novaTimer = 3 + Math.random() * 4;
+	// Tidal disruption event: a star's death spiral, then the fed disk glows.
+	private tde = { active: false, t: 0, th0: 0, dir: 1 };
+	private tdeTimer = 20 + Math.random() * 30; // first one within the minute
+	private diskGlow = 0; // brief disk brightening after a TDE feeds it
 
 	private elapsed = 0;
 
@@ -499,22 +519,30 @@ class BlackHoleComponent {
 		this.dustCount = placed;
 	}
 
-	// One meteor: enters just past a side edge, streaks down-and-across at
-	// its own speed and length, burning out before (or as) it exits.
-	private spawnShoot(): void {
-		const fromLeft = Math.random() < 0.5;
+	// One meteor: enters just past a side edge (or fans out of a shower's
+	// shared radiant), streaks down-and-across at its own speed and length,
+	// burning out before (or as) it exits. Some are bolides: they end in a
+	// terminal flash instead of fading away.
+	private spawnShoot(radiant?: { x: number; y: number }): void {
+		if (this.shoots.length >= SHOOT_MAX_ACTIVE) return;
+		const fromLeft = radiant ? radiant.x < 0.5 : Math.random() < 0.5;
 		const vx = (0.75 + Math.random() * 0.45) * (fromLeft ? 1 : -1);
-		const vy = 0.25 + Math.random() * 0.45;
+		// Shower members fan: a wider vertical spread out of the radiant.
+		const vy = radiant
+			? 0.1 + Math.random() * 0.75
+			: 0.25 + Math.random() * 0.45;
 		const mag = Math.hypot(vx, vy);
+		const jit = () => (Math.random() - 0.5) * 0.05;
 		this.shoots.push({
 			t: 0,
 			// Start just outside the side edge so the streak crosses the frame.
-			x: fromLeft ? -0.12 : 1.12,
-			y: -0.08 + Math.random() * 0.65,
+			x: radiant ? radiant.x + jit() : fromLeft ? -0.12 : 1.12,
+			y: radiant ? radiant.y + jit() : -0.08 + Math.random() * 0.65,
 			dx: vx / mag,
 			dy: vy / mag,
 			dur: 0.8 + Math.random() * 0.7,
 			len: 0.75 + Math.random() * 0.35,
+			bolide: Math.random() < BOLIDE_CHANCE,
 		});
 	}
 
@@ -540,21 +568,37 @@ class BlackHoleComponent {
 			this.diskTheta[i] = theta;
 		}
 
-		/*
 		// Comets: each swings along its conic, fastest at perihelion.
 		for (let i = 0; i < COMET_DEFS.length; i++) {
 			const d = COMET_DEFS[i];
 			const rc = d.p / (1 + d.e * Math.cos(this.cometThetas[i]));
 			this.cometThetas[i] += (d.l / (rc * rc)) * dt;
 		}
-		*/
 
-		// Shooting stars: edge-to-edge streaks, started on a random timer —
-		// several can be in flight together, up to SHOOT_MAX_ACTIVE.
+		// Shooting stars: edge-to-edge streaks on a random timer — several
+		// can be in flight together, up to SHOOT_MAX_ACTIVE. Sometimes the
+		// spawn is a whole shower: meteors fanning out of one shared radiant.
 		this.shootTimer -= dt;
 		if (this.shootTimer <= 0 && this.shoots.length < SHOOT_MAX_ACTIVE) {
-			this.spawnShoot();
+			if (!this.shower && Math.random() < SHOWER_CHANCE) {
+				this.shower = {
+					left: 3 + Math.floor(Math.random() * 3),
+					x: Math.random() < 0.5 ? -0.1 : 1.1,
+					y: -0.05 + Math.random() * 0.4,
+					next: 0,
+				};
+			} else {
+				this.spawnShoot();
+			}
 			this.shootTimer = SHOOT_MIN + Math.random() * (SHOOT_MAX - SHOOT_MIN);
+		}
+		if (this.shower) {
+			this.shower.next -= dt;
+			if (this.shower.next <= 0) {
+				this.spawnShoot(this.shower);
+				this.shower.next = 0.2 + Math.random() * 0.35;
+				if (--this.shower.left <= 0) this.shower = null;
+			}
 		}
 		for (let i = this.shoots.length - 1; i >= 0; i--) {
 			const s = this.shoots[i];
@@ -579,6 +623,26 @@ class BlackHoleComponent {
 			this.nova.t += dt;
 			if (this.nova.t >= NOVA_DUR) this.nova.active = false;
 		}
+
+		// Tidal disruption: every few minutes a star wanders in too close.
+		this.tdeTimer -= dt;
+		if (this.tdeTimer <= 0 && !this.tde.active) {
+			this.tde = {
+				active: true,
+				t: 0,
+				th0: Math.random() * Math.PI * 2,
+				dir: Math.random() < 0.5 ? 1 : -1,
+			};
+			this.tdeTimer = TDE_MIN + Math.random() * (TDE_MAX - TDE_MIN);
+		}
+		if (this.tde.active) {
+			this.tde.t += dt;
+			if (this.tde.t >= TDE_DUR) {
+				this.tde.active = false;
+				this.diskGlow = 1; // the debris finally feeds the disk
+			}
+		}
+		this.diskGlow = Math.max(0, this.diskGlow - dt / 2.2);
 	}
 
 	private close(): void {
@@ -889,7 +953,7 @@ class BlackHoleComponent {
 			// fades to embers — the disk reads properly lopsided.
 			const amp = Math.min(0.8, 0.2 + 0.55 / r);
 			const beaming = 1 - amp + amp * Math.cos(theta);
-			let b = heat * beaming + this.diskNoise[i];
+			let b = heat * beaming * (1 + 0.35 * this.diskGlow) + this.diskNoise[i];
 			b = Math.max(0, Math.min(1, b));
 
 			// Screen-space distance from the hole, in horizon radii (the
@@ -975,6 +1039,20 @@ class BlackHoleComponent {
 			// Faint glow either side of the head.
 			deposit(Math.round(hx) - 1, Math.round(hy), 0.12 * env);
 			deposit(Math.round(hx) + 1, Math.round(hy), 0.12 * env);
+			if (s.bolide) {
+				// Terminal flash: the fireball pops as the streak burns out.
+				const flash =
+					smoothstep(0.72, 0.86, u) * (1 - smoothstep(0.86, 1, u));
+				if (flash > 0.05) {
+					const bc = Math.round(hx);
+					const br = Math.round(hy);
+					glyph(bc, br, "*", Math.min(1, 0.5 + flash));
+					deposit(bc - 1, br, 0.3 * flash);
+					deposit(bc + 1, br, 0.3 * flash);
+					deposit(bc, br - 1, 0.2 * flash);
+					deposit(bc, br + 1, 0.2 * flash);
+				}
+			}
 		}
 
 		// -- supernova: swell up the glyph ramp to the flash, then sink back
@@ -1094,7 +1172,6 @@ class BlackHoleComponent {
 			}
 		}
 
-		/*
 		// -- comets: bright heads, tails streaming anti-solar (away from the
 		// core), longest and brightest near perihelion; each glyph vanishes
 		// while it is behind the hole --
@@ -1135,7 +1212,56 @@ class BlackHoleComponent {
 				);
 			}
 		}
-		*/
+
+		// -- tidal disruption event: a doomed star spirals down the disk
+		// plane and is stretched into a luminous debris stream along its own
+		// trajectory (spaghettification), wrapping tighter around the hole as
+		// it plunges, vanishing at the horizon. Parametric death spiral: r
+		// eases from TDE_R0 to the horizon, winding rate climbing as 1/r. --
+		if (this.tde.active) {
+			const u = Math.min(1, this.tde.t / TDE_DUR);
+			const pathR = (uu: number) =>
+				EVENT_HORIZON +
+				(TDE_R0 - EVENT_HORIZON) * (1 - Math.pow(Math.max(0, uu), 1.8));
+			const rNow = pathR(u);
+			// The stream stretches as the tidal field steepens near the hole.
+			const maxLag = 0.04 + 0.16 * smoothstep(3.0, 1.1, rNow);
+			const steps = 90;
+			let lastCol = Number.NaN;
+			let lastRow = Number.NaN;
+			for (let k = 0; k <= steps; k++) {
+				const f = k / steps;
+				const uu = u - f * maxLag;
+				if (uu <= 0) break; // not yet stretched this far back
+				const rr = pathR(uu);
+				const th = this.tde.th0 + (this.tde.dir * 16.7) / rr;
+				const x = Math.cos(th) * rr;
+				const z = Math.sin(th) * rr;
+				const col = Math.round(cx + x * sX);
+				const row = Math.round(cy + z * SIN_T * sY);
+				if (col === lastCol && row === lastRow) continue;
+				lastCol = col;
+				lastRow = row;
+				if (hiddenBehindHole(col, row, z)) continue;
+				// Hotter as the material falls deeper; dimmer down the tail.
+				const heat = 0.45 + 0.55 * smoothstep(3.6, 1.3, rr);
+				if (k === 0) {
+					glyph(col, row, "@", Math.min(1, heat * 1.1));
+				} else {
+					glyph(
+						col,
+						row,
+						TDE_CHARS[
+							Math.min(
+								TDE_CHARS.length - 1,
+								Math.floor(f * TDE_CHARS.length),
+							)
+						],
+						heat * Math.pow(1 - f, 1.2) * 0.9,
+					);
+				}
+			}
+		}
 
 		// -- landing-page chrome: wordmark and tagline, drawn last so nothing
 		// washes them out. Both are stamped onto cleared plates (the cells behind
@@ -1360,7 +1486,8 @@ export default function (pi: ExtensionAPI) {
 	};
 
 	pi.registerCommand("void", {
-		description: "The void — black hole, planets, shooting stars, constellations",
+		description:
+			"The void — black hole, planets, comets, shooting stars, constellations",
 		handler: async (_args, ctx) => openVoid(ctx),
 	});
 	pi.registerCommand("galaxy", {
