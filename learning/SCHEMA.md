@@ -19,9 +19,12 @@ treat THIS file as authoritative. Full design:
 - `.lock`             — write lock, protocol identical to heuristics DESIGN.md §2
                         (wx-open, 10s stale-steal, backoff ≤130×100ms).
 
-Git: runtime data. Exclude `events.jsonl`, `receipts.jsonl`, `.distiller-cursor`,
-`digests/` from config snapshots the same way graphify-out/ artifacts are
-excluded. SCHEMA.md and PHASE1-DISPATCH.md ARE tracked.
+Git: runtime data IS tracked — deliberately. Multi-machine peer sync
+(docs/sync.md) carries `events.jsonl`, `receipts.jsonl`, and heuristics stores
+across machines with a `merge=union` driver (.gitattributes), so concurrent
+appends from two peers merge without conflict. `.distiller-cursor` and
+`digests/` are tracked too; the distiller runs on ONE machine only (the Mac)
+so the cursor has a single writer. SCHEMA.md and PHASE1-DISPATCH.md ARE tracked.
 
 ## Event schema (one JSON object per line)
 
