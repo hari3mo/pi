@@ -47,7 +47,8 @@
  *     patterns joined by faint dotted lines, twinkling slowly
  *   - occasional shooting stars streaking across the field
  *   - the occasional supernova: a star swells up the glyph ramp, flashes,
- *     and fades back to nothing
+ *     blows a faint expanding shock ring, and sinks back down the ramp
+ *     to nothing
  *   - a quiet layered starfield: sparse field stars gathered into a faint
  *     diagonal band, a few bright glyph stars, and one small open cluster —
  *     every star at its own twinkle rate and phase
@@ -498,6 +499,25 @@ class BlackHoleComponent {
 		this.dustCount = placed;
 	}
 
+	// One meteor: enters just past a side edge, streaks down-and-across at
+	// its own speed and length, burning out before (or as) it exits.
+	private spawnShoot(): void {
+		const fromLeft = Math.random() < 0.5;
+		const vx = (0.75 + Math.random() * 0.45) * (fromLeft ? 1 : -1);
+		const vy = 0.25 + Math.random() * 0.45;
+		const mag = Math.hypot(vx, vy);
+		this.shoots.push({
+			t: 0,
+			// Start just outside the side edge so the streak crosses the frame.
+			x: fromLeft ? -0.12 : 1.12,
+			y: -0.08 + Math.random() * 0.65,
+			dx: vx / mag,
+			dy: vy / mag,
+			dur: 0.8 + Math.random() * 0.7,
+			len: 0.75 + Math.random() * 0.35,
+		});
+	}
+
 	// Direct port of updateAccretionDisk() physics from blackhole.js.
 	private tick(dt: number): void {
 		this.elapsed += dt;
@@ -533,24 +553,7 @@ class BlackHoleComponent {
 		// several can be in flight together, up to SHOOT_MAX_ACTIVE.
 		this.shootTimer -= dt;
 		if (this.shootTimer <= 0 && this.shoots.length < SHOOT_MAX_ACTIVE) {
-			const fromLeft = Math.random() < 0.5;
-			const vx = fromLeft ? 0.75 + Math.random() * 0.45 : -0.75 - Math.random() * 0.45;
-			const vy = 0.25 + Math.random() * 0.45;
-			const mag = Math.hypot(vx, vy);
-			const dx = vx / mag;
-			const dy = vy / mag;
-			const dur = 0.8 + Math.random() * 0.7;
-			const len = 0.75 + Math.random() * 0.35;
-			this.shoots.push({
-				t: 0,
-				// Start just outside the side edge so the streak crosses the frame.
-				x: fromLeft ? -0.12 : 1.12,
-				y: -0.08 + Math.random() * 0.65,
-				dx,
-				dy,
-				dur,
-				len,
-			});
+			this.spawnShoot();
 			this.shootTimer = SHOOT_MIN + Math.random() * (SHOOT_MAX - SHOOT_MIN);
 		}
 		for (let i = this.shoots.length - 1; i >= 0; i--) {
@@ -929,40 +932,90 @@ class BlackHoleComponent {
 			}
 		}
 
-		// -- shooting stars: bright head, longer dimming trail, edge-to-edge --
+		// -- shooting stars: bright head, continuous dimming trail. The trail
+		// is walked cell-by-cell in screen space (a fixed normalized step
+		// leaves gaps between glyphs on wide terminals), growing in behind
+		// the head as the meteor ignites, then fading out whole. --
 		for (const s of this.shoots) {
 			const u = s.t / s.dur;
 			const env = Math.min(1, u / 0.12) * (1 - smoothstep(0.68, 1, u));
-			const hx = s.x + s.dx * u * s.len;
-			const hy = s.y + s.dy * u * s.len;
-			const trailStep = 0.045 * (s.len / 0.9);
-			for (let i = 0; i < SHOOT_CHARS.length; i++) {
-				const d = i * trailStep;
-				const col = Math.round((hx - s.dx * d) * artW);
-				const row = Math.round((hy - s.dy * d) * rows);
-				const b = env * (1 - i / SHOOT_CHARS.length);
-				glyph(col, row, SHOOT_CHARS[i], i === 0 ? Math.min(1.2, b * 1.35) : b);
-				if (i === 0) {
-					deposit(col - 1, row, 0.12 * env);
-					deposit(col + 1, row, 0.12 * env);
-				}
+			const hx = (s.x + s.dx * u * s.len) * artW;
+			const hy = (s.y + s.dy * u * s.len) * rows;
+			// Unit step along the on-screen path (cells, not normalized units).
+			const mag = Math.hypot(s.dx * artW, s.dy * rows);
+			const ux = (s.dx * artW) / mag;
+			const uy = (s.dy * rows) / mag;
+			// Trail length scales with the frame and the streak, easing in
+			// over the first third of flight so the meteor visibly ignites.
+			const tail =
+				Math.max(5, Math.round(artW * 0.08 * s.len)) * smoothstep(0, 0.35, u);
+			let lastCol = Number.NaN;
+			let lastRow = Number.NaN;
+			for (let d = 0; d <= tail; d++) {
+				const col = Math.round(hx - ux * d);
+				const row = Math.round(hy - uy * d);
+				if (col === lastCol && row === lastRow) continue; // no double-stamps
+				lastCol = col;
+				lastRow = row;
+				const f = d / Math.max(1, tail);
+				const ch =
+					SHOOT_CHARS[
+						Math.min(
+							SHOOT_CHARS.length - 1,
+							Math.floor(f * SHOOT_CHARS.length),
+						)
+					];
+				glyph(
+					col,
+					row,
+					ch,
+					d === 0 ? Math.min(1, env * 1.35) : env * (1 - f) * 0.9,
+				);
 			}
+			// Faint glow either side of the head.
+			deposit(Math.round(hx) - 1, Math.round(hy), 0.12 * env);
+			deposit(Math.round(hx) + 1, Math.round(hy), 0.12 * env);
 		}
 
-		// -- supernova: swell up the ramp to the flash, then fade back --
+		// -- supernova: swell up the glyph ramp to the flash, then sink back
+		// down it as the light dies (it used to freeze on "*" while dimming),
+		// with a faint shock ring expanding away from the flash --
 		if (this.nova.active) {
 			const u = this.nova.t / NOVA_DUR;
-			const stage = u < 0.12 ? 0 : u < 0.26 ? 1 : 2;
-			const fade = 1 - smoothstep(0.5, 1, u);
+			// Fast rise to the flash at ~1/5 of the run, slow decay after.
+			const env = u < 0.2 ? u / 0.2 : 1 - smoothstep(0.2, 1, u);
 			const col = Math.round(this.nova.x * artW);
 			const row = Math.round(this.nova.y * rows);
-			glyph(col, row, ".+*"[stage], Math.max(0.15, fade));
-			if (stage === 2 && fade > 0.5) {
+			glyph(
+				col,
+				row,
+				env < 0.35 ? "." : env < 0.75 ? "+" : "*",
+				Math.max(0.12, env),
+			);
+			if (env > 0.6) {
 				// The flash spills into the neighbouring cells.
-				deposit(col - 1, row, 0.25 * fade);
-				deposit(col + 1, row, 0.25 * fade);
-				deposit(col, row - 1, 0.18 * fade);
-				deposit(col, row + 1, 0.18 * fade);
+				deposit(col - 1, row, 0.25 * env);
+				deposit(col + 1, row, 0.25 * env);
+				deposit(col, row - 1, 0.18 * env);
+				deposit(col, row + 1, 0.18 * env);
+			}
+			// Shock ring: born at the flash, expanding and thinning out.
+			// Stamped (max, not additive) on the 2:1-aspect ellipse so it
+			// stays a clean faint circle instead of blooming.
+			if (u > 0.24) {
+				const rr = 1 + (u - 0.24) * 5; // radius in rows
+				const rb = 0.22 * (1 - smoothstep(0.24, 0.85, u));
+				if (rb > 0.02) {
+					const steps = Math.max(8, Math.round(rr * 6));
+					for (let a = 0; a < steps; a++) {
+						const ang = (a / steps) * Math.PI * 2;
+						stamp(
+							Math.round(col + Math.cos(ang) * rr * 2),
+							Math.round(row + Math.sin(ang) * rr),
+							rb,
+						);
+					}
+				}
 			}
 		}
 
