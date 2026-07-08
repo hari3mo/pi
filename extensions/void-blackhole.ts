@@ -1418,12 +1418,13 @@ export default function (pi: ExtensionAPI) {
 						// resting beat between sweeps instead of looping back-to-back.
 						const range = markW + WORDMARK.length + 40;
 						const pos = phase % range;
-						// Glint runs render in the theme's accent color (the same
-						// token the docs call out for "logo" use) plus BOLD. The base
-						// wordmark stays normal foreground; dim ink disappears on dark
-						// themes before the sweep reaches it.
-						// Specular profile matching the splash path: bold-accent core
-						// (d<2), plain-accent fringe (d<4), base ink beyond.
+						// Glint runs render in `muted` (gray in every theme) plus BOLD,
+						// NOT `accent` — accent is bronze/brown in porcelain-light, and
+						// the shimmer must read gray on both light and dark variants.
+						// The base wordmark stays normal foreground; dim ink disappears
+						// on dark themes before the sweep reaches it.
+						// Specular profile matching the splash path: bold-muted core
+						// (d<2), plain-muted fringe (d<4), base ink beyond.
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
 							let tier: "" | "base" | "fringe" | "glint" = "";
@@ -1432,9 +1433,9 @@ export default function (pi: ExtensionAPI) {
 								if (!run) return;
 								out +=
 									tier === "glint"
-										? RESET + BOLD + theme.fg("accent", run)
+										? RESET + BOLD + theme.fg("muted", run)
 										: tier === "fringe"
-											? RESET + theme.fg("accent", run)
+											? RESET + theme.fg("muted", run)
 											: RESET + run;
 								run = "";
 							};
