@@ -17,6 +17,7 @@
 import { existsSync, mkdirSync, rmSync, symlinkSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { execSync } from "node:child_process";
 
 const here = dirname(fileURLToPath(import.meta.url)); // <AGENT_DIR>/scripts/lib
 export const AGENT_DIR = process.env.PI_AGENT_DIR ?? join(here, "..", "..");
