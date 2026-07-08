@@ -411,8 +411,12 @@ class BlackHoleComponent {
 	) {
 		this.tui = tui;
 		this.onClose = onClose;
+		// Wordmark glint uses `muted` (gray in every theme: dark #8a8a8a, light
+		// #6e6e6e), NOT `accent` — accent is bronze/brown in porcelain-light, and
+		// the shimmer must read gray on both variants. `muted` is also
+		// contrast-correct per background (light-gray on dark, dark-gray on light).
 		this.accentAnsi =
-			typeof theme?.getFgAnsi === "function" ? theme.getFgAnsi("accent") : "";
+			typeof theme?.getFgAnsi === "function" ? theme.getFgAnsi("muted") : "";
 
 		const home = process.env.HOME ?? "";
 		const cwd =
