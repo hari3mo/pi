@@ -20,7 +20,21 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url)); // <AGENT_DIR>/scripts/lib
 export const AGENT_DIR = process.env.PI_AGENT_DIR ?? join(here, "..", "..");
-export const PKG = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
+// Resolve the installed pi package portably. The Mac installs with
+// `npm --prefix ~/.local` (→ ~/.local/lib/node_modules); a Linux peer under
+// fnm/nvm puts it elsewhere. `npm root -g` reports the right global root on
+// either, so derive PKG from it instead of hardcoding ~/.local/lib. Falls back
+// to the legacy path (and PI_PKG override) so a broken/absent npm still works.
+function resolvePkg() {
+	if (process.env.PI_PKG) return process.env.PI_PKG;
+	try {
+		const root = execSync("npm root -g", { encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] }).trim();
+		const p = join(root, "@earendil-works", "pi-coding-agent");
+		if (root && existsSync(p)) return p;
+	} catch {}
+	return join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
+}
+export const PKG = resolvePkg();
 
 /**
  * Symlink the pi package's bare-specifier deps into <AGENT_DIR>/node_modules.
