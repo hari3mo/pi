@@ -44,6 +44,50 @@ bin/
 node_modules/
 *.log
 .DS_Store
+__pycache__/
+*.pyc
+*.bak
+.bak
 
 # ---- graphify knowledge graph (derived; rebuilt by post-commit hook / /graphify) ----
 graphify-out/
+
+# ---- machine-local skill symlinks (obsidian_wiki pip package links these into
+#      skills/ on the Mac; absolute Python.framework targets that dangle on any
+#      peer. pi does NOT invoke them — they exist as Hermes skills. Only
+#      skills/wiki-query (WIKI-FIRST doctrine) + skills/graphify are real,
+#      tracked pi skills. Keep this list so a pip reinstall can't re-break peers.)
+/skills/claude-history-ingest
+/skills/codex-history-ingest
+/skills/copilot-history-ingest
+/skills/cross-linker
+/skills/daily-update
+/skills/graph-colorize
+/skills/hermes-history-ingest
+/skills/impl-validator
+/skills/llm-wiki
+/skills/memory-bridge
+/skills/openclaw-history-ingest
+/skills/pi-history-ingest
+/skills/skill-creator
+/skills/tag-taxonomy
+/skills/vault-skill-factory
+/skills/wiki-agent
+/skills/wiki-capture
+/skills/wiki-context-pack
+/skills/wiki-dashboard
+/skills/wiki-dedup
+/skills/wiki-digest
+/skills/wiki-export
+/skills/wiki-history-ingest
+/skills/wiki-import
+/skills/wiki-ingest
+/skills/wiki-lint
+/skills/wiki-rebuild
+/skills/wiki-research
+/skills/wiki-setup
+/skills/wiki-stage-commit
+/skills/wiki-status
+/skills/wiki-switch
+/skills/wiki-synthesize
+/skills/wiki-update
