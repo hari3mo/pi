@@ -205,7 +205,21 @@ def _write_baseline(baseline: dict) -> None:
         pass
 
 
-PI_PKG = Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent"
+def _resolve_pi_pkg() -> Path:
+    """Installed pi package, portably (mirrors scripts/lib/jiti-loader.mjs):
+    PI_PKG env override -> `npm root -g` (fnm/nvm/brew layouts) -> legacy ~/.local."""
+    if env := os.environ.get("PI_PKG"):
+        return Path(env)
+    try:
+        root = subprocess.run(["npm", "root", "-g"], capture_output=True, text=True, timeout=10).stdout.strip()
+        if root and (p := Path(root) / "@earendil-works" / "pi-coding-agent").is_dir():
+            return p
+    except Exception:
+        pass
+    return Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent"
+
+
+PI_PKG = _resolve_pi_pkg()
 
 
 def _pi_version() -> str | None:
