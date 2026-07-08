@@ -1,8 +1,21 @@
 // Repro + regression harness for pi-tui scrollback-wipe-on-above-viewport-change.
 import assert from "node:assert";
+import { execSync } from "node:child_process";
+import { join } from "node:path";
 
+// Portable: PI_TUI_PATH override -> `npm root -g` -> legacy ~/.local layout.
 const TUI_PATH =
-	"/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js";
+	process.env.PI_TUI_PATH ??
+	join(
+		(() => {
+			try {
+				return execSync("npm root -g", { encoding: "utf8" }).trim();
+			} catch {
+				return join(process.env.HOME, ".local", "lib", "node_modules");
+			}
+		})(),
+		"@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js",
+	);
 const { TUI } = await import(TUI_PATH);
 
 function makeTerminal(cols, rows) {
