@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.80.3",
   "theme": "porcelain-light/porcelain",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-sonnet-5",
+  "defaultProvider": "openai",
+  "defaultModel": "gpt-5.5-pro",
   "defaultThinkingLevel": "high",
   "quietStartup": false,
   "enabledModels": [
