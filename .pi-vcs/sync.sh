@@ -58,9 +58,10 @@ if ! git fetch -q origin 2>/dev/null; then
   exit 0
 fi
 
-ahead_behind="$(git rev-list --left-right --count origin/main...main 2>/dev/null || echo '0 0')"
-behind="${ahead_behind%%	*}"; ahead="${ahead_behind##*	}"
-[ "$behind" = "0" ] && [ "$ahead" = "0" ] && exit 0   # fully in sync
+read -r behind ahead <<EOF
+$(git rev-list --left-right --count origin/main...main 2>/dev/null || echo "0 0")
+EOF
+[ "${behind:-0}" = "0" ] && [ "${ahead:-0}" = "0" ] && exit 0   # fully in sync
 
 if [ "$behind" != "0" ]; then
   # GRAPHIFY_SKIP_HOOK: post-commit graph rebuild is skipped during rebase
