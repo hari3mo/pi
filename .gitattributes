@@ -1,0 +1,8 @@
+# Append-only runtime logs written by live pi sessions on EVERY peer machine.
+# merge=union keeps lines from both sides on merge instead of conflicting —
+# order across machines is not guaranteed, but both consumers (the distiller,
+# heuristics loader) treat these as unordered event sets keyed by id/ts.
+learning/events.jsonl merge=union
+learning/receipts.jsonl merge=union
+heuristics/*.jsonl merge=union
+.pi/heuristics/*.jsonl merge=union
