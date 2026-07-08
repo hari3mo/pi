@@ -39,6 +39,20 @@ from pathlib import Path
 AGENT_DIR = Path(os.environ.get("PI_AGENT_DIR", Path.home() / ".pi" / "agent"))
 MANIFEST = AGENT_DIR / "schema" / "manifest.json"
 
+
+def _pi_pkg_root() -> Path:
+    """Installed pi package, portably (mirrors scripts/lib/jiti-loader.mjs):
+    PI_PKG env override -> `npm root -g` (fnm/nvm/brew layouts) -> legacy ~/.local."""
+    if env := os.environ.get("PI_PKG"):
+        return Path(env)
+    try:
+        root = subprocess.run(["npm", "root", "-g"], capture_output=True, text=True, timeout=10).stdout.strip()
+        if root and (p := Path(root) / "@earendil-works" / "pi-coding-agent").is_dir():
+            return p
+    except Exception:
+        pass
+    return Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent"
+
 CREDENTIAL_GLOBS = [
     "auth.json", "*.env", ".env*", "*.key", "*.pem", "*.p12", "*.pfx",
     "*credential*", "*secret*", "*token*", "*password*", "*.oauth",
@@ -283,7 +297,7 @@ def check_installed_integrity() -> None:
         errors.append(
             ".pi-vcs/hooks/post-checkout: graphify full-rebuild hook present — its .md "
             "re-extraction wipes the semantic graph layer; delete it (deliberately removed 2026-07-04)")
-    tui = Path.home() / ".local/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js"
+    tui = _pi_pkg_root() / "node_modules/@earendil-works/pi-tui/dist/tui.js"
     if tui.exists() and "viewport reflow repaint" not in tui.read_text(encoding="utf-8", errors="replace"):
         warnings.append(
             "pi-tui dist: scrollback-fix patch markers missing (pi update overwrote it?) — "
