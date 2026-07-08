@@ -61,12 +61,15 @@ export function decide(state: RouterState, key: string, flagged: boolean): Route
 // Cross-store guidance (deliverable 2)
 // ---------------------------------------------------------------------------
 
-// Hardcoded absolute paths mirror how AGENTS.md and ~/.obsidian-wiki/config.wiki
-// write them literally (same repo, same user). Shared so graph-first can detect a
-// grep into pi's own source / the wiki vault without re-declaring the paths.
-export const PI_PKG = "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent";
-export const WIKI_VAULT = "/Users/harissaif/.pi/agent/wiki";
-export const WIKI_CONFIG = "/Users/harissaif/.obsidian-wiki/config.wiki";
+// Derived from $HOME so the same repo works on every peer machine (macOS
+// /Users/<u>, Linux /home/<u>). process.env needs no import, preserving this
+// module's "pure, no imports" loading contract. Shared so graph-first can
+// detect a grep into pi's own source / the wiki vault without re-declaring
+// the paths.
+const HOME = process.env.HOME ?? "";
+export const PI_PKG = `${HOME}/.local/lib/node_modules/@earendil-works/pi-coding-agent`;
+export const WIKI_VAULT = `${HOME}/.pi/agent/wiki`;
+export const WIKI_CONFIG = `${HOME}/.obsidian-wiki/config.wiki`;
 
 /**
  * The both-stores one-liner appended to EVERY router message: which store

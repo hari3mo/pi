@@ -24,8 +24,8 @@ const { classifyPiDocRead, isWikiConsult, decideAction, buildNudge, buildBlock }
 );
 const { CROSS_STORE_GUIDANCE } = await jiti.import(join(AGENT_DIR, "extensions", "lib", "knowledge-router.ts"));
 
-const PI = "/Users/harissaif/.local/lib/node_modules/@earendil-works/pi-coding-agent";
-const CWD = "/Users/harissaif/.pi/agent";
+const PI = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-works", "pi-coding-agent");
+const CWD = AGENT_DIR;
 
 let failed = 0;
 const check = (label, cond) => {

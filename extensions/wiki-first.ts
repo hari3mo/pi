@@ -58,7 +58,7 @@ import {
 
 /** The three doc roots under PI_PKG the WIKI-FIRST doctrine names. */
 const DOC_SUBPATHS = ["README.md", "docs/", "examples/"];
-const ACTIVE_WIKI_CONFIG = "/Users/harissaif/.obsidian-wiki/config";
+const ACTIVE_WIKI_CONFIG = `${process.env.HOME ?? ""}/.obsidian-wiki/config`;
 
 /** File-reading utilities whose target under PI_PKG counts as "reading pi docs". */
 const READ_CMD_RE = /\b(cat|sed|head|tail|less|more|bat|nl|view)\b/;
