@@ -34,7 +34,7 @@
 		"thinkingText": "ash",
 
 		"selectedBg": "bgSelect",
-		"userMessageBg": "bgRaise",
+		"userMessageBg": "bgUser",
 		"userMessageText": "ink",
 		"customMessageBg": "bgRaise",
 		"customMessageText": "silver",
