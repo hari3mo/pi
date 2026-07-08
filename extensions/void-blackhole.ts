@@ -1317,6 +1317,7 @@ class BlackHoleComponent {
 		const glintRange = markW + WORDMARK.length + 40;
 		const glintPos = Math.floor(this.elapsed / 0.12) % glintRange;
 		const glintTier = BOLD + this.accentAnsi;
+		const glintFringe = this.accentAnsi; // soft edge: accent without BOLD
 
 		// -- rasterize: brightness -> glyph; color is just dim/normal/bold --
 		const lines: string[] = [""];
@@ -1332,11 +1333,19 @@ class BlackHoleComponent {
 				const ch =
 					overlay[row * artW + col] ??
 					RAMP[Math.min(RAMP_MAX, Math.floor(Math.pow(b, 0.95) * RAMP_MAX))];
+				// Specular profile: bold-accent core, plain-accent fringe, so the
+				// sweep reads as a highlight with falloff instead of a flat block.
+				const gd =
+					b >= 2
+						? Math.abs(col - markCol + (row - markRow) - glintPos)
+						: 99;
 				const want =
 					b >= 2
-						? Math.abs(col - markCol + (row - markRow) - glintPos) < 3
+						? gd < 2
 							? glintTier
-							: ""
+							: gd < 4
+								? glintFringe
+								: ""
 						: b < 0.4
 							? DIM
 							: b < 0.95
@@ -1405,21 +1414,24 @@ export default function (pi: ExtensionAPI) {
 						// resting beat between sweeps instead of looping back-to-back.
 						const range = markW + WORDMARK.length + 40;
 						const pos = phase % range;
-						const bandWidth = 3;
 						// Glint runs render in the theme's accent color (the same
 						// token the docs call out for "logo" use) plus BOLD. The base
 						// wordmark stays normal foreground; dim ink disappears on dark
 						// themes before the sweep reaches it.
+						// Specular profile matching the splash path: bold-accent core
+						// (d<2), plain-accent fringe (d<4), base ink beyond.
 						const shimmerLine = (line: string, y: number): string => {
 							let out = "";
-							let tier: "" | "base" | "glint" = "";
+							let tier: "" | "base" | "fringe" | "glint" = "";
 							let run = "";
 							const flush = () => {
 								if (!run) return;
 								out +=
 									tier === "glint"
 										? RESET + BOLD + theme.fg("accent", run)
-										: RESET + run;
+										: tier === "fringe"
+											? RESET + theme.fg("accent", run)
+											: RESET + run;
 								run = "";
 							};
 							for (let x = 0; x < line.length; x++) {
@@ -1428,8 +1440,9 @@ export default function (pi: ExtensionAPI) {
 									run += ch;
 									continue;
 								}
-								const want: "base" | "glint" =
-									Math.abs(x + y - pos) < bandWidth ? "glint" : "base";
+								const d = Math.abs(x + y - pos);
+								const want: "base" | "fringe" | "glint" =
+									d < 2 ? "glint" : d < 4 ? "fringe" : "base";
 								if (want !== tier) {
 									flush();
 									tier = want;
