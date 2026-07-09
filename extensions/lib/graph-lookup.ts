@@ -13,7 +13,8 @@
  */
 
 import { existsSync, readFileSync, statSync } from "node:fs";
-import { dirname, join } from "node:path";
+import { basename, dirname, join } from "node:path";
+import { classifyCwd, DEFAULT_DOMAIN, resolveGraphDir } from "./domains.ts";
 
 export const OUT = "graphify-out";
 
@@ -28,14 +29,43 @@ export function findGraphRoot(cwd: string): string | undefined {
 	}
 }
 
+/** A located graph: `root` + the subdir under it holding graph.json (usually OUT). */
+export interface GraphLoc {
+	root: string;
+	out: string;
+}
+
+/**
+ * Domain-aware graph location (v2, config/domains.json). A cwd classifying to
+ * a non-default domain resolves to that domain's dedicated graph dir (e.g.
+ * prism → <prism-oracle>/prism-graph, which holds graph.json DIRECTLY — no
+ * graphify-out nesting). Falls back to the plain walk-up. Fail-open: any
+ * domain-config problem behaves exactly like v1.
+ */
+export function findGraphLoc(cwd: string): GraphLoc | undefined {
+	try {
+		const domain = classifyCwd(cwd);
+		if (domain !== DEFAULT_DOMAIN) {
+			const gdir = resolveGraphDir(domain);
+			if (gdir && existsSync(join(gdir, "graph.json"))) {
+				return { root: dirname(gdir), out: basename(gdir) };
+			}
+		}
+	} catch {
+		/* fail open → v1 behavior */
+	}
+	const found = findGraphRoot(cwd);
+	return found ? { root: found, out: OUT } : undefined;
+}
+
 /**
  * Pinned graphify interpreter written by the graphify skill/CLI (uv/pipx-safe);
  * falls back to system python3. Allowlists path chars (mirrors graphify's own
  * hook probe) before trusting the recorded path.
  */
-export function graphifyPython(root: string): string {
+export function graphifyPython(root: string, out: string = OUT): string {
 	try {
-		const p = readFileSync(join(root, OUT, ".graphify_python"), "utf8").trim();
+		const p = readFileSync(join(root, out, ".graphify_python"), "utf8").trim();
 		if (p && !/[^a-zA-Z0-9/_.@:\\-]/.test(p) && existsSync(p)) return p;
 	} catch {
 		// fall through to system python
