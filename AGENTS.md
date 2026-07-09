@@ -79,7 +79,8 @@ dispatch `engineer` with a design-only task returning the design artifact
 - GRAPH-FIRST: when `graphify-out/graph.json` exists, answer structure/architecture
   questions with the `graph` tool (query/explain/path) BEFORE dispatching scout or
   reading files — ~30x cheaper; subagents inherit the tool, so dispatched tasks may
-  assume it too.
+  assume it too. Domain-aware: in a prism cwd the `graph` tool resolves to the
+  prism-oracle code graph (`config/domains.json`), not the local walk-up.
 - WIKI-FIRST: knowledge questions about pi itself (its APIs, features, docs,
   conventions, past lessons) are answered from the wiki vault (`wiki-query` against
   the wiki profile at `~/.obsidian-wiki/config.wiki`) plus the `graph` tool BEFORE
@@ -93,6 +94,16 @@ dispatch `engineer` with a design-only task returning the design artifact
   re-derivation). Explicit lessons go through the `learn` tool, not direct
   heuristics writes. Wiki `upstream` pages are pi-version-stamped; the session-start
   self-audit flags them stale after a `pi update`.
+- DOMAIN ROUTING: knowledge is compartmentalized by work domain
+  (`config/domains.json` + `extensions/lib/domains.ts`). A session whose cwd is
+  prism work (`~/prism`, the EC2 SageMaker shared filesystem) is domain `prism`:
+  learning events are stamped `domain: "prism"` (the `learn` tool can override
+  per event), wiki-first counts the prism wiki (profile
+  `~/.obsidian-wiki/config.prism`) as consulted knowledge, and the `graph` tool
+  queries the prism-oracle graph. The nightly distiller routes prism events to
+  the prism-oracle repo's stores (its own heuristics.jsonl + learned wiki pages
+  + digests), NEVER into pi's oracle/heuristics — and vice versa. Everything
+  else is domain `pi` (unchanged v1 behavior).
 
 ## Escalation
 
