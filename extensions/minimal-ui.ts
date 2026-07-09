@@ -12,7 +12,7 @@ import type { AssistantMessage } from "@earendil-works/pi-ai";
 import { CustomEditor } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI, ExtensionContext } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
-import { fmtTokens, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "./lib/format.ts";
+import { fmtTokens, shortenCwd, SPINNER_FRAMES, SPINNER_INTERVAL_MS } from "./lib/format.ts";
 
 const SEP = "  ·  ";
 
@@ -63,7 +63,7 @@ function applyMinimalChrome(pi: ExtensionAPI, ctx: ExtensionContext): void {
 				const window = ctx.model?.contextWindow ?? 0;
 				const ctxPct = window > 0 && lastContext > 0 ? `${Math.min(100, Math.round((lastContext / window) * 100))}%` : null;
 
-				const leftParts = [model];
+				const leftParts = [shortenCwd(process.cwd()), model];
 				if (branch) leftParts.push(branch);
 				leftParts.push(pi.getThinkingLevel());
 
