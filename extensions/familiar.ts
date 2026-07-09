@@ -45,8 +45,11 @@ import type {
 	ExtensionCommandContext,
 	ExtensionContext,
 	Theme,
-	TUI,
 } from "@earendil-works/pi-coding-agent";
+
+// pi-coding-agent does not re-export the TUI type; we only ever call
+// requestRender(), so a minimal structural type keeps the callbacks honest.
+type TUIRef = { requestRender: () => void };
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 // --------------------------------------------------------------- opt-in flag --
@@ -330,7 +333,7 @@ function applyChrome(ctx: ExtensionContext): void {
 	if (ctx.mode !== "tui") return;
 	chromeOn = true;
 
-	ctx.ui.setHeader((tui: TUI, theme: Theme) => {
+	ctx.ui.setHeader((tui: TUIRef, theme: Theme) => {
 		headerRender = () => tui.requestRender();
 		const fg = fgOf(theme);
 		return {
@@ -353,7 +356,7 @@ function applyChrome(ctx: ExtensionContext): void {
 
 	ctx.ui.setWidget(
 		"familiar",
-		(tui: TUI, theme: Theme) => {
+		(tui: TUIRef, theme: Theme) => {
 			widgetRender = () => tui.requestRender();
 			startBeat();
 			const fg = fgOf(theme);
