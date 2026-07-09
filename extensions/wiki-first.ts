@@ -211,19 +211,21 @@ export function decideAction(state: WikiFirstState, key: string, flagged: boolea
 // names the `graph` tool for THIS repo's live code structure (the reverse door).
 // ---------------------------------------------------------------------------
 
-export function buildNudge(target: string): string {
+export function buildNudge(target: string, domainProfile?: string): string {
+	const domainLine = domainProfile ? ` This session's domain wiki (${domainProfile}) also counts as consulted knowledge.` : "";
 	return (
 		`[wiki-first] Pi-knowledge lookup (${target}) — the wiki vault is compiled knowledge, ` +
 		`cheaper than a cold pi-docs read. Try \`wiki-query\` against the wiki profile ` +
-		`(~/.obsidian-wiki/config.wiki) first. Read allowed this once. ${CROSS_STORE_GUIDANCE}`
+		`(~/.obsidian-wiki/config.wiki) first. Read allowed this once.${domainLine} ${CROSS_STORE_GUIDANCE}`
 	);
 }
 
-export function buildBlock(target: string): string {
+export function buildBlock(target: string, domainProfile?: string): string {
+	const domainLine = domainProfile ? ` This session's domain wiki (${domainProfile}) also counts as consulted knowledge.` : "";
 	return (
 		`[wiki-first] Consult the wiki before pi's own docs (${target}). Use \`wiki-query\` against ` +
 		`the wiki profile (~/.obsidian-wiki/config.wiki). If the wiki genuinely lacks this, ` +
-		`re-run the IDENTICAL read to proceed. ${CROSS_STORE_GUIDANCE}`
+		`re-run the IDENTICAL read to proceed.${domainLine} ${CROSS_STORE_GUIDANCE}`
 	);
 }
 
