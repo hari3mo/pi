@@ -281,7 +281,7 @@ let errorTimer: ReturnType<typeof setTimeout> | null = null;
 
 function startBeat(): void {
 	if (beat) return;
-	// ~3 fps: enough for a blink + thinking dots + paw bat, CPU-trivial.
+	// ~3 fps: enough for a blink + scanning dots + ray pulse, CPU-trivial.
 	beat = setInterval(() => {
 		tick++;
 		widgetRender?.();
