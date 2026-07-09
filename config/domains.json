@@ -1,0 +1,14 @@
+{
+  "prism": {
+    "cwdPrefixes": [
+      "~/prism",
+      "/home/ec2-user/SageMaker/prism-ds-shared-filesystem"
+    ],
+    "oracleRepo": {
+      "darwin": "~/prism/prism-oracle",
+      "linux": "~/SageMaker/prism-ds-shared-filesystem/haris-saif/prism-oracle"
+    },
+    "wikiProfile": "~/.obsidian-wiki/config.prism",
+    "graphDir": "<oracleRepo>/prism-graph"
+  }
+}
