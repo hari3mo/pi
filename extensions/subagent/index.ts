@@ -43,27 +43,22 @@ function isSonnetModel(model: { id?: string; name?: string } | undefined): boole
 	return /sonnet/i.test(model.id ?? "") || /sonnet/i.test(model.name ?? "");
 }
 
-// Override a model string's trailing ":<thinking>" suffix with `level`. The
-// provider/id half uses "/", so the last ":" cleanly delimits the thinking
-// level (mirrors formatUsageStats' split). Sonnet 5 and Gemini 3.5 Flash stay
-// pinned to high; every other child inherits the orchestrator's thinking level.
-function lockedThinkingLevel(model: string): string | undefined {
-	return /(?:claude-sonnet-5|gemini-3\.5-flash)/i.test(model) ? "high" : undefined;
+// Override a model string's trailing ":<thinking>" suffix with the harness pin
+// for model families where effort is policy, not inherited from the lead.
+// Opus and GPT-5.5 run xhigh; Sonnet and Gemini Flash run high. Unknown
+// families keep their configured suffix unchanged.
+function pinnedThinkingLevel(model: string): string | undefined {
+	if (/(?:sonnet|gemini.*flash)/i.test(model)) return "high";
+	if (/(?:opus|gpt[- ]5\.5)/i.test(model)) return "xhigh";
+	return undefined;
 }
 
-function withThinking(model: string, level: string | undefined): string {
-	const thinking = lockedThinkingLevel(model) ?? level;
+function withThinking(model: string): string {
+	const thinking = pinnedThinkingLevel(model);
 	if (!thinking) return model;
 	const sep = model.lastIndexOf(":");
-	const base = sep > model.indexOf("/") ? model.slice(0, sep) : model;
+	const base = sep > model.lastIndexOf("/") ? model.slice(0, sep) : model;
 	return `${base}:${thinking}`;
-}
-
-// The orchestrator's current thinking level, published by the subagent tool's
-// execute handler (which has `pi`) and read by module-level runSingleAgent
-// (which does not) — same cross-scope hand-off as __piWriteGateMode.
-function inheritedThinking(): string | undefined {
-	return (globalThis as { __piOrchestratorThinking?: string }).__piOrchestratorThinking;
 }
 
 type QaVerdict = "PASS" | "FAIL: implementation" | "FAIL: design";
@@ -854,7 +849,7 @@ async function runSingleAgent(
 	if (childGate === "write") {
 		args.push("--write");
 	}
-	const childModel = agent.model ? withThinking(agent.model, inheritedThinking()) : undefined;
+	const childModel = agent.model ? withThinking(agent.model) : undefined;
 	if (childModel) args.push("--model", childModel);
 	if (agent.tools && agent.tools.length > 0) args.push("--tools", agent.tools.join(","));
 	if (agent.noContextFiles) args.push("--no-context-files");
@@ -1183,9 +1178,6 @@ export default function (pi: ExtensionAPI) {
 		parameters: SubagentParams,
 
 		async execute(_toolCallId, params, signal, onUpdate, ctx) {
-			// Publish the orchestrator's live thinking level so spawned children
-			// inherit it (see inheritedThinking / withThinking).
-			(globalThis as { __piOrchestratorThinking?: string }).__piOrchestratorThinking = pi.getThinkingLevel();
 			if (isSonnetModel(ctx.model)) {
 				return {
 					isError: true,
@@ -1329,7 +1321,7 @@ export default function (pi: ExtensionAPI) {
 				const allResults: SingleResult[] = new Array(tasks.length);
 
 				// Initialize placeholder results. Seed each with the resolved model and
-				// inherited gate so a PENDING subagent still renders its status-bar data
+				// write gate so a PENDING subagent still renders its status-bar data
 				// (mode · thinking) before its subprocess emits any usage.
 				const pendingGate: "write" | "confirm" =
 					(globalThis as { __piWriteGateMode?: string }).__piWriteGateMode === "write" ? "write" : "confirm";
@@ -1343,7 +1335,7 @@ export default function (pi: ExtensionAPI) {
 						messages: [],
 						stderr: "",
 						usage: { input: 0, output: 0, reasoning: 0, cacheRead: 0, cacheWrite: 0, cost: 0, contextTokens: 0, turns: 0 },
-						model: withThinking(agents.find((a) => a.name === task.agent)?.model ?? "", inheritedThinking()) || undefined,
+						model: withThinking(agents.find((a) => a.name === task.agent)?.model ?? "") || undefined,
 						mode: pendingGate,
 					};
 				}
