@@ -163,26 +163,35 @@ const GraphParams = Type.Object({
 
 export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
-		const root = findGraphRoot(ctx.cwd);
-		if (!root) return;
+		const loc = findGraph(ctx.cwd);
+		if (!loc) return;
 		// Keep LESSONS.md current for this session; cheap no-op when fresh.
-		execFile(graphifyPython(root), ["-m", "graphify", "reflect", "--if-stale"], { cwd: root, timeout: 30_000 }, () => {
-			// Fire-and-forget: reflection failure must never block a session.
-		});
+		execFile(
+			graphifyPython(loc.root, loc.out),
+			["-m", "graphify", "reflect", "--if-stale"],
+			{
+				cwd: loc.root,
+				timeout: 30_000,
+				env: loc.out === OUT ? process.env : { ...process.env, GRAPHIFY_OUT: join(loc.root, loc.out) },
+			},
+			() => {
+				// Fire-and-forget: reflection failure must never block a session.
+			},
+		);
 	});
 
 	pi.on("before_agent_start", async (event, ctx) => {
-		const root = findGraphRoot(ctx.cwd);
-		if (!root) return;
-		const s = graphStats(root);
+		const loc = findGraph(ctx.cwd);
+		if (!loc) return;
+		const s = graphStats(loc.root, loc.out);
 		if (!s) return;
 		const block = [
 			`\n\n## Knowledge graph (graphify)`,
-			`${join(root, OUT, "graph.json")} — ${s.nodes} nodes · ${s.edges} edges · ${s.communities} communities (updated ${fmtAge(s.updated)}${s.stale ? "; STALE for docs — suggest /graphify --update" : ""}).`,
-			`Graph root: ${root} (walks up from cwd; falls back to the pi agent config graph when no project graph exists).`,
+			`${join(loc.root, loc.out, "graph.json")} — ${s.nodes} nodes · ${s.edges} edges · ${s.communities} communities (updated ${fmtAge(s.updated)}${s.stale ? "; STALE for docs — suggest /graphify --update" : ""}).`,
+			`Graph root: ${loc.root} (domain-aware: prism cwds use the prism-oracle graph; otherwise walks up from cwd, falling back to the pi agent config graph).`,
 			`Hubs: ${s.hubs.join(", ")}.`,
 			`Answer questions about this codebase's structure/architecture with the \`graph\` tool (query/explain/path) BEFORE reading files or dispatching scouts — it is ~30x cheaper than reading.` +
-				(s.hasLessons ? ` Past-query lessons: ${join(root, OUT, "reflections", "LESSONS.md")}.` : ""),
+				(s.hasLessons ? ` Past-query lessons: ${join(loc.root, loc.out, "reflections", "LESSONS.md")}.` : ""),
 		].join("\n");
 		return { systemPrompt: event.systemPrompt + block };
 	});
