@@ -44,7 +44,7 @@ Every session that changes config must update it.
 | Heuristics store | `extensions/heuristics/store.ts` | Path resolution, JSONL read, locked read-modify-write mutations, and the full capture pipeline (DESIGN.md §1–§2, §4, §6–§7). |
 | Subagent tool | `extensions/subagent/index.ts` | Spawns isolated `pi` subprocesses per delegated task; supports single/parallel/chain modes via JSON-mode structured output; auto-appends `STANDING_CONTRACT_FOOTER` to every dispatched task, and `finalizeQaOutput` verdict-normalizes peer returns (`[VERDICT: ...]`) with a session-level consecutive-FAIL loop budget of 3. |
 | Subagent agents helper (symlink) | `extensions/subagent/agents.ts` | Symlink into the installed `pi-coding-agent` examples package; not repo-local logic. |
-| Agent role set | `agents/worker.md`, `agents/fable-engineer.md`, `agents/lawyer.md`, `agents/peer.md`, `agents/scout.md`, `agents/engineer.md`, `agents/doctor.md` | Seven-role roster dispatched per the AGENTS.md scale-first routing table. `engineer` (renamed from `solo-engineer`) is the default workhorse (whole bounded tasks end-to-end; also design-only dispatches when 2+ implementers consume the design — there is no standing architect). `worker` (renamed from `builder`) handles fully-specified mechanical edits and ships after review passes. `scout` is read-only investigation; `doctor` (sonnet, read/run-only) runs the acceptance path and returns PASS/FAIL, only when something is runnable. `peer` (renamed from `reviewer`, itself renamed from `qa-reviewer`; gpt-5.5:xhigh, inherits lead thinking) is the deep-reasoning gate for existing-behavior/high-risk changes. `lawyer` (renamed from `peer-engineer`, gpt-5.5:xhigh) gives blind second opinions; `fable-engineer` is opt-in only (explicit user approval), the sole orchestrator-tier subagent. Scope ambiguity is resolved by interviewing the user (`scope-planner` deleted). |
+| Agent role set | `agents/worker.md`, `agents/fable-engineer.md`, `agents/lawyer.md`, `agents/peer.md`, `agents/scout.md`, `agents/engineer.md`, `agents/doctor.md` | Seven-role roster dispatched per the AGENTS.md scale-first routing table. `engineer` (renamed from `solo-engineer`) is the default workhorse (whole bounded tasks end-to-end; also design-only dispatches when 2+ implementers consume the design — there is no standing architect). `worker` (renamed from `builder`) handles fully-specified mechanical edits and ships after review passes. `scout` is read-only investigation; `doctor` (sonnet, read/run-only) runs the acceptance path and returns PASS/FAIL, only when something is runnable. `peer` (renamed from `reviewer`, itself renamed from `qa-reviewer`; gpt-5.5:xhigh, pinned xhigh) is the deep-reasoning gate for existing-behavior/high-risk changes. `lawyer` (renamed from `peer-engineer`, gpt-5.5:xhigh) gives blind second opinions; `fable-engineer` is opt-in only (explicit user approval), the sole orchestrator-tier subagent. Scope ambiguity is resolved by interviewing the user (`scope-planner` deleted). |
 | Prompt templates | `prompts/build.md`, `prompts/design.md`, `prompts/feature.md`, `prompts/ship.md` | `/design`, `/build`, `/ship`, `/feature` slash-command prompt templates. |
 | Themes | `themes/porcelain.json`, `themes/porcelain-light.json` | "Porcelain" quiet theme (dark + light variants), paired with the Minimal UI extension. |
 | Schema validation | `schema/*.schema.json`, `schema/manifest.json`, `scripts/validate-config.py` | Manifest-driven validator: schema conformance, heuristics scope drift, credential leakage, gitignore coverage, dangling skill symlinks, layout conformance. |
@@ -57,6 +57,15 @@ Every session that changes config must update it.
 | Global agent doctrine | `AGENTS.md` | The Delegation Gate, write-gate pre-flight, intent interview, scale-first routing table, seven-role roster, fable budget invariants, rework loop, and config-maintenance checklist governing how this harness is used across sessions. |
 
 ## Changelog
+
+**Subagent thinking pins no longer inherit from the lead.**
+User-directed. `extensions/subagent/index.ts` now pins Opus/GPT-5.5 children to `:xhigh`
+and Sonnet/Gemini Flash children to `:high`, overriding any trailing suffix for those families
+and never reading the lead's live thinking level. Unknown model families keep their configured
+suffix unchanged. Updated AGENTS.md Defaults plus current docs/wiki references. Files:
+`extensions/subagent/index.ts`, `AGENTS.md`, `docs/config-index.md`,
+`wiki/components/subagent-extension.md`, `wiki/concepts/routing-and-roles.md`. Why: subagent
+effort is a per-model policy, not an orchestration inheritance rule.
 
 **Removed the `opus-lead` profile: opus is now just a direct-work lead.**
 User-directed: dropped the delegation-biased Opus orchestration doctrine. `claude-opus-4-8`
@@ -75,14 +84,14 @@ pages. Verified: validate-config clean, check-lead-config green. Note: `direct` 
 `wiki/index.md`, `wiki/synthesis/orchestration-lessons.md`. Why: opus should be just opus
 when active.
 
-**Peer/doctor model repin: `peer` → `openai/gpt-5.5:xhigh` (inherits lead thinking), `doctor` → `anthropic/claude-sonnet-5:high`.**
-User-directed. `peer` (gate-tier verification) moves from `google/gemini-3.5-flash:high` to
-`openai/gpt-5.5`; because gpt-5.5 is not in `withThinking`'s pinned set (only sonnet-5/gemini-3.5-flash
-lock to high), peer now inherits the orchestrator's thinking level like `engineer` — the `:xhigh` suffix
-is the fallback default. `doctor` (acceptance-path runner) moves from `google/gemini-3.5-flash:high` to
-`anthropic/claude-sonnet-5:high` (the mechanical tier). Updated the `model:` frontmatter in
-`agents/peer.md` and `agents/doctor.md`, plus doctrine references: AGENTS.md Defaults tiers,
-`config/lead-profiles.json` opus-lead doctrine, and `wiki/concepts/routing-and-roles.md` role table.
+**Peer/doctor model repin (superseded by the 2026-07-09 thinking pins): `peer` → `openai/gpt-5.5:xhigh`, `doctor` → `anthropic/claude-sonnet-5:high`.**
+User-directed. `peer` (gate-tier verification) moved from `google/gemini-3.5-flash:high` to
+`openai/gpt-5.5`; current behavior pins GPT-5.5 subagents to `:xhigh` directly in
+`withThinking`, so the suffix is no longer a lead-effort fallback. `doctor` (acceptance-path runner)
+moved from `google/gemini-3.5-flash:high` to `anthropic/claude-sonnet-5:high` (the mechanical tier).
+Updated the `model:` frontmatter in `agents/peer.md` and `agents/doctor.md`, plus doctrine references:
+AGENTS.md Defaults tiers, `config/lead-profiles.json` opus-lead doctrine, and
+`wiki/concepts/routing-and-roles.md` role table.
 
 **Peer/reviewer model swap: `reviewer` → `openai/gpt-5.5:xhigh`, `peer` → `google/gemini-3.5-flash:high`.**
 User-directed: the two model pins on the second-opinion roles were exchanged. `reviewer`
