@@ -50,3 +50,29 @@ Nothing to do — the schedulers sync every 5 minutes on both ends. To force a
 sync now: `bash ~/.pi/agent/.pi-vcs/sync.sh`. To check health:
 `git -C ~/.pi/agent status && git -C ~/.pi/agent log --oneline -3` and
 `tail ~/.pi/agent/.git/pi-sync.err`.
+
+## The prism-oracle repo (separate domain knowledge, separate sync)
+
+Prism data-science knowledge lives OUTSIDE this repo, in the prism-oracle repo
+(github.com/haris-prism/prism-oracle):
+
+- Mac checkout: `~/prism/prism-oracle`
+- EC2 checkout: `~/SageMaker/prism-ds-shared-filesystem/haris-saif/prism-oracle`
+  (pushes via its own deploy key, ssh alias `github.com-prism-oracle`)
+
+Learning events still flow through THIS repo's single intake
+(`learning/events.jsonl`, stamped `domain: "prism"` per learning/SCHEMA.md v2 —
+the union-merge carries them Mac<->EC2 like everything else). The nightly Mac
+distiller then routes prism events into the prism-oracle repo's own stores
+(`heuristics/heuristics.jsonl`, learned pages in `prism-wiki/`,
+`learning/digests/`), pulling before it writes and pushing after.
+
+Sync model for prism-oracle itself: NO scheduled loop — the Mac distiller
+pushes nightly and humans pull/push on demand (`git pull --rebase` on EC2 when
+fresh prism knowledge is wanted there; `.oracle-vcs/sync.sh` in that repo wraps
+commit->pull->push). Single-writer rule: the distiller (Mac) is the only
+MACHINE writer of prism stores; EC2 edits are human ones.
+
+Machine-local per peer (never tracked): `~/.obsidian-wiki/config.prism`
+pointing at that machine's prism-wiki checkout — required for wiki-first's
+prism-domain routing (`config/domains.json` names the profile path).
