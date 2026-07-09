@@ -49,12 +49,19 @@ function findGraph(cwd: string): GraphLoc | undefined {
 	return existsSync(join(agentDir, OUT, "graph.json")) ? { root: agentDir, out: OUT } : undefined;
 }
 
-function runGraphify(root: string, args: string[], timeoutMs: number): Promise<string> {
+function runGraphify(loc: GraphLoc, args: string[], timeoutMs: number): Promise<string> {
 	return new Promise((resolve) => {
 		execFile(
-			graphifyPython(root),
+			graphifyPython(loc.root, loc.out),
 			["-m", "graphify", ...args],
-			{ cwd: root, timeout: timeoutMs, maxBuffer: 4 * 1024 * 1024 },
+			{
+				cwd: loc.root,
+				timeout: timeoutMs,
+				maxBuffer: 4 * 1024 * 1024,
+				// Non-standard out dir (a domain graph like prism-graph/): point
+				// graphify at it explicitly — GRAPHIFY_OUT must be absolute.
+				env: loc.out === OUT ? process.env : { ...process.env, GRAPHIFY_OUT: join(loc.root, loc.out) },
+			},
 			(err, stdout, stderr) => {
 				const out = `${stdout ?? ""}${stderr ? `\n${stderr}` : ""}`.trim();
 				resolve(err && !out ? `graphify error: ${err.message}` : out);
