@@ -12,6 +12,7 @@ import type { ExtensionAPI, Theme } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
 import { shortenCwd } from "./lib/format.ts";
+import { personaEnabled } from "./familiar.ts";
 
 // Generated with: figlet -f standard 'harimo'
 const BANNER_LINES = [
@@ -88,6 +89,8 @@ export default function (pi: ExtensionAPI) {
 	let contextLine = "";
 
 	pi.on("session_start", async (_event, ctx) => {
+		// Bow out cleanly when the Ember persona owns the header (flag check only).
+		if (personaEnabled()) return;
 		contextLine = computeContextLine(ctx.cwd);
 
 		if (ctx.mode === "tui") {
