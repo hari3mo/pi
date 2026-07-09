@@ -4,7 +4,7 @@
   "defaultProvider": "google",
   "defaultModel": "gemini-3.5-flash",
   "defaultThinkingLevel": "high",
-  "quietStartup": false,
+  "quietStartup": true,
   "enabledModels": [
     "claude-sonnet-5",
     "claude-opus-4-8",
