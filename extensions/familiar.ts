@@ -388,7 +388,10 @@ function removeChrome(ctx: ExtensionContext): void {
 	mood = "idle";
 	tick = 0;
 	ctx.ui.setWidget("familiar", undefined);
-	ctx.ui.setHeader(undefined); // built-in header returns; custom-header on restart
+	// ponytail: mid-session disable restores the BUILT-IN header, not
+	// custom-header's — re-running custom-header needs its session_start.
+	// Upgrade path if that matters: a restart (the notify says so) re-installs it.
+	ctx.ui.setHeader(undefined);
 }
 
 // ------------------------------------------------------------- extension -----
