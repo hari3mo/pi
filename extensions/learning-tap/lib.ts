@@ -23,6 +23,8 @@ export interface LearningEvent {
 	ts: string;
 	session: string;
 	cwd: string;
+	/** v2: knowledge domain ("pi" | "prism" | ...); absent = "pi" (SCHEMA.md). */
+	domain?: string;
 	kind: EventKind;
 	payload: Record<string, unknown>;
 	evidence: string[];
@@ -45,8 +47,13 @@ export function makeEvent(
 	session: string,
 	cwd: string,
 	now = Date.now(),
+	domain?: string,
 ): LearningEvent {
-	return { id: makeEventId(now), ts: new Date(now).toISOString(), session, cwd, kind, payload, evidence };
+	const ev: LearningEvent = { id: makeEventId(now), ts: new Date(now).toISOString(), session, cwd, kind, payload, evidence };
+	// Only stamp non-default domains: absent means "pi" (SCHEMA.md v2), which
+	// keeps pi-domain lines byte-identical to v1 and the union-merge cheap.
+	if (domain && domain !== "pi") ev.domain = domain;
+	return ev;
 }
 
 /** Serialize; returns undefined when the line would exceed MAX_LINE_BYTES (drop, don't truncate JSON). */
@@ -275,6 +282,8 @@ export interface Receipt {
 	session: string;
 	ts: string;
 	cwd: string;
+	/** v2: knowledge domain of the session (cwd-classified); absent = "pi". */
+	domain?: string;
 	heuristicIdsInjected: string[];
 	wikiPagesRead: string[];
 	graphQueries: number;
