@@ -260,7 +260,12 @@ export default function (pi: ExtensionAPI) {
 							// .md structural extractor never replaces the semantic (LLM) doc layer.
 							"from pathlib import Path; from graphify.detect import detect; from graphify.watch import _rebuild_code; root = Path('.'); code = [Path(f) for f in detect(root)['files']['code']]; _rebuild_code(root, changed_paths=code)",
 						],
-						{ cwd: root, timeout: UPDATE_TIMEOUT_MS, maxBuffer: 4 * 1024 * 1024 },
+						{
+							cwd: loc.root,
+							timeout: UPDATE_TIMEOUT_MS,
+							maxBuffer: 4 * 1024 * 1024,
+							env: loc.out === OUT ? process.env : { ...process.env, GRAPHIFY_OUT: join(loc.root, loc.out) },
+						},
 						(err, stdout, stderr) => resolve(err ? `rebuild failed: ${err.message}\n${stderr}` : `${stdout}`.trim()),
 					);
 				});
@@ -268,7 +273,7 @@ export default function (pi: ExtensionAPI) {
 				ctx.ui.notify(out.split("\n").slice(-2).join(" ") || "Graph rebuilt.", "info");
 				return;
 			}
-			ctx.ui.notify(statusText(root), "info");
+			ctx.ui.notify(statusText(loc.root, loc.out), "info");
 		},
 	});
 }
