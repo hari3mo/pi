@@ -164,22 +164,27 @@ export function classifyPiDocRead(
 /**
  * Does this tool call CONSULT the wiki (so the ladder goes dormant)? Any read
  * under the wiki vault, or a bash command naming the wiki vault / profile /
- * `wiki-query`. Pure.
+ * `wiki-query`. Pure. `extraVaults` (v2) adds domain vaults (e.g. the prism
+ * wiki) so consulting the session domain's wiki also satisfies the doctrine.
  */
 export function isWikiConsult(
 	toolName: string,
 	input: { path?: string; file_path?: string; command?: string },
 	cwd: string,
+	extraVaults: string[] = [],
 ): boolean {
 	try {
 		if (toolName === "read") {
 			const raw = input.path ?? input.file_path;
 			if (!raw) return false;
-			return resolve(cwd || "/", raw).startsWith(`${WIKI_VAULT}/`);
+			const abs = resolve(cwd || "/", raw);
+			if (abs.startsWith(`${WIKI_VAULT}/`)) return true;
+			return extraVaults.some((v) => v && abs.startsWith(`${v}/`));
 		}
 		if (toolName === "bash") {
 			const cmd = input.command ?? "";
-			return cmd.includes(WIKI_VAULT) || cmd.includes("config.wiki") || cmd.includes("wiki-query");
+			if (cmd.includes(WIKI_VAULT) || cmd.includes("config.wiki") || cmd.includes("wiki-query")) return true;
+			return extraVaults.some((v) => v && cmd.includes(v));
 		}
 	} catch {
 		// fail open
