@@ -80,66 +80,62 @@ const MOODS: readonly Mood[] = ["idle", "thinking", "tool", "error"] as const;
 
 export interface Face {
 	mood: Mood;
-	eyes: string; //  3 chars
-	mouth: string; // 1 char
-	paw: string; //   "" | 1 char
+	eyes: string; // 3 chars — the sprite's face
+	ray: string; //  1 char — the animated sparkle glyph on the rays
 	word: string;
 	/** Semantic theme color name for this mood. */
 	color: string;
-	/** Front-facing cat, 3 lines, ASCII-only (safe width on any terminal). */
+	/** Front-facing star-sprite, 3 lines, ASCII-only (safe width anywhere). */
 	art: string[];
-	/** Compact kaomoji for the one-line status widget. */
+	/** Compact sprite for the one-line status widget. */
 	kao: string;
 }
 
 /**
  * Pure mood → face. `tick` drives the cheap in-mood animation (eye scan,
- * thinking dots, paw bat); `blink` briefly shuts the eyes. Deterministic, so
+ * scanning dots, ray pulse); `blink` briefly shuts the eyes. Deterministic, so
  * the harness can assert frames differ across moods and fit the width budget.
  */
 export function faceFor(mood: Mood, opts?: { tick?: number; blink?: boolean }): Face {
 	const t = opts?.tick ?? 0;
 	const blink = opts?.blink ?? false;
 	let eyes: string;
-	let mouth: string;
-	let paw = "";
+	let ray: string;
 	let word: string;
 	let color: string;
 	switch (mood) {
 		case "thinking":
 			eyes = blink ? "-.-" : ["o.o", "-.o", "o.-"][t % 3]!;
-			mouth = "o";
-			word = "thinking" + ".".repeat(t % 4);
+			ray = ["~", "*", "~", "."][t % 4]!; // rays shimmer as it scans
+			word = "scanning" + ".".repeat(t % 4);
 			color = "accent";
 			break;
 		case "tool":
 			eyes = blink ? "-.-" : "^.^";
-			mouth = "w";
-			paw = t % 2 ? "/" : "\\";
-			word = "on it";
+			ray = t % 2 ? "*" : "+"; // flaring — rays pulse bright
+			word = "flaring";
 			color = "success";
 			break;
 		case "error":
-			eyes = "x.x"; // too rattled to blink
-			mouth = "O";
-			paw = "!";
-			word = "yowl!";
+			eyes = "x.x"; // too rattled to twinkle
+			ray = "!"; //     rays scattered by the shock
+			word = "collapse!";
 			color = "error";
 			break;
 		default: // idle
 			eyes = blink ? "-.-" : "o.o";
-			mouth = "w";
-			word = "purring";
+			ray = "."; // faint resting twinkle
+			word = "adrift";
 			color = "muted";
 			break;
 	}
 	const art = [
-		" /\\_/\\",
+		` \\ ${ray} /`,
 		`( ${eyes} )`,
-		` >${mouth}<${paw ? ` ${paw}` : ""}`,
+		` / ${ray} \\`,
 	];
-	const kao = `(=${eyes}=)${paw}`;
-	return { mood, eyes, mouth, paw, word, color, art, kao };
+	const kao = `*${eyes}*`;
+	return { mood, eyes, ray, word, color, art, kao };
 }
 
 /** Plain (uncolored) one-line status text. Exported for the harness. */
