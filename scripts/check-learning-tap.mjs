@@ -159,6 +159,16 @@ check(
 	} finally {
 		rmSync(dir, { recursive: true, force: true });
 	}
+
+	// --- domain stamping (SCHEMA.md v2) --------------------------------------
+	const evPi = makeEvent("explicit", { text: "pi lesson" }, ["e"], "s1", "/", undefined, "pi");
+	check("domain: 'pi' NOT stamped (absent = pi, v1-identical lines)", !("domain" in evPi));
+	const evDefault = makeEvent("explicit", { text: "default lesson" }, ["e"], "s1", "/");
+	check("domain: omitted → absent", !("domain" in evDefault));
+	const evPrism = makeEvent("explicit", { text: "prism lesson" }, ["e"], "s1", "/", undefined, "prism");
+	check("domain: 'prism' stamped", evPrism.domain === "prism");
+	const prismLine = serializeEvent(evPrism);
+	check("domain: prism line serializes + parses back", JSON.parse(prismLine).domain === "prism");
 }
 
 console.log(failed === 0 ? "\nall checks passed" : `\n${failed} check(s) FAILED`);
