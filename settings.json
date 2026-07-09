@@ -2,8 +2,8 @@
   "lastChangelogVersion": "0.80.3",
   "theme": "porcelain-light/porcelain",
   "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "high",
+  "defaultModel": "claude-fable-5",
+  "defaultThinkingLevel": "xhigh",
   "quietStartup": true,
   "enabledModels": [
     "claude-sonnet-5",
