@@ -243,8 +243,8 @@ export default function (pi: ExtensionAPI) {
 			{ value: "update", label: "re-extract changed code + recluster (no LLM)" },
 		],
 		handler: async (args, ctx) => {
-			const root = findGraphRoot(ctx.cwd);
-			if (!root) {
+			const loc = findGraph(ctx.cwd);
+			if (!loc) {
 				ctx.ui.notify("No graphify-out/graph.json found — build one with /graphify first.", "warning");
 				return;
 			}
@@ -253,7 +253,7 @@ export default function (pi: ExtensionAPI) {
 				ctx.ui.notify("Rebuilding graph (AST + recluster, no LLM)...", "info");
 				const out = await new Promise<string>((resolve) => {
 					execFile(
-						graphifyPython(root),
+						graphifyPython(loc.root, loc.out),
 						[
 							"-c",
 							// Code-only refresh: pass the code corpus as changed_paths so graphify's
