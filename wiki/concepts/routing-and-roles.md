@@ -48,8 +48,8 @@ a default that gets pruned down. Most tasks are Standard.
 | `worker` | mechanical | Fully-specified mechanical edits, zero residual design; ships after review. |
 | `engineer` | deep reasoning (`claude-opus-4-8:xhigh`) | THE DEFAULT WORKHORSE — whole bounded tasks end-to-end, design inline; also design-only dispatches. |
 | `doctor` | mechanical (`claude-sonnet-5:high`) | Runs the acceptance path, PASS/FAIL + `file:line` evidence; never edits. Only when something is RUNNABLE. |
-| `peer` | deep reasoning (`openai/gpt-5.5:xhigh`, inherits lead thinking) | Gate-tier verification: existing behavior, 3+ files, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design. |
-| `lawyer` | peer (`google/gemini-3.5-flash:high`) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer. |
+| `peer` | deep reasoning (`openai/gpt-5.5:xhigh`, pinned xhigh) | Gate-tier verification: existing behavior, 3+ files, auth/security, migrations, public API. Returns PASS / FAIL: implementation / FAIL: design. |
+| `lawyer` | peer (`openai/gpt-5.5:xhigh`, pinned xhigh) | Blind independent second opinion on expensive-to-unwind calls; never shown the other's answer. |
 | `fable-engineer` | orchestrator-tier, opt-in | Highest-stakes solo builds; dispatched ONLY with explicit user approval; its task must inline repo conventions (loads no context files). |
 
 ## Two durable design rules
