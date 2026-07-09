@@ -72,13 +72,28 @@ Caps: payload strings individually ≤4000 chars (findings/answer) or ≤1000
 
 - Runs nightly out-of-session; reads events after `.distiller-cursor`, plus
   `graphify-out/reflections/LESSONS.md` and any legacy `wiki/_raw/*` files.
-- Dedupes against the wiki vault before writing; reinforces instead of
-  duplicating.
-- Writes ONLY: heuristics stores (per their DESIGN.md schema), wiki
-  `learned`-layer pages (per wiki/SCHEMA.md), `digests/`, the cursor, and
-  archival moves into `wiki/_archives/`. Never edits upstream/local pages —
+- **Domain routing (v2):** events partition by `domain` (absent = `pi`).
+  - `pi` events → pi stores, unchanged: `~/.pi/agent/heuristics/` +
+    per-repo `.pi/heuristics/`, oracle `learned` pages, `learning/digests/`.
+  - `prism` events → the prism-oracle repo (path per platform in
+    `config/domains.json`): `<oracle>/heuristics/heuristics.jsonl` (same
+    schema as pi's, DESIGN.md §1), `learned`-layer pages in
+    `<oracle>/prism-wiki/`, digests in `<oracle>/learning/digests/`.
+    The human-curated `<oracle>/learnings.md` and
+    `<oracle>/prism-wiki/heuristics.md` are NEVER machine-written.
+    The distiller pulls the prism-oracle repo before writing and
+    commits+pushes after; if the pull fails it skips prism routing and
+    leaves those events for the next run (cursor not advanced past them).
+- Dedupes against the matching domain's knowledge before writing; reinforces
+  instead of duplicating.
+- Writes ONLY: heuristics stores (per their DESIGN.md schema), wiki/oracle
+  `learned`-layer pages (per the vault's SCHEMA), `digests/`, the cursor, and
+  archival moves into `_archives/`. Never edits upstream/local pages —
   contradictions are flagged `disputed` in the digest instead.
 - Advances the cursor only after a fully successful run (crash-safe replay).
+- Single writer: the distiller runs on ONE machine (the Mac) for BOTH
+  domains. Peers append events; the pi-repo union-merge carries them to the
+  Mac.
 
 ## Liveness (self-audit additions, Phase 1 item 5)
 
