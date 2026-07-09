@@ -141,21 +141,21 @@ export function faceFor(mood: Mood, opts?: { tick?: number; blink?: boolean }): 
 /** Plain (uncolored) one-line status text. Exported for the harness. */
 export function widgetLinePlain(mood: Mood, tick: number, blink = false): string {
 	const f = faceFor(mood, { tick, blink });
-	return `ember ${f.kao}  ${f.word}`;
+	return `nova ${f.kao}  ${f.word}`;
 }
 
 type Seg = { t: string; c: string };
 
-/** Header as 3 lines of colored segments — cat + wordmark + mood. */
+/** Header as 3 lines of colored segments — sprite + wordmark + mood. */
 export function headerSegments(mood: Mood, tick: number): Seg[][] {
 	const f = faceFor(mood, { tick });
 	const pad = (s: string) => s + " ".repeat(Math.max(0, 8 - s.length));
 	return [
-		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "ember", c: "accent" }],
+		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "nova", c: "accent" }],
 		[
 			{ t: pad(f.art[1]!), c: f.color },
 			{ t: "  ", c: "dim" },
-			{ t: "your terminal cat daemon", c: "dim" },
+			{ t: "your terminal star-sprite", c: "dim" },
 		],
 		[{ t: pad(f.art[2]!), c: f.color }, { t: "  ", c: "dim" }, { t: `~ ${f.word}`, c: f.color } ],
 	];
@@ -224,9 +224,9 @@ class FamiliarSplash {
 		const blink = this.tick % 18 < 2; // brief double-frame blink
 		const f = faceFor(demoMood, { tick: this.tick, blink });
 
-		// Flickering embers drifting above the ears.
-		const sparks = [" .  :   '", "  '  .  : ", " :   '  . ", "  .  '  : "];
-		const emberLine = fg("warning", sparks[this.tick % sparks.length]!);
+		// Stardust drifting past the sprite — starlight motes, not warm embers.
+		const sparks = [" .  *   '", "  '  .  * ", " *   '  . ", "  .  '  * "];
+		const starLine = fg("muted", sparks[this.tick % sparks.length]!);
 
 		// Legend with the current mood lit in its own color.
 		const legend =
@@ -237,14 +237,14 @@ class FamiliarSplash {
 			fg("dim", " ·");
 
 		const content: string[] = [
-			emberLine,
+			starLine,
 			fg(f.color, f.art[0]!),
 			fg(f.color, f.art[1]!),
 			fg(f.color, f.art[2]!),
 			"",
-			fg("accent", "e m b e r"),
+			fg("accent", "n o v a"),
 			"",
-			fg("dim", "your terminal cat daemon"),
+			fg("dim", "your terminal star-sprite"),
 			fg("dim", this.cwd),
 			"",
 			legend,
@@ -361,7 +361,7 @@ function applyChrome(ctx: ExtensionContext): void {
 					try {
 						const blink = mood !== "error" && tick % 7 === 0;
 						const f = faceFor(mood, { tick, blink });
-						const line = fg(f.color, `ember ${f.kao}`) + fg("dim", `  ${f.word}`);
+						const line = fg(f.color, `nova ${f.kao}`) + fg("dim", `  ${f.word}`);
 						return [truncateToWidth(line, width)];
 					} catch {
 						return [""];
