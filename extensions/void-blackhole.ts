@@ -1396,7 +1396,7 @@ export default function (pi: ExtensionAPI) {
 	// until a key is pressed. The built-in pi header is replaced with the
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
-		// Bow out cleanly when the Ember persona owns the chrome (flag check only).
+		// Bow out cleanly when the familiar persona owns the chrome (flag check only).
 		if (personaEnabled()) return;
 		if (ctx.mode !== "tui") return;
 		const setVoidHeader = () => {
