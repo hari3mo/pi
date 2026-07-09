@@ -1,31 +1,31 @@
 /**
- * familiar — "Ember", a terminal cat daemon for the pi TUI.
+ * familiar — "Nova", a terminal star-sprite for the pi TUI.
  *
- * A small, hearth-warm ASCII cat that lives in your prompt and reacts to what
- * pi is doing. Deliberately the opposite of the cosmic void-blackhole identity:
- * where the black hole is cold, vast and indifferent, Ember is small, warm and
- * present — a lap cat that is also a Unix daemon quietly running in the
- * background (that's the pun). Cats are the most iconic ASCII subject, so the
- * persona reads crisply in glyphs on any terminal.
+ * A small ASCII star-sprite that lives in your prompt and reacts to what pi is
+ * doing — kin to the cosmic void-blackhole identity, not its opposite: where
+ * the black hole is the whole galaxy spiralling into a supermassive core, Nova
+ * is a single mote of that same starlight, twinkling quietly in the background
+ * (the daemon still runs, it just wears a star now). A little sparking star
+ * reads crisply in glyphs on any terminal.
  *
  * Chrome, all opt-in:
- *   - splash   : an animated warm welcome card (cat blinks, embers flicker,
- *                the face cycles through its moods to show off state reactions);
- *                any key wakes the session. Shown once on startup.
- *   - header   : a compact banner — the cat + the "ember" wordmark + the
+ *   - splash   : an animated welcome card (the sprite twinkles, stardust
+ *                drifts, the face cycles through its moods to show off state
+ *                reactions); any key wakes the session. Shown once on startup.
+ *   - header   : a compact banner — the sprite + the "nova" wordmark + the
  *                current mood, re-rendered only on state change (no timer).
  *   - widget   : a persistent status line below the editor — the "living"
- *                familiar, blinking and reacting; one modest timer drives it.
+ *                familiar, twinkling and reacting; one modest timer drives it.
  *
- * State reactions (blinks / poses / expression changes, CPU trivial):
- *   idle      (=o.o=)  purring     — resting; slow blink
- *   thinking  (=-.o=)  thinking…   — eyes scanning while the agent streams
- *   tool      (=^.^=)/ on it       — batting a paw while a tool runs
- *   error     (=x.x=)! yowl!       — puffed up after a tool error (auto-decays)
+ * State reactions (twinkles / flares / expression changes, CPU trivial):
+ *   idle      *o.o*  adrift      — resting; faint twinkle, slow blink
+ *   thinking  *-.o*  scanning…   — rays shimmering while the agent streams
+ *   tool      *^.^*  flaring     — rays pulse bright while a tool runs
+ *   error     *x.x*  collapse!   — rays scatter after a tool error (auto-decays)
  *
  * Coexistence: void-blackhole and custom-header stay the default and are
  * untouched except for a one-line `if (personaEnabled()) return;` guard that
- * lets them bow out cleanly when Ember is awake — a shared flag file is the
+ * lets them bow out cleanly when Nova is awake — a shared flag file is the
  * only race-free way to arbitrate who owns the startup splash + header. With
  * the persona DISABLED (the default: no flag file) this module does nothing
  * and the void identity behaves exactly as before.
@@ -53,7 +53,7 @@ type TUIRef = { requestRender: () => void };
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 // --------------------------------------------------------------- opt-in flag --
-// Presence of this file = Ember is awake. Resolved next to the agent dir so the
+// Presence of this file = Nova is awake. Resolved next to the agent dir so the
 // guards in void-blackhole/custom-header (which import personaEnabled) read the
 // exact same path regardless of who imports this module.
 const FLAG_PATH: string = (() => {
@@ -64,7 +64,7 @@ const FLAG_PATH: string = (() => {
 	}
 })();
 
-/** True when the Ember persona is enabled. Fail-open: any error → disabled. */
+/** True when the Nova persona is enabled. Fail-open: any error → disabled. */
 export function personaEnabled(): boolean {
 	try {
 		return existsSync(FLAG_PATH);
