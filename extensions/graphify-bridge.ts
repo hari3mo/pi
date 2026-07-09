@@ -75,13 +75,13 @@ interface GraphStats {
 
 /** Cheap stats straight from graph.json, cached by mtime. */
 let statsCache: { root: string; mtimeMs: number; stats: GraphStats } | undefined;
-function graphStats(root: string): GraphStats | undefined {
+function graphStats(root: string, out: string = OUT): GraphStats | undefined {
 	try {
-		const graphPath = join(root, OUT, "graph.json");
+		const graphPath = join(root, out, "graph.json");
 		const mtimeMs = statSync(graphPath).mtimeMs;
 		if (statsCache && statsCache.root === root && statsCache.mtimeMs === mtimeMs) {
 			// stale flag can change independently of graph.json; refresh it alone
-			statsCache.stats.stale = existsSync(join(root, OUT, "needs_update"));
+			statsCache.stats.stale = existsSync(join(root, out, "needs_update"));
 			return statsCache.stats;
 		}
 		const data = JSON.parse(readFileSync(graphPath, "utf8")) as {
@@ -112,8 +112,8 @@ function graphStats(root: string): GraphStats | undefined {
 			communities: new Set(data.nodes.map((n) => n.community)).size,
 			hubs,
 			updated: new Date(mtimeMs),
-			stale: existsSync(join(root, OUT, "needs_update")),
-			hasLessons: existsSync(join(root, OUT, "reflections", "LESSONS.md")),
+			stale: existsSync(join(root, out, "needs_update")),
+			hasLessons: existsSync(join(root, out, "reflections", "LESSONS.md")),
 		};
 		statsCache = { root, mtimeMs, stats };
 		return stats;
@@ -129,16 +129,16 @@ function fmtAge(d: Date): string {
 	return `${Math.round(mins / (60 * 24))}d ago`;
 }
 
-function statusText(root: string): string {
-	const s = graphStats(root);
-	if (!s) return `graph.json unreadable under ${root}/${OUT}/`;
+function statusText(root: string, out: string = OUT): string {
+	const s = graphStats(root, out);
+	if (!s) return `graph.json unreadable under ${root}/${out}/`;
 	return [
 		`graph: ${s.nodes} nodes · ${s.edges} edges · ${s.communities} communities (updated ${fmtAge(s.updated)})`,
 		`hubs: ${s.hubs.join(", ")}`,
 		s.stale
 			? "STALE: docs/images changed since last extraction — run /graphify --update (LLM re-extract). Code stays fresh via the post-commit hook."
 			: "fresh: code changes rebuild automatically on commit",
-		s.hasLessons ? `lessons: ${OUT}/reflections/LESSONS.md` : "",
+		s.hasLessons ? `lessons: ${out}/reflections/LESSONS.md` : "",
 	]
 		.filter(Boolean)
 		.join("\n");
