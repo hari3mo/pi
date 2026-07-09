@@ -204,31 +204,31 @@ export default function (pi: ExtensionAPI) {
 		parameters: GraphParams,
 
 		async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-			const root = findGraphRoot(ctx.cwd);
-			if (!root) {
+			const loc = findGraph(ctx.cwd);
+			if (!loc) {
 				return { content: [{ type: "text", text: "No graphify-out/graph.json found — build one with /graphify first." }] };
 			}
 			let text: string;
 			switch (params.action) {
 				case "status":
-					text = statusText(root);
+					text = statusText(loc.root, loc.out);
 					break;
 				case "query": {
 					if (!params.q) return { content: [{ type: "text", text: "Error: q required for query" }] };
 					const args = ["query", params.q];
 					if (params.budget) args.push("--budget", String(params.budget));
-					text = await runGraphify(root, args, QUERY_TIMEOUT_MS);
+					text = await runGraphify(loc, args, QUERY_TIMEOUT_MS);
 					break;
 				}
 				case "explain":
 					if (!params.q) return { content: [{ type: "text", text: "Error: q required for explain" }] };
-					text = await runGraphify(root, ["explain", params.q], QUERY_TIMEOUT_MS);
+					text = await runGraphify(loc, ["explain", params.q], QUERY_TIMEOUT_MS);
 					break;
 				case "path":
 					if (!params.q || !params.target) {
 						return { content: [{ type: "text", text: "Error: q and target required for path" }] };
 					}
-					text = await runGraphify(root, ["path", params.q, params.target], QUERY_TIMEOUT_MS);
+					text = await runGraphify(loc, ["path", params.q, params.target], QUERY_TIMEOUT_MS);
 					break;
 			}
 			if (text.length > TOOL_OUTPUT_CAP) text = `${text.slice(0, TOOL_OUTPUT_CAP)}\n... (truncated)`;
