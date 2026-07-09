@@ -63,6 +63,18 @@ check("consult: bash naming config.wiki", isWikiConsult("bash", { command: "cat 
 check("consult: bash naming wiki-query", isWikiConsult("bash", { command: "run wiki-query wiki" }, CWD));
 check("consult: ordinary read is NOT a consult", isWikiConsult("read", { path: `${CWD}/AGENTS.md` }, CWD) === false);
 
+// --- domain-vault consult (v2) ---
+const PRISM_VAULT = "/tmp/prism-oracle/prism-wiki";
+check("consult: read under domain vault", isWikiConsult("read", { path: `${PRISM_VAULT}/concepts/x.md` }, CWD, [PRISM_VAULT]));
+check("consult: bash naming domain vault", isWikiConsult("bash", { command: `rg foo ${PRISM_VAULT}` }, CWD, [PRISM_VAULT]));
+check("consult: domain vault NOT consulted without extraVaults", isWikiConsult("read", { path: `${PRISM_VAULT}/concepts/x.md` }, CWD) === false);
+check("consult: empty extraVaults entries ignored", isWikiConsult("read", { path: `${CWD}/AGENTS.md` }, CWD, [""]) === false);
+
+// --- domain-aware messages (v2) ---
+check("msg: nudge names domain profile when present", buildNudge("x", "/tmp/config.prism").includes("/tmp/config.prism"));
+check("msg: block names domain profile when present", buildBlock("x", "/tmp/config.prism").includes("/tmp/config.prism"));
+check("msg: nudge unchanged without domain", !buildNudge("x").includes("domain wiki"));
+
 // --- escalation ladder ---
 const state = { count: 0, blocked: new Set() };
 const A = classifyPiDocRead("read", { path: `${PI}/README.md` }, CWD).key;
