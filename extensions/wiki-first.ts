@@ -236,6 +236,11 @@ export function buildBlock(target: string, domainProfile?: string): string {
 export default function (pi: ExtensionAPI) {
 	let cwd = "/";
 	let wikiConsulted = false;
+	// v2: the session domain's wiki (config/domains.json) — e.g. prism cwd →
+	// the prism-oracle vault. Consulting IT also satisfies wiki-first, and the
+	// nudge/block names it so the model is routed to the right store.
+	let domainProfile: string | undefined;
+	let domainVault: string | undefined;
 	const state: WikiFirstState = makeRouterState();
 
 	// Cheap existsSync each check (mirrors graph-first's active()); the vault or
@@ -251,6 +256,21 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		cwd = ctx.cwd || "/";
 		wikiConsulted = false;
+		domainProfile = undefined;
+		domainVault = undefined;
+		try {
+			const domain = classifyCwd(cwd);
+			if (domain !== DEFAULT_DOMAIN) {
+				const profile = resolveWikiProfile(domain);
+				if (profile && existsSync(profile)) {
+					domainProfile = profile;
+					const vault = vaultPathFromConfig(profile);
+					if (existsSync(vault)) domainVault = vault;
+				}
+			}
+		} catch {
+			/* fail open: no domain routing */
+		}
 		resetRouterState(state);
 	});
 
@@ -261,7 +281,7 @@ export default function (pi: ExtensionAPI) {
 			const input = event.input as { path?: string; file_path?: string; command?: string };
 
 			// Consult signal first: watching the same stream we gate on costs nothing.
-			if (isWikiConsult(event.toolName, input, cwd)) {
+			if (isWikiConsult(event.toolName, input, cwd, domainVault ? [domainVault] : [])) {
 				wikiConsulted = true;
 				return;
 			}
@@ -275,7 +295,7 @@ export default function (pi: ExtensionAPI) {
 						{
 							customType: "wiki-first-nudge",
 							display: true,
-							content: buildNudge(target),
+							content: buildNudge(target, domainProfile),
 						},
 						{ deliverAs: "nextTurn" },
 					);
@@ -284,7 +304,7 @@ export default function (pi: ExtensionAPI) {
 					pi.events.emit("learning-violation", { doctrine: "wiki-first", detail: `block: ${target}` });
 					return {
 						block: true,
-						reason: buildBlock(target),
+						reason: buildBlock(target, domainProfile),
 					};
 				case "bypass":
 				default:
