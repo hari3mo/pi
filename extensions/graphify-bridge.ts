@@ -27,24 +27,26 @@ import { StringEnum } from "@earendil-works/pi-ai";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
-import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "./lib/graph-lookup.ts";
+import { findGraphLoc, type GraphLoc, graphifyPython, OUT } from "./lib/graph-lookup.ts";
 
 const TOOL_OUTPUT_CAP = 12_000;
 const QUERY_TIMEOUT_MS = 60_000;
 const UPDATE_TIMEOUT_MS = 300_000;
 
 /**
- * Resolve the directory whose graphify-out/graph.json to query.
- * Primary: the shared walk-up (lib/graph-lookup.ts) — per-project graphs win.
- * Fallback: the pi agent config dir (getAgentDir(), honors PI_AGENT_DIR) so the
- * harness reaches its OWN graph from a cwd outside it (e.g. $HOME). The fallback
- * lives here, not in the lib, because that lib is deliberately pi-import-free.
+ * Resolve the graph to query: { root, out } where <root>/<out>/graph.json.
+ * Primary: the domain-aware locator (lib/graph-lookup.ts findGraphLoc) — a
+ * prism-domain cwd resolves to the prism-oracle prism-graph/ dir; other cwds
+ * walk up to the nearest graphify-out/. Fallback: the pi agent config dir
+ * (getAgentDir(), honors PI_AGENT_DIR) so the harness reaches its OWN graph
+ * from a cwd outside it (e.g. $HOME). The fallback lives here, not in the
+ * lib, because that lib is deliberately pi-import-free.
  */
-function findGraphRoot(cwd: string): string | undefined {
-	const found = findGraphRootPure(cwd);
+function findGraph(cwd: string): GraphLoc | undefined {
+	const found = findGraphLoc(cwd);
 	if (found) return found;
 	const agentDir = getAgentDir();
-	return existsSync(join(agentDir, OUT, "graph.json")) ? agentDir : undefined;
+	return existsSync(join(agentDir, OUT, "graph.json")) ? { root: agentDir, out: OUT } : undefined;
 }
 
 function runGraphify(root: string, args: string[], timeoutMs: number): Promise<string> {
