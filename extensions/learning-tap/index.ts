@@ -199,7 +199,9 @@ export default function (pi: ExtensionAPI) {
 		description:
 			"File a durable, generalizable lesson into the learning pipeline (learning/events.jsonl). " +
 			"The nightly distiller dedupes against the wiki vault and heuristics store, then promotes. " +
-			"One imperative sentence; evidence pointers required.",
+			"One imperative sentence; evidence pointers required. Lessons route by knowledge domain " +
+			"(cwd-classified default; pass `domain` to override — e.g. a prism data lesson learned " +
+			"while working outside a prism directory).",
 		parameters: Type.Object({
 			text: Type.String({ description: "One imperative, self-contained, generalizable sentence." }),
 			category: CategorySchema,
@@ -209,6 +211,13 @@ export default function (pi: ExtensionAPI) {
 				minItems: 1,
 			}),
 			basis: Type.Optional(BasisSchema),
+			domain: Type.Optional(
+				Type.String({
+					description:
+						'Knowledge domain override: "pi" (harness-internal) or "prism" (Prism data-science). ' +
+						"Defaults to the session's cwd-classified domain.",
+				}),
+			),
 		}),
 		async execute(_toolCallId, params) {
 			const p = params as {
@@ -217,8 +226,9 @@ export default function (pi: ExtensionAPI) {
 				scope?: string;
 				evidence: string[];
 				basis?: string;
+				domain?: string;
 			};
-			const ev = makeEvent(
+			const ev = stampEvent(
 				"explicit",
 				{
 					text: cap(p.text, USERTEXT_CAP),
@@ -227,8 +237,7 @@ export default function (pi: ExtensionAPI) {
 					basis: p.basis ?? "directly-observed",
 				},
 				p.evidence,
-				sessionId,
-				cwd,
+				p.domain?.trim() || sessionDomain,
 			);
 			const ok = addEvent(buffer, ev);
 			return {
@@ -328,6 +337,7 @@ export default function (pi: ExtensionAPI) {
 					session: sessionId,
 					ts: new Date().toISOString(),
 					cwd: ctx.cwd,
+					...(sessionDomain !== DEFAULT_DOMAIN ? { domain: sessionDomain } : {}),
 					heuristicIdsInjected: ids,
 					wikiPagesRead: [...wikiPagesRead],
 					graphQueries,
