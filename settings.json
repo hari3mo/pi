@@ -1,9 +1,9 @@
 {
   "lastChangelogVersion": "0.80.3",
   "theme": "porcelain-light/porcelain",
-  "defaultProvider": "anthropic",
-  "defaultModel": "claude-opus-4-8",
-  "defaultThinkingLevel": "xhigh",
+  "defaultProvider": "google",
+  "defaultModel": "gemini-3.1-pro-preview",
+  "defaultThinkingLevel": "high",
   "quietStartup": true,
   "enabledModels": [
     "claude-sonnet-5",
