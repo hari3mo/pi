@@ -1,5 +1,5 @@
 /**
- * Preview + acceptance harness for the "Nova" terminal star-sprite persona.
+ * Preview + acceptance harness for the "Harimo" terminal star-sprite persona.
  *
  * Renders the splash + a full cycle of the state expressions to stdout and
  * exits 0. Runnable with pi's own strip-types path:

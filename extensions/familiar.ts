@@ -1,9 +1,9 @@
 /**
- * familiar — "Nova", a terminal star-sprite for the pi TUI.
+ * familiar — "Harimo", a terminal star-sprite for the pi TUI.
  *
  * A small ASCII star-sprite that lives in your prompt and reacts to what pi is
  * doing — kin to the cosmic void-blackhole identity, not its opposite: where
- * the black hole is the whole galaxy spiralling into a supermassive core, Nova
+ * the black hole is the whole galaxy spiralling into a supermassive core, Harimo
  * is a single mote of that same starlight, twinkling quietly in the background
  * (the daemon still runs, it just wears a star now). A little sparking star
  * reads crisply in glyphs on any terminal.
@@ -12,7 +12,7 @@
  *   - splash   : an animated welcome card (the sprite twinkles, stardust
  *                drifts, the face cycles through its moods to show off state
  *                reactions); any key wakes the session. Shown once on startup.
- *   - header   : a compact banner — the sprite + the "nova" wordmark + the
+ *   - header   : a compact banner — the sprite + the "harimo" wordmark + the
  *                current mood, re-rendered only on state change (no timer).
  *   - widget   : a persistent status line below the editor — the "living"
  *                familiar, twinkling and reacting; one modest timer drives it.
@@ -25,7 +25,7 @@
  *
  * Coexistence: void-blackhole and custom-header stay the default and are
  * untouched except for a one-line `if (personaEnabled()) return;` guard that
- * lets them bow out cleanly when Nova is awake — a shared flag file is the
+ * lets them bow out cleanly when Harimo is awake — a shared flag file is the
  * only race-free way to arbitrate who owns the startup splash + header. With
  * the persona DISABLED (the default: no flag file) this module does nothing
  * and the void identity behaves exactly as before.
@@ -53,7 +53,7 @@ type TUIRef = { requestRender: () => void };
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 // --------------------------------------------------------------- opt-in flag --
-// Presence of this file = Nova is awake. Resolved next to the agent dir so the
+// Presence of this file = Harimo is awake. Resolved next to the agent dir so the
 // guards in void-blackhole/custom-header (which import personaEnabled) read the
 // exact same path regardless of who imports this module.
 const FLAG_PATH: string = (() => {
@@ -64,7 +64,7 @@ const FLAG_PATH: string = (() => {
 	}
 })();
 
-/** True when the Nova persona is enabled. Fail-open: any error → disabled. */
+/** True when the Harimo persona is enabled. Fail-open: any error → disabled. */
 export function personaEnabled(): boolean {
 	try {
 		return existsSync(FLAG_PATH);
@@ -141,7 +141,7 @@ export function faceFor(mood: Mood, opts?: { tick?: number; blink?: boolean }): 
 /** Plain (uncolored) one-line status text. Exported for the harness. */
 export function widgetLinePlain(mood: Mood, tick: number, blink = false): string {
 	const f = faceFor(mood, { tick, blink });
-	return `nova ${f.kao}  ${f.word}`;
+	return `harimo ${f.kao}  ${f.word}`;
 }
 
 type Seg = { t: string; c: string };
@@ -151,7 +151,7 @@ export function headerSegments(mood: Mood, tick: number): Seg[][] {
 	const f = faceFor(mood, { tick });
 	const pad = (s: string) => s + " ".repeat(Math.max(0, 8 - s.length));
 	return [
-		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "nova", c: "accent" }],
+		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "harimo", c: "accent" }],
 		[
 			{ t: pad(f.art[1]!), c: f.color },
 			{ t: "  ", c: "dim" },
@@ -361,7 +361,7 @@ function applyChrome(ctx: ExtensionContext): void {
 					try {
 						const blink = mood !== "error" && tick % 7 === 0;
 						const f = faceFor(mood, { tick, blink });
-						const line = fg(f.color, `nova ${f.kao}`) + fg("dim", `  ${f.word}`);
+						const line = fg(f.color, `harimo ${f.kao}`) + fg("dim", `  ${f.word}`);
 						return [truncateToWidth(line, width)];
 					} catch {
 						return [""];
@@ -427,10 +427,10 @@ export default function (pi: ExtensionAPI) {
 
 	pi.registerCommand("familiar", {
 		description:
-			"Toggle Nova, the terminal star-sprite persona (splash + header + status line)",
+			"Toggle Harimo, the terminal star-sprite persona (splash + header + status line)",
 		handler: async (_args: string, ctx: ExtensionCommandContext) => {
 			if (ctx.mode !== "tui") {
-				ctx.ui.notify("Nova lives in the interactive TUI", "error");
+				ctx.ui.notify("Harimo lives in the interactive TUI", "error");
 				return;
 			}
 			if (personaEnabled()) {
@@ -439,7 +439,7 @@ export default function (pi: ExtensionAPI) {
 				} catch {}
 				removeChrome(ctx);
 				ctx.ui.notify(
-					"Nova winked out ✧  Restart pi to restore the void splash + header.",
+					"Harimo winked out ✧  Restart pi to restore the void splash + header.",
 					"info",
 				);
 			} else {
@@ -449,7 +449,7 @@ export default function (pi: ExtensionAPI) {
 				applyChrome(ctx);
 				settle("idle");
 				ctx.ui.notify(
-					"Nova is awake ✧  header + status applied. Restart pi to meet the splash.",
+					"Harimo is awake ✧  header + status applied. Restart pi to meet the splash.",
 					"info",
 				);
 			}
