@@ -1,31 +1,31 @@
 /**
- * familiar — "Ember", a terminal cat daemon for the pi TUI.
+ * familiar — "Nova", a terminal star-sprite for the pi TUI.
  *
- * A small, hearth-warm ASCII cat that lives in your prompt and reacts to what
- * pi is doing. Deliberately the opposite of the cosmic void-blackhole identity:
- * where the black hole is cold, vast and indifferent, Ember is small, warm and
- * present — a lap cat that is also a Unix daemon quietly running in the
- * background (that's the pun). Cats are the most iconic ASCII subject, so the
- * persona reads crisply in glyphs on any terminal.
+ * A small ASCII star-sprite that lives in your prompt and reacts to what pi is
+ * doing — kin to the cosmic void-blackhole identity, not its opposite: where
+ * the black hole is the whole galaxy spiralling into a supermassive core, Nova
+ * is a single mote of that same starlight, twinkling quietly in the background
+ * (the daemon still runs, it just wears a star now). A little sparking star
+ * reads crisply in glyphs on any terminal.
  *
  * Chrome, all opt-in:
- *   - splash   : an animated warm welcome card (cat blinks, embers flicker,
- *                the face cycles through its moods to show off state reactions);
- *                any key wakes the session. Shown once on startup.
- *   - header   : a compact banner — the cat + the "ember" wordmark + the
+ *   - splash   : an animated welcome card (the sprite twinkles, stardust
+ *                drifts, the face cycles through its moods to show off state
+ *                reactions); any key wakes the session. Shown once on startup.
+ *   - header   : a compact banner — the sprite + the "nova" wordmark + the
  *                current mood, re-rendered only on state change (no timer).
  *   - widget   : a persistent status line below the editor — the "living"
- *                familiar, blinking and reacting; one modest timer drives it.
+ *                familiar, twinkling and reacting; one modest timer drives it.
  *
- * State reactions (blinks / poses / expression changes, CPU trivial):
- *   idle      (=o.o=)  purring     — resting; slow blink
- *   thinking  (=-.o=)  thinking…   — eyes scanning while the agent streams
- *   tool      (=^.^=)/ on it       — batting a paw while a tool runs
- *   error     (=x.x=)! yowl!       — puffed up after a tool error (auto-decays)
+ * State reactions (twinkles / flares / expression changes, CPU trivial):
+ *   idle      *o.o*  adrift      — resting; faint twinkle, slow blink
+ *   thinking  *-.o*  scanning…   — rays shimmering while the agent streams
+ *   tool      *^.^*  flaring     — rays pulse bright while a tool runs
+ *   error     *x.x*  collapse!   — rays scatter after a tool error (auto-decays)
  *
  * Coexistence: void-blackhole and custom-header stay the default and are
  * untouched except for a one-line `if (personaEnabled()) return;` guard that
- * lets them bow out cleanly when Ember is awake — a shared flag file is the
+ * lets them bow out cleanly when Nova is awake — a shared flag file is the
  * only race-free way to arbitrate who owns the startup splash + header. With
  * the persona DISABLED (the default: no flag file) this module does nothing
  * and the void identity behaves exactly as before.
@@ -53,7 +53,7 @@ type TUIRef = { requestRender: () => void };
 import { truncateToWidth, visibleWidth } from "@earendil-works/pi-tui";
 
 // --------------------------------------------------------------- opt-in flag --
-// Presence of this file = Ember is awake. Resolved next to the agent dir so the
+// Presence of this file = Nova is awake. Resolved next to the agent dir so the
 // guards in void-blackhole/custom-header (which import personaEnabled) read the
 // exact same path regardless of who imports this module.
 const FLAG_PATH: string = (() => {
@@ -64,7 +64,7 @@ const FLAG_PATH: string = (() => {
 	}
 })();
 
-/** True when the Ember persona is enabled. Fail-open: any error → disabled. */
+/** True when the Nova persona is enabled. Fail-open: any error → disabled. */
 export function personaEnabled(): boolean {
 	try {
 		return existsSync(FLAG_PATH);
@@ -80,86 +80,82 @@ const MOODS: readonly Mood[] = ["idle", "thinking", "tool", "error"] as const;
 
 export interface Face {
 	mood: Mood;
-	eyes: string; //  3 chars
-	mouth: string; // 1 char
-	paw: string; //   "" | 1 char
+	eyes: string; // 3 chars — the sprite's face
+	ray: string; //  1 char — the animated sparkle glyph on the rays
 	word: string;
 	/** Semantic theme color name for this mood. */
 	color: string;
-	/** Front-facing cat, 3 lines, ASCII-only (safe width on any terminal). */
+	/** Front-facing star-sprite, 3 lines, ASCII-only (safe width anywhere). */
 	art: string[];
-	/** Compact kaomoji for the one-line status widget. */
+	/** Compact sprite for the one-line status widget. */
 	kao: string;
 }
 
 /**
  * Pure mood → face. `tick` drives the cheap in-mood animation (eye scan,
- * thinking dots, paw bat); `blink` briefly shuts the eyes. Deterministic, so
+ * scanning dots, ray pulse); `blink` briefly shuts the eyes. Deterministic, so
  * the harness can assert frames differ across moods and fit the width budget.
  */
 export function faceFor(mood: Mood, opts?: { tick?: number; blink?: boolean }): Face {
 	const t = opts?.tick ?? 0;
 	const blink = opts?.blink ?? false;
 	let eyes: string;
-	let mouth: string;
-	let paw = "";
+	let ray: string;
 	let word: string;
 	let color: string;
 	switch (mood) {
 		case "thinking":
 			eyes = blink ? "-.-" : ["o.o", "-.o", "o.-"][t % 3]!;
-			mouth = "o";
-			word = "thinking" + ".".repeat(t % 4);
+			ray = ["~", "*", "~", "."][t % 4]!; // rays shimmer as it scans
+			word = "scanning" + ".".repeat(t % 4);
 			color = "accent";
 			break;
 		case "tool":
 			eyes = blink ? "-.-" : "^.^";
-			mouth = "w";
-			paw = t % 2 ? "/" : "\\";
-			word = "on it";
+			ray = t % 2 ? "*" : "+"; // flaring — rays pulse bright
+			word = "flaring";
 			color = "success";
 			break;
 		case "error":
-			eyes = "x.x"; // too rattled to blink
-			mouth = "O";
-			paw = "!";
-			word = "yowl!";
+			eyes = "x.x"; // too rattled to twinkle
+			ray = "!"; //     rays scattered by the shock
+			word = "collapse!";
 			color = "error";
 			break;
 		default: // idle
 			eyes = blink ? "-.-" : "o.o";
-			mouth = "w";
-			word = "purring";
+			ray = "."; // faint resting twinkle
+			word = "adrift";
 			color = "muted";
 			break;
 	}
 	const art = [
-		" /\\_/\\",
+		` \\ ${ray} /`,
 		`( ${eyes} )`,
-		` >${mouth}<${paw ? ` ${paw}` : ""}`,
+		` / ${ray} \\`,
 	];
-	const kao = `(=${eyes}=)${paw}`;
-	return { mood, eyes, mouth, paw, word, color, art, kao };
+	const kao = `*${eyes}*`;
+	return { mood, eyes, ray, word, color, art, kao };
 }
 
 /** Plain (uncolored) one-line status text. Exported for the harness. */
 export function widgetLinePlain(mood: Mood, tick: number, blink = false): string {
 	const f = faceFor(mood, { tick, blink });
-	return `ember ${f.kao}  ${f.word}`;
+	return `nova ${f.kao}  ${f.word}`;
 }
 
 type Seg = { t: string; c: string };
 
-/** Header as 3 lines of colored segments — cat + wordmark + mood. */
+/** Header as 3 lines of colored segments — sprite + wordmark + mood. */
 export function headerSegments(mood: Mood, tick: number): Seg[][] {
 	const f = faceFor(mood, { tick });
 	const pad = (s: string) => s + " ".repeat(Math.max(0, 8 - s.length));
 	return [
-		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "ember", c: "accent" }],
+		[{ t: pad(f.art[0]!), c: f.color }, { t: "  ", c: "dim" }, { t: "nova", c: "accent" }],
 		[
 			{ t: pad(f.art[1]!), c: f.color },
 			{ t: "  ", c: "dim" },
-			{ t: "your terminal cat daemon", c: "dim" },
+			{ t: "your terminal star-sprite", c: "dim" },
 		],
 		[{ t: pad(f.art[2]!), c: f.color }, { t: "  ", c: "dim" }, { t: `~ ${f.word}`, c: f.color } ],
 	];
@@ -228,9 +224,9 @@ class FamiliarSplash {
 		const blink = this.tick % 18 < 2; // brief double-frame blink
 		const f = faceFor(demoMood, { tick: this.tick, blink });
 
-		// Flickering embers drifting above the ears.
-		const sparks = [" .  :   '", "  '  .  : ", " :   '  . ", "  .  '  : "];
-		const emberLine = fg("warning", sparks[this.tick % sparks.length]!);
+		// Stardust drifting past the sprite — starlight motes, not warm embers.
+		const sparks = [" .  *   '", "  '  .  * ", " *   '  . ", "  .  '  * "];
+		const starLine = fg("muted", sparks[this.tick % sparks.length]!);
 
 		// Legend with the current mood lit in its own color.
 		const legend =
@@ -241,14 +237,14 @@ class FamiliarSplash {
 			fg("dim", " ·");
 
 		const content: string[] = [
-			emberLine,
+			starLine,
 			fg(f.color, f.art[0]!),
 			fg(f.color, f.art[1]!),
 			fg(f.color, f.art[2]!),
 			"",
-			fg("accent", "e m b e r"),
+			fg("accent", "n o v a"),
 			"",
-			fg("dim", "your terminal cat daemon"),
+			fg("dim", "your terminal star-sprite"),
 			fg("dim", this.cwd),
 			"",
 			legend,
@@ -285,7 +281,7 @@ let errorTimer: ReturnType<typeof setTimeout> | null = null;
 
 function startBeat(): void {
 	if (beat) return;
-	// ~3 fps: enough for a blink + thinking dots + paw bat, CPU-trivial.
+	// ~3 fps: enough for a blink + scanning dots + ray pulse, CPU-trivial.
 	beat = setInterval(() => {
 		tick++;
 		widgetRender?.();
@@ -365,7 +361,7 @@ function applyChrome(ctx: ExtensionContext): void {
 					try {
 						const blink = mood !== "error" && tick % 7 === 0;
 						const f = faceFor(mood, { tick, blink });
-						const line = fg(f.color, `ember ${f.kao}`) + fg("dim", `  ${f.word}`);
+						const line = fg(f.color, `nova ${f.kao}`) + fg("dim", `  ${f.word}`);
 						return [truncateToWidth(line, width)];
 					} catch {
 						return [""];
@@ -431,10 +427,10 @@ export default function (pi: ExtensionAPI) {
 
 	pi.registerCommand("familiar", {
 		description:
-			"Toggle Ember, the terminal cat-daemon persona (splash + header + status line)",
+			"Toggle Nova, the terminal star-sprite persona (splash + header + status line)",
 		handler: async (_args: string, ctx: ExtensionCommandContext) => {
 			if (ctx.mode !== "tui") {
-				ctx.ui.notify("Ember lives in the interactive TUI", "error");
+				ctx.ui.notify("Nova lives in the interactive TUI", "error");
 				return;
 			}
 			if (personaEnabled()) {
@@ -443,7 +439,7 @@ export default function (pi: ExtensionAPI) {
 				} catch {}
 				removeChrome(ctx);
 				ctx.ui.notify(
-					"Ember curled up 😴  Restart pi to restore the void splash + header.",
+					"Nova winked out ✧  Restart pi to restore the void splash + header.",
 					"info",
 				);
 			} else {
@@ -453,7 +449,7 @@ export default function (pi: ExtensionAPI) {
 				applyChrome(ctx);
 				settle("idle");
 				ctx.ui.notify(
-					"Ember is awake ✧  header + status applied. Restart pi to meet the splash.",
+					"Nova is awake ✧  header + status applied. Restart pi to meet the splash.",
 					"info",
 				);
 			}
