@@ -28,6 +28,7 @@ import { getAgentDir } from "@earendil-works/pi-coding-agent";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
 import { Type } from "typebox";
 import { BasisSchema, CategorySchema, ScopeSchema } from "../heuristics/schema.ts";
+import { classifyCwd, DEFAULT_DOMAIN } from "../lib/domains.ts";
 import { findGraphRoot as findGraphRootPure, graphifyPython, OUT } from "../lib/graph-lookup.ts";
 import { WIKI_VAULT } from "../lib/knowledge-router.ts";
 import {
