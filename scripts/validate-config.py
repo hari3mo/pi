@@ -302,6 +302,12 @@ def check_installed_integrity() -> None:
         warnings.append(
             "pi-tui dist: scrollback-fix patch markers missing (pi update overwrote it?) — "
             "re-apply per patches/pi-tui-scrollback-fix.md, then run its harness")
+    for rel in ("dist/modes/interactive/theme/theme-controller.js", "dist/cli/startup-ui.js"):
+        f = _pi_pkg_root() / rel
+        if f.exists() and "pi-theme-detect-timeout" not in f.read_text(encoding="utf-8", errors="replace"):
+            warnings.append(
+                f"pi dist {rel}: theme-detect-timeout patch marker missing (pi update overwrote it?) — "
+                "re-apply per patches/pi-theme-detect-timeout.md (OSC 11 races the stock 100ms over SSH)")
 
 
 def check_layout(layout: dict) -> None:
