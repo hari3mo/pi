@@ -427,10 +427,10 @@ export default function (pi: ExtensionAPI) {
 
 	pi.registerCommand("familiar", {
 		description:
-			"Toggle Ember, the terminal cat-daemon persona (splash + header + status line)",
+			"Toggle Nova, the terminal star-sprite persona (splash + header + status line)",
 		handler: async (_args: string, ctx: ExtensionCommandContext) => {
 			if (ctx.mode !== "tui") {
-				ctx.ui.notify("Ember lives in the interactive TUI", "error");
+				ctx.ui.notify("Nova lives in the interactive TUI", "error");
 				return;
 			}
 			if (personaEnabled()) {
@@ -439,7 +439,7 @@ export default function (pi: ExtensionAPI) {
 				} catch {}
 				removeChrome(ctx);
 				ctx.ui.notify(
-					"Ember curled up 😴  Restart pi to restore the void splash + header.",
+					"Nova winked out ✧  Restart pi to restore the void splash + header.",
 					"info",
 				);
 			} else {
@@ -449,7 +449,7 @@ export default function (pi: ExtensionAPI) {
 				applyChrome(ctx);
 				settle("idle");
 				ctx.ui.notify(
-					"Ember is awake ✧  header + status applied. Restart pi to meet the splash.",
+					"Nova is awake ✧  header + status applied. Restart pi to meet the splash.",
 					"info",
 				);
 			}
