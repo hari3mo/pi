@@ -134,10 +134,10 @@ early, before the budget runs out.
 
 ## Defaults
 
-- Lead: `claude-fable-5:xhigh`. Tiers pinned: deep reasoning `claude-opus-4-8:xhigh`,
-  mechanical `claude-sonnet-5:high`, doctor `claude-sonnet-5:high`, peer `openai/gpt-5.5:xhigh`
-  (inherits the lead's thinking level, like engineer; the suffix is the fallback).
-- Pass `model:thinking` explicitly when delegating.
+- Lead: `claude-fable-5:xhigh`. Subagent effort is pinned by model family, never inherited from
+  the lead: Opus and GPT-5.5 run `:xhigh`; Sonnet and Gemini Flash run `:high`.
+- Agent frontmatter may include `model:thinking`, but the subagent harness overwrites the suffix
+  for pinned model families.
 
 ## Config Maintenance (~/.pi/agent)
 
