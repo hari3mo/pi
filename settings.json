@@ -1,6 +1,6 @@
 {
   "lastChangelogVersion": "0.80.3",
-  "theme": "porcelain-light",
+  "theme": "porcelain-light/porcelain",
   "defaultProvider": "openai",
   "defaultModel": "gpt-5.5",
   "defaultThinkingLevel": "high",
