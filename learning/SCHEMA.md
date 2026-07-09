@@ -1,9 +1,11 @@
-# Learning Pipeline — Event Contract (v1)
+# Learning Pipeline — Event Contract (v2)
 
 Shared contract between the Pi-side capture taps (learning-tap extension,
 Phase 1) and the out-of-session distiller (Hermes cron, Phase 2). Both sides
 treat THIS file as authoritative. Full design:
 `~/.hermes/plans/2026-07-04_210500-pi-learning-loop-redesign.md`.
+Domain compartmentalization (v2):
+`~/.hermes/plans/2026-07-09_113000-prism-domain-compartmentalization.md`.
 
 ## Files (this directory)
 
@@ -34,11 +36,22 @@ so the cursor has a single writer. SCHEMA.md and PHASE1-DISPATCH.md ARE tracked.
   "ts": "ISO 8601",
   "session": "<pi session id>",
   "cwd": "/abs/project/path",
+  "domain": "pi" | "prism",   // v2, OPTIONAL — absent means "pi" (back-compat)
   "kind": "verdict" | "rework" | "correction" | "query" | "explicit" | "violation",
   "payload": { },          // kind-specific, below
   "evidence": ["session:<id>#<msgidx>", "file:line", "verdict:<eventId>"]
 }
 ```
+
+### domain (v2)
+
+Which knowledge domain the event belongs to; decides WHERE the distiller
+promotes it (see routing below). Assignment: the session's cwd sets the
+default via `config/domains.json` prefixes (`extensions/lib/domains.ts`
+classifyCwd — e.g. `~/prism` on the Mac or the EC2 SageMaker shared
+filesystem → `prism`); the `learn` tool may override per event with an
+explicit `domain` argument. Receipts carry the same field. Events/receipts
+without the field are `pi` — no migration of old lines.
 
 Caps: payload strings individually ≤4000 chars (findings/answer) or ≤1000
 (userText); whole line ≤8KB; writers drop oversize rather than truncate JSON.
