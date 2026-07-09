@@ -89,7 +89,7 @@ export default function (pi: ExtensionAPI) {
 	let contextLine = "";
 
 	pi.on("session_start", async (_event, ctx) => {
-		// Bow out cleanly when the Ember persona owns the header (flag check only).
+		// Bow out cleanly when the familiar persona owns the header (flag check only).
 		if (personaEnabled()) return;
 		contextLine = computeContextLine(ctx.cwd);
 
