@@ -70,6 +70,7 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
+import { personaEnabled } from "./familiar.ts";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -1395,6 +1396,8 @@ export default function (pi: ExtensionAPI) {
 	// until a key is pressed. The built-in pi header is replaced with the
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
+		// Bow out cleanly when the Ember persona owns the chrome (flag check only).
+		if (personaEnabled()) return;
 		if (ctx.mode !== "tui") return;
 		const setVoidHeader = () => {
 			let phase = 0;
