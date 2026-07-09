@@ -66,6 +66,8 @@ export default function (pi: ExtensionAPI) {
 	let buffer: LearningEvent[] = [];
 	let cwd = "/";
 	let sessionId = "";
+	// v2: knowledge domain of this session (cwd default; learn tool may override per event).
+	let sessionDomain: string = DEFAULT_DOMAIN;
 	// Receipt accumulators (MEASURE side — learning/SCHEMA.md receipts.jsonl)
 	let wikiPagesRead: Set<string> = new Set();
 	let graphQueries = 0;
@@ -74,10 +76,15 @@ export default function (pi: ExtensionAPI) {
 	// Correction tap: the agent's last visible action, for precedingAction context.
 	let lastToolLabel = "";
 
+	/** makeEvent bound to this session's identity + domain (v2). */
+	const stampEvent = (kind: Parameters<typeof makeEvent>[0], payload: Record<string, unknown>, evidence: string[], domain = sessionDomain) =>
+		makeEvent(kind, payload, evidence, sessionId, cwd, undefined, domain);
+
 	pi.on("session_start", async (_event, ctx) => {
 		buffer = [];
 		cwd = ctx.cwd || "/";
 		sessionId = ctx.sessionManager.getSessionFile?.() ?? "<unknown>";
+		sessionDomain = classifyCwd(cwd); // fail-open → "pi"
 		wikiPagesRead = new Set();
 		graphQueries = 0;
 		lastVerdict = null;
