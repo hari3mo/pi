@@ -4,9 +4,12 @@
  * Loads the real exported functions via the jiti loader (house pattern).
  * Run from ~/.pi/agent: node scripts/check-domains.mjs
  */
-import { loadTs } from "./lib/jiti-loader.mjs";
+import { join } from "node:path";
+import { AGENT_DIR, loadJiti, provisionNodeModules } from "./lib/jiti-loader.mjs";
 
-const m = await loadTs("extensions/lib/domains.ts");
+provisionNodeModules();
+const { jiti } = await loadJiti();
+const m = await jiti.import(join(AGENT_DIR, "extensions", "lib", "domains.ts"));
 const {
 	DEFAULT_DOMAIN,
 	expandHome,
