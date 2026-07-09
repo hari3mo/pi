@@ -28,8 +28,10 @@ const PI = join(process.env.HOME, ".local", "lib", "node_modules", "@earendil-wo
 const CWD = AGENT_DIR;
 
 let failed = 0;
+let passed = 0;
 const check = (label, cond) => {
 	if (!cond) failed++;
+	else passed++;
 	console.log(`${cond ? "ok  " : "FAIL"}  ${label}`);
 };
 
@@ -95,4 +97,4 @@ check("msg: every message names both stores (wiki + graph)", nudge.includes("wik
 check("msg: block keeps IDENTICAL-retry escape", /IDENTICAL read to proceed/.test(block));
 
 assert.equal(failed, 0, `${failed} wiki-first check(s) failed`);
-console.log(`\nwiki-first: ${cases.length + 10 + 4} assertions passed`);
+console.log(`\nwiki-first: ${passed} assertions passed`);
