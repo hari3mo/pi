@@ -30,7 +30,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { findGraphRoot, OUT } from "./lib/graph-lookup.ts";
+import { findGraphLoc, type GraphLoc, OUT } from "./lib/graph-lookup.ts";
 import { persistStatsRecord } from "./lib/stats-store.ts";
 import {
 	CROSS_STORE_GUIDANCE,
@@ -268,18 +268,18 @@ export function buildBlock(identifier: string, command: string): string {
 // ---------------------------------------------------------------------------
 
 export default function (pi: ExtensionAPI) {
-	let root: string | undefined;
+	let loc: GraphLoc | undefined;
 	let sessionId = "";
 	const state: GraphFirstState = makeRouterState();
 	const counts = { nudges: 0, blocks: 0, bypasses: 0 };
 	let endNudgeSent = false;
 	let lastPersistedTotal = -1;
 
-	const active = (): string | undefined =>
-		root && existsSync(join(root, OUT, "graph.json")) ? root : undefined;
+	const active = (): GraphLoc | undefined =>
+		loc && existsSync(join(loc.root, loc.out, "graph.json")) ? loc : undefined;
 
 	pi.on("session_start", async (_event, ctx) => {
-		root = findGraphRoot(ctx.cwd);
+		loc = findGraphLoc(ctx.cwd);
 		sessionId = `${new Date().toISOString()}-${process.pid}`;
 		resetRouterState(state);
 		counts.nudges = 0;
