@@ -52,9 +52,9 @@ capture structured output. It is the concrete machinery behind the
   `MISSING` when absent), maintains the **session-level consecutive-FAIL counter**,
   and appends a LOOP-BUDGET-EXHAUSTED banner at 3. Mid-chain peer steps are not
   counted. This enforces the [[concepts/rework-loop]] contract.
-- **Thinking-lock.** `claude-sonnet-5` and `gemini-3.5-flash` children are pinned
-  to `:high`; every other child inherits the orchestrator's live thinking level
-  (published on `globalThis`, the same cross-scope hand-off as the write gate).
+- **Thinking-lock.** Effort is pinned per model family, never inherited from the
+  lead: Opus and GPT-5.5 children run `:xhigh`; Sonnet and Gemini Flash children
+  run `:high`. Unknown model families keep their configured suffix unchanged.
 - **Write-gate inheritance.** Children get `--write` only when the parent is in
   write mode (reads `__piWriteGateMode` from the
   [[components/write-gate-extension]]); otherwise they run headless in confirm
