@@ -100,12 +100,10 @@ export default function (pi: ExtensionAPI) {
 		try {
 			addEvent(
 				buffer,
-				makeEvent(
+				stampEvent(
 					"violation",
 					{ doctrine: String(v?.doctrine ?? "unknown"), detail: cap(String(v?.detail ?? ""), 500) },
 					[`session:${sessionId}`],
-					sessionId,
-					cwd,
 				),
 			);
 		} catch {
@@ -121,7 +119,7 @@ export default function (pi: ExtensionAPI) {
 			if (!isCorrectionCandidate(event.text)) return;
 			const added = addEvent(
 				buffer,
-				makeEvent(
+				stampEvent(
 					"correction",
 					{
 						precedingAction: cap(lastToolLabel, 200),
@@ -129,8 +127,6 @@ export default function (pi: ExtensionAPI) {
 						basis: "inferred",
 					},
 					[`session:${sessionId}`],
-					sessionId,
-					cwd,
 				),
 			);
 			if (added) correctionsCaptured++;
@@ -165,12 +161,10 @@ export default function (pi: ExtensionAPI) {
 				if (!isSubstantiveQuery(action, Boolean(event.isError), text)) return;
 				addEvent(
 					buffer,
-					makeEvent(
+					stampEvent(
 						"query",
 						{ tool: "graph", action, question: String(input.q ?? ""), answer: cap(text, 4000) },
 						[`session:${sessionId}`],
-						sessionId,
-						cwd,
 					),
 				);
 				return;
@@ -185,12 +179,10 @@ export default function (pi: ExtensionAPI) {
 					lastVerdict = verdict;
 					addEvent(
 						buffer,
-						makeEvent(
+						stampEvent(
 							"verdict",
 							{ role, verdict, findings: cap(ret.text, 4000), taskSpecHash: "" },
 							[`session:${sessionId}`],
-							sessionId,
-							cwd,
 						),
 					);
 				}
