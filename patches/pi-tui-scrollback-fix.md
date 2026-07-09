@@ -10,8 +10,16 @@ the terminal scrollback and re-emitting the entire transcript. Clearing
 scrollback resets the scrollbar and can snap the view to the top/bottom.
 
 ## Fix
-File:
-`~/.local/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js`
+File (live fnm install; verify with `readlink -f $(which pi)` / `pi --version`):
+`~/.local/share/fnm/node-versions/<ver>/installation/lib/node_modules/@earendil-works/pi-coding-agent/node_modules/@earendil-works/pi-tui/dist/tui.js`
+(as of pi 0.80.3: `v22.23.1`). The old `~/.local/lib/...` path is stale.
+
+**Apply mechanically:** `node ~/.pi/agent/patches/pi-tui-scrollback-fix-apply.mjs`
+auto-detects the live dist, backs up `tui.js` to `tui.js.bak`, applies BOTH edits
+via whitespace-tolerant string replacement, and no-ops if already patched. It writes
+outside `~/.pi`, so the orchestrator runs it with user approval. The exact replacement
+lives in `patches/pi-tui-scrollback-reflow-block.txt` + `pi-tui-scrollback-patch-lib.mjs`;
+the verified patched copy is staged at `patches/staging/tui.patched.js`.
 
 In `doRender()`, replace the destructive fallback:
 
@@ -73,6 +81,10 @@ newViewportTop`, `hardwareCursorRow = newViewportTop + height - 1`. Look for
 ## Verification
 Regression harness: `~/.pi/agent/patches/pi-tui-scrollback-fix-harness.mjs`
 (durable copy; also at `/tmp/pi-scroll-fix/harness.mjs` while it survives).
+Run against the live dist (or a staged copy) via the `PI_TUI_PATH` env override:
+`PI_TUI_PATH=<dist>/tui.js node ~/.pi/agent/patches/pi-tui-scrollback-fix-harness.mjs`.
+Staged proof: `PI_TUI_PATH=~/.pi/agent/patches/staging/tui.patched.js node .../harness.mjs`
+(all 8 green; unpatched dist fails case1 — the harness is sensitivity-checked).
 Run with `node`. Covers: above-viewport in-place change (no `3J`, no repaint
 of off-screen rows), mixed above+below change (visible part repainted, no
 `3J`), append after a skipped change stays aligned, drastic shrink doesn't
