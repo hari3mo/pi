@@ -329,12 +329,15 @@ export default function (pi: ExtensionAPI) {
 
 	pi.on("agent_end", async () => {
 		try {
-			const r = root; // stats persist even if graph.json was removed mid-session
-			if (!r) return;
+			const l = loc; // stats persist even if graph.json was removed mid-session
+			if (!l) return;
+			// Stats stay machine-local: skip persisting into a non-standard domain
+			// graph dir (e.g. prism-graph/ inside the synced prism-oracle repo) —
+			// a per-session stats file there would sync as noise.
 			const total = counts.nudges + counts.blocks + counts.bypasses;
-			if (total > 0 && total !== lastPersistedTotal) {
+			if (l.out === OUT && total > 0 && total !== lastPersistedTotal) {
 				persistStatsRecord(
-					join(r, OUT, STATS_FILE),
+					join(l.root, l.out, STATS_FILE),
 					{
 						id: sessionId,
 						ts: Date.now(),
