@@ -1,0 +1,61 @@
+if (firstChanged < prevViewportTop) {
+            // pi-tui scrollback-fix: the first changed line is above the previous
+            // viewport. Off-screen rows live in scrollback and cannot be repainted in
+            // place, so a full redraw used to fire here — wiping scrollback (2J/3J).
+            const newViewportTop = Math.max(0, newLines.length - height);
+            const hasKittyImages = this.collectKittyImageIds(newLines).size > 0 || this.previousKittyImageIds.size > 0;
+            // Content collapsed below the old viewport window (e.g. a full-screen splash
+            // closing while a header sits at the top of the buffer). Clamping would leave
+            // the newly-exposed top rows unpainted, so re-emit the whole new buffer from
+            // screen row 0 with per-line 2K clears — no 2J/3J, scrollback preserved;
+            // overflow scrolls correct content into scrollback. Kitty images still punt.
+            if (newViewportTop < prevViewportTop && !hasKittyImages) {
+                logRedraw(`viewport reflow repaint (newViewportTop=${newViewportTop} < prevViewportTop=${prevViewportTop})`);
+                let reflowBuffer = "\x1b[?2026h"; // Begin synchronized output
+                const currentScreenRow = Math.max(0, Math.min(height - 1, hardwareCursorRow - prevViewportTop));
+                if (currentScreenRow > 0) {
+                    reflowBuffer += `\x1b[${currentScreenRow}A`; // Move up to screen row 0
+                }
+                reflowBuffer += "\r";
+                for (let i = 0; i < newLines.length; i++) {
+                    if (i > 0)
+                        reflowBuffer += "\r\n";
+                    reflowBuffer += "\x1b[2K"; // Clear the line before painting
+                    reflowBuffer += newLines[i];
+                }
+                // Fits on screen: clear the stale rows left below the new content and
+                // leave the cursor on the bottom screen row (newViewportTop + height - 1)
+                // so positionHardwareCursor's relative moves stay correct.
+                for (let r = newLines.length; r < height; r++) {
+                    reflowBuffer += "\r\n\x1b[2K";
+                }
+                reflowBuffer += "\x1b[?2026l"; // End synchronized output
+                this.terminal.write(reflowBuffer);
+                this.cursorRow = Math.max(0, newLines.length - 1);
+                this.hardwareCursorRow = newViewportTop + height - 1;
+                this.maxLinesRendered = Math.max(this.maxLinesRendered, newLines.length);
+                this.previousViewportTop = newViewportTop;
+                this.positionHardwareCursor(cursorPos, newLines.length);
+                this.previousLines = newLines;
+                this.previousKittyImageIds = this.collectKittyImageIds(newLines);
+                this.previousWidth = width;
+                this.previousHeight = height;
+                return;
+            }
+            if (lastChanged < prevViewportTop) {
+                // Everything that changed is off-screen: nothing to paint. Off-screen
+                // rows map to the same physical rows regardless of content, so leaving
+                // the stale render in scrollback is layout-safe.
+                logRedraw(`skipped off-screen change (${firstChanged}..${lastChanged} < ${prevViewportTop})`);
+                this.positionHardwareCursor(cursorPos, newLines.length);
+                this.previousLines = newLines;
+                this.previousKittyImageIds = this.collectKittyImageIds(newLines);
+                this.previousWidth = width;
+                this.previousHeight = height;
+                this.previousViewportTop = prevViewportTop;
+                return;
+            }
+            // Mixed change: clamp to the viewport top and repaint only the visible tail.
+            logRedraw(`clamped firstChanged to viewportTop (${firstChanged} -> ${prevViewportTop})`);
+            firstChanged = prevViewportTop;
+        }
