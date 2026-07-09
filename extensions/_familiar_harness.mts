@@ -1,5 +1,5 @@
 /**
- * Preview + acceptance harness for the "Nova" terminal star-sprite persona.
+ * Preview + acceptance harness for the "Ember" terminal-cat persona.
  *
  * Renders the splash + a full cycle of the state expressions to stdout and
  * exits 0. Runnable with pi's own strip-types path:
@@ -70,7 +70,7 @@ for (const frame of splashFrames) {
 	assert.ok(frame.some((l) => l.trim().length > 0), "splash frame is non-empty");
 }
 assert.strictEqual(new Set(widgetLines).size, moods.length, "each mood has a distinct status line");
-assert.strictEqual(new Set(artBlocks).size, moods.length, "each mood has a distinct sprite face");
+assert.strictEqual(new Set(artBlocks).size, moods.length, "each mood has a distinct cat face");
 assert.ok(
 	new Set(splashFrames.map((f) => f.join("\n"))).size > 1,
 	"splash animates across moods",
