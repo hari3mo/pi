@@ -44,6 +44,7 @@
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
+import { classifyCwd, DEFAULT_DOMAIN, loadDomains, resolveWikiProfile } from "./lib/domains.ts";
 import {
 	CROSS_STORE_GUIDANCE,
 	decide,
@@ -81,6 +82,19 @@ function wikiLinkBlock(): string | undefined {
 		lines.push(
 			`Pi wiki: ${WIKI_VAULT} (config ${WIKI_CONFIG}); use wiki-query here for durable pi knowledge.`,
 		);
+	}
+	// Domain wikis (config/domains.json): name each configured domain's vault
+	// so the model can cross over regardless of cwd (e.g. the prism wiki).
+	try {
+		for (const [id] of Object.entries(loadDomains())) {
+			const profile = resolveWikiProfile(id);
+			if (!profile || !existsSync(profile)) continue;
+			const vault = vaultPathFromConfig(profile);
+			if (!existsSync(vault)) continue;
+			lines.push(`${id} wiki: ${vault} (config ${profile}); use wiki-query here for durable ${id}-domain knowledge.`);
+		}
+	} catch {
+		/* fail open */
 	}
 	if (lines.length === 0) return undefined;
 	return `\n\n## Wiki links (cwd-independent)\n\n${lines.join("\n")}\nThese are absolute links; keep using them even when cwd is an unrelated project.`;
