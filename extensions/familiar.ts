@@ -23,12 +23,11 @@
  *   tool      *^.^*  flaring     — rays pulse bright while a tool runs
  *   error     *x.x*  collapse!   — rays scatter after a tool error (auto-decays)
  *
- * Coexistence: void-blackhole and custom-header stay the default and are
- * untouched except for a one-line `if (personaEnabled()) return;` guard that
- * lets them bow out cleanly when Harimo is awake — a shared flag file is the
- * only race-free way to arbitrate who owns the startup splash + header. With
- * the persona DISABLED (the default: no flag file) this module does nothing
- * and the void identity behaves exactly as before.
+ * Coexistence: void-blackhole keeps owning the startup splash; Harimo owns the
+ * post-splash header + status widget when awake. custom-header bows out via
+ * `personaEnabled()` so only one header renders at a time. With the persona
+ * DISABLED (the default: no flag file) this module does nothing and the void
+ * identity behaves exactly as before.
  *
  * Toggle (a real registered command, per the pi 0.80.3 constraint that
  * extensions cannot synthesize "/cmd" text):  /familiar
@@ -325,7 +324,7 @@ function flashError(): void {
 	errorTimer.unref?.();
 }
 
-function applyChrome(ctx: ExtensionContext): void {
+export function applyFamiliarChrome(ctx: ExtensionContext): void {
 	if (ctx.mode !== "tui") return;
 	chromeOn = true;
 
@@ -394,16 +393,8 @@ function removeChrome(ctx: ExtensionContext): void {
 export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (event, ctx) => {
 		if (!personaEnabled() || ctx.mode !== "tui") return;
-		if (event.reason !== "startup") {
-			applyChrome(ctx);
-			return;
-		}
-		// While the splash owns the screen the header must take zero rows (same
-		// reasoning as void-blackhole). The real chrome installs once it closes.
-		ctx.ui.setHeader(() => ({ render: (): string[] => [], invalidate() {} }));
-		void ctx.ui
-			.custom((tui, theme, _kb, done) => new FamiliarSplash(tui, theme, () => done(undefined)))
-			.then(() => applyChrome(ctx));
+		if (event.reason === "startup") return; // void-blackhole installs chrome after its splash.
+		applyFamiliarChrome(ctx);
 	});
 
 	pi.on("agent_start", async () => {
@@ -446,10 +437,10 @@ export default function (pi: ExtensionAPI) {
 				try {
 					writeFileSync(FLAG_PATH, "on\n");
 				} catch {}
-				applyChrome(ctx);
+				applyFamiliarChrome(ctx);
 				settle("idle");
 				ctx.ui.notify(
-					"Harimo is awake ✧  header + status applied. Restart pi to meet the splash.",
+					"Harimo is awake ✧  void splash on restart, Harimo header + status after it.",
 					"info",
 				);
 			}
