@@ -1,7 +1,7 @@
 /**
  * Preview + acceptance harness for the "Harimo" terminal star-sprite persona.
  *
- * Renders the splash + a full cycle of the state expressions to stdout and
+ * Renders the splash + a full cycle of the status-widget expressions to stdout and
  * exits 0. Runnable with pi's own strip-types path:
  *
  *   node --experimental-strip-types extensions/_familiar_harness.mts [width] [rows]
@@ -13,7 +13,7 @@
 
 import assert from "node:assert";
 import { visibleWidth } from "@earendil-works/pi-tui";
-import { FamiliarSplash, faceFor, headerSegments, type Mood, widgetLinePlain } from "./familiar.ts";
+import { FamiliarSplash, faceFor, type Mood, widgetLinePlain } from "./familiar.ts";
 
 const WIDTH = Number(process.argv[2] ?? 80);
 const ROWS = Number(process.argv[3] ?? 24);
@@ -44,24 +44,21 @@ splash.dispose();
 console.log(`=== SPLASH (width=${WIDTH}, rows=${ROWS}) ===`);
 for (const l of splashFrames[0]!) console.log(l);
 
-// ---- 2) state expression cycle: art + widget + header per mood ----
+// ---- 2) state expression cycle: art + widget per mood ----
 console.log("\n=== STATE EXPRESSIONS ===");
 const widgetLines: string[] = [];
 const artBlocks: string[] = [];
 for (const m of moods) {
 	const f = faceFor(m, { tick: 1 });
 	const widget = widgetLinePlain(m, 1);
-	const header = headerSegments(m, 1).map((line) => line.map((s) => s.t).join(""));
 	widgetLines.push(widget);
 	artBlocks.push(f.art.join("\n"));
 	checkWidth(f.art);
 	checkWidth([widget]);
-	checkWidth(header);
 
 	console.log(`\n[${m}]  ${f.color}`);
 	for (const l of f.art) console.log("   " + l);
 	console.log("   widget: " + widget);
-	console.log("   header: " + header.join("  |  "));
 }
 
 // ---- 3) asserts ----
