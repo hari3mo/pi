@@ -387,8 +387,7 @@ export default function (pi: ExtensionAPI) {
 	});
 
 	pi.registerCommand("familiar", {
-		description:
-			"Toggle Harimo, the terminal star-sprite persona (splash + header + status line)",
+		description: "Toggle Harimo, the terminal star-sprite status widget",
 		handler: async (_args: string, ctx: ExtensionCommandContext) => {
 			if (ctx.mode !== "tui") {
 				ctx.ui.notify("Harimo lives in the interactive TUI", "error");
@@ -399,10 +398,7 @@ export default function (pi: ExtensionAPI) {
 					unlinkSync(FLAG_PATH);
 				} catch {}
 				removeChrome(ctx);
-				ctx.ui.notify(
-					"Harimo winked out ✧  Restart pi to restore the void splash + header.",
-					"info",
-				);
+				ctx.ui.notify("Harimo winked out ✧  status widget removed.", "info");
 			} else {
 				try {
 					writeFileSync(FLAG_PATH, "on\n");
