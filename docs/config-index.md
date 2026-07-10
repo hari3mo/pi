@@ -22,7 +22,8 @@ Every session that changes config must update it.
 | Graphify bridge | `extensions/graphify-bridge.ts`, `.pi-vcs/hooks/post-commit` | Native knowledge-graph integration: injects a compact graph block (absolute graph path/root, size/hubs/staleness) into the system prompt, registers a cwd-independent `graph` tool (nearest project graph; falls back to the pi agent config graph) and a `/graph` command (status / AST rebuild+recluster); post-commit hook auto-rebuilds the graph on code commits and flags doc changes as `needs_update`; session-start `reflect --if-stale` keeps query lessons fresh. |
 | Void harness (test) | `extensions/_void_harness.mts` | Drives `void-blackhole.ts`'s fake registration to unit-test its component factory. |
 | Chat title | `extensions/chat-title.ts` | Sets the terminal tab/window title to project + condensed last prompt, prefixed with a live session timer. |
-| Custom header | `extensions/custom-header.ts` | Replaces pi's built-in header with a figlet "harimo" banner + greeting/cwd/aphorism subtitle lines. |
+| Custom header | `extensions/custom-header.ts` | Replaces pi's built-in header with a figlet "harimo" banner + greeting/cwd/aphorism subtitle lines; bows out when Harimo familiar is enabled. |
+| Familiar persona | `extensions/familiar.ts`, `extensions/void-blackhole.ts`, `.familiar-enabled` | Optional `/familiar` Harimo persona: the void still owns startup splash; when the flag exists, Harimo owns the post-splash header + below-editor status widget. |
 | Focus chime | `extensions/focus-chime.ts` | macOS-only notification (osascript) when an agent turn runs longer than 25s; `/chime` toggles it. |
 | Minimal UI | `extensions/minimal-ui.ts` | Companion to the "porcelain" theme: quiet one-line footer + grayscale breathing working-indicator; `/minimal-ui` toggles. |
 | Model awareness | `extensions/model-awareness.ts` | Keeps the LLM's system prompt aware of the live active model so the Delegation Gate model checks stay accurate across mid-session switches. |
@@ -33,7 +34,7 @@ Every session that changes config must update it.
 | Write-gate default | `extensions/read-only-default.ts` | New sessions start in "confirm" mode; `/write`, `/confirm`, `/read-only` (or Ctrl+\`) switch write-access modes; auto-write approvals (`/write`, `pi --write`, confirm-mode "allow all") only skip prompts under `~/.pi`; hard-blocks `edit`/`write` tool calls whenever the lead model is fable, in all gate modes, exempting spawned children via `PI_SUBAGENT=1`. |
 | Session receipt | `extensions/session-receipt.ts` | Narrow "shop receipt" summary (duration, turns, tokens, cost, tool tally, files touched); `/receipt` toggles it. |
 | Task tracker | `extensions/task-tracker.ts` | `task` tool + `/tasks` command with a persistent TUI widget/status; state lives in cloned tool-result details so reloads/branching stay correct. |
-| Void blackhole | `extensions/void-blackhole.ts` | Animated ASCII black-hole TUI landing page / `/void` screensaver with a Newtonian accretion-disk simulation. |
+| Void blackhole | `extensions/void-blackhole.ts` | Animated ASCII black-hole TUI landing page / `/void` screensaver with a Newtonian accretion-disk simulation; on startup it hands post-splash chrome to Harimo when `.familiar-enabled` exists. |
 | Shared format helpers | `extensions/lib/format.ts` | Duration/token/cwd formatting helpers shared by several extensions; not auto-loaded (lives outside `extensions/*.ts`). |
 | Continuous-learning design doc | `extensions/heuristics/DESIGN.md` | Authoritative v2 spec for the heuristics extension (storage, capture, injection, scoring, `/heuristics` command). |
 | Heuristics `/heuristics` command | `extensions/heuristics/command.ts` | Implements the `/heuristics` command (list/edit/delete/promote) per DESIGN.md §10. |
@@ -57,6 +58,14 @@ Every session that changes config must update it.
 | Global agent doctrine | `AGENTS.md` | The Delegation Gate, write-gate pre-flight, intent interview, scale-first routing table, seven-role roster, fable budget invariants, rework loop, and config-maintenance checklist governing how this harness is used across sessions. |
 
 ## Changelog
+
+**Void splash + Harimo chrome can coexist.**
+User-directed. `/familiar` no longer suppresses the void landing page: on startup,
+`void-blackhole.ts` always shows the void splash, then installs Harimo header/status when
+`.familiar-enabled` exists; `familiar.ts` skips its own startup splash and exports the chrome
+installer for that handoff. Verified with void/familiar harnesses + config validator. Files:
+`extensions/void-blackhole.ts`, `extensions/familiar.ts`, `docs/config-index.md`. Why: user
+wanted both the void landing page and the Harimo persona.
 
 **Subagent thinking pins no longer inherit from the lead.**
 User-directed. `extensions/subagent/index.ts` now pins Opus/GPT-5.5 children to `:xhigh`
