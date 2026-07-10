@@ -66,8 +66,8 @@ harimo wordmark header after keypress, and mounts the Harimo status widget when
 `.familiar-enabled` exists; `familiar.ts` skips its own startup splash/header and exports
 only the widget installer for that handoff. Verified with void/familiar harnesses + config
 validator. Files: `extensions/void-blackhole.ts`, `extensions/familiar.ts`,
-`docs/config-index.md`. Why: user wanted both the void landing page and Harimo persona, but
-not the familiar sprite as the top prompt-page header.
+`extensions/_familiar_harness.mts`, `docs/config-index.md`. Why: user wanted both the void
+landing page and Harimo persona, but not the familiar sprite as the top prompt-page header.
 
 **Subagent thinking pins no longer inherit from the lead.**
 User-directed. `extensions/subagent/index.ts` now pins Opus/GPT-5.5 children to `:xhigh`
