@@ -304,7 +304,6 @@ function settle(next: Mood): void {
 	clearErrorTimer();
 	if (next === mood) return;
 	mood = next;
-	headerRender?.();
 	widgetRender?.();
 }
 
@@ -312,7 +311,6 @@ function settle(next: Mood): void {
 function flashError(): void {
 	clearErrorTimer();
 	mood = "error";
-	headerRender?.();
 	widgetRender?.();
 	errorTimer = setTimeout(() => {
 		errorTimer = null;
