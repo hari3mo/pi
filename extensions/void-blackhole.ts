@@ -70,7 +70,7 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
-import { applyFamiliarChrome, personaEnabled } from "./familiar.ts";
+import { applyFamiliarWidget, personaEnabled } from "./familiar.ts";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -1475,7 +1475,7 @@ export default function (pi: ExtensionAPI) {
 			});
 		};
 		if (event.reason !== "startup") {
-			if (!personaEnabled()) setVoidHeader();
+			setVoidHeader();
 			return;
 		}
 		// While the splash owns the screen, the header must take no rows:
@@ -1492,8 +1492,8 @@ export default function (pi: ExtensionAPI) {
 				return new BlackHoleComponent(tui, theme, () => done(undefined));
 			})
 			.then(() => {
-				if (personaEnabled()) applyFamiliarChrome(ctx);
-				else setVoidHeader();
+				setVoidHeader();
+				if (personaEnabled()) applyFamiliarWidget(ctx);
 			});
 	});
 
