@@ -70,7 +70,7 @@ import type {
 } from "@earendil-works/pi-coding-agent";
 import { VERSION } from "@earendil-works/pi-coding-agent";
 import { truncateToWidth } from "@earendil-works/pi-tui";
-import { personaEnabled } from "./familiar.ts";
+import { applyFamiliarChrome, personaEnabled } from "./familiar.ts";
 
 // ------------------------------------------------ constants (config.js) ----
 const EVENT_HORIZON = 0.85; // matter vanishes inside this radius (the shadow)
@@ -1396,8 +1396,6 @@ export default function (pi: ExtensionAPI) {
 	// until a key is pressed. The built-in pi header is replaced with the
 	// same harimo wordmark the landing page carries.
 	pi.on("session_start", async (event, ctx) => {
-		// Bow out cleanly when the familiar persona owns the chrome (flag check only).
-		if (personaEnabled()) return;
 		if (ctx.mode !== "tui") return;
 		const setVoidHeader = () => {
 			let phase = 0;
@@ -1477,7 +1475,7 @@ export default function (pi: ExtensionAPI) {
 			});
 		};
 		if (event.reason !== "startup") {
-			setVoidHeader();
+			if (!personaEnabled()) setVoidHeader();
 			return;
 		}
 		// While the splash owns the screen, the header must take no rows:
@@ -1493,7 +1491,10 @@ export default function (pi: ExtensionAPI) {
 			.custom((tui, theme, _kb, done) => {
 				return new BlackHoleComponent(tui, theme, () => done(undefined));
 			})
-			.then(setVoidHeader);
+			.then(() => {
+				if (personaEnabled()) applyFamiliarChrome(ctx);
+				else setVoidHeader();
+			});
 	});
 
 	const openVoid = async (ctx: ExtensionCommandContext) => {
