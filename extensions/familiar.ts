@@ -9,12 +9,10 @@
  * reads crisply in glyphs on any terminal.
  *
  * Chrome, all opt-in:
- *   - splash   : the void-blackhole landing page stays the startup splash;
- *                Harimo installs its own chrome after that splash closes.
- *   - header   : a compact banner — the sprite + the "harimo" wordmark + the
- *                current mood, re-rendered only on state change (no timer).
+ *   - splash   : the void-blackhole landing page stays the startup splash.
+ *   - header   : the void-blackhole harimo wordmark stays on the prompt page.
  *   - widget   : a persistent status line below the editor — the "living"
- *                familiar, twinkling and reacting; one modest timer drives it.
+ *                familiar sprite, twinkling and reacting; one modest timer drives it.
  *
  * State reactions (twinkles / flares / expression changes, CPU trivial):
  *   idle      *o.o*  adrift      — resting; faint twinkle, slow blink
@@ -22,8 +20,8 @@
  *   tool      *^.^*  flaring     — rays pulse bright while a tool runs
  *   error     *x.x*  collapse!   — rays scatter after a tool error (auto-decays)
  *
- * Coexistence: void-blackhole keeps owning the startup splash; Harimo owns the
- * post-splash header + status widget when awake. custom-header bows out via
+ * Coexistence: void-blackhole owns the startup splash + prompt-page wordmark;
+ * Harimo owns only the status widget when awake. custom-header bows out via
  * `personaEnabled()` so only one header renders at a time. With the persona
  * DISABLED (the default: no flag file) this module does nothing and the void
  * identity behaves exactly as before.
@@ -273,7 +271,6 @@ class FamiliarSplash {
 let chromeOn = false;
 let mood: Mood = "idle";
 let tick = 0;
-let headerRender: (() => void) | null = null;
 let widgetRender: (() => void) | null = null;
 let beat: ReturnType<typeof setInterval> | null = null;
 let errorTimer: ReturnType<typeof setTimeout> | null = null;
