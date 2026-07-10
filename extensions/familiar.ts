@@ -30,7 +30,8 @@
  *
  * Toggle (a real registered command, per the pi 0.80.3 constraint that
  * extensions cannot synthesize "/cmd" text):  /familiar
- * Header + status apply live; the void splash remains the startup landing page.
+ * Status applies live; the void splash + wordmark header remain the landing
+ * page and prompt-page chrome.
  *
  * Fail-open: every render is wrapped so a throw can never break the session.
  */
@@ -267,8 +268,8 @@ class FamiliarSplash {
 }
 
 // ------------------------------------------------------------- live state -----
-// Module-scoped so the event handlers, the header and the widget all share one
-// mood. Only ever mutated while the chrome is mounted (chromeOn).
+// Module-scoped so the event handlers and widget share one mood. Only ever
+// mutated while the familiar widget is mounted (chromeOn).
 let chromeOn = false;
 let mood: Mood = "idle";
 let tick = 0;
@@ -301,7 +302,7 @@ function clearErrorTimer(): void {
 	}
 }
 
-/** Change mood and repaint header + widget. */
+/** Change mood and repaint the widget. */
 function settle(next: Mood): void {
 	clearErrorTimer();
 	if (next === mood) return;
@@ -323,30 +324,9 @@ function flashError(): void {
 	errorTimer.unref?.();
 }
 
-export function applyFamiliarChrome(ctx: ExtensionContext): void {
+export function applyFamiliarWidget(ctx: ExtensionContext): void {
 	if (ctx.mode !== "tui") return;
 	chromeOn = true;
-
-	ctx.ui.setHeader((tui: TUIRef, theme: Theme) => {
-		headerRender = () => tui.requestRender();
-		const fg = fgOf(theme);
-		return {
-			render(width: number): string[] {
-				try {
-					const rows = headerSegments(mood, tick).map((line) =>
-						truncateToWidth(line.map((s) => fg(s.c, s.t)).join(""), width),
-					);
-					return ["", ...rows, ""];
-				} catch {
-					return [""];
-				}
-			},
-			invalidate() {},
-			dispose() {
-				headerRender = null;
-			},
-		};
-	});
 
 	ctx.ui.setWidget(
 		"familiar",
@@ -382,18 +362,14 @@ function removeChrome(ctx: ExtensionContext): void {
 	mood = "idle";
 	tick = 0;
 	ctx.ui.setWidget("familiar", undefined);
-	// ponytail: mid-session disable restores the BUILT-IN header, not
-	// custom-header's — re-running custom-header needs its session_start.
-	// Upgrade path if that matters: a restart (the notify says so) re-installs it.
-	ctx.ui.setHeader(undefined);
 }
 
 // ------------------------------------------------------------- extension -----
 export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (event, ctx) => {
 		if (!personaEnabled() || ctx.mode !== "tui") return;
-		if (event.reason === "startup") return; // void-blackhole installs chrome after its splash.
-		applyFamiliarChrome(ctx);
+		if (event.reason === "startup") return; // void-blackhole installs widget after its splash.
+		applyFamiliarWidget(ctx);
 	});
 
 	pi.on("agent_start", async () => {
@@ -436,10 +412,10 @@ export default function (pi: ExtensionAPI) {
 				try {
 					writeFileSync(FLAG_PATH, "on\n");
 				} catch {}
-				applyFamiliarChrome(ctx);
+				applyFamiliarWidget(ctx);
 				settle("idle");
 				ctx.ui.notify(
-					"Harimo is awake ✧  void splash on restart, Harimo header + status after it.",
+					"Harimo is awake ✧  void splash + wordmark header stay; sprite lives in status.",
 					"info",
 				);
 			}
