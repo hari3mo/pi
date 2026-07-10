@@ -9,9 +9,8 @@
  * reads crisply in glyphs on any terminal.
  *
  * Chrome, all opt-in:
- *   - splash   : an animated welcome card (the sprite twinkles, stardust
- *                drifts, the face cycles through its moods to show off state
- *                reactions); any key wakes the session. Shown once on startup.
+ *   - splash   : the void-blackhole landing page stays the startup splash;
+ *                Harimo installs its own chrome after that splash closes.
  *   - header   : a compact banner — the sprite + the "harimo" wordmark + the
  *                current mood, re-rendered only on state change (no timer).
  *   - widget   : a persistent status line below the editor — the "living"
@@ -31,7 +30,7 @@
  *
  * Toggle (a real registered command, per the pi 0.80.3 constraint that
  * extensions cannot synthesize "/cmd" text):  /familiar
- * Header + status apply live; the splash loads/unloads on the next startup.
+ * Header + status apply live; the void splash remains the startup landing page.
  *
  * Fail-open: every render is wrapped so a throw can never break the session.
  */
