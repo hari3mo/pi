@@ -126,9 +126,12 @@ def split_provider_model(provider: Any, model: Any, default_provider: str = "?")
     slash = raw.find("/")
     colon = raw.rfind(":")
     without_effort = raw[:colon] if colon > slash else raw
-    if not provider_s and slash >= 0:
+    if slash >= 0:
         left, right = without_effort.split("/", 1)
-        return left or default_provider, right or "unknown"
+        if not provider_s:
+            return left or default_provider, right or "unknown"
+        if left == provider_s:
+            return provider_s, right or "unknown"
     return provider_s or default_provider, without_effort or "unknown"
 
 
@@ -533,16 +536,13 @@ def collect_claude(home: Path, host: str, hostname: str) -> tuple[list[dict[str,
             if usage["totalTokens"] <= 0:
                 counter.skipped += 1
                 continue
-            model = str(message.get("model") or "unknown")
-            if model == "<synthetic>" and usage["totalTokens"] <= 0:
-                counter.skipped += 1
-                continue
+            provider, model = split_provider_model(None, message.get("model"), "anthropic")
             add_record(
                 records,
                 host=host,
                 hostname=hostname,
                 app="claude",
-                provider="anthropic",
+                provider=provider,
                 model=model,
                 session_id=session_id,
                 timestamp=ts_to_iso(entry.get("timestamp")),
