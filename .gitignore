@@ -52,6 +52,9 @@ __pycache__/
 # ---- graphify knowledge graph (derived; rebuilt by post-commit hook / /graphify) ----
 graphify-out/
 
+# ---- generated local dashboards (aggregate private usage metadata; rebuild from scripts) ----
+dashboard/
+
 # ---- machine-local skill symlinks (obsidian_wiki pip package links these into
 #      skills/ on the Mac; absolute Python.framework targets that dangle on any
 #      peer. pi does NOT invoke them — they exist as Hermes skills. Only
