@@ -323,7 +323,8 @@ def tool_blocks_from_hermes(raw: Any) -> list[tuple[str, Any]]:
     for call in calls:
         if not isinstance(call, dict):
             continue
-        fn = call.get("function") if isinstance(call.get("function"), dict) else {}
+        fn_obj = call.get("function")
+        fn: dict[str, Any] = fn_obj if isinstance(fn_obj, dict) else {}
         name = fn.get("name") or call.get("name") or call.get("tool_name") or "tool"
         args = fn.get("arguments") if "arguments" in fn else call.get("arguments", call.get("input", {}))
         blocks.append((str(name), maybe_json(args)))
@@ -355,6 +356,9 @@ def add_record(
     calls: int = 1,
     messages: int = 0,
     tool_calls: int = 0,
+    tools: dict[str, int] | None = None,
+    languages: dict[str, dict[str, int]] | None = None,
+    agent: str = "",
     input_tokens: float = 0,
     output_tokens: float = 0,
     reasoning_tokens: float = 0,
