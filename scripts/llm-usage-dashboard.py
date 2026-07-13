@@ -188,17 +188,154 @@ def cost_or_none(cost: float) -> float | None:
     return None
 
 
-def count_tool_calls_from_content(content: Any) -> int:
-    if not isinstance(content, list):
+LANG_BY_EXT = {
+    "py": "Python", "pyw": "Python", "ipynb": "Jupyter", "js": "JavaScript", "jsx": "JavaScript",
+    "ts": "TypeScript", "tsx": "TypeScript", "mts": "TypeScript", "mjs": "JavaScript", "cjs": "JavaScript",
+    "json": "JSON", "jsonl": "JSONL", "md": "Markdown", "mdx": "MDX", "yaml": "YAML", "yml": "YAML",
+    "toml": "TOML", "html": "HTML", "css": "CSS", "scss": "SCSS", "sass": "Sass", "svg": "SVG",
+    "sh": "Shell", "bash": "Shell", "zsh": "Shell", "fish": "Shell", "sql": "SQL", "rs": "Rust",
+    "go": "Go", "java": "Java", "kt": "Kotlin", "kts": "Kotlin", "swift": "Swift", "c": "C", "h": "C/C++",
+    "cpp": "C++", "cc": "C++", "cxx": "C++", "hpp": "C++", "cs": "C#", "rb": "Ruby", "php": "PHP",
+    "lua": "Lua", "r": "R", "ex": "Elixir", "exs": "Elixir", "erl": "Erlang", "hrl": "Erlang",
+    "xml": "XML", "csv": "CSV", "txt": "Text", "dockerfile": "Dockerfile", "makefile": "Makefile",
+}
+SPECIAL_FILENAMES = {"dockerfile": "Dockerfile", "makefile": "Makefile", "gemfile": "Ruby", "rakefile": "Ruby"}
+PATHISH_KEYS = {"path", "file", "files", "filename", "file_path", "filepath", "notebook_path", "relative_path", "absolute_path"}
+TEXT_KEYS = {"content", "new_string", "newtext", "new_text", "text", "code", "replacement", "insert"}
+FILE_RE = re.compile(r"(?:^|[\s'\"(])([~./A-Za-z0-9_@+={}-][~./A-Za-z0-9_@+={}:,-]*\.[A-Za-z0-9]{1,8})(?=$|[\s'\"),:;])")
+
+
+def lang_from_path(path: str) -> str | None:
+    cleaned = path.strip().strip("'\"`<>()[]{}")
+    if not cleaned or len(cleaned) > 400:
+        return None
+    name = Path(cleaned.split("?", 1)[0].split("#", 1)[0]).name.lower()
+    if name in SPECIAL_FILENAMES:
+        return SPECIAL_FILENAMES[name]
+    if "." not in name:
+        return None
+    ext = name.rsplit(".", 1)[-1]
+    return LANG_BY_EXT.get(ext)
+
+
+def merge_counter_map(dst: dict[str, int], src: dict[str, int]) -> None:
+    for key, value in src.items():
+        dst[key] = dst.get(key, 0) + int(value)
+
+
+def merge_language_map(dst: dict[str, dict[str, int]], src: dict[str, dict[str, int]]) -> None:
+    for lang, stat in src.items():
+        cur = dst.setdefault(lang, {"lines": 0, "edits": 0})
+        cur["lines"] += int(stat.get("lines", 0))
+        cur["edits"] += int(stat.get("edits", 0))
+
+
+def maybe_json(value: Any) -> Any:
+    if not isinstance(value, str):
+        return value
+    stripped = value.strip()
+    if not stripped or stripped[0] not in "[{":
+        return value
+    try:
+        return json.loads(stripped)
+    except json.JSONDecodeError:
+        return value
+
+
+def text_line_count(value: str) -> int:
+    if not value:
         return 0
-    count = 0
+    return value.count("\n") + 1
+
+
+def collect_path_strings(value: Any, key_hint: str = "") -> set[str]:
+    value = maybe_json(value)
+    found: set[str] = set()
+    if isinstance(value, dict):
+        for key, child in value.items():
+            found |= collect_path_strings(child, str(key).lower())
+    elif isinstance(value, list):
+        for child in value:
+            found |= collect_path_strings(child, key_hint)
+    elif isinstance(value, str):
+        if key_hint in PATHISH_KEYS:
+            found.add(value)
+        for match in FILE_RE.finditer(value):
+            found.add(match.group(1))
+    return found
+
+
+def payload_line_count(value: Any, key_hint: str = "") -> int:
+    value = maybe_json(value)
+    if isinstance(value, dict):
+        total = 0
+        for key, child in value.items():
+            total += payload_line_count(child, str(key).lower())
+        return total
+    if isinstance(value, list):
+        return sum(payload_line_count(child, key_hint) for child in value)
+    if isinstance(value, str) and key_hint in TEXT_KEYS:
+        return text_line_count(value)
+    return 0
+
+
+def language_stats_from_args(args: Any) -> dict[str, dict[str, int]]:
+    paths = collect_path_strings(args)
+    langs = sorted({lang for path in paths if (lang := lang_from_path(path))})
+    if not langs:
+        return {}
+    lines = payload_line_count(args)
+    per_lang_lines = max(0, lines)
+    return {lang: {"lines": per_lang_lines, "edits": 1} for lang in langs}
+
+
+def analyze_tool_blocks(blocks: Iterable[tuple[str, Any]]) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
+    tools: dict[str, int] = {}
+    languages: dict[str, dict[str, int]] = {}
+    for raw_name, raw_args in blocks:
+        name = str(raw_name or "tool").strip() or "tool"
+        tools[name] = tools.get(name, 0) + 1
+        merge_language_map(languages, language_stats_from_args(raw_args))
+    return tools, languages
+
+
+def tool_blocks_from_content(content: Any) -> list[tuple[str, Any]]:
+    if not isinstance(content, list):
+        return []
+    blocks: list[tuple[str, Any]] = []
     for block in content:
         if not isinstance(block, dict):
             continue
         block_type = block.get("type")
-        if block_type in {"toolCall", "tool_use", "server_tool_use"}:
-            count += 1
-    return count
+        if block_type not in {"toolCall", "tool_use", "server_tool_use"}:
+            continue
+        name = block.get("name") or block.get("toolName") or block.get("tool_name") or block_type
+        args = block.get("arguments") if "arguments" in block else block.get("input", block.get("params", {}))
+        blocks.append((str(name), maybe_json(args)))
+    return blocks
+
+
+def tool_blocks_from_hermes(raw: Any) -> list[tuple[str, Any]]:
+    calls = maybe_json(raw)
+    if not isinstance(calls, list):
+        return []
+    blocks: list[tuple[str, Any]] = []
+    for call in calls:
+        if not isinstance(call, dict):
+            continue
+        fn = call.get("function") if isinstance(call.get("function"), dict) else {}
+        name = fn.get("name") or call.get("name") or call.get("tool_name") or "tool"
+        args = fn.get("arguments") if "arguments" in fn else call.get("arguments", call.get("input", {}))
+        blocks.append((str(name), maybe_json(args)))
+    return blocks
+
+
+def analyze_tool_content(content: Any) -> tuple[dict[str, int], dict[str, dict[str, int]]]:
+    return analyze_tool_blocks(tool_blocks_from_content(content))
+
+
+def count_tool_calls_from_content(content: Any) -> int:
+    return sum(analyze_tool_content(content)[0].values())
 
 
 def add_record(
