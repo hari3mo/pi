@@ -965,7 +965,7 @@ function matrixAgg(rs) {{ return aggregate(rs, r => `${{r.host}} · ${{r.app}}`,
 const commonHeaders = [
   {{label:'Name', key:'label'}}, {{label:'Sessions', key:'sessions', num:true, render:r=>fmtInt(r.sessions)}}, {{label:'Calls', key:'calls', num:true, render:r=>fmtInt(r.calls)}},
   {{label:'Tokens', key:'totalTokens', num:true, render:r=>fmtTokens(r.totalTokens)}}, {{label:'Input', key:'input', num:true, render:r=>fmtTokens(r.input)}}, {{label:'Output', key:'output', num:true, render:r=>fmtTokens(r.output)}},
-  {{label:'Cache R/W', key:'cacheRead', num:true, render:r=>`${{fmtTokens(r.cacheRead)}} / ${{fmtTokens(r.cacheWrite)}}`}}, {{label:'Cost', key:'cost', num:true, render:r=>fmtCost(r.cost)}},
+  {{label:'Cache R/W', key:'cacheRead', num:true, render:r=>`${{fmtTokens(r.cacheRead)}} / ${{fmtTokens(r.cacheWrite)}}`}}, {{label:'Cost', key:'cost', num:true, render:r=>fmtCost(r.knownCostRecords ? r.cost : null)}},
   {{label:'Unpriced', key:'unpricedTokens', num:true, render:r=>fmtTokens(r.unpricedTokens)}}
 ];
 function renderOverview(rs) {{
@@ -998,7 +998,7 @@ function renderRecords(rs) {{
     {{label:'Model', key:'model', render:r=>`${{esc(r.provider)}}/${{esc(r.model)}}<div class="dim">${{esc(r.costStatus)}}</div>`}},
     {{label:'Project', key:'project'}}, {{label:'Tokens', key:'totalTokens', num:true, render:r=>fmtTokens(r.totalTokens)}}, {{label:'Cost', key:'cost', num:true, render:r=>fmtCost(r.cost)}}, {{label:'Session', key:'sessionId', render:r=>esc(String(r.sessionId).slice(0,32))}}
   ];
-  return `<div class="panel"><h2>Raw usage records</h2>${{table(headers, rs.map(r=>({{...r, cost:r.cost ?? -1}})))}}</div>`;
+  return `<div class="panel"><h2>Raw usage records</h2>${{table(headers, rs)}}</div>`;
 }}
 function fillControls() {{
   document.getElementById('rangeButtons').innerHTML = ranges.map(([k,label]) => `<button data-range="${{k}}" class="${{state.range===k?'active':''}}">${{label}}</button>`).join('');
