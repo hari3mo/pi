@@ -60,6 +60,8 @@ Every session that changes config must update it.
 
 ## Changelog
 
+**LLM usage atlas.** Added `scripts/llm-usage-dashboard.py` plus `/llm-dashboard`/`/llm-usage` wrapper to generate a self-contained browser dashboard spanning Pi, Hermes, and Claude Code across local + EC2. It reads only aggregate usage metadata, marks Claude Code dollar cost as unpriced, and keeps generated `dashboard/` output ignored. Verified with full local+EC2 generation, browser render/console, `check-llm-dashboard`, extension smoke, and config validator. Files: `scripts/llm-usage-dashboard.py`, `extensions/llm-dashboard.ts`, `scripts/check-llm-dashboard.mjs`, `.gitignore`, `schema/manifest.json`, `docs/config-index.md`. Why: user wanted a comprehensive interactive multi-agent usage dashboard using Pi Atlas as reference.
+
 **Void splash + Harimo status widget can coexist under the harimo wordmark.**
 User-directed. `/familiar` no longer suppresses the void landing page or replaces the
 prompt-page wordmark: on startup, `void-blackhole.ts` shows the void splash, installs its
