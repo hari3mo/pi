@@ -451,8 +451,7 @@ def collect_hermes(home: Path, host: str, hostname: str) -> tuple[list[dict[str,
             continue
         source["sessions"] = len(rows)
         for row in rows:
-            provider = row["billing_provider"] or "?"
-            model = row["model"] or "unknown"
+            provider, model = split_provider_model(row["billing_provider"] or None, row["model"] or "unknown")
             cost_value = row["actual_cost_usd"] if row["actual_cost_usd"] is not None else row["estimated_cost_usd"]
             cost = cost_or_none(finite_number(cost_value, math.nan))
             input_tokens = intish(row["input_tokens"])
